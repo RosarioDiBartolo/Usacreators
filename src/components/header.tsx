@@ -31,7 +31,7 @@ interface MenuItem {
   items?: MenuItem[];
 }
 
-interface Navbar1Props {
+interface HeaderProps {
   logo?: {
     url: string;
     src: string;
@@ -51,7 +51,7 @@ interface Navbar1Props {
   };
 }
 
-const Navbar1 = ({
+const Header = ({
   logo = {
     url: "https://www.shadcnblocks.com",
     src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
@@ -134,7 +134,7 @@ const Navbar1 = ({
     login: { title: "Login", url: "#" },
     signup: { title: "Sign up", url: "#" },
   },
-}: Navbar1Props) => {
+}: HeaderProps) => {
   return (
     <section className="py-4">
       <div className="container">
@@ -296,4 +296,4 @@ const SubMenuLink = ({ item }: { item: MenuItem }) => {
   );
 };
 
-export { Navbar1 };
+export default Header;
