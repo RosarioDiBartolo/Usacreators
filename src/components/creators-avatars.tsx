@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
-import { cn } from "@/lib/utils";
+ 
 
 const CreatorsAvatars = () => {
   const [hover, setHover] = useState(false);

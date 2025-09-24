@@ -136,10 +136,10 @@ const Header = ({
   },
 }: HeaderProps) => {
   return (
-    <section className=" px-10 bg-background fixed h-fit inset-0 z-50">
+    <section className=" py-2 md:py-0  px-10 bg-background fixed h-fit inset-0 z-50">
       <div className="">
         {/* Desktop Menu */}
-        <nav className="hidden justify-between lg:flex items-center">
+        <nav className="hidden justify-between md:flex items-center">
           <div className="flex items-center gap-6">
             {/* Logo */}
             <a href={logo.url} className="   flex items-center gap-2">
@@ -171,7 +171,7 @@ const Header = ({
         </nav>
 
         {/* Mobile Menu */}
-        <div className="block lg:hidden">
+        <div className="block md:hidden">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <a href={logo.url} className="flex items-center gap-2">
