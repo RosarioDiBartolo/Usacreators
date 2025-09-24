@@ -22,7 +22,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-
+import logoSrc from "@/assets/logo.png";
 interface MenuItem {
   title: string;
   url: string;
@@ -53,10 +53,10 @@ interface HeaderProps {
 
 const Header = ({
   logo = {
-    url: "https://www.shadcnblocks.com",
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
+    url: "#",
+    src: logoSrc,
     alt: "logo",
-    title: "Shadcnblocks.com",
+    title: "Miami Creators",
   },
   menu = [
     { title: "Home", url: "#" },
@@ -136,16 +136,16 @@ const Header = ({
   },
 }: HeaderProps) => {
   return (
-    <section className="py-4">
-      <div className="container">
+    <section className=" px-10 bg-background fixed h-fit inset-0 z-50">
+      <div className="">
         {/* Desktop Menu */}
-        <nav className="hidden justify-between lg:flex">
+        <nav className="hidden justify-between lg:flex items-center">
           <div className="flex items-center gap-6">
             {/* Logo */}
-            <a href={logo.url} className="flex items-center gap-2">
+            <a href={logo.url} className="   flex items-center gap-2">
               <img
                 src={logo.src}
-                className="max-h-8 dark:invert"
+                className="max-h-8 dark:invert rounded-full   "
                 alt={logo.alt}
               />
               <span className="text-lg font-semibold tracking-tighter">
@@ -160,7 +160,7 @@ const Header = ({
               </NavigationMenu>
             </div>
           </div>
-          <div className="flex gap-2">
+          <div className="flex  gap-2">
             <Button asChild variant="outline" size="sm">
               <a href={auth.login.url}>{auth.login.title}</a>
             </Button>
@@ -177,7 +177,7 @@ const Header = ({
             <a href={logo.url} className="flex items-center gap-2">
               <img
                 src={logo.src}
-                className="max-h-8 dark:invert"
+                className="max-h-8 dark:invert rounded-full "
                 alt={logo.alt}
               />
             </a>
@@ -193,7 +193,7 @@ const Header = ({
                     <a href={logo.url} className="flex items-center gap-2">
                       <img
                         src={logo.src}
-                        className="max-h-8 dark:invert"
+                        className="max-h-8 dark:invert rounded-full "
                         alt={logo.alt}
                       />
                     </a>
