@@ -10,7 +10,7 @@ const RandomCircles = ({ count = 12 }) => {
     size: Math.floor(Math.random() * 60) + 20, // 20px - 80px
     left: Math.random() * 90, // % of container width
     duration: Math.random() * 15 + 10, // 10s - 25s
-    delay: 1.2, // stagger start
+    delay: .2, // stagger start
     opacity: Math.random() * 0.5 + 0.4, // 0.4 - 0.9
     outlineOffset: Math.floor(Math.random() * 8), // 0 - 7px
     bgColor: Math.random() > 0.5 ? "var(--secondary)" : "transparent",

@@ -6,9 +6,9 @@ const HeroContent = () => {
   return (
     <motion.div
       className="text-center font-montserrat relative z-10"
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 120 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 5, duration: 1.2, ease: "easeOut" }}
+      transition={{ delay: 2, duration: 3, ease: "easeOut" }}
     >
       <h1 className="text-3xl md:text-5xl tracking-tight lg:text-6xl font-extrabold mb-6 dark:text-white">
         Connect with all our<span className="px-3"> Creators</span>
