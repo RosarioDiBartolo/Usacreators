@@ -62,7 +62,7 @@ function Hero() {
 
       <div
         className="relative transition  container mx-auto max-w-4xl
-        flex flex-col gap-12 p-12 items-center"
+        flex flex-col gap-12 py-12 items-center"
       >
         <CreatorsAvatars />
         <HeroContent />
