@@ -24,13 +24,13 @@ const CreatorsAvatars = () => {
   };
 
   const avatarVariants = {
-    hidden: { scale: 0.5, y: 10, x: 400, opacity: 0 },
+    hidden: { scale: 0.2, y: 10, x: 400, opacity: 0 },
     visible: {
       scale: 1,
       y: 0,
       x: 0,
       opacity: 1,
-      transition: { duration: 0.8 },
+      transition: { duration: 0.8, scale: {duration: 2} },
     },
   };
 

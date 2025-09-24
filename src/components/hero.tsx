@@ -23,7 +23,7 @@ const RandomCircles = ({ count = 12 }) => {
       {circles.map((circle) => (
         <motion.div
           key={circle.id}
-          className="absolute rounded-full   brightness-90 transition"
+          className="absolute rounded-full  brightness-90 transition"
           style={{
             width: `${circle.size}px`,
             height: `${circle.size}px`,
