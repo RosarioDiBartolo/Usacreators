@@ -1,16 +1,15 @@
-import React from "react";
-import BrandThumbnail from "@/assets/brand-section-thumbnail.jpg";
-import { Button } from "./ui/button";
+ 
+ import { Button } from "./ui/button";
+import CardsStack from "./cards-stack";
 function BrandSection() {
   return (
     <section
       id="brand"
-      className="  relative  font-bold bg-primary text-primary-foreground m-10 rounded-full px-40 p-20"
+      className=" my-44  relative  font-bold bg-primary text-primary-foreground m-10 rounded-full    text-center  xl:text-start py-40 px-10 xl:px-40 xl:py-10"
     >
-      <div className=" flex justify-around items-center">
-        <img className=" w-xs   rounded-3xl" src={BrandThumbnail} />
-
-        <div className="  max-w-3xl">
+      <div className="  w-full   justify-around items-center flex flex-col gap-10  xl:flex-row  ">
+        <CardsStack />
+        <div className="  w-full">
                <h3 className=" text-primary-foreground/50 text-6xl capitalize">
             We alredy acquired the best creators for your brand's porpouses.
           </h3>
@@ -21,13 +20,12 @@ function BrandSection() {
            
         </div>
       </div>
-      <Button
-        size={"lg"}
-        className="top-0 border p-7 rounded-full text-lg -translate-1/2 left-1/2 absolute"
-        variant={"secondary"}
+      <div
+         className="top-0 bg-secondary text-secondary-foreground    border outline-2 outline-primary outline-offset-8 border-primary p-4 px-10 rounded-full text-lg -translate-1/2 left-1/2 absolute"
+         
       >
-        Check Our Creators
-      </Button>
+        Brand's section
+      </div>
     </section>
   );
 }
