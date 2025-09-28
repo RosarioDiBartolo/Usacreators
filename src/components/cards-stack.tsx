@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "motion/react";
-import React, { useState, useEffect, useCallback } from "react";
+import  { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import c1 from "@/assets/creators/brand-section-thumbnail.jpg";
@@ -21,8 +21,7 @@ const fakeCards: CardType[] = [
     
 
 ];
-
-const isEven = (n: number) => n % 2 === 0;
+ 
 const getCardAnimation = (offset: number, index: number, activeIndex: number, radius = 150) => {
   const isActive = activeIndex === index;
   
@@ -164,7 +163,7 @@ const CarouselNavigation = ({ index, setIndex, itemsCount, alwaysShow = false, c
   );
 };
 
-const CardsStack = ({ cards = fakeCards }: { cards: CardType[] }) => {
+const CardsStack = ({ cards = fakeCards }: { cards?: CardType[] }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0); // -1 for left, 1 for right, 0 for initial
 

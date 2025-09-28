@@ -1,4 +1,4 @@
-import React from "react";
+ 
 import { motion } from "motion/react";
 import CreatorsAvatars from "./creators-avatars";
 import HeroContent from "./hero-content";
