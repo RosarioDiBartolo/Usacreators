@@ -15,12 +15,11 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
   title = "Connect with all our",
   subtitle = "Creators",
   description = "We connect brands with Our's top content creators for authentic, engaging social media presence.",
-  buttonText = "Get in Touch!",
-  buttonHref = "#get-started",
+
   delay = 0.5,
   duration = 1.2,
 }) => {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -57,47 +56,18 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
     hidden: {
       opacity: 0,
       y: 80,
-       scale: 0.5,
+      scale: 0.5,
     },
     visible: {
       opacity: 1,
       y: 0,
-        
+
       scale: 1,
       transition: {
         type: "spring",
-        duration: duration * .7,
-         delay: 1.2,
-      },
-    },
-  };
-
-  const buttonVariants: Variants = {
-    hidden: {
-      opacity: 0,
-      y: 40,
-      scale: 0.8,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
+        duration: duration * 0.7,
         delay: 1.2,
       },
-    },
-    hover: {
-      scale: 1.05,
-      y: -2,
-      transition: {
-        duration: 0.2,
-        ease: "easeInOut",
-      },
-    },
-    tap: {
-      scale: 0.95,
     },
   };
 
@@ -123,12 +93,11 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
     >
       {/* Background glow effect */}
       <motion.div
-        className="absolute text-primary-foreground inset-0 bg-gradient-to-r from-primary/20 via-transparent to-primary/20 rounded-3xl blur-3xl"
+        className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-primary/20 rounded-3xl blur-3xl pointer-events-none"
         variants={glowVariants}
         initial="hidden"
         animate="visible"
       />
-
       {/* Main title */}
       <motion.h1
         className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4   leading-tight"
@@ -142,9 +111,11 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
           {subtitle}
         </motion.span>
       </motion.h1>
-
       {/* Highlighted text */}
-      <motion.div className="mb-8 perspective-1000" variants={highlightVariants}>
+      <motion.div
+        className="mb-8 perspective-1000"
+        variants={highlightVariants}
+      >
         <motion.span
           className="text-5xl md:text-7xl lg:text-8xl font-black  bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text   inline-block"
           style={{
@@ -152,10 +123,9 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
             filter: "drop-shadow(0 4px 20px rgba(var(--primary), 0.2))",
           }}
         >
-          <span>From</span> <span className=" text-primary">MIAMI.</span> 
+          <span>From</span> <span className=" bg-clip-text text-transparent bg-gradient-to-t from-amber-500 to-primary">MIAMI.</span>
         </motion.span>
       </motion.div>
-
       {/* Description */}
       <motion.p
         className="text-lg md:text-xl lg:text-2xl mb-8      max-w-3xl mx-auto leading-relaxed"
@@ -163,8 +133,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
       >
         {description}
       </motion.p>
-
-      {/* CTA Button */}
+      {/* CTA Button
       <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
         <motion.a
           href={buttonHref}
@@ -180,8 +149,26 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
             initial={false}
           />
         </motion.a>
-      </motion.div>
+      </motion.div> */}
+      <p className="text-primary text-xl font-extrabold my-3">You're either</p>
 
+      <div className="flex gap-1 justify-center items-center relative z-10">
+        <button
+          onClick={() => {
+            document.getElementById("brand")?.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }}
+          className="text-end w-52 text-2xl font-bold rounded-s-full bg-gradient-to-b from-primary to-amber-500 text-primary-foreground p-2 px-4"
+        >
+          A Brand
+        </button>
+
+        <button className="text-start w-52 text-2xl font-bold rounded-e-full bg-secondary text-secondary-foreground p-2 px-4">
+          A Creator
+        </button>
+      </div>
       {/* Floating particles effect */}
       {[...Array(6)].map((_, i) => (
         <motion.div
