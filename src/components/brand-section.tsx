@@ -12,7 +12,14 @@ function BrandSection() {
       
       rounded-[100px]    text-center  xl:text-start  "
     >
-      <div className=" py-40 px-10 xl:px-40 xl:py-10 overflow-hidden  w-full 
+         <div
+         className="top-0 bg-secondary text-secondary-foreground    border outline-2 outline-primary outline-offset-8 border-primary p-4 px-10 rounded-full text-lg -translate-1/2 left-1/2 absolute"
+         
+      >
+        Brand's section
+      </div>
+
+      <div className=" py-40 px-10 xl:px-40   overflow-hidden  w-full 
       
       justify-center  items-center  xl:items-start  flex flex-col xl:flex-row flex-wrap gap-28     ">
         <CardsStack />
@@ -21,7 +28,7 @@ function BrandSection() {
             We alredy acquired the best creators for your brand's porpouses.
           </h3>
         <h2 className="  md:text-8xl text-7xl ">
-            You just have to  <span className=" bg-clip-text text-transparent bg-gradient-to-t from-secondary-foreground to-neutral-500  text-8xl md:text-9xl"> choose</span>
+            You just have to  <span className=" bg-clip-text text-transparent bg-gradient-to-t from-stone-950 via-stone-600 to-white  text-8xl md:text-9xl"> choose</span>
           </h2>
         
          </div>
@@ -30,12 +37,7 @@ function BrandSection() {
       <Button variant={"secondary"}  className=" rounded-2xl absolute bottom-0 translate-y-1/2 -translate-x-1/2 left-1/2 ">
         Click to discover more.
       </Button>
-      <div
-         className="top-0 bg-secondary text-secondary-foreground    border outline-2 outline-primary outline-offset-8 border-primary p-4 px-10 rounded-full text-lg -translate-1/2 left-1/2 absolute"
-         
-      >
-        Brand's section
-      </div>
+    
     </section>
   );
 }

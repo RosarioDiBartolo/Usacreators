@@ -13,7 +13,7 @@ const RandomCircles = ({ count = 12 }) => {
     delay: .2, // stagger start
     opacity: Math.random() * 0.5 + 0.4, // 0.4 - 0.9
     outlineOffset: Math.floor(Math.random() * 8), // 0 - 7px
-    bgColor: Math.random() > 0.5 ? "var(--secondary)" : "transparent",
+    bgColor: Math.random() > 0.5 ? "var(--background)" : "transparent",
     outlineColor:
       Math.random() > 0.5 ? "white" : "rgba(255,255,255,0.5)",
   }));

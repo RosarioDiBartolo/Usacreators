@@ -44,7 +44,7 @@ const CreatorsAvatars = () => {
       {/* Avatars container */}
       <motion.div
       layout
-        className="bg-secondary shadow-2xl text-muted-foreground items-center rounded-full overflow-hidden p-2 gap-3 flex cursor-pointer group"
+        className="bg-background  shadow-2xl text-muted-foreground items-center rounded-full overflow-hidden p-2 gap-3 flex cursor-pointer group"
         whileHover={{ scale: 1.02 }}
         transition={{ layout: {
           type:  "keyframes"    },  type: "spring", stiffness: 200, damping: 15 }}
