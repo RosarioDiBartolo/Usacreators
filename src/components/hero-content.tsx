@@ -165,7 +165,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
           A Brand
         </button>
 
-        <button className="text-start max-w-52  flex-1   font-bold rounded-e-full bg-secondary text-secondary-foreground p-2 px-4">
+        <button className="text-start max-w-52  flex-1   font-bold rounded-e-full bg-gradient-to-b from-secondary to-stone-800 text-secondary-foreground p-2 px-4">
           A Creator
         </button>
       </div>

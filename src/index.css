@@ -62,7 +62,7 @@
   --primary-foreground: oklch(0.985 0 0);
   --secondary: var(--color-stone-900);
   --secondary-foreground: oklch(100% 0.00011 271.152);
-  --tertiary: var(--color-amber-500)
+  --tertiary: var(--color-amber-500);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
   --accent: var(--color-orange-200);
