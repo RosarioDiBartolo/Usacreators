@@ -160,12 +160,12 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
               block: "start",
             });
           }}
-          className="text-end w-52 text-2xl font-bold rounded-s-full bg-gradient-to-b from-primary to-amber-500 text-primary-foreground p-2 px-4"
+          className="text-end max-w-52 flex-1 text-2xl font-bold rounded-s-full bg-gradient-to-b from-primary to-amber-500 text-primary-foreground p-2 px-4"
         >
           A Brand
         </button>
 
-        <button className="text-start w-52 text-2xl font-bold rounded-e-full bg-secondary text-secondary-foreground p-2 px-4">
+        <button className="text-start max-w-52  flex-1 text-2xl font-bold rounded-e-full bg-secondary text-secondary-foreground p-2 px-4">
           A Creator
         </button>
       </div>

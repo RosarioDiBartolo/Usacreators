@@ -6,16 +6,22 @@ function BrandSection() {
   return (
     <section
       id="brand"
-      className=" my-44  relative  font-bold bg-gradient-to-bl from-primary via-primary to-amber-400 text-primary-foreground m-10 rounded-full    text-center  xl:text-start py-40 px-10 xl:px-40 xl:py-10"
+      className=" my-44  relative   font-bold bg-gradient-to-bl from-primary via-primary to-amber-400 text-primary-foreground 
+      
+      mx-auto max-w-[90rem]
+      
+      rounded-[100px]    text-center  xl:text-start  "
     >
-      <div className="  w-full   justify-around items-center flex flex-col gap-10  xl:flex-row  ">
+      <div className=" py-40 px-10 xl:px-40 xl:py-10 overflow-hidden  w-full 
+      
+      justify-center  items-center  xl:items-start  flex flex-col xl:flex-row flex-wrap gap-28     ">
         <CardsStack />
-        <div className="  w-full">
-               <h3 className=" text-primary-foreground/50 text-6xl capitalize">
+        <div className=" w-full">
+               <h3 className=" text-primary-foreground/50 text-4xl sm:text-6xl capitalize">
             We alredy acquired the best creators for your brand's porpouses.
           </h3>
-        <h2 className="   text-8xl">
-            You just have to choose.
+        <h2 className="  md:text-8xl text-7xl ">
+            You just have to  <span className=" bg-clip-text text-transparent bg-gradient-to-t from-secondary-foreground to-neutral-500  text-8xl md:text-9xl"> choose</span>
           </h2>
         
          </div>

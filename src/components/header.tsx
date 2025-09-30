@@ -136,7 +136,7 @@ const Header = ({
   },
 }: HeaderProps) => {
   return (
-    <section className=" py-2 md:py-0  px-10 bg-background fixed h-fit inset-0 z-50">
+    <section className=" py-2 md:py-0  px-10 bg-background fixed h-fit inset-0 z-50 max-w-screen">
       <div className="">
         {/* Desktop Menu */}
         <nav className="hidden justify-between md:flex items-center">

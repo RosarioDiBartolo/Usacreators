@@ -74,7 +74,7 @@ const CreatorsAvatars = () => {
 
             <motion.a
               key="extra-people"
-              className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-black text-center text-xs font-medium text-white hover:bg-gray-600 dark:border-gray-800 dark:bg-white dark:text-black"
+              className="flex !h-10 !w-10 aspect-square items-center justify-center rounded-full border-2 border-white bg-black text-center text-xs font-medium text-white hover:bg-gray-600 dark:border-gray-800 dark:bg-white dark:text-black"
               href=""
               variants={avatarVariants}
               whileHover={{ scale: 1.15, rotate: 3 }}
@@ -89,7 +89,7 @@ const CreatorsAvatars = () => {
                 animate={{ opacity: 1  }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
-                className="  left-full mx-3 whitespace-nowrap text-sm font-medium"
+                className=" hidden md:block  left-full mx-3 whitespace-nowrap text-sm font-medium"
               >
                 99+ USA Creators all in one platform
               </motion.span>

@@ -72,7 +72,7 @@ const Card = ({ card, index, activeIndex, total, onCardClick }: {
         duration: 0.6 
       }}
       className={cn(
-        "origin-bottom shadow-2xl rounded-2xl bg-background text-foreground border-2 border-white/20 w-xs h-96 overflow-hidden absolute inset-0 cursor-pointer",
+        "origin-bottom shadow-2xl rounded-2xl bg-background text-foreground border-2 border-white/20 w-full h-96 overflow-hidden absolute inset-0 cursor-pointer",
         "backdrop-blur-sm"
       )}
       onClick={() => onCardClick(index)}
@@ -185,8 +185,8 @@ const CardsStack = ({ cards = fakeCards }: { cards?: CardType[] }) => {
   }, [handleNext]);
 
   return (
-    <div className="min-w-md flex justify-center">
-      <div className="relative !min-w-xs h-[425px] group/hover">
+    <div className=" w-md max-w-full flex justify-center">
+      <div className="relative max-w-full w-xs h-[425px] group/hover">
         <AnimatePresence mode="popLayout" custom={direction}>
           {cards.map((card, i) => (
             <Card 
