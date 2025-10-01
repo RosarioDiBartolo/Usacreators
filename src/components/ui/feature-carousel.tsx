@@ -1,18 +1,16 @@
 import React from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button'; // Assuming you have a Button component from shadcn/ui
 import { cn } from '@/lib/utils'; // Assuming you have a utility for class names
 
 // --- TYPES ---
 interface HeroProps extends React.HTMLAttributes<HTMLDivElement> {
-  title: React.ReactNode;
+  heading: React.ReactNode;
   subtitle: string;
   images: { src: string; alt: string; }[];
 }
 
 // --- HERO SECTION COMPONENT ---
 export const HeroSection = React.forwardRef<HTMLDivElement, HeroProps>(
-  ({ title, subtitle, images, className, ...props }, ref) => {
+  ({ heading, subtitle, images, className, ...props }, ref) => {
     const [currentIndex, setCurrentIndex] = React.useState(Math.floor(images.length / 2));
 
     const handleNext = React.useCallback(() => {
@@ -34,7 +32,7 @@ export const HeroSection = React.forwardRef<HTMLDivElement, HeroProps>(
       <div
         ref={ref}
         className={cn(
-          'relative w-full min-h-screen [border-radius:550px_400px_550px_400px] flex flex-col items-center justify-center    p-4',
+          'relative w-full min-h-screen  rounded-full  bg-radial-[at_50%_100%] to-50% from-indigo-100/60 flex flex-col items-center justify-center    p-4',
           className
         )}
         {...props}
@@ -45,9 +43,9 @@ export const HeroSection = React.forwardRef<HTMLDivElement, HeroProps>(
           {/* Header Section */}
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tighter max-w-4xl">
-              {title}
+              {heading}
             </h1>
-            <p className="max-w-2xl mx-auto text-muted-foreground md:text-xl">
+            <p className="max-w-2xl mx-auto font-normal text-muted-foreground md:text-xl">
               {subtitle}
             </p>
           </div>

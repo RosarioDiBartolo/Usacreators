@@ -34,11 +34,10 @@ const App: React.FC = () => {
   return (
     <div className="w-full">
       <HeroSection
-        title={title}
+        heading={title}
         subtitle="Browse Miami’s best creators and match with the right talent for your brand in minutes, not weeks."
         images={images}
-        appStoreLink="#"
-        googlePlayLink="#"
+       
       />
     </div>
   );

@@ -128,7 +128,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
       </motion.div>
       {/* Description */}
       <motion.p
-        className="text-lg md:text-xl lg:text-2xl mb-8      max-w-3xl mx-auto leading-relaxed"
+        className="text-lg md:text-xl lg:text-2xl mb-8 text-muted     max-w-3xl mx-auto leading-relaxed"
         variants={itemVariants}
       >
         {description}
@@ -151,7 +151,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
         </motion.a>
       </motion.div> */}
 
-      <div className="flex gap-8 text-xl md:text-2xl justify-center items-center relative z-10">
+      <div className="flex text-center gap-8 text-xl md:text-2xl justify-center items-center relative z-10">
         <button
           onClick={() => {
             document.getElementById("brand")?.scrollIntoView({
@@ -159,12 +159,12 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
               block: "start",
             });
           }}
-          className="text-center shadow-xl shadow-amber-900/50 max-w-58 flex-1   font-bold rounded-xl bg-gradient-to-b from-primary to-amber-500 text-primary-foreground  p-3 px-8"
+          className=" tracking-tight  shadow-xl shadow-amber-900/50 max-w-58 font-semibold flex-1     rounded-2xl bg-gradient-to-b from-primary to-amber-500 text-primary-foreground  p-4 px-8"
         >
           I'm a Brand
         </button>
 
-        <button className="text-center shadow-xl shadow-amber-900/50  max-w-58  flex-1   font-bold rounded-xl bg-secondary  text-secondary-foreground  p-3 px-8">
+        <button className="tracking-tight   shadow-xl shadow-amber-900/50  max-w-58 font-semibold  flex-1    rounded-2xl bg-secondary bg-radial from-secondary via-secondary to-white/15     text-secondary-foreground  p-4 px-8">
           I'm a Creator
         </button>
       </div>

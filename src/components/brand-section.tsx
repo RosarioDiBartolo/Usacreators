@@ -1,8 +1,6 @@
   
-import { UserRoundCheck } from "lucide-react";
-import CardsStack from "./cards-stack";
-import Carousel from "./carousel";
-import { Button } from "./ui/button";
+import { UserRoundCheck } from "lucide-react"; 
+import Carousel from "./carousel"; 
 
 function BrandSection() {
   return (
@@ -36,7 +34,7 @@ function BrandSection() {
          </div>
       </div>
 
-      <button  className=" rounded-full flex gap-2 items-center text-2xl font-light bg-secondary border text-secondary-foreground p-5 px-12 absolute bottom-0 translate-y-1/2 -translate-x-1/2 left-1/2 ">
+      <button  className=" rounded-full flex gap-2 items-center text-2xl font-light bg-gradient-to-t from-secondary to-stone-700 border text-secondary-foreground p-5 px-12 absolute bottom-0 translate-y-1/2 -translate-x-1/2 left-1/2 ">
         Apply now <UserRoundCheck />
       </button>
     
