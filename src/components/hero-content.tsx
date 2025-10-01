@@ -150,9 +150,8 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
           />
         </motion.a>
       </motion.div> */}
-      <p className="text-primary text-xl font-extrabold my-3">You're either</p>
 
-      <div className="flex gap-1 text-xl md:text-2xl justify-center items-center relative z-10">
+      <div className="flex gap-8 text-xl md:text-2xl justify-center items-center relative z-10">
         <button
           onClick={() => {
             document.getElementById("brand")?.scrollIntoView({
@@ -160,13 +159,13 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
               block: "start",
             });
           }}
-          className="text-end max-w-52 flex-1   font-bold rounded-s-full bg-gradient-to-b from-primary to-amber-500 text-primary-foreground p-2 px-4"
+          className="text-center shadow-xl shadow-amber-900/50 max-w-58 flex-1   font-bold rounded-xl bg-gradient-to-b from-primary to-amber-500 text-primary-foreground  p-3 px-8"
         >
-          A Brand
+          I'm a Brand
         </button>
 
-        <button className="text-start max-w-52  flex-1   font-bold rounded-e-full bg-gradient-to-b from-secondary to-stone-800 text-secondary-foreground p-2 px-4">
-          A Creator
+        <button className="text-center shadow-xl shadow-amber-900/50  max-w-58  flex-1   font-bold rounded-xl bg-secondary  text-secondary-foreground  p-3 px-8">
+          I'm a Creator
         </button>
       </div>
       {/* Floating particles effect */}

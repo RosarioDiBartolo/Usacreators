@@ -23,12 +23,12 @@ function BrandSection() {
       
       justify-center  items-center  xl:items-start  flex flex-col xl:flex-row flex-wrap gap-28     ">
         <CardsStack />
-        <div className=" w-full">
-               <h3 className=" text-primary-foreground/50 text-4xl sm:text-6xl capitalize">
+        <div className=" w-full bg-clip-text text-transparent  bg-primary-foreground/60">
+               <h3 className=" text-4xl sm:text-6xl capitalize">
             We alredy acquired the best creators for your brand's porpouses.
           </h3>
-        <h2 className="  md:text-8xl text-7xl ">
-            You just have to  <span className=" bg-clip-text text-transparent bg-gradient-to-t from-stone-950 via-stone-600 to-white  text-8xl md:text-9xl"> choose</span>
+        <h2 className="  bg-clip-text text-transparent bg-gradient-to-t from-secondary to-secondary/40   md:text-8xl text-7xl mt-5 ">
+            You just have to  <span className=" leading-3 text-8xl md:text-9xl"> choose</span>
           </h2>
         
          </div>
