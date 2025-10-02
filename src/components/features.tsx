@@ -8,16 +8,15 @@ export default function Example() {
         }
       `}</style>
 
-       
-
-      {/* Feature Cards */}
-      <div className="flex flex-wrap items-start justify-center gap-10">
-        <div className="text-center   lg:max-w-2xl mx-auto mb-2">
+      <div className="text-center max-w-82 lg:max-w-2xl mx-auto mb-12">
         <h1 className="text-3xl font-semibold">Features You’ll Love</h1>
         <p className="text-sm text-slate-500 mt-2">
           Connect with Miami’s top creators — authentic, local, and ready to bring your brand to life.
         </p>
       </div>
+
+      {/* Feature Cards */}
+      <div className="flex flex-wrap items-start justify-center gap-10">
         <div className="max-w-80 hover:-translate-y-0.5 transition duration-300">
           <img
             className="rounded-xl"
