@@ -123,7 +123,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
             filter: "drop-shadow(0 4px 20px rgba(var(--primary), 0.2))",
           }}
         >
-          <span>From</span> <span className=" bg-clip-text text-transparent bg-gradient-to-t from-amber-500 to-primary">MIAMI.</span>
+          <span>From</span> <span className=" bg-clip-text text-transparent bg-gradient-to-t from-amber-200 to-amber-500">MIAMI.</span>
         </motion.span>
       </motion.div>
       {/* Description */}
