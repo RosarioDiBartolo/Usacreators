@@ -8,12 +8,14 @@ import {
   useMotionValueEvent,
 } from "motion/react";
 import logo from "@/assets/logo-no-text.png"
-import React, { useRef, useState } from "react";
+import React, {  useRef, useState, type SetStateAction } from "react";
 
 
 interface NavbarProps {
   children: React.ReactNode;
   className?: string;
+  visible: boolean;
+  setVisible: React.Dispatch<SetStateAction<boolean>>
 }
 
 interface NavBodyProps {
@@ -49,14 +51,13 @@ interface MobileNavMenuProps {
   onClose: () => void;
 }
 
-export const Navbar = ({ children, className }: NavbarProps) => {
+export const Navbar = ({ children, className, visible, setVisible }: NavbarProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
-  const [visible, setVisible] = useState<boolean>(false);
-
+ 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > 100) {
       setVisible(true);
@@ -69,7 +70,7 @@ export const Navbar = ({ children, className }: NavbarProps) => {
     <motion.div
       ref={ref}
       // IMPORTANT: Change this to class of `fixed` if you want the navbar to be fixed
-      className={cn(" fixed inset-x-0 top-4 z-40 w-full", className)}
+      className={cn(" fixed inset-x-0 lg:top-4 z-40 w-full", className)}
     >
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
@@ -82,9 +83,9 @@ export const Navbar = ({ children, className }: NavbarProps) => {
     </motion.div>
   );
 };
-
+  
 export const NavBody = ({ children, className, visible }: NavBodyProps) => {
-  return (
+   return (
     <motion.div
       animate={{
         backdropFilter: visible ? "blur(10px)" : "none",
@@ -92,7 +93,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
           ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
           : "none",
         width: visible ? "40%" : "100%",
-        y: visible ? 20 : 0,
+        y:  visible ? 20 : 0,
       }}
       transition={{
         type: "spring",
@@ -153,11 +154,11 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
         boxShadow: visible
           ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
           : "none",
-        width: visible ? "90%" : "100%",
+        width: "100%",
         paddingRight: visible ? "12px" : "0px",
         paddingLeft: visible ? "12px" : "0px",
         borderRadius: visible ? "4px" : "2rem",
-        y: visible ? 20 : 0,
+        
       }}
       transition={{
         type: "spring",
@@ -165,7 +166,7 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
         damping: 50,
       }}
       className={cn(
-        "relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-transparent px-0 py-2 lg:hidden",
+        "relative z-50   flex w-full   flex-col items-center justify-between bg-transparent px-0 py-2 lg:hidden",
         visible && "bg-white/80 dark:bg-neutral-950/80",
         className,
       )}
@@ -194,8 +195,7 @@ export const MobileNavHeader = ({
 export const MobileNavMenu = ({
   children,
   className,
-  isOpen,
-  onClose,
+  isOpen, 
 }: MobileNavMenuProps) => {
   return (
     <AnimatePresence>
@@ -205,7 +205,7 @@ export const MobileNavMenu = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className={cn(
-            "absolute inset-x-0 top-16 z-50 flex w-full flex-col items-start justify-start gap-4 rounded-lg bg-white px-4 py-8 shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] dark:bg-neutral-950",
+            "absolute inset-x-0 top-16 z-50 flex max-w-[calc(100vw-2rem)] mx-auto w-full flex-col items-start justify-start gap-4 rounded-lg bg-white px-4 py-8 shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] dark:bg-neutral-950",
             className,
           )}
         >
@@ -219,14 +219,16 @@ export const MobileNavMenu = ({
 export const MobileNavToggle = ({
   isOpen,
   onClick,
+  visible
 }: {
   isOpen: boolean;
   onClick: () => void;
+  visible: boolean; 
 }) => {
   return isOpen ? (
-    <IconX className="text-black dark:text-white" onClick={onClick} />
+    <IconX  className={cn("text-black dark:text-white transition", visible? "opacity-100": "opacity-0")} onClick={onClick} />
   ) : (
-    <IconMenu2 className="text-black dark:text-white" onClick={onClick} />
+    <IconMenu2 className={cn("text-black dark:text-white transition", visible? "opacity-100": "opacity-0")} onClick={onClick} />
   );
 };
 
