@@ -10,7 +10,7 @@ function BrandSection() {
       
       mx-auto max-w-[90rem]
       
-      rounded-[100px]    text-center  xl:text-start  "
+      rounded-[100px] text-center     "
     >
          <div
          className="top-0 bg-secondary text-secondary-foreground border-4  border-background p-6 px-18 rounded-full text-xl font-light -translate-1/2 left-1/2 absolute"
@@ -23,19 +23,21 @@ function BrandSection() {
       
       justify-center  items-center  xl:items-start  flex flex-col xl:flex-row flex-wrap gap-28     ">
         <Carousel/>
-        <div className=" w-full bg-clip-text text-transparent  bg-primary-foreground/60">
-               <h3 className=" text-4xl sm:text-6xl capitalize">
+        <div className=" mx-auto max-w-3xl w-full tracking-wider   bg-clip-text text-transparent  bg-primary-foreground/60">
+               <h3 className=" md:leading-12 text-2xl font-extralight md:text-4xl  ">
             We alredy acquired the best creators for your brand's porpouses.
           </h3>
-        <h2 className="  bg-clip-text text-transparent bg-gradient-to-t from-secondary to-secondary/40   md:text-8xl text-7xl mt-5 ">
-            You just have to  <span className=" leading-3 text-8xl md:text-9xl"> choose</span>
+        <h2 className="  bg-clip-text text-transparent bg-gradient-to-t from-secondary to-secondary/30   md:text-6xl text-7xl mt-5 ">
+            You just have to 
           </h2>
         
          </div>
       </div>
 
-      <button  className=" rounded-full flex gap-2 items-center text-2xl font-light bg-gradient-to-t from-secondary to-stone-700 border text-secondary-foreground p-5 px-12 absolute bottom-0 translate-y-1/2 -translate-x-1/2 left-1/2 ">
-        Apply now <UserRoundCheck />
+      <button  className="
+      
+      rounded-full flex gap-4 items-center  font-bold bg-gradient-to-b from-stone-500 to-stone-900   border   p-5 px-12 absolute bottom-0 translate-y-1/2 -translate-x-1/2 left-1/2 ">
+       <span className=" capitalize bg-clip-text text-transparent bg-gradient-to-b from-secondary-foreground to-amber-500      text-5xl"> choose us</span> 
       </button>
     
     </section>
