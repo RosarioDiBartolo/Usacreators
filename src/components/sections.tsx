@@ -17,8 +17,13 @@ const tabs = [
 
 function Sections() {
   return (
-    <div className=" h-screen relative">
-      <Tabs tabs={tabs} containerClassName=" sticky top-32 justify-center" />
+    <div className="bg-muted   relative   ">
+       <Tabs
+        tabs={tabs}
+        tabClassName="
+       text-lg"
+        containerClassName=" !sticky !top-0 justify-center"
+      />
     </div>
   );
 }
