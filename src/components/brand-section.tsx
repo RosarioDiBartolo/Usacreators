@@ -4,7 +4,7 @@ function BrandSection() {
   return (
     <section
       id="brand"
-      className=" mt-44  relative   font-bold bg-gradient-to-b from-primary/30 via-primary to-primary/70 text-primary-foreground 
+      className="   relative   font-bold bg-gradient-to-b from-orange-300  via-orange-600 to-primary  text-primary-foreground 
       
       mx-auto max-w-[90rem]
       

@@ -122,12 +122,14 @@ function TinyStats() {
 
 export default function CreatorsSection() {
   return (
-    <div className=" ">
+ 
     <section
       id="brand"
-      className="max-w-[90rem]  mx-auto border-yellow-400 bg-gradient-to-b from-primary/70   to-amber-100  text-start font-bold text-primary-foreground"
+      className="max-w-[90rem] rounded-t-[100px]  mx-auto border-yellow-400 bg-gradient-to-b from-orange-300  via-orange-600 to-primary   text-start font-bold text-primary-foreground"
       aria-labelledby="creators-heading"
-    >
+    > <div className="top-0 bg-secondary text-secondary-foreground border-4  border-background p-6 px-18 rounded-full text-xl font-light -translate-1/2 left-1/2 absolute">
+        Creator's section
+      </div>
       <div className="w-full overflow-hidden">
         <div className="mx-auto flex flex-col justify-between text-center w-full    items-center gap-12 px-6 py-20 xl:px-16">
           <div className="order-2 xl:order-1">
@@ -191,7 +193,6 @@ export default function CreatorsSection() {
       <style jsx>{`
         .text-balance { text-wrap: balance; }
       `}</style>
-    </section>
-    </div>
+    </section> 
   );
 }

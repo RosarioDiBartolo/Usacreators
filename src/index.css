@@ -1,13 +1,17 @@
-@import url("https://fonts.googleapis.com/css2?family=Ultra&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
-
 @import "tailwindcss";
 @import "tw-animate-css";
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-ultra: "Ultra", serif;
-  --font-montserrat: "Montserrat", sans-serif;
+  --font-heading: "Ultra", Georgia, "Times New Roman", serif;
+
+  /* Humanist-style system font stack for body */
+  --font-body: -apple-system, /* macOS/iOS */ BlinkMacSystemFont,
+    /* Chrome macOS */ "Segoe UI", /* Windows */ "San Francisco",
+    /* fallback for Apple systems */ Roboto,
+    /* Android/modern devices */ "Helvetica Neue", Arial,
+    /* classic neutral sans */ "Liberation Sans",
+    /* Linux fallback */ sans-serif; /* ultimate fallback */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -49,66 +53,64 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 :root {
-  --font-ultra: "Ultra", serif;
   --radius: 0.625rem;
 
   /* Base */
-  --background: #F8F5F1;          /* Ivory caldo */
-  --foreground: #3A3A3A;          /* Neutral scuro (testi principali) */
+  --background: #f8f5f1; /* Ivory caldo */
+  --foreground: #3a3a3a; /* Neutral scuro (testi principali) */
 
   /* Card / Popover */
-  --card: #FFFFFF;
-  --card-foreground: #3A3A3A;
-  --popover: #FFFFFF;
-  --popover-foreground: #3A3A3A;
+  --card: #ffffff;
+  --card-foreground: #3a3a3a;
+  --popover: #ffffff;
+  --popover-foreground: #3a3a3a;
 
   /* CTA Primario (Miami Orange) */
-  --primary: #FF6900;
-  --primary-foreground: #FFFFFF;
+  --primary: #ff6900;
+  --primary-foreground: #ffffff;
 
   /* CTA Secondario (Espresso) */
-  --secondary: #2A1F1D;           /* Espresso caldo */
-  --secondary-foreground: #FFFFFF;
+  --secondary: #2a1f1d; /* Espresso caldo */
+  --secondary-foreground: #ffffff;
 
   /* Tertiary (può essere un accent extra se serve) */
-  --tertiary: #E4D5BD;            /* Beige ivory */
-  --tertiary-foreground: #2A1F1D;
+  --tertiary: #e4d5bd; /* Beige ivory */
+  --tertiary-foreground: #2a1f1d;
 
   /* Muted neutrals */
-  --muted: #F4F2EE;
+  --muted: #f4f2ee;
   --muted-foreground: #e9e3dd;
 
   /* Accent (beige chiaro dorato) */
-  --accent: #E4D5BD;
-  --accent-foreground: #2A1F1D;
+  --accent: #e4d5bd;
+  --accent-foreground: #2a1f1d;
 
   /* Destructive (rosso premium) */
-  --destructive: #B94B3D;
-  --destructive-foreground: #FFFFFF;
+  --destructive: #b94b3d;
+  --destructive-foreground: #ffffff;
 
   /* Borders / Inputs / Ring */
-  --border: #E2DED9;
-  --input: #E2DED9;
+  --border: #e2ded9;
+  --input: #e2ded9;
   --ring: rgba(228, 213, 189, 0.6); /* ivory-beige soft */
 
   /* Charts (armonizzati) */
-  --chart-1: #FF6900;  /* arancione */
-  --chart-2: #2A1F1D;  /* espresso */
-  --chart-3: #E4D5BD;  /* ivory beige */
-  --chart-4: #D2691E;  /* brown copper */
-  --chart-5: #3A3A3A;  /* dark neutral */
+  --chart-1: #ff6900; /* arancione */
+  --chart-2: #2a1f1d; /* espresso */
+  --chart-3: #e4d5bd; /* ivory beige */
+  --chart-4: #d2691e; /* brown copper */
+  --chart-5: #3a3a3a; /* dark neutral */
 
   /* Sidebar */
-  --sidebar: #F8F5F1;
-  --sidebar-foreground: #3A3A3A;
-  --sidebar-primary: #FF6900;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #E4D5BD;
-  --sidebar-accent-foreground: #2A1F1D;
-  --sidebar-border: #E2DED9;
+  --sidebar: #f8f5f1;
+  --sidebar-foreground: #3a3a3a;
+  --sidebar-primary: #ff6900;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e4d5bd;
+  --sidebar-accent-foreground: #2a1f1d;
+  --sidebar-border: #e2ded9;
   --sidebar-ring: rgba(228, 213, 189, 0.6);
 }
-
 
 @layer base {
   * {
@@ -118,56 +120,4 @@
     @apply bg-background text-foreground w-screen overflow-x-hidden;
   }
 }
-
-.pattern {
-  background-image: linear-gradient(
-      30deg,
-      #444cf7 12%,
-      transparent 12.5%,
-      transparent 87%,
-      #444cf7 87.5%,
-      #444cf7
-    ),
-    linear-gradient(
-      150deg,
-      #444cf7 12%,
-      transparent 12.5%,
-      transparent 87%,
-      #444cf7 87.5%,
-      #444cf7
-    ),
-    linear-gradient(
-      30deg,
-      #444cf7 12%,
-      transparent 12.5%,
-      transparent 87%,
-      #444cf7 87.5%,
-      #444cf7
-    ),
-    linear-gradient(
-      150deg,
-      #444cf7 12%,
-      transparent 12.5%,
-      transparent 87%,
-      #444cf7 87.5%,
-      #444cf7
-    ),
-    linear-gradient(
-      60deg,
-      #444cf777 25%,
-      transparent 25.5%,
-      transparent 75%,
-      #444cf777 75%,
-      #444cf777
-    ),
-    linear-gradient(
-      60deg,
-      #444cf777 25%,
-      transparent 25.5%,
-      transparent 75%,
-      #444cf777 75%,
-      #444cf777
-    );
-  background-size: 20px 35px;
-  background-position: 0 0, 0 0, 10px 18px, 10px 18px, 0 0, 10px 18px;
-}
+ 
