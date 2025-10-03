@@ -7,6 +7,7 @@ import {
 } from "framer-motion";
 import { Button } from "./ui/button";
 import { MousePointer2 } from "lucide-react";
+import CreatorsAvatars from "./creators-avatars";
 
 interface AnimatedTextProps {
   title?: string;
@@ -20,46 +21,14 @@ interface AnimatedTextProps {
 
 const MotionButton = motion(Button);
 
-const DiscoverMore = ({itemVariants}:{itemVariants: Variants}) => {
-  const [Hover, setHover] = useState(false);
-  return (
-    <MotionButton
- 
-      layout
-      onPointerEnter={() => setHover(true)}
-      onPointerLeave={() => setHover(false)}
-      whileHover="hover"
-      variants={itemVariants}
-      variant={"secondary"}
-      size={"none"}
-      className=" text-xl p-5 px-8 rounded-full"
-    >
-      <LayoutGroup>
-        <motion.span layout = "preserve-aspect"> Discover More </motion.span>
-        <AnimatePresence mode="popLayout">{Hover && <motion.span 
-        initial = {{
-          opacity: 0
-        }}
-        animate = {{
-          opacity: 1
-        }}
-        exit={{
-          opacity: 0
-        }} layout>  < MousePointer2 size={48} /> </motion.span>} </AnimatePresence>
-      </LayoutGroup>
-    </MotionButton>
-  );
-};
-
-const itemVariantsTemplate: (duration: number)=> Variants = (duration)=> ({
+const itemVariantsTemplate: (duration: number) => Variants = (duration) => ({
   hidden: {
     opacity: 0,
     y: 60,
 
     filter: "blur(10px)",
-  },
-  hover: {},
-  visible:  {
+  }, 
+  visible: {
     opacity: 1,
     y: 0,
 
@@ -71,7 +40,7 @@ const itemVariantsTemplate: (duration: number)=> Variants = (duration)=> ({
       damping: 20,
       stiffness: 100,
     },
-  }  ,
+  },
 });
 
 const containerVariants: Variants = {
@@ -91,8 +60,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
   delay = 0.5,
   duration = 1.2,
 }) => {
-
-  const itemVariants = itemVariantsTemplate(duration)
+  const itemVariants = itemVariantsTemplate(duration);
   return (
     <motion.div
       className="text-center  relative z-10 max-w-4xl mx-auto px-4"
@@ -102,29 +70,22 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
       animate="visible"
     >
       <motion.h3
-        
         className=" mb-3 bg-gradient-to-t from-amber-400 to-primary-foreground bg-clip-text text-transparent    font-extralight tracking-widest text-2xl         "
         variants={itemVariants}
       >
         Miami Creators.com
       </motion.h3>
+
       {/* Main title */}
       <motion.h1
-        
         className="  text-4xl md:text-4xl  leading-tight"
         variants={itemVariants}
       >
-        <motion.span  className=" ">
-          {title}
-        </motion.span>
-        <motion.span 
-          className="    bg-clip-text text-transparent bg-radial to-secondary  from-stone-500   mx-3   "
-         >
+        <motion.span className=" ">{title}</motion.span>
+        <motion.span className="    bg-clip-text text-transparent bg-radial to-secondary  from-stone-500   mx-3   ">
           {subtitle}
         </motion.span>
-        <motion.div 
-        className="mb-8 perspective-1000" 
-         >
+        <motion.div className="mb-8 perspective-1000">
           <motion.span className="text-6xl font-normal   bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text   inline-block">
             <span>From</span>{" "}
             <span className=" font-semibold bg-clip-text text-transparent bg-gradient-to-t from-amber-50 to-amber-400">
@@ -139,12 +100,18 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
       <motion.p
         className="text-lg mb-8 text-muted-foreground     max-w-xl mx-auto   font-extralight"
         variants={itemVariants}
-        
       >
         {description}
       </motion.p>
 
-      <DiscoverMore itemVariants={itemVariants}/>
+      <MotionButton
+         variants={itemVariants}
+        variant={"secondary"}
+        size={"none"}
+        className=" text-xl p-5 px-8 rounded-full"
+      >
+        <motion.span  > Discover More </motion.span>
+      </MotionButton>
       {/* CTA Button
       <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
         <motion.a

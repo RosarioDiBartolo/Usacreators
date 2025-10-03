@@ -8,9 +8,11 @@ export default function Example() {
         }
       `}</style>
 
-      <div className="text-center max-w-82 lg:max-w-2xl mx-auto mb-12">
-        <h1 className="text-3xl font-semibold">Features You’ll Love</h1>
-        <p className="text-sm text-slate-500 mt-2">
+      <div className="text-center  max-w-2xl mx-auto mb-12">
+        <h1 className="  text-3xl italic 
+        bg-clip-text text-transparent bg-gradient-to-br 
+        from-foreground via-stone-600 to-stone-300  ">Features You’ll Love</h1>
+        <p className=" text-xl text-slate-500 mt-2">
           Connect with Miami’s top creators — authentic, local, and ready to bring your brand to life.
         </p>
       </div>
