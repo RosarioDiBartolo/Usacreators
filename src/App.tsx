@@ -1,5 +1,7 @@
  
 import BrandSection from './components/brand-section'
+import CreatorsSection from './components/creators-section'
+
 import Features from './components/features'
 import Header from './components/header'
 import Hero from './components/hero'
@@ -14,6 +16,8 @@ function App() {
       <Hero />
       <Features />
       <BrandSection />
+            <CreatorsSection />
+
     </>
   )
 }

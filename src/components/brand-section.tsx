@@ -4,11 +4,11 @@ function BrandSection() {
   return (
     <section
       id="brand"
-      className=" my-44  relative   font-bold bg-gradient-to-b from-primary/30 via-primary to-primary text-primary-foreground 
+      className=" mt-44  relative   font-bold bg-gradient-to-b from-primary/30 via-primary to-primary/70 text-primary-foreground 
       
       mx-auto max-w-[90rem]
       
-      rounded-[100px] text-center     "
+      rounded-t-[100px] text-center     "
     >
       <div className="top-0 bg-secondary text-secondary-foreground border-4  border-background p-6 px-18 rounded-full text-xl font-light -translate-1/2 left-1/2 absolute">
         Brand's section
@@ -27,17 +27,21 @@ function BrandSection() {
           <h2 className="  bg-clip-text text-transparent bg-gradient-to-t from-secondary to-secondary/30 pb-2     md:text-6xl text-7xl mt-5 ">
             You just have to
           </h2>
-        </div>
-      </div>
-
-      <button
+            <button
         className="
-      rounded-full flex gap-4 items-center  font-bold bg-gradient-to-b from-stone-500 to-stone-900   border   p-5 px-12 absolute bottom-0 translate-y-1/2 -translate-x-1/2 left-1/2 "
+        my-3
+      rounded-full mx-auto flex gap-4 items-center  font-bold bg-gradient-to-b from-stone-500 to-stone-900   border   p-5 px-12 
+     bottom-0  "
       >
-        <span className="whitespace-nowrap capitalize bg-clip-text text-transparent bg-gradient-to-b from-secondary-foreground to-amber-500 text-5xl">
+        <span className="whitespace-nowrap z-50 capitalize bg-clip-text text-transparent bg-gradient-to-b from-secondary-foreground to-amber-500 text-5xl">
           choose us
         </span>
       </button>
+        </div>
+        
+      </div>
+
+    
     </section>
   );
 }
