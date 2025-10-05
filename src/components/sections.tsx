@@ -19,9 +19,9 @@ const tabs = [
 
 function Sections() {
   return (
-    <div className=" relative   ">
+    <div className=" relative  mt-42  ">
 
-  <Comparison className="aspect-video  h-[180vh] ">
+  <Comparison className="  h-[160vh] md:h-screen flex items-center    ">
     
     <ComparisonItem className=" py-22" position="left">
       <BrandSection />

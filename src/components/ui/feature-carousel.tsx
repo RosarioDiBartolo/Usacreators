@@ -32,7 +32,7 @@ export const HeroSection = React.forwardRef<HTMLDivElement, HeroProps>(
       <div
         ref={ref}
         className={cn(
-          'relative w-full min-h-screen  rounded-full  bg-radial-[at_50%_100%] to-50% from-indigo-100/60 flex flex-col items-center justify-center    p-4',
+          'relative w-full min-h-full  rounded-full  flex flex-col items-center justify-center    p-4',
           className
         )}
         {...props}
@@ -40,15 +40,7 @@ export const HeroSection = React.forwardRef<HTMLDivElement, HeroProps>(
 
         {/* Content */}
         <div className="z-10 flex w-full flex-col items-center text-center space-y-8 md:space-y-24">
-          {/* Header Section */}
-          <div className="space-y-4">
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tighter max-w-4xl">
-              {heading}
-            </h1>
-            <p className="max-w-2xl mx-auto font-normal text-muted-foreground md:text-xl">
-              {subtitle}
-            </p>
-          </div>
+         
 
           {/* Main Showcase Section */}
           <div className="relative w-full h-[350px] md:h-[450px] flex items-center justify-center">

@@ -18,9 +18,6 @@ import {
   useRef,
   useState,
   useMemo,
-  KeyboardEvent,
-  MouseEventHandler,
-  TouchEventHandler,
 } from 'react';
 import { cn } from '@/lib/utils';
 
@@ -139,7 +136,7 @@ export const Comparison = ({
   mode = 'drag',
   onDragStart,
   onDragEnd,
-  initialPosition = 50,
+  initialPosition = 0,
   step = 2,
   disabled = false,
   snapPoints,
@@ -173,37 +170,8 @@ export const Comparison = ({
     const percentage = clamp((x / domRect.width) * 100);
     setSliderPosition(percentage);
   };
-
-  const handleMouseDrag: MouseEventHandler<HTMLDivElement> = (event) => {
-    if (!event.currentTarget) return;
-    handleDrag(event.currentTarget.getBoundingClientRect(), event.clientX);
-  };
-
-  const handleTouchDrag: TouchEventHandler<HTMLDivElement> = (event) => {
-    if (!event.currentTarget) return;
-    const touches = Array.from(event.touches);
-    handleDrag(event.currentTarget.getBoundingClientRect(), touches.at(0)?.clientX ?? 0);
-  };
-
-  const startDrag = () => {
-    if (disabled || mode !== 'drag') return;
-    setIsDragging(true);
-    onDragStart?.();
-  };
-
-  const endDrag = () => {
-    if (mode !== 'drag') return;
-    setIsDragging(false);
-    // optional snap on release
-    if (snapPoints?.length) {
-      const nearest = snapPoints.reduce((prev, cur) =>
-        Math.abs(cur - sliderPosition) < Math.abs(prev - sliderPosition) ? cur : prev
-      , snapPoints[0]);
-      setSliderPositionImmediate(nearest);
-    }
-    onDragEnd?.();
-  };
-
+ 
+ 
   // keyboard a11y
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (disabled) return;
@@ -271,13 +239,7 @@ export const Comparison = ({
           disabled ? 'opacity-60 cursor-not-allowed' : '',
           className
         )}
-        onMouseDown={startDrag}
-        onMouseLeave={endDrag}
-        onMouseMove={handleMouseDrag}
-        onMouseUp={endDrag}
-        onTouchStart={startDrag}
-        onTouchMove={handleTouchDrag}
-        onTouchEnd={endDrag}
+         
         {...props}
       />
     </ImageComparisonContext.Provider>

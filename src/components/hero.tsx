@@ -55,7 +55,7 @@ function Hero() {
   return (
     <section
       className="group relative  overflow-hidden  ß
-      bg-gradient-to-b from-primary  from-60% to-orange-300 max-w-screen min-h-[90vh]
+      bg-gradient-to-b from-orange-700 md:from-primary  from-60%  to-orange-300 max-w-screen min-h-[90vh]
       text-primary-foreground px-6 md:px-12 lg:px-20 pt-20"
     >
       <RandomCircles count={15} />

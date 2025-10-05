@@ -67,7 +67,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
       animate="visible"
     >
       <motion.h3
-        className=" mb-3 bg-gradient-to-t from-amber-400 to-primary-foreground bg-clip-text text-transparent    font-extralight tracking-widest text-4xl         "
+        className=" mb-3 bg-gradient-to-t from-amber-400 to-primary-foreground bg-clip-text text-transparent    font-extralight tracking-widest md:text-4xl         "
         variants={itemVariants}
       >
         Miami Creators.com
@@ -83,7 +83,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
           {subtitle}
         </motion.span>
         <motion.div className="mb-2  perspective-1000">
-          <motion.span className="text-6xl font-normal   bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text   inline-block">
+          <motion.span className="text-6xl font-bold md:font-normal   bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text   inline-block">
             <span>From</span>{" "}
             <span className=" bg-clip-text text-transparent bg-radial from-amber-100 to-amber-400">
               MIAMI.
