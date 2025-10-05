@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { type ReactNode } from 'react';
 import { HeroSection } from '@/components/ui/feature-carousel'; // Adjust the import path as needed
 
-const App: React.FC = () => {
+const App: React.FC<{title: ReactNode}> = ({title}) => {
   const images = [
     {
       src: 'https://images.unsplash.com/photo-1504051771394-dd2e66b2e08f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjJ8fGdpcmx8ZW58MHx8MHx8fDA%3D',
@@ -25,11 +25,7 @@ const App: React.FC = () => {
     },
   ];
 
-  const title = (
-    <>
-      Explore our <span className="text-transparent bg-clip-text bg-gradient-to-b from-secondary to-stone-600">Creator's </span> catalog
-    </>
-  );
+  
 
   return (
     <div className="w-full">

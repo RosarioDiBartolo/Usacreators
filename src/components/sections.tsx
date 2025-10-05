@@ -1,5 +1,7 @@
 import BrandSection from "./brand-section";
 import CreatorsSection from "./creators-section";
+import { Comparison, ComparisonItem, ComparisonHandle } from "./ui/comparision";
+import { Feature } from "./ui/feature-with-image-comparison";
 
 import { Tabs } from "./ui/tabs";
 const tabs = [
@@ -17,13 +19,19 @@ const tabs = [
 
 function Sections() {
   return (
-    <div className="bg-muted   relative   ">
-       <Tabs
-        tabs={tabs}
-        tabClassName="
-       text-lg"
-        containerClassName=" !sticky !top-0 justify-center"
-      />
+    <div className=" relative   ">
+
+  <Comparison className="aspect-video  h-[180vh] ">
+    
+    <ComparisonItem className=" py-22" position="left">
+      <BrandSection />
+    </ComparisonItem>
+   <ComparisonItem className=" py-22" position="right">
+      <CreatorsSection />
+    </ComparisonItem>
+    <ComparisonHandle />
+  </Comparison>
+
     </div>
   );
 }

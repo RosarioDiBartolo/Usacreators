@@ -10,16 +10,19 @@ function BrandSection() {
       
       rounded-t-[100px] text-center     "
     >
-      <div className="top-0 bg-secondary text-secondary-foreground border-4  border-background p-6 px-18 rounded-full text-xl font-light -translate-1/2 left-1/2 absolute">
-        Brand's section
-      </div>
-
+      
       <div
         className=" py-20 px-10 xl:px-40      w-full 
       
       justify-center overflow-hidden  items-center  xl:items-start  flex flex-col xl:flex-row flex-wrap gap-28     "
       >
-        <Carousel />
+        <Carousel title = {
+      
+    <>
+      Explore our <span className="text-transparent bg-clip-text bg-gradient-to-b from-secondary to-stone-600">Creator's </span> catalog
+    </>
+  
+        } />
         <div className=" mx-auto max-w-3xl w-full tracking-wider   bg-clip-text text-transparent  bg-primary-foreground/60">
           <h3 className=" md:leading-12 text-2xl font-extralight md:text-4xl  ">
             We alredy acquired the best creators for your brand's porpouses.
