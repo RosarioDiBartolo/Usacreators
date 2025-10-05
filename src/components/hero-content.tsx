@@ -100,6 +100,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
       <motion.p
         className="text-lg mb-8 text-muted-foreground     max-w-xl mx-auto   font-extralight"
         variants={itemVariants}
+        
       >
         {description}
       </motion.p>
@@ -107,6 +108,10 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
       <MotionButton
          variants={itemVariants}
         variant={"secondary"}
+        whileTap={{
+          scale:0.8,
+          opacity:.8
+        }}
         size={"none"}
         className=" text-xl p-5 px-8 rounded-full"
       >
