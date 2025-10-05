@@ -32,7 +32,6 @@ export default function NavbarDemo() {
   const [visible, setVisible] = useState<boolean>(false);
 
   return (
-    <header className="relative w-full">
       <Navbar visible = {visible} setVisible={setVisible}>
         {/* Desktop Navigation */}
         <NavBody >
@@ -89,7 +88,6 @@ export default function NavbarDemo() {
         </MobileNav>
       </Navbar>
 
-      {/* Navbar */}
-    </header>
+
   );
 } 

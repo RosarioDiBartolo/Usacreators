@@ -10,14 +10,18 @@ import Sections from './components/sections'
 function App() {
  
   return (
-    <>
+    <div className=''>
+      <div className=' bg-primary'>
+        
  <Header /> 
       
       <Hero />
       <Features />
+      
+      </div>
       <Sections />
 
-    </>
+    </div>
   )
 }
 

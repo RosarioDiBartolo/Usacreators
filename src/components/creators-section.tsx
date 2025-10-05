@@ -8,7 +8,7 @@ function BrandSection() {
       
       mx-auto max-w-[90rem]
       
-      rounded-t-[100px] text-center     "
+      rounded-[100px] text-center     "
     >
       
       <div

@@ -6,9 +6,6 @@ import {
   type Variants,
 } from "framer-motion";
 import { Button } from "./ui/button";
-import { MousePointer2 } from "lucide-react";
-import CreatorsAvatars from "./creators-avatars";
-
 interface AnimatedTextProps {
   title?: string;
   subtitle?: string;
@@ -70,7 +67,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
       animate="visible"
     >
       <motion.h3
-        className=" mb-3 bg-gradient-to-t from-amber-400 to-primary-foreground bg-clip-text text-transparent    font-extralight tracking-widest text-2xl         "
+        className=" mb-3 bg-gradient-to-t from-amber-400 to-primary-foreground bg-clip-text text-transparent    font-extralight tracking-widest text-4xl         "
         variants={itemVariants}
       >
         Miami Creators.com
@@ -78,17 +75,17 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
 
       {/* Main title */}
       <motion.h1
-        className="  text-4xl md:text-4xl  leading-tight"
+        className="  text-4xl md:text-5xl  leading-tight"
         variants={itemVariants}
       >
         <motion.span className=" ">{title}</motion.span>
         <motion.span className="    bg-clip-text text-transparent bg-radial to-secondary  from-stone-500   mx-3   ">
           {subtitle}
         </motion.span>
-        <motion.div className="mb-8 perspective-1000">
+        <motion.div className="mb-2  perspective-1000">
           <motion.span className="text-6xl font-normal   bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text   inline-block">
             <span>From</span>{" "}
-            <span className=" font-semibold bg-clip-text text-transparent bg-gradient-to-t from-amber-50 to-amber-400">
+            <span className=" bg-clip-text text-transparent bg-radial from-amber-100 to-amber-400">
               MIAMI.
             </span>
           </motion.span>
@@ -98,7 +95,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
 
       {/* Description */}
       <motion.p
-        className="text-lg mb-8 text-muted-foreground     max-w-xl mx-auto   font-extralight"
+        className="text-xl mb-8 font-semibold  bg-clip-text text-transparent bg-radial to-stone-300  from-stone-100   max-w-xl mx-auto "
         variants={itemVariants}
         
       >
@@ -183,12 +180,6 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
           }}
         />
       ))}
-
-      {/* Background glow effect */}
-      <motion.div
-        className="absolute inset-0 bg-radial-[at_50%_40%]  from-violet-100/50 animate-pulse via-transparent  rounded-3xl blur-3xl pointer-events-none"
-        variants={itemVariants}
-      />
     </motion.div>
   );
 };

@@ -77,7 +77,7 @@ export function TabsControlAnimated({
   return (
     <div
       className={cn(
-        "absolute top-6 left-1/2 -translate-x-1/2 z-50",
+        "sticky s top-6 w-fit mx-auto  z-50",
         "rounded-full px-1 bg-stone-100/90 backdrop-blur shadow border border-stone-200",
         className
       )}

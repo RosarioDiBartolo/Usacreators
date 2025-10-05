@@ -54,8 +54,8 @@ const RandomCircles = ({ count = 12 }) => {
 function Hero() {
   return (
     <section
-      className="group relative  overflow-hidden rounded-b-[100px]
-      bg-gradient-to-b from-primary to-primary/30 max-w-screen min-h-[90vh]
+      className="group relative  overflow-hidden  ß
+      bg-gradient-to-b from-primary  from-60% to-orange-300 max-w-screen min-h-[90vh]
       text-primary-foreground px-6 md:px-12 lg:px-20 pt-20"
     >
       <RandomCircles count={15} />
