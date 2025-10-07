@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { GripVerticalIcon } from 'lucide-react';
+import { GripVerticalIcon } from "lucide-react";
 import {
   MotionValue,
   motion,
   useMotionValue,
   useSpring,
   useTransform,
-} from 'motion/react';
+} from "motion/react";
 import {
   type ComponentProps,
   createContext,
@@ -18,12 +18,13 @@ import {
   useRef,
   useState,
   useMemo,
-} from 'react';
-import { cn } from '@/lib/utils';
+} from "react";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "./button";
 
 /* ========= Context ========= */
 
-type Mode = 'hover' | 'drag';
+type Mode = "hover" | "drag";
 
 type ImageComparisonContextType = {
   sliderPosition: number; // 0..100
@@ -35,12 +36,16 @@ type ImageComparisonContextType = {
   step: number;
 };
 
-const ImageComparisonContext = createContext<ImageComparisonContextType | undefined>(undefined);
+const ImageComparisonContext = createContext<
+  ImageComparisonContextType | undefined
+>(undefined);
 
 const useImageComparisonContext = () => {
   const context = useContext(ImageComparisonContext);
   if (!context) {
-    throw new Error('useImageComparisonContext must be used within a <Comparison>');
+    throw new Error(
+      "useImageComparisonContext must be used within a <Comparison>"
+    );
   }
   return context;
 };
@@ -59,14 +64,19 @@ export function TabsControlAnimated({
   options?: TabOpt[];
   className?: string;
 }) {
-  const { sliderPosition, setSliderPositionImmediate, disabled } = useImageComparisonContext();
+  const { sliderPosition, setSliderPositionImmediate, disabled } =
+    useImageComparisonContext();
 
   // active tab = closest to current slider position (so dragging updates active state)
   const activeIndex = useMemo(() => {
-    let idx = 0, best = Infinity;
+    let idx = 0,
+      best = Infinity;
     options.forEach((o, i) => {
       const d = Math.abs(o.value - sliderPosition);
-      if (d < best) { best = d; idx = i; }
+      if (d < best) {
+        best = d;
+        idx = i;
+      }
     });
     return idx;
   }, [options, sliderPosition]);
@@ -74,14 +84,14 @@ export function TabsControlAnimated({
   return (
     <div
       className={cn(
-        "sticky s top-6 w-fit mx-auto  z-50",
-        "rounded-full px-1 bg-stone-100/90 backdrop-blur shadow border border-stone-200",
+        "sticky shadow-2xl   top-6 w-fit mx-auto  z-50",
+        "rounded-full px-1 bg-stone-100/90 backdrop-blur   border border-stone-200",
         className
       )}
     >
       <div className="relative p-1 flex gap-1">
         {/* Animated pill */}
-        <motion.div
+        {/* <motion.div
           layout
           layoutId="tabs-active-pill"
           className="absolute top-1 bottom-1 rounded-full bg-white shadow"
@@ -90,7 +100,7 @@ export function TabsControlAnimated({
             left: `calc(${(activeIndex / options.length) * 100}% + ${activeIndex * 0.25}rem)`,
             width: `calc(${(1 / options.length) * 100}% - ${(options.length - 1) * 0.25}rem/${options.length})`,
           }}
-        />
+        /> */}
         {options.map((opt, i) => {
           const isActive = i === activeIndex;
           return (
@@ -99,15 +109,30 @@ export function TabsControlAnimated({
               type="button"
               disabled={disabled}
               onClick={() => setSliderPositionImmediate(opt.value)}
-              className={cn(
-                "relative z-10 px-4 py-2 rounded-full text-sm font-medium",
-                isActive ? "text-stone-900" : "text-stone-600 hover:text-stone-900",
-                disabled && "opacity-50 cursor-not-allowed"
-              )}
+              className={buttonVariants({
+                variant:  isActive?"secondary": "outline",
+                size: "none",
+                className:
+                  "relative z-10   py-2 !rounded-full text-sm font-medium",
+              })}
+              animate={
+                isActive
+                  ? {
+                      paddingInline: "4rem",
+                    }
+                  : {
+                      paddingInline: "1.5rem",
+                    }
+              }
               aria-pressed={isActive}
               whileHover={!disabled ? { scale: 1.03 } : {}}
               whileTap={!disabled ? { scale: 0.97 } : {}}
-              transition={{ type: "spring", stiffness: 600, damping: 30, mass: 0.3 }}
+              transition={{
+                type: "spring",
+                stiffness: 600,
+                damping: 30,
+                mass: 0.3,
+              }}
             >
               {opt.label}
             </motion.button>
@@ -133,7 +158,7 @@ export type ComparisonProps = HTMLAttributes<HTMLDivElement> & {
 
 export const Comparison = ({
   className,
-  mode = 'drag',
+  mode = "drag",
   onDragStart,
   onDragEnd,
   initialPosition = 0,
@@ -148,7 +173,11 @@ export const Comparison = ({
   // state + motion value
   const [sliderPosition, setSliderPosition] = useState(clamp(initialPosition));
   const motionValue = useMotionValue(sliderPosition);
-  const motionSliderPosition = useSpring(motionValue, { stiffness: 250, damping: 30, mass: 3});
+  const motionSliderPosition = useSpring(motionValue, {
+    stiffness: 250,
+    damping: 60,
+    mass: 3,
+  });
 
   useEffect(() => {
     motionValue.set(sliderPosition);
@@ -165,38 +194,37 @@ export const Comparison = ({
 
   const handleDrag = (domRect: DOMRect, clientX: number) => {
     if (disabled) return;
-    if (!isDragging && mode === 'drag') return; // in hover it can update on move without drag
+    if (!isDragging && mode === "drag") return; // in hover it can update on move without drag
     const x = clientX - domRect.left;
     const percentage = clamp((x / domRect.width) * 100);
     setSliderPosition(percentage);
   };
- 
- 
+
   // keyboard a11y
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (disabled) return;
     switch (e.key) {
-      case 'ArrowLeft':
+      case "ArrowLeft":
         e.preventDefault();
         setSliderPositionImmediate(sliderPosition - step);
         break;
-      case 'ArrowRight':
+      case "ArrowRight":
         e.preventDefault();
         setSliderPositionImmediate(sliderPosition + step);
         break;
-      case 'Home':
+      case "Home":
         e.preventDefault();
         setSliderPositionImmediate(0);
         break;
-      case 'End':
+      case "End":
         e.preventDefault();
         setSliderPositionImmediate(100);
         break;
-      case 'PageDown':
+      case "PageDown":
         e.preventDefault();
         setSliderPositionImmediate(sliderPosition - step * 5);
         break;
-      case 'PageUp':
+      case "PageUp":
         e.preventDefault();
         setSliderPositionImmediate(sliderPosition + step * 5);
         break;
@@ -219,8 +247,8 @@ export const Comparison = ({
       {/* Example default two-tabs control: */}
       <TabsControlAnimated
         options={[
-          { label: "Brand’s section", value: 0 },
-          { label: "Creator’s section", value: 100 },
+          { label: "I'm a Brand", value: 0 },
+          { label: "I'm a Creator", value: 100 },
         ]}
       />
 
@@ -235,11 +263,10 @@ export const Comparison = ({
         tabIndex={disabled ? -1 : 0}
         onKeyDown={onKeyDown}
         className={cn(
-          'relative isolate w-full select-none overflow-hidden outline-none',
-          disabled ? 'opacity-60 cursor-not-allowed' : '',
+          "relative isolate w-full select-none overflow-hidden outline-none",
+          disabled ? "opacity-60 cursor-not-allowed" : "",
           className
         )}
-         
         {...props}
       />
     </ImageComparisonContext.Provider>
@@ -249,7 +276,7 @@ export const Comparison = ({
 /* ========= Items & Handle ========= */
 
 export type ComparisonItemProps = ComponentProps<typeof motion.div> & {
-  position: 'left' | 'right';
+  position: "left" | "right";
   alt?: string; // optional a11y label if you’re not nesting an <img>
 };
 
@@ -260,16 +287,22 @@ export const ComparisonItem = ({
   ...props
 }: ComparisonItemProps) => {
   const { motionSliderPosition } = useImageComparisonContext();
-  const leftClipPath = useTransform(motionSliderPosition, (value) => `inset(0 0 0 ${value}%)`);
-  const rightClipPath = useTransform(motionSliderPosition, (value) => `inset(0 ${100 - value}% 0 0)`);
+  const leftClipPath = useTransform(
+    motionSliderPosition,
+    (value) => `inset(0 0 0 ${value}%)`
+  );
+  const rightClipPath = useTransform(
+    motionSliderPosition,
+    (value) => `inset(0 ${100 - value}% 0 0)`
+  );
 
   return (
     <motion.div
       aria-hidden={alt ? undefined : true}
       aria-label={alt}
-      className={cn('absolute inset-0 h-full w-full object-cover', className)}
-      role={alt ? 'img' : 'presentation'}
-      style={{ clipPath: position === 'left' ? leftClipPath : rightClipPath }}
+      className={cn("absolute inset-0 h-full w-full object-cover", className)}
+      role={alt ? "img" : "presentation"}
+      style={{ clipPath: position === "left" ? leftClipPath : rightClipPath }}
       {...props}
     />
   );
@@ -291,8 +324,8 @@ export const ComparisonHandle = ({
     <motion.div
       aria-hidden="true"
       className={cn(
-        '-translate-x-1/2 absolute top-0 z-50 flex h-full w-10 items-center justify-center',
-        mode === 'drag' && !disabled && 'cursor-grab active:cursor-grabbing',
+        "-translate-x-1/2 absolute top-0 z-50 flex h-full w-10 items-center justify-center",
+        mode === "drag" && !disabled && "cursor-grab active:cursor-grabbing",
         className
       )}
       role="presentation"
@@ -302,7 +335,7 @@ export const ComparisonHandle = ({
       {children ?? (
         <>
           <div className="-translate-x-1/2 absolute left-1/2 h-full w-px bg-background/80" />
-          {mode === 'drag' && !disabled && (
+          {mode === "drag" && !disabled && (
             <div className="z-50 flex items-center justify-center rounded-sm bg-background px-0.5 py-1 shadow">
               <GripVerticalIcon className="h-4 w-4 select-none text-muted-foreground" />
             </div>

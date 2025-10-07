@@ -37,11 +37,11 @@ function CreatorsSection() {
               Get discovered by brands that match your niche and start landing paid collaborations effortlessly.
             </h3>
 
-            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+            <div className="flex flex-col  sm:flex-row gap-4 pt-2">
               <Button
                 variant="secondary"
                 size="none"
-                className="rounded-full px-8 py-4 text-xl md:text-2xl font-light hover:-translate-y-3
+                className="rounded-full mx-auto   px-8 py-4 text-xl md:text-2xl font-light hover:-translate-y-3
                            transition-all duration-200 hover:opacity-90 active:scale-85"
                 aria-label="Become a Creator"
               >

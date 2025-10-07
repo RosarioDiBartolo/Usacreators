@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import {
-  AnimatePresence,
-  LayoutGroup,
+import React from "react";
+import { 
   motion,
   type Variants,
 } from "framer-motion";
@@ -102,18 +100,20 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
         {description}
       </motion.p>
 
-      <MotionButton
-         variants={itemVariants}
-        variant={"secondary"}
-        whileTap={{
-          scale:0.8,
-          opacity:.8
-        }}
-        size={"none"}
-        className=" text-xl p-5 px-8 rounded-full"
-      >
-        <motion.span  > Discover More </motion.span>
-      </MotionButton>
+    <MotionButton
+  variants={itemVariants}
+  variant="secondary"
+  whileTap={{ scale: 0.8, opacity: 0.8 }}
+  onClick={() => {
+    const target = document.getElementById("features");
+    target?.scrollIntoView({ behavior: "smooth" });
+  }}
+  size="none"
+  className="text-xl p-5 px-8 rounded-full"
+>
+  <motion.span>Discover More</motion.span>
+</MotionButton>
+
       {/* CTA Button
       <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
         <motion.a

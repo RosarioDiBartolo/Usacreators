@@ -1,6 +1,6 @@
 export default function Example() {
   return (
-    <section className="w-full py-16 bg-background">
+    <section id="features" className="w-full py-16 bg-background">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
         * {
