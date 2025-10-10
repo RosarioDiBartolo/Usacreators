@@ -21,9 +21,4 @@ const app = initializeApp(firebaseConfig);
 // Initialize services
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-
-// Analytics (only works in browser, not SSR)
-export let analytics = null;
-isSupported().then((yes) => {
-  if (yes) analytics = getAnalytics(app);
-});
+ 
