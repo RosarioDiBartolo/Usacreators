@@ -1,0 +1,272 @@
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { z } from "zod";
+import crypto from "crypto";
+import admin, { type ServiceAccount } from "firebase-admin";
+import serviceAccount from "./service-account.json" with { type: "json" };
+
+// ---------- Environment Safety Check ----------
+const requiredEnv = ["ALLOW_ORIGIN"];
+for (const key of requiredEnv) {
+  if (!process.env[key]) {
+    console.error(`❌ Missing environment variable: ${key}`);
+  }
+}
+
+// ---------- Firebase Initialization ----------
+if (!admin.apps.length) {
+  try {
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount as ServiceAccount),
+    });
+  } catch (err) {
+    console.error("❌ Invalid FIREBASE_SERVICE_ACCOUNT JSON:", err);
+    throw new Error("Failed to initialize Firebase Admin.");
+  }
+}
+const db = admin.firestore();
+
+// ---------- Schema ----------
+const Schema = z.object({
+  name: z.string().min(2).max(120),
+  email: z.string().email(),
+  phone: z.string().trim().min(5).max(40),
+  profilePictureUrl: z.string().trim().optional().nullable(),
+  bio: z.string().trim().max(1000).optional().default(""),
+  locationYesNo: z.enum(["yes", "no"]),
+  instagram: z.string().trim().optional().default(""),
+  tiktok: z.string().trim().optional().default(""),
+  instagramPost: z.string().trim().optional().default(""),
+  additionalInfo: z.string().trim().max(2000).optional().default(""),
+  turnstileToken: z.string().optional(),
+});
+
+// ---------- Helpers ----------
+const asUrl = (v?: string | null) => {
+  if (!v) return undefined;
+  const s = v.trim();
+  return s && /^https?:\/\//i.test(s) ? s : s ? `https://${s}` : undefined;
+};
+
+const normalizeIG = (v?: string | null) => {
+  if (!v) return undefined;
+  const s = v.trim().replace(/^@/, "");
+  return s ? (/^https?:\/\//i.test(s) ? s : `https://instagram.com/${s}`) : undefined;
+};
+
+const normalizeTT = (v?: string | null) => {
+  if (!v) return undefined;
+  const s = v.trim().replace(/^@/, "");
+  return s ? (/^https?:\/\//i.test(s) ? s : `https://tiktok.com/@${s}`) : undefined;
+};
+
+const normalizeIGPost = (v?: string | null) => {
+  if (!v) return undefined;
+  const s = v.trim();
+  return /^https?:\/\//i.test(s) ? s : undefined;
+};
+
+const hashIP = (ip: string) => crypto.createHash("sha256").update(ip).digest("hex");
+
+const RATE_WINDOW_MINUTES = Number(process.env.RATE_WINDOW_MINUTES || "5");
+
+// ---------- Handler ----------
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // 🧱 Defensive header fix for PowerShell "Expect: 100-continue"
+  if (req.headers.expect === "100-continue") delete req.headers.expect;
+
+  // 🧾 CORS
+  res.setHeader("Access-Control-Allow-Origin", process.env.ALLOW_ORIGIN || "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") return res.status(204).end();
+  if (req.method !== "POST") {
+    return res.status(405).json({ success: false, message: "Method not allowed" });
+  }
+
+  try {
+    // 🧩 Step 1: Parse & validate payload
+    const parsed = Schema.safeParse(req.body);
+    if (!parsed.success) {
+      console.warn("⚠️ Invalid payload:", parsed.error.flatten());
+      return res.status(400).json({
+        success: false,
+        code: "INVALID_PAYLOAD",
+        message: "Invalid payload",
+        details: parsed.error.flatten(),
+      });
+    }
+    const d = parsed.data;
+
+    // 🧩 Step 2: Identify IP
+    const ip =
+      ((req.headers["x-forwarded-for"] as string) || "")
+        .split(",")
+        .map((p) => p.trim())
+        .filter(Boolean)[0] ||
+      (req.socket && (req.socket.remoteAddress || "")) ||
+      "unknown";
+    const ipHash = hashIP(ip);
+
+    // 🧩 Step 3: Turnstile captcha
+    if (d.turnstileToken) {
+      try {
+        const verifyResp = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({
+            secret: process.env.TURNSTILE_SECRET_KEY || "",
+            response: d.turnstileToken,
+          }),
+        });
+
+        const verifyData = await verifyResp.json();
+        if (!verifyData.success) {
+          return res.status(403).json({
+            success: false,
+            code: "CAPTCHA_FAILED",
+            message: "Captcha verification failed",
+          });
+        }
+      } catch (err) {
+        console.error("Captcha verification error:", err);
+        return res.status(503).json({
+          success: false,
+          code: "CAPTCHA_ERROR",
+          message: "Captcha verification unavailable",
+        });
+      }
+    }
+
+    // 🧩 Step 4: Rate limiting
+    try {
+      if ( false && RATE_WINDOW_MINUTES > 0) {
+        const windowStart = admin.firestore.Timestamp.fromMillis(
+          Date.now() - RATE_WINDOW_MINUTES * 60 * 1000
+        );
+
+        const ipQ = await db
+          .collection("applications")
+          .where("ipHash", "==", ipHash)
+          .where("createdAt", ">=", windowStart)
+          .limit(1)
+          .get();
+        if (!ipQ.empty) {
+          return res.status(429).json({
+            success: false,
+            code: "RATE_LIMIT_IP",
+            message: "Too many requests from this IP. Try again later.",
+          });
+        }
+
+        const emailQ = await db
+          .collection("applications")
+          .where("email", "==", d.email.toLowerCase())
+          .where("createdAt", ">=", windowStart)
+          .limit(1)
+          .get();
+        if (!emailQ.empty) {
+          return res.status(429).json({
+            success: false,
+            code: "RATE_LIMIT_EMAIL",
+            message: "This email was used recently. Try again later.",
+          });
+        }
+      }
+    } catch (err) {
+      console.error("⚠️ Rate-limit check failed:", err);
+    }
+
+    // 🧩 Step 5: Duplicate prevention
+    try {
+      const existingEmailQ = await db
+        .collection("applications")
+        .where("email", "==", d.email.toLowerCase())
+        .limit(1)
+        .get();
+      if (!existingEmailQ.empty) {
+        return res.status(409).json({
+          success: false,
+          code: "DUPLICATE_EMAIL",
+          message: "This email already applied.",
+        });
+      }
+
+      const ig = normalizeIG(d.instagram);
+      if (ig) {
+        const igQ = await db.collection("applications").where("instagram", "==", ig).limit(1).get();
+        if (!igQ.empty) {
+          return res.status(409).json({
+            success: false,
+            code: "DUPLICATE_INSTAGRAM",
+            message: "This Instagram already applied.",
+          });
+        }
+      }
+
+      const tt = normalizeTT(d.tiktok);
+      if (tt) {
+        const ttQ = await db.collection("applications").where("tiktok", "==", tt).limit(1).get();
+        if (!ttQ.empty) {
+          return res.status(409).json({
+            success: false,
+            code: "DUPLICATE_TIKTOK",
+            message: "This TikTok already applied.",
+          });
+        }
+      }
+
+      const igPost = normalizeIGPost(d.instagramPost);
+
+      // 🧩 Step 6: Save to Firestore
+      const docRef = await db.collection("applications").add({
+        name: d.name,
+        email: d.email.toLowerCase(),
+        phone: d.phone,
+        profilePictureUrl: asUrl(d.profilePictureUrl) ?? null,
+        bio: d.bio || "",
+        locationYesNo: d.locationYesNo,
+        instagram: ig ?? null,
+        tiktok: tt ?? null,
+        instagramPost: igPost ?? null,
+        additionalInfo: d.additionalInfo || "",
+        ua: String(req.headers["user-agent"] || "").slice(0, 300),
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        source: "vercel-api",
+        ipHash,
+      });
+
+      // 🧩 Step 7: Optional Slack webhook
+      if (process.env.SLACK_WEBHOOK_URL) {
+        try {
+          await fetch(process.env.SLACK_WEBHOOK_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              text: `📨 New application: ${d.name} (${d.email.toLowerCase()})`,
+            }),
+            signal: AbortSignal.timeout(3000),
+          });
+        } catch (err) {
+          console.error("⚠️ Slack webhook failed:", err);
+        }
+      }
+
+      return res.status(201).json({ success: true, id: docRef.id });
+    } catch (err) {
+      console.error("❌ Database error:", err);
+      return res.status(500).json({
+        success: false,
+        code: "DB_ERROR",
+        message: "Database operation failed",
+      });
+    }
+  } catch (err) {
+    console.error("❌ Server error:", err);
+    return res.status(500).json({
+      success: false,
+      code: "INTERNAL_ERROR",
+      message: "Internal server error",
+    });
+  }
+}
