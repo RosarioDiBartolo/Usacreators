@@ -27,7 +27,7 @@ function BrandSection() {
                
             </h1>
 
-            <h2 className="mx-auto    lg:mx-0 max-w-xl font-semibold text-orange-00  text-2xl md:text-3xl">
+            <h2 className="mx-auto    lg:mx-0 max-w-xl font-extralight text-orange-00 ">
               We’ve already onboarded top creators ready to deliver on-brand content for your business purposes.
             </h2>
 

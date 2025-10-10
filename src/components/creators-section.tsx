@@ -7,7 +7,7 @@ function CreatorsSection() {
     <section
       id="brand"
       aria-label="Creators Catalog"
-      className="relative mx-auto h-fit max-w-[90rem] rounded-[100px] text-center lg:text-left font-bold text-primary-foreground
+      className="relative mx-auto h-[932px] max-w-[90rem] rounded-[100px] text-center lg:text-left font-bold text-primary-foreground
                  bg-gradient-to-b from-violet-300/40 via-violet-600 to-violet-800 py-20"
     >
       <div className="w-full px-6 md:px-10 xl:px-24 ">
