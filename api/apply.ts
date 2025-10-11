@@ -140,7 +140,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // 🧩 Step 4: Rate limiting
     try {
-      if ( false && RATE_WINDOW_MINUTES > 0) {
+      if (   RATE_WINDOW_MINUTES > 0) {
         const windowStart = admin.firestore.Timestamp.fromMillis(
           Date.now() - RATE_WINDOW_MINUTES * 60 * 1000
         );
