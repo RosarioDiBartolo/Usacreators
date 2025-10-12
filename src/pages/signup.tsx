@@ -10,7 +10,7 @@ function SignupPage() {
         speed={0.5}
         squareSize={40}
         borderColor="#333"
-        hoverFillColor="#222"
+        hoverFillColor="#d99168"
       />
 
       <SiginForm />

@@ -49,7 +49,7 @@ const containerVariants: Variants = {
   }),
 };
 const AnimatedText: React.FC<AnimatedTextProps> = ({
-  title = "Connect with all our",
+  title = "Connect with all our ",
   subtitle = "Creators",
   description = "We connect brands with Our's top content creators for authentic, engaging social media presence.",
   delay = 0.5,
@@ -58,14 +58,14 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
   const itemVariants = itemVariantsTemplate(duration);
   return (
     <motion.div
-      className="text-center  relative z-10 max-w-4xl mx-auto px-4"
+      className="text-center w-full  relative z-10 max-w-7xl mx-auto px-4"
       variants={containerVariants}
       custom={delay}
       initial="hidden"
       animate="visible"
     >
       <motion.h3
-        className=" mb-3 bg-gradient-to-t from-amber-400 to-primary-foreground bg-clip-text text-transparent    font-extralight tracking-widest md:text-4xl         "
+        className=" text-4xl mb-3 bg-gradient-to-t from-amber-400 to-primary-foreground bg-clip-text text-transparent    font-extralight tracking-widest      "
         variants={itemVariants}
       >
         Miami Creators.com
@@ -73,15 +73,15 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
 
       {/* Main title */}
       <motion.h1
-        className="  text-4xl md:text-5xl  leading-tight"
+        className=" text-7xl  font-extrabold leading-tight"
         variants={itemVariants}
       >
         <motion.span className=" ">{title}</motion.span>
-        <motion.span className="    bg-clip-text text-transparent bg-radial to-secondary  from-stone-500   mx-3   ">
+        <motion.span className="    bg-clip-text text-transparent bg-radial to-secondary  from-stone-500     ">
           {subtitle}
         </motion.span>
-        <motion.div className="mb-2  perspective-1000">
-          <motion.span className="text-6xl font-bold md:font-normal   bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text   inline-block">
+        <motion.div className="mb-2  font-bold perspective-1000">
+          <motion.span className=" font-bold    bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text   inline-block">
             <span>From</span>{" "}
             <span className=" bg-clip-text text-transparent bg-radial from-amber-100 to-amber-400">
               MIAMI.
@@ -93,7 +93,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
 
       {/* Description */}
       <motion.p
-        className="text-xl mb-8 font-semibold  bg-clip-text text-transparent bg-radial to-stone-300  from-stone-100   max-w-xl mx-auto "
+        className="text-xl mb-8 font-light  bg-clip-text text-transparent bg-radial to-stone-300  from-stone-100   max-w-xl mx-auto "
         variants={itemVariants}
         
       >

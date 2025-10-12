@@ -7,14 +7,14 @@ function CreatorsSection() {
     <section
       id="brand"
       aria-label="Creators Catalog"
-      className="relative mx-auto h-[932px] max-w-[90rem] rounded-[100px] text-center lg:text-left font-bold text-primary-foreground
+      className="relative mx-auto h-fit max-w-[90rem]  max-w-[90rem] rounded-[100px] text-center lg:text-left font-bold text-primary-foreground
                  bg-gradient-to-b from-violet-300/40 via-violet-600 to-violet-800 py-20"
     >
       <div className="w-full px-6 md:px-10 xl:px-24 ">
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-20 lg:grid-cols-2">
           {/* Left: Carousel */}
           <div className=" order-2 w-full">
-            <Carousel />
+            <Carousel title={undefined} />
           </div>
 
           {/* Right: Copy + CTAs */}
@@ -45,7 +45,7 @@ function CreatorsSection() {
                 asChild
                 variant="secondary"
                 size="none"
-                className="rounded-full mx-auto   px-8 py-4 text-xl md:text-2xl font-light hover:-translate-y-3
+                className="rounded-full mx-auto md:mx-0  px-8 py-4 text-xl md:text-2xl font-light hover:-translate-y-3
                            transition-all duration-200 hover:opacity-90 active:scale-85"
                 aria-label="Become a Creator"
               >

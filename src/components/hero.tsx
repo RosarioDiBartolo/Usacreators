@@ -61,7 +61,7 @@ function Hero() {
       <RandomCircles count={15} />
 
       <div
-        className="relative transition  container mx-auto max-w-4xl
+        className="relative transition  container mx-auto  
         flex flex-col gap-12 py-12 items-center"
       >
         <CreatorsAvatars />

@@ -37,7 +37,7 @@ function BrandSection() {
               <Button
                 variant="secondary"
                 size="none"
-                className="rounded-full mx-auto px-8 py-4 text-xl md:text-2xl font-light hover:-translate-y-3
+                className="rounded-full mx-auto lg: px-8 py-4 text-xl md:text-2xl font-light hover:-translate-y-3
                            transition-all duration-200 hover:opacity-90 active:scale-85"
                 aria-label="Apply as a Creator"
               >
