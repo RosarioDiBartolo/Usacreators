@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { CheckCircle, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function SuccessStep() {
   return (
@@ -35,8 +36,7 @@ function SuccessStep() {
 
           <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-3 sm:space-y-0 mt-2">
             <Button
-              as="a"
-              href="https://discord.gg/YOUR_DISCORD_LINK"
+              
               target="_blank"
               className="bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105"
             >
@@ -44,11 +44,13 @@ function SuccessStep() {
             </Button>
 
             <Button
-              as="a"
-              href="/"
-              className="bg-green-500 hover:bg-green-600 text-white text-lg font-semibold px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105"
+              asChild
+               className="bg-green-500 hover:bg-green-600 text-white text-lg font-semibold px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105"
             >
+              <Link
+              to={"/"}> 
               Go Back Home
+              </Link>
             </Button>
           </div>
         </CardContent>

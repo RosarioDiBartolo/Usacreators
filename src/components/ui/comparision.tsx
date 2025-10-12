@@ -84,7 +84,7 @@ export function TabsControlAnimated({
   return (
     <div
       className={cn(
-        "sticky shadow-2xl   top-6 w-fit mx-auto  z-50",
+        "  shadow-2xl absolute left-1/2 -translate-1/2   w-fit mx-auto  z-50",
         "rounded-full px-1 bg-stone-100/90 backdrop-blur   border border-stone-200",
         className
       )}
@@ -159,12 +159,11 @@ export type ComparisonProps = HTMLAttributes<HTMLDivElement> & {
 export const Comparison = ({
   className,
   mode = "drag",
-  onDragStart,
-  onDragEnd,
-  initialPosition = 0,
+   initialPosition = 0,
   step = 2,
   disabled = false,
-  snapPoints,
+  children,
+ 
   ...props
 }: ComparisonProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -188,17 +187,8 @@ export const Comparison = ({
     setSliderPosition(v);
     motionValue.set(v);
   };
-
-  // dragging
-  const [isDragging, setIsDragging] = useState(false);
-
-  const handleDrag = (domRect: DOMRect, clientX: number) => {
-    if (disabled) return;
-    if (!isDragging && mode === "drag") return; // in hover it can update on move without drag
-    const x = clientX - domRect.left;
-    const percentage = clamp((x / domRect.width) * 100);
-    setSliderPosition(percentage);
-  };
+ 
+ 
 
   // keyboard a11y
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -243,14 +233,7 @@ export const Comparison = ({
         step,
       }}
     >
-      {/* Put TabsControlAnimated here or from parent as a child */}
-      {/* Example default two-tabs control: */}
-      <TabsControlAnimated
-        options={[
-          { label: "I'm a Brand", value: 0 },
-          { label: "I'm a Creator", value: 100 },
-        ]}
-      />
+      
 
       <div
         ref={containerRef}
@@ -263,12 +246,20 @@ export const Comparison = ({
         tabIndex={disabled ? -1 : 0}
         onKeyDown={onKeyDown}
         className={cn(
-          "relative isolate w-full select-none overflow-hidden outline-none",
+          "relative isolate w-full select-none overflow-  outline-none",
           disabled ? "opacity-60 cursor-not-allowed" : "",
           className
         )}
         {...props}
+      >
+          <TabsControlAnimated
+        options={[
+          { label: "I'm a Brand", value: 0 },
+          { label: "I'm a Creator", value: 100 },
+        ]}
       />
+        {children}
+      </div>
     </ImageComparisonContext.Provider>
   );
 };

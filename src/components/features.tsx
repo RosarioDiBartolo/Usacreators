@@ -73,7 +73,7 @@ export default function FeaturesSection() {
   return (
     <>
       {/* SECTION 1 — Original (image right) */}
-      <section id="features" className="relative w-full py-20 bg-background">
+      <section id="features" className="relative w-full py-20  ">
         {/* Background glow */}
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute left-1/2 top-10 h-56 w-[48rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-primary/25 via-primary/10 to-primary/25 blur-3xl" />
@@ -187,9 +187,9 @@ export default function FeaturesSection() {
           </motion.div>
         </div>
       </section>
-
+                <div className="bg-gradient-to-t from-orange-500 to-orange-700  text-primary-foreground"> 
       {/* SECTION 2 — Mirrored (image left) */}
-      <section className="relative w-full py-20 bg-gradient-to-t from-orange-500 to-orange-700  text-primary-foreground">
+      <section className="relative w-full py-20  ">
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 md:px-10 lg:grid-cols-2">
           {/* Media left */}
           <motion.div
@@ -245,7 +245,7 @@ export default function FeaturesSection() {
       </section>
 
       {/* SECTION 3 — Feature Showcase grid */}
-      <section className="w-full py-16 bg-gradient-to-b from-orange-500 ">
+      <section className="w-full py-16   ">
         <div className="mx-auto max-w-7xl px-6 md:px-10">
           <div className="mb-8 flex items-end justify-between gap-4">
             <div>
@@ -303,6 +303,7 @@ export default function FeaturesSection() {
           </div>
         </div>
       </section>
+       </div>
     </>
   );
 }

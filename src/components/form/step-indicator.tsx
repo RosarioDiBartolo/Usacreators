@@ -30,7 +30,7 @@ import type { Step } from "@/lib/form-schemas";
             <span
               className={cn(
                 "text-xs mt-1.5 hidden sm:block",
-                index === currentStep ? "text-primary font-medium" : "text-background"
+                index <= currentStep  ? "text-primary font-medium" :    "text-background" 
               )}
             >
               {step.title}

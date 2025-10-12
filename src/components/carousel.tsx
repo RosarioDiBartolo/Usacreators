@@ -28,7 +28,7 @@ const App: React.FC<{title: ReactNode}> = ({title}) => {
   
 
   return (
-    <div className="w-full">
+    <div className="w-full translate-y-10">
       <HeroSection
         heading={title}
         subtitle="Browse Miami’s best creators and match with the right talent for your brand in minutes, not weeks."

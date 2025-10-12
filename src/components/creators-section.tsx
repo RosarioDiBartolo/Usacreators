@@ -7,7 +7,7 @@ function CreatorsSection() {
     <section
       id="brand"
       aria-label="Creators Catalog"
-      className="relative mx-auto h-fit max-w-[90rem]  max-w-[90rem] rounded-[100px] text-center lg:text-left font-bold text-primary-foreground
+      className="relative mx-auto  h-full max-w-[90rem] md:rounded-[100px] text-center lg:text-left font-bold text-primary-foreground
                  bg-gradient-to-b from-violet-300/40 via-violet-600 to-violet-800 py-20"
     >
       <div className="w-full px-6 md:px-10 xl:px-24 ">
@@ -19,7 +19,7 @@ function CreatorsSection() {
 
           {/* Right: Copy + CTAs */}
           <div className="order-2 lg:order-1 mx-auto w-full max-w-2xl tracking-wide space-y-6">
-            <h1 className="text-balance text-5xl md:text-7xl font-extrabold tracking-tighter">
+            <h1 className="text-balance   text-5xl md:text-7xl font-extrabold tracking-tighter">
               Join our{" "}
               <span className="bg-gradient-to-b from-secondary to-secondary bg-clip-text text-transparent">
                 Creators
@@ -27,10 +27,7 @@ function CreatorsSection() {
               Catalog
             </h1>
 
-            <h2 className="mx-auto hidden md:block lg:mx-0 max-w-xl font-semibold text-secondary text-2xl md:text-3xl">
-              We collaborate with Miami’s top creators producing
-              high-performing, on-brand content for local businesses.
-            </h2>
+           
 
             <h3
               className="text-balance font-extralight text-2xlleading-snug
@@ -45,7 +42,7 @@ function CreatorsSection() {
                 asChild
                 variant="secondary"
                 size="none"
-                className="rounded-full mx-auto md:mx-0  px-8 py-4 text-xl md:text-2xl font-light hover:-translate-y-3
+                className="rounded-full mx-auto lg:mx-0  px-8 py-4 text-xl md:text-2xl font-light hover:-translate-y-3
                            transition-all duration-200 hover:opacity-90 active:scale-85"
                 aria-label="Become a Creator"
               >

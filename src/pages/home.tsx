@@ -6,12 +6,14 @@ import Sections from '@/components/sections'
 function Home() {
   return (
 <div className="">
-      <div className=" bg-primary">
+      <div className=" ">
         <Header />
 
         <Hero />
         <Features />
-      </div>
+       </div>
+              <div className=' h-22 bg-primary' />
+
       <Sections /> 
     </div>  )
 }
