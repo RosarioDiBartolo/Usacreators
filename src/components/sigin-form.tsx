@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence  } from "framer-motion";
 import { ChevronLeft, ChevronRight, Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,30 +15,9 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
-import { z } from "zod";
-
-const steps = [
-  { id: "personal", title: "Personal Info" },
-  { id: "social", title: "Location & Socials" },
-  { id: "additional", title: "Anything Else?" },
-] as const;
-
-type YesNo = "yes" | "no";
-
-interface FormData {
-  name: string;
-  email: string;
-  phone: string;
-  profilePictureFile: File | null;
-  bio: string;
-  locationYesNo: YesNo | "";
-  instagram: string;
-  tiktok: string;
-  instagramPost: string;
-  additionalInfo: string;
-}
-
+import { cn } from "@/lib/utils"; 
+import { step0Schema, step1Schema, fullSchema, stepKeysMap, steps, type YesNo, type FormDataType } from "@/lib/form-schemas";
+ 
 /* ── Helpers (moved above schemas so we can use them in transforms) ── */
 async function uploadProfileImage(file: File) {
   const fd = new FormData();
@@ -50,25 +29,7 @@ async function uploadProfileImage(file: File) {
     throw new Error(data?.error || "Image upload failed.");
   return data.url;
 }
-
-function normalizeHandle(v: string, platform: "ig" | "tt") {
-  const s = v.trim();
-  if (!s) return "";
-  try {
-    const u = new URL(s);
-    const ok =
-      platform === "ig"
-        ? /(^|\.)instagram\.com$/i.test(u.hostname)
-        : /(^|\.)tiktok\.com$/i.test(u.hostname);
-    if (ok) return u.toString().replace(/\/$/, ""); // remove trailing slash
-  } catch {
-    /* empty */
-  }
-  const clean = s.replace(/^@/, "");
-  return platform === "ig"
-    ? `https://instagram.com/${clean}`
-    : `https://tiktok.com/@${clean}`;
-}
+ 
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -79,77 +40,19 @@ const contentVariants = {
   visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
   exit: { opacity: 0, x: -50, transition: { duration: 0.2 } },
 };
-
-/* ── Validation (trim, better phone, clean optional URL, handle/URL transforms) ── */
-const phoneSchema = z
-  .string()
-  .trim()
-  .regex(/^\+?[0-9\s().-]{7,20}$/, "Enter a valid phone.")
-  .refine((v) => (v.match(/\d/g)?.length ?? 0) >= 7, "Enter a valid phone.");
-
-const step0Schema = z.object({
-  name: z.string().trim().min(2, "Enter your full name."),
-  email: z.string().trim().email("Enter a valid email."),
-  bio: z.string().max(1000, "Max 1000 chars.").optional(),
-});
-
-const urlOptional = z.preprocess(
-  (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
-  z.string().url("Enter a valid URL.").optional()
-);
-
-const instagramField = z
-  .string()
-  .trim()
-  .optional()
-  .transform((v) => (v ? normalizeHandle(v, "ig") : v))
-  .refine(
-    (v) => !v || /^https?:\/\/(www\.)?instagram\.com\/[^/]+\/?$/.test(v),
-    "Enter a valid IG handle/URL"
-  );
-
-const tiktokField = z
-  .string()
-  .trim()
-  .optional()
-  .transform((v) => (v ? normalizeHandle(v, "tt") : v))
-  .refine(
-    (v) => !v || /^https?:\/\/(www\.)?tiktok\.com\/@[^/]+\/?$/.test(v),
-    "Enter a valid TikTok handle/URL"
-  );
-
-const step1Schema = z.object({
-  locationYesNo: z.enum(["yes", "no"], { message: "Select one option." }),
-  instagram: instagramField,
-  tiktok: tiktokField,
-  instagramPost: urlOptional,
-});
-
-const fullSchema = step0Schema.and(step1Schema).and(
-  z.object({
-    additionalInfo: z.string().max(2000, "Max 2000 chars.").optional(),
-  })
-);
-
-/* ── Keys per step (remove ghost 'profilePictureUrl') ── */
-const stepKeysMap = [
-  ["name", "email", "bio"],
-  ["locationYesNo", "instagram", "tiktok", "instagramPost"],
-  ["additionalInfo"],
-] as const;
+ 
 
 const opt = (s?: string) => (s && s.trim() ? s.trim() : undefined);
 
 const OnboardingForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<FormDataType>({
     name: "",
     email: "",
-    phone: "",
     profilePictureFile: null,
     bio: "",
-    locationYesNo: "",
+    locationYesNo: "yes",
     instagram: "",
     tiktok: "",
     instagramPost: "",
@@ -157,9 +60,9 @@ const OnboardingForm = () => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  function updateFormData<K extends keyof FormData>(
+  function updateFormData<K extends keyof FormDataType>(
     field: K,
-    value: FormData[K]
+    value: FormDataType[K]
   ) {
     setFormData((p) => ({ ...p, [field]: value }));
     if (errors[field as string])
@@ -174,11 +77,11 @@ const OnboardingForm = () => {
     updateFormData("profilePictureFile", file);
   }
 
-  const isStepValid = useMemo(() => {
-    if (currentStep === 0) return step0Schema.safeParse(formData).success;
-    if (currentStep === 1) return step1Schema.safeParse(formData).success;
-    return true;
-  }, [currentStep, formData]);
+  // const isStepValid = useMemo(() => {
+  //   if (currentStep === 0) return step0Schema.safeParse(formData).success;
+  //   if (currentStep === 1) return step1Schema.safeParse(formData).success;
+  //   return true;
+  // }, [currentStep, formData]);
 
   const validateAndSetErrorsForStep = () => {
     const schema =
@@ -196,7 +99,11 @@ const OnboardingForm = () => {
     const stepKeys = new Set(stepKeysMap[currentStep]);
     const next: Record<string, string> = {};
     for (const [k, msgs] of Object.entries(fieldErrors))
-      if (stepKeys.has(k as typeof stepKeysMap[number][number]) && msgs?.length) next[k] = msgs[0];
+      if (
+        stepKeys.has(k as (typeof stepKeysMap)[number][number]) &&
+        msgs?.length
+      )
+        next[k] = msgs[0];
     setErrors(next);
     return false;
   };
@@ -214,7 +121,7 @@ const OnboardingForm = () => {
   async function handleSubmit() {
     const parsed = fullSchema.safeParse(formData);
     if (!parsed.success) {
-      const { fieldErrors , formErrors} = parsed.error.flatten();
+      const { fieldErrors, formErrors } = parsed.error.flatten();
       const map: Record<string, string> = {};
       for (const [k, msgs] of Object.entries(fieldErrors))
         if (msgs?.length) map[k] = msgs[0];
@@ -223,6 +130,12 @@ const OnboardingForm = () => {
       toast.error(
         formErrors?.[0] ?? `Please fix ${n} field${n > 1 ? "s" : ""}.`
       );
+      const firstErrorField = Object.keys(errors)[0];
+      if (firstErrorField) {
+        document
+          .getElementById(firstErrorField)
+          ?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
       return;
     }
     try {
@@ -250,12 +163,16 @@ const OnboardingForm = () => {
         try {
           const { error } = await res.json();
           if (error) errText = error;
-        } catch { /* empty */ }
+        } catch {
+          /* empty */
+        }
         throw new Error(errText);
       }
       toast.success("Application submitted successfully!");
-    } catch (e  ) {
-      toast.error(e?.message || "Submission failed.");
+    } catch (e: unknown) {
+      let message = "Submission failed.";
+      if (e instanceof Error) message = e.message;
+      toast.error(message);
     } finally {
       setIsSubmitting(false);
     }
@@ -272,7 +189,11 @@ const OnboardingForm = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="flex justify-between mb-2" aria-label="Steps">
+        <div
+          className="flex justify-between mb-2"
+          aria-valuetext={`Step ${currentStep + 1} of ${steps.length}`}
+          aria-label="Steps"
+        >
           {steps.map((step, index) => (
             <motion.div
               key={step.id}
@@ -336,7 +257,8 @@ const OnboardingForm = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              if (currentStep === steps.length - 1) {handleSubmit()}else{ nextStep();}
+              if (currentStep < steps.length - 1) nextStep();
+              else handleSubmit();
             }}
             noValidate
           >
@@ -406,7 +328,7 @@ const OnboardingForm = () => {
                           </p>
                         )}
                       </motion.div>
-                      <motion.div variants={fadeInUp} className="space-y-2">
+                      {/* <motion.div variants={fadeInUp} className="space-y-2">
                         <Label htmlFor="phone">Phone Number</Label>
                         <Input
                           id="phone"
@@ -430,7 +352,7 @@ const OnboardingForm = () => {
                             {errors.phone}
                           </p>
                         )}
-                      </motion.div>
+                      </motion.div> */}
                       <motion.div variants={fadeInUp} className="space-y-2">
                         <Label htmlFor="profilePicture">Profile Picture</Label>
                         <Input
@@ -644,11 +566,11 @@ const OnboardingForm = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <Button
-                  type={currentStep === steps.length - 1 ? "submit" : "button"}
-                  onClick={
-                    currentStep === steps.length - 1 ? undefined : nextStep
-                  }
-                  // important: keep clickable to surface errors
+                  type="button"
+                  onClick={() => {
+                    if (currentStep === steps.length - 1) handleSubmit();
+                    else nextStep();
+                  }}
                   disabled={isSubmitting}
                   className="flex items-center gap-1 transition-all duration-300 rounded-2xl"
                 >

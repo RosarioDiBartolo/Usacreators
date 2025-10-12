@@ -29,7 +29,6 @@ const db = admin.firestore();
 const Schema = z.object({
   name: z.string().min(2).max(120),
   email: z.string().email(),
-  phone: z.string().trim().min(5).max(40),
   profilePictureUrl: z.string().trim().optional().nullable(),
   bio: z.string().trim().max(1000).optional().default(""),
   locationYesNo: z.enum(["yes", "no"]),
@@ -222,7 +221,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const docRef = await db.collection("applications").add({
         name: d.name,
         email: d.email.toLowerCase(),
-        phone: d.phone,
         profilePictureUrl: asUrl(d.profilePictureUrl) ?? null,
         bio: d.bio || "",
         locationYesNo: d.locationYesNo,
