@@ -1,27 +1,17 @@
- 
-
-import Features from './components/features'
-import Header from './components/header'
-import Hero from './components/hero'
-import Sections from './components/sections'
-import SiginForm from './components/sigin-form'
+  
+ import { BrowserRouter, Route, Routes } from "react-router-dom";
+import NotFound from "./pages/not-found";
+import Home from "./pages/home";
 
 function App() {
- 
   return (
-    <div className=''>
-      <div className=' bg-primary'>
-        
- <Header /> 
-      
-      <Hero />
-      <Features />
-      
-      </div>
-      <Sections />
-      <SiginForm />
-    </div>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" index element={<Home />} />
+         <Route path="*" element={<NotFound />} />
+      </Routes>{" "}
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
