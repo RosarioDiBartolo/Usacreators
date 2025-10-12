@@ -1,14 +1,17 @@
 import z from "zod";
 
-export const steps = [
+export const steps: Step[] = [
   { id: "personal", title: "Personal Info" },
   { id: "social", title: "Location & Socials" },
   { id: "additional", title: "Anything Else?" },
 ] as const;
+export type Step = {
+  id: string;
+  title: string;
+}
 
 export type YesNo = "yes" | "no";
-
-export type FormDataType = z.infer<typeof fullSchema> & {
+ export type FormDataType = z.infer<typeof fullSchema> & {
   profilePictureFile: File | null;
 };
 

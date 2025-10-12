@@ -1,4 +1,4 @@
-import SiginForm from "@/components/sigin-form";
+import SiginForm from "@/components/form/sigin-form";
 import Squares from "@/components/squares-background";
 
 function SignupPage() {
@@ -9,7 +9,7 @@ function SignupPage() {
         direction="diagonal"
         speed={0.5}
         squareSize={40}
-        borderColor="#333"
+        borderColor="#ff6900"
         hoverFillColor="#d99168"
       />
 
