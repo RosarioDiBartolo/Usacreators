@@ -1,10 +1,6 @@
 import z from "zod";
 
-export const steps: Step[] = [
-  { id: "personal", title: "Personal Info" },
-  { id: "social", title: "Location & Socials" },
-  { id: "additional", title: "Anything Else?" },
-] as const;
+ 
 export type Step = {
   id: string;
   title: string;

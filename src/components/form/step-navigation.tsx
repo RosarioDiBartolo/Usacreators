@@ -35,7 +35,7 @@ export default function StepNavigation({
         <Button
           type="button"
           onClick={() =>
-            currentStep === steps.length - 1 ? handleSubmit() : nextStep()
+            currentStep === steps.length - 2 ? handleSubmit() : nextStep()
           }
           disabled={isSubmitting}
           className="rounded-2xl"
@@ -44,7 +44,7 @@ export default function StepNavigation({
             <>
               <Loader2 className="h-4 w-4 animate-spin" /> Submitting...
             </>
-          ) : currentStep === steps.length - 1 ? (
+          ) : currentStep === steps.length - 2 ? (
             <>
               Submit <Check className="h-4 w-4" />
             </>

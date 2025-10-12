@@ -1,12 +1,11 @@
- 
- import { motion,   } from "motion/react";
+import { motion } from "motion/react";
 
- import {
+import {
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
- } from "../ui/card";
+} from "../ui/card";
 import { Textarea } from "../ui/textarea";
 import { fadeInUp } from "./utils";
 import { Label } from "../ui/label";
@@ -15,7 +14,8 @@ import type { FormDataType } from "@/lib/form-schemas";
 function AdditionalInfo({
   formData,
   errors,
-  updateFormData 
+  updateFormData,
+  setErrors
 }: {
   formData: FormDataType;
   errors: Record<string, string>;
@@ -23,7 +23,8 @@ function AdditionalInfo({
     field: K,
     value: FormDataType[K]
   ) => void;
- }) {
+  setErrors: React.Dispatch<React.SetStateAction<Record<string, string>>>
+}) {
   return (
     <>
       {" "}
@@ -45,20 +46,26 @@ function AdditionalInfo({
             name="additionalInfo"
             maxLength={2000}
             value={formData.additionalInfo}
-            onChange={(e) => updateFormData("additionalInfo", e.target.value)}
+            onChange={(e) => {
+              updateFormData("additionalInfo", e.target.value);
+              // Optional: clear error on change
+              if (errors.additionalInfo)
+                setErrors(errors=> ({ ...errors, additionalInfo: "" }));
+            }}
             aria-invalid={!!errors.additionalInfo}
             aria-describedby={
               errors.additionalInfo ? "err-additionalInfo" : undefined
             }
-          />{" "}
+          />
           {errors.additionalInfo && (
-            <p
+            <motion.p
               id="err-additionalInfo"
               className="text-xs text-destructive mt-1"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
             >
-              {" "}
-              {errors.additionalInfo}{" "}
-            </p>
+              {errors.additionalInfo}
+            </motion.p>
           )}{" "}
         </motion.div>{" "}
       </CardContent>{" "}

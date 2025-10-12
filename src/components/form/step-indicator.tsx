@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import {steps as stepsArray} from "@/lib/form-schemas"
-const StepIndicator = ({ currentStep, steps }: { currentStep: number; steps:  typeof stepsArray}) => {
+import type { Step } from "@/lib/form-schemas";
+ const StepIndicator = ({ currentStep, steps }: { currentStep: number; steps:  Step[]}) => {
   const pct = (currentStep / (steps.length - 1)) * 100;
 
   return (
@@ -30,7 +30,7 @@ const StepIndicator = ({ currentStep, steps }: { currentStep: number; steps:  ty
             <span
               className={cn(
                 "text-xs mt-1.5 hidden sm:block",
-                index === currentStep ? "text-primary font-medium" : "text-muted-foreground"
+                index === currentStep ? "text-primary font-medium" : "text-background"
               )}
             >
               {step.title}
