@@ -181,7 +181,7 @@ const OnboardingForm = () => {
   const pct = (currentStep / (steps.length - 1)) * 100;
 
   return (
-    <div className="w-full max-w-lg mx-auto py-8 relative">
+    <div className="w-full h-screen md:h-fit flex flex-col max-w-lg mx-auto py-8 px-4 relative">
       {/* Progress */}
       <motion.div
         className="mb-8"
@@ -190,7 +190,7 @@ const OnboardingForm = () => {
         transition={{ duration: 0.5 }}
       >
         <div
-          className="flex justify-between mb-2"
+          className="flex gap-2 sm:justify-between mb-2"
           aria-valuetext={`Step ${currentStep + 1} of ${steps.length}`}
           aria-label="Steps"
         >
@@ -204,7 +204,7 @@ const OnboardingForm = () => {
                 type="button"
                 className={cn(
                   // bigger target for a11y
-                  "w-6 h-6 rounded-full cursor-pointer transition-colors duration-300",
+                  "w-2 h-2 rounded-full cursor-pointer transition-colors duration-300",
                   index < currentStep
                     ? "bg-primary"
                     : index === currentStep
@@ -249,11 +249,12 @@ const OnboardingForm = () => {
 
       {/* Form */}
       <motion.div
+      className=" flex-1"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <Card className="border shadow-md rounded-3xl overflow-hidden">
+        <Card className="border h-full shadow-md rounded-3xl overflow-hidden">
           <form
             onSubmit={(e) => {
               e.preventDefault();
