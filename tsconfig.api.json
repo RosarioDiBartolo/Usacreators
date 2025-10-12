@@ -1,0 +1,28 @@
+// tsconfig.api.json
+{
+  // Note: We use "extends" but explicitly override the critical settings
+  "extends": "./tsconfig.app.json", 
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    
+    // Crucial: Use the latest target for Vercel functions
+    "target": "ES2022", 
+    
+    // Set lib to only include Node-relevant libraries
+    "lib": ["ES2022"], 
+    
+    // Allow JSON imports directly
+    "resolveJsonModule": true, 
+    
+    // Ensure TypeScript knows we're handling server code
+    "moduleDetection": "force", 
+    
+    // Disable JSX if your API functions don't use it
+    "jsx": "preserve", // Or remove if your API files don't need it
+    
+    "noEmit": true // Keep this if Vercel handles the final compilation
+  },
+  "include": ["api/**/*"], // ONLY include API files
+  "exclude": ["src/**/*"]  // Explicitly exclude frontend files
+}

@@ -1,8 +1,7 @@
 import Features from '@/components/features'
 import Header from '@/components/header'
 import Hero from '@/components/hero'
-import Sections from '@/components/sections'
-import SiginForm from '@/components/sigin-form'
+import Sections from '@/components/sections' 
  
 function Home() {
   return (
@@ -13,8 +12,7 @@ function Home() {
         <Hero />
         <Features />
       </div>
-      <Sections />
-      <SiginForm />
+      <Sections /> 
     </div>  )
 }
 

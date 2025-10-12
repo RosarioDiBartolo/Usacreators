@@ -2,8 +2,13 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { z } from "zod";
 import crypto from "crypto";
 import admin, { type ServiceAccount } from "firebase-admin";
-import serviceAccount from "./service-account.json" with { type: "json" };
+import path from "path";
+import { readFileSync } from "fs"; 
 
+const jsonPath = path.join(  "./api", 'service-account.json');
+
+  const rawData =  readFileSync(jsonPath, 'utf8');
+const serviceAccount = JSON.parse(rawData)
 // ---------- Environment Safety Check ----------
 const requiredEnv = ["ALLOW_ORIGIN"];
 for (const key of requiredEnv) {
@@ -11,6 +16,7 @@ for (const key of requiredEnv) {
     console.error(`❌ Missing environment variable: ${key}`);
   }
 }
+ 
 
 // ---------- Firebase Initialization ----------
 if (!admin.apps.length) {

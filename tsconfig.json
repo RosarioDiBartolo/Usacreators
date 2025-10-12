@@ -1,8 +1,9 @@
 {
   "files": [],
   "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
+    { "path": "./tsconfig.app.json" },  // (Frontend/Vite config - keep original settings)
+    { "path": "./tsconfig.node.json" },
+    { "path": "./tsconfig.api.json" }   // 👈 Add the new API config here
   ],
   "compilerOptions": {
     "resolveJsonModule": true,

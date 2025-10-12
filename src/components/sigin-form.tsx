@@ -181,7 +181,7 @@ const OnboardingForm = () => {
   const pct = (currentStep / (steps.length - 1)) * 100;
 
   return (
-    <div className="w-full max-w-lg mx-auto py-8">
+    <div className="w-full max-w-lg mx-auto py-8 relative">
       {/* Progress */}
       <motion.div
         className="mb-8"
