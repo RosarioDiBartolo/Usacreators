@@ -1,7 +1,7 @@
 import Features from '@/components/features/features-sections'
 import Header from '@/components/header'
 import Hero from '@/components/hero'
-import Sections from '@/components/sections' 
+import CreatorsBrands from '@/components/creator-brand' 
  
 function Home() {
   return (
@@ -12,9 +12,8 @@ function Home() {
         <Hero />  
         <Features />
        </div>
-              <div className=' h-22 bg-orange-700' />
-
-      <Sections /> 
+ 
+      <CreatorsBrands />
     </div>  )
 }
 
