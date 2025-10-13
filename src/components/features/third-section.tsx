@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export default function ShowcaseSection({ data }) {
   return (
-    <section className="w-full py-16 bg-gradient-to-t from-orange-700 to-orange-500 text-primary-foreground">
+    <section className="w-full py-16 ">
       <div className="mx-auto max-w-7xl px-6 md:px-10">
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>

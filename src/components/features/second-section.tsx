@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export default function BuildFasterSection({ data, media }) {
   return (
-    <div className="bg-gradient-to-t from-orange-500 to-orange-700 text-primary-foreground">
+    <div className="  ">
       <section className="relative w-full py-20">
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 md:px-10 lg:grid-cols-2">
           {/* Media left */}
