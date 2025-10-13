@@ -1,4 +1,4 @@
-import Features from '@/components/features'
+import Features from '@/components/features/features-sections'
 import Header from '@/components/header'
 import Hero from '@/components/hero'
 import Sections from '@/components/sections' 
@@ -9,10 +9,10 @@ function Home() {
       <div className=" ">
         <Header />
 
-        <Hero />
+        <Hero />  
         <Features />
        </div>
-              <div className=' h-22 bg-primary' />
+              <div className=' h-22 bg-orange-700' />
 
       <Sections /> 
     </div>  )

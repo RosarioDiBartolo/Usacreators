@@ -1,15 +1,8 @@
 import React from "react";
-import { 
-  motion,
-  type Variants,
-} from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { Button } from "./ui/button";
 interface AnimatedTextProps {
-  title?: string;
-  subtitle?: string;
-  description?: string;
-  buttonText?: string;
-  buttonHref?: string;
+ 
   delay?: number;
   duration?: number;
 }
@@ -22,7 +15,7 @@ const itemVariantsTemplate: (duration: number) => Variants = (duration) => ({
     y: 60,
 
     filter: "blur(10px)",
-  }, 
+  },
   visible: {
     opacity: 1,
     y: 0,
@@ -49,70 +42,61 @@ const containerVariants: Variants = {
   }),
 };
 const AnimatedText: React.FC<AnimatedTextProps> = ({
-  title = "Connect with all our ",
-  subtitle = "Creators",
-  description = "We connect brands with Our's top content creators for authentic, engaging social media presence.",
-  delay = 0.5,
+ 
+   delay = 0.5,
   duration = 1.2,
 }) => {
   const itemVariants = itemVariantsTemplate(duration);
   return (
     <motion.div
-      className="text-center w-full  relative z-10 max-w-7xl mx-auto px-4"
+      className="text-center w-full  relative z-10  mx-auto px-4"
       variants={containerVariants}
       custom={delay}
       initial="hidden"
       animate="visible"
     >
-      <motion.h3
+      {/* <motion.h3
         className=" text-4xl mb-3 bg-gradient-to-t from-amber-400 to-primary-foreground bg-clip-text text-transparent    font-extralight tracking-widest      "
         variants={itemVariants}
       >
         Miami Creators.com
-      </motion.h3>
+      </motion.h3> */}
 
       {/* Main title */}
       <motion.h1
-        className=" text-7xl  font-extrabold leading-tight"
+        className=" text-6xl  font-bold  "
         variants={itemVariants}
       >
-        <motion.span className=" ">{title}</motion.span>
-        <motion.span className="    bg-clip-text text-transparent bg-radial to-secondary  from-stone-500     ">
-          {subtitle}
-        </motion.span>
-        <motion.div className="mb-2  font-bold perspective-1000">
-          <motion.span className=" font-bold    bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text   inline-block">
-            <span>From</span>{" "}
-            <span className=" bg-clip-text text-transparent bg-radial from-amber-100 to-amber-400">
-              MIAMI.
+        <motion.span className=" "> Connect with all our Creators</motion.span>
+        <motion.div className="mb-2 perspective-1000  bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text   ">
+             <span className=" bg-clip-text text-transparent bg-radial from-amber-100 to-amber-400 font-extrabold">
+              From Miami.
             </span>
-          </motion.span>
-        </motion.div>
+         </motion.div>
       </motion.h1>
       {/* Highlighted text */}
 
       {/* Description */}
       <motion.p
-        className="text-xl mb-8 font-light  bg-clip-text text-transparent bg-radial to-stone-300  from-stone-100   max-w-xl mx-auto "
+        className="text-xl text-primary-foreground/80 mb-8      max-w-xl mx-auto "
         variants={itemVariants}
-        
       >
-        {description}
+        We connect brands with our's top content creators for authentic, engaging social media presence.
       </motion.p>
 
-    <MotionButton
-  variants={itemVariants}
-  variant="secondary"
-  whileTap={{ scale: 0.8, opacity: 0.8 }}
-  onClick={() => {
-    const target = document.getElementById("features");
-    target?.scrollIntoView({ behavior: "smooth" });
-  }}
-  size="none"
-  className="text-xl p-5 px-8 rounded-full"
->
-  <motion.span>Discover More</motion.span>
-</MotionButton>
+      <MotionButton
+        variants={itemVariants}
+        variant="secondary"
+        whileTap={{ scale: 0.8, opacity: 0.8 }}
+        onClick={() => {
+          const target = document.getElementById("features");
+          target?.scrollIntoView({ behavior: "smooth" });
+        }}
+        size="none"
+        className="text-xl p-5 px-8 rounded-full"
+      >
+        <motion.span>Wanna see more?</motion.span>
+      </MotionButton>
 
       {/* CTA Button
       <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">

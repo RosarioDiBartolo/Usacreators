@@ -3,8 +3,7 @@ import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
  
 
 const CreatorsAvatars = () => {
-  const [hover, setHover] = useState(false);
-
+ 
   const avatarUrls = [
     "https://avatars.githubusercontent.com/u/16860528",
     "https://avatars.githubusercontent.com/u/20110627",
@@ -37,14 +36,13 @@ const CreatorsAvatars = () => {
   return (
     <motion.div
      
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+       
       className="relative inline-flex items-center"
     >
       {/* Avatars container */}
       <motion.div
       layout
-        className="bg-background text-foreground  shadow-2xl items-center rounded-full overflow-hidden p-2 gap-3 flex cursor-pointer group"
+        className="bg-background/60 text-foreground  shadow-2xl items-center rounded-full overflow-hidden p-2 gap-3 flex cursor-pointer group"
         whileHover={{ scale: 1.02 }}
         transition={{ layout: {
           type:  "keyframes"    },  type: "spring", stiffness: 200, damping: 15 }}
@@ -82,19 +80,16 @@ const CreatorsAvatars = () => {
               +{numPeople}
             </motion.a>
           </motion.div>
-          <AnimatePresence mode="popLayout">
-            {hover && (
+           
               <motion.span
                 initial={{ opacity: 0  }}
                 animate={{ opacity: 1  }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
+                   transition={{ duration: 0.5 }}
                 className=" hidden md:block  left-full mx-3 whitespace-nowrap text-sm font-medium"
               >
                 99+ USA Creators all in one platform
               </motion.span>
-            )}
-          </AnimatePresence>
+     
         </LayoutGroup>
       </motion.div>
     </motion.div>
