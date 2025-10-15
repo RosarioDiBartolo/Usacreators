@@ -6,7 +6,7 @@ import CreatorsBrands from '@/components/creator-brand'
 function Home() {
   return (
 <div className="">
-      <div className=" ">
+      <div className=" pb-28 ">
         <Header />
 
         <Hero />  
