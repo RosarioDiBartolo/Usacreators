@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Users, Zap } from "lucide-react";
-import CreatorsSectionThumbnail from "@/assets/good-faces-T4p72-fc2_A-unsplash.jpg";
+import CreatorsSectionThumbnail from "@/assets/creators/wesley-tingey-JOhjfzjeJLw-unsplash.jpg";
 import BrandSectionThumnail from "@/assets/oleg-laptev-QRKJwE6yfJo-unsplash.jpg";
+import { BeamsBackground } from "./ui/beams-background";
 function Creators() {
   return (
     <motion.section
@@ -386,7 +387,7 @@ const Circles = () => {
 };
 function CreatorsBrands() {
   return (
-    <div className="bg-gradient-to-t from-muted via-secondary to-secondary min-h-screen py-20 px-4 lg:px-10 relative">
+    <BeamsBackground className=" py-20"> 
       <div className="container  mx-auto max-w-7xl relative">
         <Circles />
 
@@ -455,8 +456,7 @@ function CreatorsBrands() {
           ))}
         </motion.div>
       </div>
-    </div>
-  );
+</BeamsBackground>  );
 }
 
 export default CreatorsBrands;
