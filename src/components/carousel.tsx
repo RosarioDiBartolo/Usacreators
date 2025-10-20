@@ -27,7 +27,7 @@ const App = () => {
   
 
   return (
-    <div className="w-full translate-y-10">
+    <div className=" my-30">
       <HeroSection
           images={images}
        

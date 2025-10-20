@@ -15,12 +15,12 @@ export default function FeaturesSection({ data, media, meta }) {
 
       <div className="
       md:py-20 max-w-[90rem]     mx-auto  
-      flex 
+      md:flex 
        items-center 
       ">
         {/* Image */}
         <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} 
-        className=" max-w-xl w-full"
+        className=" max-w-xl w-full **:  "
         >
           <Carousel/>
         </motion.div>
@@ -30,7 +30,7 @@ export default function FeaturesSection({ data, media, meta }) {
         initial={{ opacity: 0, y: 12 }} 
         whileInView={{ opacity: 1, y: 0 }} 
         transition={{ duration: 0.6, delay: 0.1 }} 
-        className="flex flex-col gap-3  
+        className="flex flex-col gap-3 px-5  
         flex-1">
           <div className="flex items-center gap-2">
             <Badge variant="secondary" className="rounded-full px-3 py-1">
@@ -78,18 +78,7 @@ export default function FeaturesSection({ data, media, meta }) {
                 </div>
               ))}
             </div>
-
-            <Card className="">
-              <CardContent className="flex items-start gap-3 p-4">
-                <div className="rounded-md bg-emerald-500/10 p-2 text-emerald-600">
-                  <ShieldCheck className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium">No lock-in</p>
-                  <p className="text-sm text-muted-foreground">Export anytime. Your data, your rules.</p>
-                </div>
-              </CardContent>
-            </Card>
+             
           </div>
         </motion.div>
       </div>
