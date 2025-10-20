@@ -121,7 +121,7 @@
   }
 
   p{
-    @apply tracking-wider leading-8 text-xl font-medium  ;
+    @apply tracking-wider leading-8   font-medium  ;
   }
   /* Imposta il default: Poppins via font-sans */
   body {

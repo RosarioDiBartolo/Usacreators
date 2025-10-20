@@ -75,7 +75,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
 
       {/* Description */}
       <motion.p
-        className=" text-primary-foreground w-full max-w-xl mx-auto "
+        className="text-xl text-primary-foreground w-full max-w-xl mx-auto "
         variants={itemVariants}
       >
         

@@ -13,14 +13,25 @@ export default function FeaturesSection({ data, media, meta }) {
         <div className="absolute left-1/2 top-10 h-56 w-[48rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-primary/25 via-primary/10 to-primary/25 blur-3xl" />
       </div>
 
-      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 md:px-10 lg:grid-cols-3">
+      <div className="
+      md:py-20 max-w-[90rem]     mx-auto  
+      flex 
+       items-center 
+      ">
         {/* Image */}
-        <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="">
+        <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} 
+        className=" max-w-xl w-full"
+        >
           <Carousel/>
         </motion.div>
 
         {/* Text */}
-        <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }} className="flex flex-col gap-3 col-span-2">
+        <motion.div 
+        initial={{ opacity: 0, y: 12 }} 
+        whileInView={{ opacity: 1, y: 0 }} 
+        transition={{ duration: 0.6, delay: 0.1 }} 
+        className="flex flex-col gap-3  
+        flex-1">
           <div className="flex items-center gap-2">
             <Badge variant="secondary" className="rounded-full px-3 py-1">
               {meta.badge}
@@ -28,19 +39,21 @@ export default function FeaturesSection({ data, media, meta }) {
             <span className="text-xs text-muted-foreground">{meta.version}</span>
           </div>
 
-          <h2 className="text-3xl font-bold leading-tight tracking-tight md:text-4xl bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">
+          <h2 className=" text-3xl  font-bold leading-tight tracking-tight  bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">
             {data.title}
           </h2>
 
-          <p className=" ">{data.description}</p>
+          <p className=" text-base leading-normal">{data.description}</p>
 
           <ul className="grid gap-4 sm:grid-cols-2">
             {data.features.map((f) => (
-              <li key={f.title} className="flex items-start gap-3 rounded-xl border p-4">
-                <div className="mt-0.5 rounded-md bg-primary/10 p-2 text-primary">{f.icon}</div>
-                <div>
-                  <h3 className=" font-bold">{f.title}</h3>
-                  <p className=" text-sm text-muted-foreground">{f.desc}</p>
+              <li key={f.title} className=" 
+              bg-primary/10   
+              flex items-start gap-3 rounded-xl border p-4">
+                <div className="m-0.5 rounded-md bg-primary/10 p-2 text-primary">{f.icon}</div>
+                <div className="  ">
+                  <h3 className=" text-primary text-lg font-black">{f.title}</h3>
+                  <p className=" text-sm text-primary/70  ">{f.desc}</p>
                 </div>
               </li>
             ))}

@@ -1,7 +1,6 @@
-import React, { type ReactNode } from 'react';
-import { HeroSection } from '@/components/ui/feature-carousel'; // Adjust the import path as needed
+ import { HeroSection } from '@/components/ui/feature-carousel'; // Adjust the import path as needed
 
-const App: React.FC<{title: ReactNode}> = ({title}) => {
+const App = () => {
   const images = [
     {
       src: 'https://images.unsplash.com/photo-1504051771394-dd2e66b2e08f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjJ8fGdpcmx8ZW58MHx8MHx8fDA%3D',
@@ -30,9 +29,7 @@ const App: React.FC<{title: ReactNode}> = ({title}) => {
   return (
     <div className="w-full translate-y-10">
       <HeroSection
-        heading={title}
-        subtitle="Browse Miami’s best creators and match with the right talent for your brand in minutes, not weeks."
-        images={images}
+          images={images}
        
       />
     </div>

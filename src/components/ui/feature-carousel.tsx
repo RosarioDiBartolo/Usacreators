@@ -3,23 +3,18 @@ import { cn } from '@/lib/utils'; // Assuming you have a utility for class names
 
 // --- TYPES ---
 interface HeroProps extends React.HTMLAttributes<HTMLDivElement> {
-  heading: React.ReactNode;
-  subtitle: string;
-  images: { src: string; alt: string; }[];
+    images: { src: string; alt: string; }[];
 }
 
 // --- HERO SECTION COMPONENT ---
 export const HeroSection = React.forwardRef<HTMLDivElement, HeroProps>(
-  ({ heading, subtitle, images, className, ...props }, ref) => {
+  ({  images, className, ...props }, ref) => {
     const [currentIndex, setCurrentIndex] = React.useState(Math.floor(images.length / 2));
 
     const handleNext = React.useCallback(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
     }, [images.length]);
-
-    const handlePrev = () => {
-      setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
-    };
+ 
     
     React.useEffect(() => {
         const timer = setInterval(() => {
@@ -61,13 +56,13 @@ export const HeroSection = React.forwardRef<HTMLDivElement, HeroProps>(
                   <div
                     key={index}
                     className={cn(
-                      'absolute w-48 h-96 md:w-96 md:h-[32rem] transition-all duration-500 ease-in-out',
+                      'absolute   w-80  h-[28rem] transition-all duration-500 ease-in-out',
                       'flex items-center justify-center'
                     )}
                     style={{
                       transform: `
-                        translateX(${(pos) * 25}%) 
-                        scale(${isCenter ? 1 : isAdjacent ? 0.85 : 0.7})
+                        translateX(${(pos) * 30}%) 
+                        scale(${isCenter ? 1 : isAdjacent ? 0.78 : 0.6})
                         rotateY(${(pos) * -10}deg)
                       `,
                       zIndex: isCenter ? 10 : isAdjacent ? 5 : 1,
