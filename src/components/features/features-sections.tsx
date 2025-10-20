@@ -122,8 +122,6 @@ export default function FeaturesWrapper() {
   return (
     <>
       <FirstSection data={content.section1} media={content.media} meta={content.meta} />
-      <SecondSection data={content.section2} media={content.media} />
-      <ThirdSection data={content.section3} />
     </>
   );
 }

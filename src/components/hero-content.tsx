@@ -2,7 +2,7 @@ import React from "react";
 import { motion, type Variants } from "framer-motion";
 import { Button } from "./ui/button";
 interface AnimatedTextProps {
- 
+
   delay?: number;
   duration?: number;
 }
@@ -42,14 +42,14 @@ const containerVariants: Variants = {
   }),
 };
 const AnimatedText: React.FC<AnimatedTextProps> = ({
- 
-   delay = 0.5,
+
+  delay = 0.5,
   duration = 1.2,
 }) => {
   const itemVariants = itemVariantsTemplate(duration);
   return (
     <motion.div
-      className="text-center w-full  relative z-10  mx-auto px-4"
+      className="text-center w-full flex flex-col gap-10 max-w-3xl mx-auto   relative z-10   px-4"
       variants={containerVariants}
       custom={delay}
       initial="hidden"
@@ -63,41 +63,52 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
       </motion.h3> */}
 
       {/* Main title */}
+      <div>
       <motion.h1
-        className=" text-6xl  font-bold  "
+        className="    "
         variants={itemVariants}
       >
-        <motion.span className=" "> Connect with all our Creators</motion.span>
-        <motion.div className="mb-2 perspective-1000  bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text   ">
-             <span className=" bg-clip-text text-transparent bg-radial from-amber-100 to-amber-400 font-extrabold">
-              From Miami.
-            </span>
-         </motion.div>
+        Discover Miami’s Top Content Creators and Influencers
+
       </motion.h1>
       {/* Highlighted text */}
 
       {/* Description */}
       <motion.p
-        className="text-xl text-primary-foreground/80 mb-8      max-w-xl mx-auto "
+        className=" text-primary-foreground w-full max-w-xl mx-auto "
         variants={itemVariants}
       >
-        We connect brands with our's top content creators for authentic, engaging social media presence.
-      </motion.p>
-
-      <MotionButton
-        variants={itemVariants}
-        variant="secondary"
-        whileTap={{ scale: 0.8, opacity: 0.8 }}
-        onClick={() => {
-          const target = document.getElementById("features");
-          target?.scrollIntoView({ behavior: "smooth" });
-        }}
-        size="none"
-        className="text-xl p-5 px-8 rounded-full"
-      >
-        <motion.span>Wanna see more?</motion.span>
-      </MotionButton>
-
+        
+        We connect <span className=" text-white">brands</span> with our's top <span className=" text-white"> content creators </span> for authentic, engaging social media <br/>presence.      </motion.p>
+     </div>
+      <div 
+      className=" flex gap-3 justify-center">
+        <MotionButton
+          variants={itemVariants}
+          variant="outline"
+          whileTap={{ scale: 0.8, opacity: 0.8 }}
+          onClick={() => {
+            const target = document.getElementById("features");
+            target?.scrollIntoView({ behavior: "smooth" });
+          }}
+          size="lg"
+          className=" "
+        >
+          <motion.span>I'm a creator</motion.span>
+        </MotionButton>
+        <MotionButton
+          variants={itemVariants}
+          variant="black"
+          whileTap={{ scale: 0.8, opacity: 0.8 }}
+          onClick={() => {
+            const target = document.getElementById("features");
+            target?.scrollIntoView({ behavior: "smooth" });
+          }}
+          size="lg"
+        >
+          <motion.span>I'm a brand</motion.span>
+        </MotionButton>
+      </div>
       {/* CTA Button
       <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
         <motion.a

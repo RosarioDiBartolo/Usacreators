@@ -66,7 +66,7 @@ export const HeroSection = React.forwardRef<HTMLDivElement, HeroProps>(
                     )}
                     style={{
                       transform: `
-                        translateX(${(pos) * 45}%) 
+                        translateX(${(pos) * 25}%) 
                         scale(${isCenter ? 1 : isAdjacent ? 0.85 : 0.7})
                         rotateY(${(pos) * -10}deg)
                       `,

@@ -1,21 +1,23 @@
+
 @import "tailwindcss";
 @import "tw-animate-css";
+
+/* dark variant */
 @custom-variant dark (&:is(.dark *));
 
+/* ===== THEME TOKENS ===== */
 @theme inline {
-  --font-heading: "Ultra", Georgia, "Times New Roman", serif;
+  /* Fonts */
+  --font-poppins: "Poppins", sans-serif;
+   
 
-  /* Humanist-style system font stack for body */
-  --font-body: -apple-system, /* macOS/iOS */ BlinkMacSystemFont,
-    /* Chrome macOS */ "Segoe UI", /* Windows */ "San Francisco",
-    /* fallback for Apple systems */ Roboto,
-    /* Android/modern devices */ "Helvetica Neue", Arial,
-    /* classic neutral sans */ "Liberation Sans",
-    /* Linux fallback */ sans-serif; /* ultimate fallback */
+  /* Radii */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* Semantic color aliases (mappate su :root) */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -25,11 +27,8 @@
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
-
-  --color-tertiary: var(--tertiary);
-
-  --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+  --color-tertiary: var(--tertiary);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
@@ -52,12 +51,14 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 }
+
+/* ===== ROOT DESIGN TOKENS ===== */
 :root {
   --radius: 0.625rem;
 
   /* Base */
-  --background: #f8f5f1; /* Ivory caldo */
-  --foreground: #3a3a3a; /* Neutral scuro (testi principali) */
+  --background: #E9E9E9FF;
+  --foreground: #000000FF;
 
   /* Card / Popover */
   --card: #ffffff;
@@ -65,41 +66,37 @@
   --popover: #ffffff;
   --popover-foreground: #3a3a3a;
 
-  /* CTA Primario (Miami Orange) */
-  --primary: #ff6900;
-  --primary-foreground: #ededed;
+  /* CTA Primario */
+  --primary: #ff6900;            /* <— tieni solo questa */
+  --primary-foreground: #E9E9E9FF;
 
-  /* CTA Secondario (Espresso) */
-  --secondary: #2a1f1d; /* Espresso caldo */
-  --secondary-foreground: #ffffff;
+  /* CTA Secondario */
+  --secondary: #2a1f1d;          /* Espresso caldo */
+  --secondary-foreground: #999694FF;
 
-  /* Tertiary (può essere un accent extra se serve) */
-  --tertiary: #e4d5bd; /* Beige ivory */
+  /* Tertiary */
+  --tertiary: #e4d5bd;           /* Beige ivory */
   --tertiary-foreground: #2a1f1d;
 
-  /* Muted neutrals */
-  --muted: #dfdbd4;
-  --muted-foreground: #817d78;
-
-  /* Accent (beige chiaro dorato) */
+  /* Accent */
   --accent: #e4d5bd;
   --accent-foreground: #2a1f1d;
 
-  /* Destructive (rosso premium) */
+  /* Destructive */
   --destructive: #b94b3d;
   --destructive-foreground: #ffffff;
 
   /* Borders / Inputs / Ring */
   --border: #e2ded9;
   --input: #e2ded9;
-  --ring: rgba(228, 213, 189, 0.6); /* ivory-beige soft */
+  --ring: rgba(228, 213, 189, 0.6);
 
-  /* Charts (armonizzati) */
-  --chart-1: #ff6900; /* arancione */
-  --chart-2: #2a1f1d; /* espresso */
-  --chart-3: #e4d5bd; /* ivory beige */
-  --chart-4: #d2691e; /* brown copper */
-  --chart-5: #3a3a3a; /* dark neutral */
+  /* Charts */
+  --chart-1: #ff6900;
+  --chart-2: #2a1f1d;
+  --chart-3: #e4d5bd;
+  --chart-4: #d2691e;
+  --chart-5: #3a3a3a;
 
   /* Sidebar */
   --sidebar: #f8f5f1;
@@ -112,12 +109,28 @@
   --sidebar-ring: rgba(228, 213, 189, 0.6);
 }
 
+/* ===== BASE LAYER ===== */
 @layer base {
+  /* Evita di forzare font su * (troppo aggressivo) */
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground w-screen overflow-x-hidden;
+
+  h1{
+    @apply text-5xl text-white  font-black;
   }
+
+  p{
+    @apply tracking-wider leading-8 text-xl font-medium  ;
+  }
+  /* Imposta il default: Poppins via font-sans */
+  body {
+    @apply font-poppins bg-background text-foreground w-screen overflow-x-hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Se vuoi usare la stack “system” in alcune aree:
+     <div class="font-body">…</div> */
 }
- 
