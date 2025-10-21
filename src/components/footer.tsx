@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 function Footer() {
   return (
-    <footer className="w-full bg-gradient-to-b from-[#454444] to-[#2C2C2C] font-poppins">
+    <footer className="w-full max-w-[1200px] mx-auto bg-gradient-to-b from-[#454444] to-[#2C2C2C] font-poppins">
       <div className="max-w-[1280px] mx-auto px-6 sm:px-12 lg:px-16 py-12 sm:py-16">
         {/* Top Section */}
         <div className="flex flex-col lg:flex-row justify-between gap-12 lg:gap-16">

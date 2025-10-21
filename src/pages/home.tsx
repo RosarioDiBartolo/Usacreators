@@ -6,7 +6,7 @@ import Footer from '@/components/footer'
 
 function Home() {
   return (
-<div className="">
+<div className="flex flex-col">
       <div className=" pb-28 ">
         <Header />
 
