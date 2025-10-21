@@ -47,13 +47,11 @@ export default function FeaturesSection({ data, media, meta }) {
 
           <ul className="grid gap-4 sm:grid-cols-2">
             {data.features.map((f) => (
-              <li key={f.title} className=" 
-              bg-primary/10   
-              flex items-start gap-3 rounded-xl border p-4">
-                <div className="m-0.5 rounded-md bg-primary/10 p-2 text-primary">{f.icon}</div>
-                <div className="  ">
-                  <h3 className=" text-primary text-lg font-black">{f.title}</h3>
-                  <p className=" text-sm text-primary/70  ">{f.desc}</p>
+              <li key={f.title} className="flex items-start gap-3 rounded-2xl border border-accent/20 bg-gradient-to-br from-accent/5 to-tertiary/10 p-5 transition-all duration-300 hover:border-accent/40 hover:shadow-lg hover:bg-gradient-to-br hover:from-accent/10 hover:to-tertiary/15">
+                <div className="rounded-lg bg-primary/10 p-3 text-primary flex-shrink-0">{f.icon}</div>
+                <div>
+                  <h3 className="text-foreground text-base font-semibold">{f.title}</h3>
+                  <p className="text-sm text-muted-foreground mt-1">{f.desc}</p>
                 </div>
               </li>
             ))}
