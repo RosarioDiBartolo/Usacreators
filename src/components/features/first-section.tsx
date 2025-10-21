@@ -52,26 +52,25 @@ export default function FeaturesSection({ data, media, meta }) {
             ))}
           </ul>
 
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Button className="h-11 gap-2 text-base">
+          <div className="flex flex-col gap-3 sm:flex-row pt-2">
+            <Button className="h-11 gap-2 text-base rounded-lg">
               {data.ctaPrimary}
               <ArrowRight className="h-4 w-4" />
             </Button>
-            <Button variant="outline" className="h-11 text-base">
+            <Button variant="outline" className="h-11 text-base rounded-lg">
               {data.ctaSecondary}
             </Button>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="grid grid-cols-3 gap-3 rounded-2xl border p-4">
+          <div className="grid gap-4 pt-4">
+            <div className="grid grid-cols-3 gap-4 rounded-2xl border border-accent/20 bg-gradient-to-br from-accent/5 to-tertiary/5 p-6">
               {data.stats.map((s) => (
                 <div key={s.label} className="text-center">
-                  <div className="text-lg font-semibold">{s.value}</div>
-                  <div className="text-[11px] text-muted-foreground">{s.label}</div>
+                  <div className="text-2xl font-bold text-foreground">{s.value}</div>
+                  <div className="text-xs text-muted-foreground mt-1">{s.label}</div>
                 </div>
               ))}
             </div>
-             
           </div>
         </motion.div>
       </div>
