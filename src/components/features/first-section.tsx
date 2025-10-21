@@ -34,11 +34,11 @@ export default function FeaturesSection({ data, media, meta }) {
             <span className="text-xs text-muted-foreground">{meta.version}</span>
           </div>
 
-          <h2 className=" text-3xl  font-bold leading-tight tracking-tight  bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">
+          <h2 className="text-3xl md:text-4xl font-bold leading-tight tracking-tight">
             {data.title}
           </h2>
 
-          <p className=" text-base leading-normal">{data.description}</p>
+          <p className="text-base leading-relaxed text-muted-foreground">{data.description}</p>
 
           <ul className="grid gap-4 sm:grid-cols-2">
             {data.features.map((f) => (
