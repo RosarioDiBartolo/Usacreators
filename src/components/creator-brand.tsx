@@ -26,16 +26,16 @@ function CreatorsBrands() {
           <div className="relative z-10 p-8 sm:p-12 lg:p-16 pb-12 lg:pb-20 w-full">
             <div className="max-w-[571px] space-y-8 lg:space-y-12">
               {/* Heading */}
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal leading-tight">
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.076] lg:leading-[107.67%]">
                 <span className="text-white">You're a </span>
-                <span className="font-normal bg-gradient-to-b from-white to-[#960CFF] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-b from-white to-[#960CFF] bg-clip-text text-transparent">
                   Brand
                 </span>
                 <span className="text-[#E9E9E9]"> looking for content Creators</span>
               </h2>
 
               {/* Description */}
-              <p className="text-[#E9E9E9] text-base sm:text-lg lg:text-xl leading-normal tracking-wide max-w-[571px]">
+              <p className="text-[#E9E9E9] text-xl font-normal leading-normal tracking-[1.6px] max-w-[571px]">
                 Connect with verified creators who understand your brand vision and can produce authentic content that resonates.
               </p>
 
@@ -43,7 +43,7 @@ function CreatorsBrands() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-[rgba(239,221,254,0.48)] text-white text-xl sm:text-2xl font-bold px-10 sm:px-14 py-3 rounded-[18px] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] transition-all duration-300"
+                className="bg-[rgba(239,221,254,0.48)] text-white text-2xl font-black px-10 sm:px-14 py-3 rounded-[18px] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] transition-all duration-300"
               >
                 Explour our Catalog
               </motion.button>
@@ -73,16 +73,16 @@ function CreatorsBrands() {
           <div className="relative z-10 p-8 sm:p-12 lg:p-16 pb-12 lg:pb-20 w-full flex flex-col items-end text-right">
             <div className="max-w-full space-y-8 lg:space-y-12">
               {/* Heading */}
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal leading-tight">
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.076] lg:leading-[107.67%]">
                 <span className="text-white">You're a </span>
-                <span className="font-normal bg-gradient-to-b from-white via-white to-[#FE7F30] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-b from-white via-white to-[#FE7F30] bg-clip-text text-transparent">
                   Creator
                 </span>
                 <span className="text-[#E9E9E9]"> looking for collaborations</span>
               </h2>
 
               {/* Description */}
-              <p className="text-[#E9E9E9] text-base sm:text-lg lg:text-xl leading-normal tracking-wide">
+              <p className="text-[#E9E9E9] text-xl font-normal leading-normal tracking-[1.6px]">
                 We've already onboarded top creators ready to deliver on-brand content for your business purposes.
               </p>
 
@@ -90,7 +90,7 @@ function CreatorsBrands() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-[#E2B69B] text-white text-xl sm:text-2xl font-bold px-10 sm:px-14 py-3 rounded-[18px] transition-all duration-300"
+                className="bg-[#E2B69B] text-white text-2xl font-black px-10 sm:px-14 py-3 rounded-[18px] transition-all duration-300"
               >
                 Apply as a Creator
               </motion.button>
