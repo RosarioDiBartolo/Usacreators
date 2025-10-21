@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 function CreatorsBrands() {
   return (
-    <section className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 font-poppins">
       <div className="flex flex-col lg:flex-row rounded-t-[60px] lg:rounded-t-[100px] overflow-hidden min-h-[500px] lg:min-h-[903px]">
         {/* Brand Section - Left */}
         <motion.div
