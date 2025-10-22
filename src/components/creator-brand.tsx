@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 function CreatorsBrands() {
   return (
-    <section className="w-full max-w-[1200px] mx-auto font-poppins">
+    <section className="w-full max-w-[1200px]  mx-auto font-poppins">
       <div className="flex flex-col lg:flex-row rounded-t-[60px] lg:rounded-t-[100px] overflow-hidden min-h-[500px] lg:min-h-[903px]">
         {/* Brand Section - Left */}
         <motion.div
@@ -53,7 +53,7 @@ function CreatorsBrands() {
 
         {/* Creator Section - Right */}
         <motion.div
-          initial={{ opacity: 0, x: 50 }}
+          initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
@@ -70,9 +70,9 @@ function CreatorsBrands() {
           </div>
 
           {/* Content */}
-          <div className="relative z-10 p-8 sm:p-12 lg:p-16 pb-12 lg:pb-20 w-full flex flex-col items-end text-right">
-            <div className="max-w-full space-y-8 lg:space-y-12">
-              {/* Heading */}
+         <div className="relative z-10 p-8 sm:p-12 lg:p-16 pb-12 lg:pb-20 w-full">
+            <div className="max-w-[571px] space-y-8 lg:space-y-12">
+                {/* Heading */}
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.076] lg:leading-[107.67%]">
                 <span className="text-white">You're a </span>
                 <span className="bg-gradient-to-b from-white via-white to-[var(--creator-brand-gradient-orange)] bg-clip-text text-transparent">
@@ -82,7 +82,7 @@ function CreatorsBrands() {
               </h2>
 
               {/* Description */}
-              <p className="text-[var(--creator-brand-overlay-light)] text-xl font-normal leading-normal tracking-[1.6px]">
+              <p className=" h-[4lh] text-[var(--creator-brand-overlay-light)] text-xl font-normal leading-normal tracking-[1.6px] max-w-[571px]">
                 We've already onboarded top creators ready to deliver on-brand content for your business purposes.
               </p>
 

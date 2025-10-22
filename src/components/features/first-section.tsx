@@ -48,12 +48,12 @@ export default function FeaturesSection({ data, media, meta }) {
           <ul className="grid gap-4 sm:grid-cols-2">
             {data.features.map((f) => (
               <li key={f.title} className=" 
-              bg-primary/10   
+              bg-gradient-to-bl from-primary/20   
               flex items-start gap-3 rounded-xl border p-4">
                 <div className="m-0.5 rounded-md bg-primary/10 p-2 text-primary">{f.icon}</div>
                 <div className="  ">
-                  <h3 className=" text-primary text-lg font-black">{f.title}</h3>
-                  <p className=" text-sm text-primary/70  ">{f.desc}</p>
+                  <h3 className="  text-lg font-black">{f.title}</h3>
+                  <p className=" text-sm  ">{f.desc}</p>
                 </div>
               </li>
             ))}
