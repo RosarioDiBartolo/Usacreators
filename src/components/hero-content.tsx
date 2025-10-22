@@ -87,7 +87,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
       Get started <ArrowDown className=" animate-bounce" />
       </p>
       <div 
-      className=" flex gap-8 justify-center">
+      className=" flex flex-col lg:flex-row gap-8 justify-center max-w-full">
         <Link  to={"/creators"}> 
         <MotionButton
           variants={itemVariants}
@@ -98,7 +98,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
             target?.scrollIntoView({ behavior: "smooth" });
           }}
           size="lg"
-          className=" "
+          className="max-w-full"
         >
           <motion.span>I'm a creator</motion.span>
         </MotionButton>
@@ -114,6 +114,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
             target?.scrollIntoView({ behavior: "smooth" });
           }}
           size="lg"
+          className="max-w-full"
         >
           <motion.span>I'm a brand</motion.span>
         </MotionButton>

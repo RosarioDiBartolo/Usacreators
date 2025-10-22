@@ -20,7 +20,7 @@ export default function FeaturesSection({ data, media, meta }) {
       ">
         {/* Image */}
         <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} 
-        className=" max-w-xl w-full **:  "
+        className=" max-w-xl w-full  overflow-hidden px-4 "
         >
           <Carousel/>
         </motion.div>
