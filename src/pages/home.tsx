@@ -13,7 +13,8 @@ function Home() {
         <Hero />
         <Features />
        </div>
-      <div className=' bg-gradient-to-b from-background to-primary/50 py-40'>
+      <div className=' bg-gradient-to-b from-background to-primary/50 
+      lg:pb-40'>
         <CreatorsBrands />
       <Footer />
 

@@ -1,20 +1,21 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="w-full rounded-b-[100px] max-w-[1200px] mx-auto bg-gradient-to-b from-[#454444] to-[#2C2C2C] font-poppins">
+    <footer className="w-full lg:rounded-b-[100px] max-w-[1200px] mx-auto bg-gradient-to-b from-[#454444] to-[#2C2C2C] font-poppins">
       <div className="max-w-[1280px] mx-auto px-6 sm:px-12 lg:px-16 py-12 sm:py-16">
         {/* Top Section */}
         <div className="flex flex-col lg:flex-row justify-between gap-12 lg:gap-16">
           {/* Left Section - Logo, Email, CTA */}
           <div className="flex flex-col gap-8 max-w-xl">
             {/* Logo and Brand Name */}
-            <div className="flex items-center gap-6 sm:gap-8">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+            <div className="flex items-end gap-6 sm:gap-8">
+              <div className= " overflow-hidden  rounded-full bg-primary flex items-center justify-center flex-shrink-0">
                 <img
                   src="/src/assets/logo-no-text.png"
                   alt="Miami Creators Logo"
-                  className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16"
+                  className="w-12 sm:w-14 lg:w-18 aspect-square "
                 />
               </div>
               <h2 className="text-white text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
@@ -30,14 +31,16 @@ function Footer() {
               Porcodio@diocane.com
             </a>
 
+            <Link to={"/creators"}> 
             {/* CTA Button */}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-primary text-white text-xl sm:text-2xl font-bold px-10 sm:px-12 py-3 rounded-[18px] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] transition-all duration-300 w-fit"
+              className="bg-primary text-white text-xl sm:text-2xl font-bold px-10 sm:px-12 py-3 rounded-[18px] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]   w-fit"
             >
               Get Started
             </motion.button>
+            </Link>
           </div>
 
           {/* Right Section - Quick Links */}
