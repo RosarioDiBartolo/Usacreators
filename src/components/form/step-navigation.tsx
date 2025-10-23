@@ -19,38 +19,42 @@ export default function StepNavigation({
   handleSubmit: () => void;
 }) {
   return (
-    <div className="flex justify-between pt-6 pb-4 px-4">
-      <motion.div whileHover={{ scale: 1.05 }}>
+    <div className="flex gap-3 sm:gap-4 justify-between pt-6 sm:pt-8 pb-4 sm:pb-6 px-4 sm:px-6">
+      <motion.div whileHover={{ scale: 1.05 }} className="flex-1 sm:flex-none">
         <Button
           type="button"
           variant="outline"
           onClick={prevStep}
           disabled={currentStep === 0 || isSubmitting}
-          className="rounded-2xl"
+          className="rounded-xl sm:rounded-2xl w-full sm:w-auto text-sm sm:text-base"
         >
-          <ChevronLeft className="h-4 w-4" /> Back
+          <ChevronLeft className="h-4 w-4" />
+          <span className="hidden sm:inline">Back</span>
         </Button>
       </motion.div>
-      <motion.div whileHover={{ scale: 1.05 }}>
+      <motion.div whileHover={{ scale: 1.05 }} className="flex-1 sm:flex-none">
         <Button
           type="button"
           onClick={() =>
             currentStep === steps.length - 2 ? handleSubmit() : nextStep()
           }
           disabled={isSubmitting}
-          className="rounded-2xl"
+          className="rounded-xl sm:rounded-2xl w-full sm:w-auto text-sm sm:text-base"
         >
           {isSubmitting ? (
             <>
-              <Loader2 className="h-4 w-4 animate-spin" /> Submitting...
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span className="hidden sm:inline">Submitting...</span>
             </>
           ) : currentStep === steps.length - 2 ? (
             <>
-              Submit <Check className="h-4 w-4" />
+              <span className="hidden sm:inline">Submit</span>
+              <Check className="h-4 w-4" />
             </>
           ) : (
             <>
-              Next <ChevronRight className="h-4 w-4" />
+              <span className="hidden sm:inline">Next</span>
+              <ChevronRight className="h-4 w-4" />
             </>
           )}
         </Button>

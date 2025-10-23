@@ -86,9 +86,9 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
      <p className=" underline flex justify-center gap-2 items-center underline-offset-4 font-black text-white">
       Get started <ArrowDown className=" animate-bounce" />
       </p>
-      <div 
-      className=" flex flex-col lg:flex-row gap-8 justify-center max-w-full">
-        <Link  to={"/creators"}> 
+      <div
+      className="flex flex-col lg:flex-row gap-6 sm:gap-8 justify-center w-full px-4">
+        <Link to={"/creators"} className="w-full lg:w-auto">
         <MotionButton
           variants={itemVariants}
           variant="outline"
@@ -98,13 +98,12 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
             target?.scrollIntoView({ behavior: "smooth" });
           }}
           size="lg"
-          className="max-w-full"
+          className="w-full rounded-full sm:rounded-3xl"
         >
           <motion.span>I'm a creator</motion.span>
         </MotionButton>
         </Link>
-                <Link  to={"/catalog"}> 
-
+        <Link to={"/catalog"} className="w-full lg:w-auto">
         <MotionButton
           variants={itemVariants}
           variant="black"
@@ -114,11 +113,11 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
             target?.scrollIntoView({ behavior: "smooth" });
           }}
           size="lg"
-          className="max-w-full"
+          className="w-full rounded-full sm:rounded-3xl"
         >
           <motion.span>I'm a brand</motion.span>
         </MotionButton>
-         </Link>
+        </Link>
       </div>
       {/* CTA Button
       <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">

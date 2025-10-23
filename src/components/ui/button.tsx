@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center  cursor-pointer  justify-center gap-2 whitespace-nowrap rounded-xl font-bold  disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "inline-flex items-center  cursor-pointer  justify-center gap-2 whitespace-nowrap rounded-lg sm:rounded-xl font-bold text-sm sm:text-base disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-all",
   {
     variants: {
       variant: {
@@ -13,10 +13,10 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         black:
-          "border bg-black text-white shadow-xs hover:bg-black/80   dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
+          "border bg-black text-white shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
         outline:
           "border bg-background text-foreground shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
-        
+
           secondary:
           "bg-secondary bg-radial to-secondary from-stone-700 border border-transparent hover:border-secondary-foreground    text-secondary-foreground  ",
         ghost:
@@ -25,10 +25,10 @@ const buttonVariants = cva(
       },
       size: {
         none: "",
-        default: "h-9 px-4 py-2 has-[>svg]:px-3",
+        default: "h-9 sm:h-10 px-3 sm:px-4 py-2 has-[>svg]:px-2.5 sm:has-[>svg]:px-3",
         sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "!px-22 !py-4 text-2xl has-[>svg]:px-4",
-        icon: "size-9",
+        lg: "!px-6 sm:!px-8 !py-3 sm:!py-4 text-lg sm:text-2xl has-[>svg]:px-3 sm:has-[>svg]:px-4",
+        icon: "size-9 sm:size-10",
       },
     },
     defaultVariants: {

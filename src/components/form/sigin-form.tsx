@@ -155,16 +155,17 @@ const OnboardingForm = () => {
 }
 
   return (
-    <div className="w-full h-screen md:h-fit flex flex-col max-w-lg mx-auto py-8 px-4 relative">
-      {currentStep !== 3 &&    <StepIndicator currentStep={currentStep} steps={steps} />}
+    <div className="w-full h-screen md:h-fit flex flex-col max-w-lg mx-auto py-6 sm:py-8 px-3 sm:px-4 relative">
       <motion.div className="flex-1" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-        <Card className="border h-full shadow-md rounded-3xl overflow-hidden">
+        <Card className="border h-full shadow-md rounded-3xl overflow-hidden flex flex-col">
+          {currentStep !== 3 && <StepIndicator currentStep={currentStep} steps={steps} />}
           <form
             onSubmit={(e) => {
               e.preventDefault();
               if (currentStep < steps.length - 1)  {nextStep()} else{ handleSubmit();}
             }}
             noValidate
+            className="flex flex-col flex-1"
           >
             <AnimatePresence mode="wait">
               <motion.div
@@ -173,6 +174,7 @@ const OnboardingForm = () => {
                 animate="visible"
                 exit="exit"
                 variants={contentVariants}
+                className="flex-1"
               >
                 {currentStep === 0 && (
                   <PersonalInfo
@@ -199,7 +201,7 @@ const OnboardingForm = () => {
                 )}
                 {currentStep === 3 && (
                   <SuccessStep
-                    
+
                   />
                 )}
               </motion.div>

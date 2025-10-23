@@ -13,25 +13,20 @@ export default function FeaturesSection({ data, media, meta }) {
         <div className="absolute left-1/2 top-10 h-56 w-[48rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-primary/25 via-primary/10 to-primary/25 blur-3xl" />
       </div>
 
-      <div className="
-      md:py-20 max-w-[90rem]     mx-auto  
-      md:flex 
-       items-center 
-      ">
+      <div className="mx-auto max-w-7xl px-5 md:px-10 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12">
         {/* Image */}
-        <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} 
-        className=" max-w-xl w-full  overflow-hidden px-4 "
+        <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
+        className="max-w-xl w-full lg:order-2 overflow-hidden px-4"
         >
           <Carousel/>
         </motion.div>
 
         {/* Text */}
-        <motion.div 
-        initial={{ opacity: 0, y: 12 }} 
-        whileInView={{ opacity: 1, y: 0 }} 
-        transition={{ duration: 0.6, delay: 0.1 }} 
-        className="flex flex-col gap-3 px-5  
-        flex-1">
+        <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="flex flex-col gap-6 lg:order-1">
           <div className="flex items-center gap-2">
             <Badge variant="secondary" className="rounded-full px-3 py-1">
               {meta.badge}
@@ -39,46 +34,43 @@ export default function FeaturesSection({ data, media, meta }) {
             <span className="text-xs text-muted-foreground">{meta.version}</span>
           </div>
 
-          <h2 className=" text-3xl  font-bold leading-tight tracking-tight  bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">
+          <h2 className="text-3xl md:text-4xl font-bold leading-tight tracking-tight">
             {data.title}
           </h2>
 
-          <p className=" text-base leading-normal">{data.description}</p>
+          <p className="text-base leading-relaxed text-muted-foreground">{data.description}</p>
 
           <ul className="grid gap-4 sm:grid-cols-2">
             {data.features.map((f) => (
-              <li key={f.title} className=" 
-              bg-gradient-to-bl from-primary/20   
-              flex items-start gap-3 rounded-xl border p-4">
-                <div className="m-0.5 rounded-md bg-primary/10 p-2 text-primary">{f.icon}</div>
-                <div className="  ">
-                  <h3 className="  text-lg font-black">{f.title}</h3>
-                  <p className=" text-sm  ">{f.desc}</p>
+              <li key={f.title} className="flex items-start gap-3 rounded-2xl border border-accent/20 bg-gradient-to-br from-accent/5 to-tertiary/10 p-5 transition-all duration-300 hover:border-accent/40 hover:shadow-lg hover:bg-gradient-to-br hover:from-accent/10 hover:to-tertiary/15">
+                <div className="rounded-lg bg-primary/10 p-3 text-primary flex-shrink-0">{f.icon}</div>
+                <div>
+                  <h3 className="text-foreground text-base font-semibold">{f.title}</h3>
+                  <p className="text-sm text-muted-foreground mt-1">{f.desc}</p>
                 </div>
               </li>
             ))}
           </ul>
 
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Button className="h-11 gap-2 text-base">
+          <div className="flex flex-col gap-3 sm:flex-row pt-2">
+            <Button className="h-11 gap-2 text-base rounded-lg">
               {data.ctaPrimary}
               <ArrowRight className="h-4 w-4" />
             </Button>
-            <Button variant="outline" className="h-11 text-base">
+            <Button variant="outline" className="h-11 text-base rounded-lg">
               {data.ctaSecondary}
             </Button>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="grid grid-cols-3 gap-3 rounded-2xl border p-4">
+          <div className="grid gap-4 pt-4">
+            <div className="grid grid-cols-3 gap-4 rounded-2xl border border-accent/20 bg-gradient-to-br from-accent/5 to-tertiary/5 p-6">
               {data.stats.map((s) => (
                 <div key={s.label} className="text-center">
-                  <div className="text-lg font-semibold">{s.value}</div>
-                  <div className="text-[11px] text-muted-foreground">{s.label}</div>
+                  <div className="text-2xl font-bold text-foreground">{s.value}</div>
+                  <div className="text-xs text-muted-foreground mt-1">{s.label}</div>
                 </div>
               ))}
             </div>
-             
           </div>
         </motion.div>
       </div>
