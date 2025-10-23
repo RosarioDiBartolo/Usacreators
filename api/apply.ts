@@ -2,12 +2,13 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { z } from "zod";
 import crypto from "crypto";
 import admin, { type ServiceAccount } from "firebase-admin";
-import path from "path";
-import { readFileSync } from "fs";
-
-const jsonPath = path.join("./api", "service-account.json");
-const rawData = readFileSync(jsonPath, "utf8");
-const serviceAccount = JSON.parse(rawData);
+  
+  
+const base64 = process.env.FIREBASE_SERVICE_ACCOUNT;
+if (!base64) {
+  throw new Error('Missing GOOGLE_SERVICE_ACCOUNT_KEY env variable');
+}
+ const serviceAccount = JSON.parse(Buffer.from(base64, 'base64').toString('utf8'));
 
 // ---------- Environment Safety Check ----------
 const requiredEnv = ["ALLOW_ORIGIN"];
