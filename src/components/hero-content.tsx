@@ -101,7 +101,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
             target?.scrollIntoView({ behavior: "smooth" });
           }}
           size="lg"
-          className="w-full rounded-full sm:rounded-3xl"
+          className="w-full rounded-full sm:rounded-3xl shadow-md"
         >
           <motion.span>I'm a creator</motion.span>
         </MotionButton>
@@ -116,7 +116,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
             target?.scrollIntoView({ behavior: "smooth" });
           }}
           size="lg"
-          className="w-full rounded-full sm:rounded-3xl"
+          className="w-full rounded-full sm:rounded-3xl shadow-md"
         >
           <motion.span>I'm a brand</motion.span>
         </MotionButton>

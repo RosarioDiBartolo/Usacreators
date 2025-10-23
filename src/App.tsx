@@ -11,7 +11,7 @@ function App() {
         <Route path="/" index element={<Home />} />
         <Route path="/creators" element={<SignupPage />} />
         <Route path="*" element={<NotFound />} />
-      </Routes> 
+      </Routes>{" "}
               <Toaster />
 
     </BrowserRouter>
