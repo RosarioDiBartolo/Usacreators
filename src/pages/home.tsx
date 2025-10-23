@@ -13,9 +13,13 @@ function Home() {
         <Hero />
         <Features />
        </div>
-
-      <CreatorsBrands />
+      <div className=' bg-gradient-to-b from-background to-primary/50 
+      lg:pb-40'>
+        <CreatorsBrands />
       <Footer />
+
+      </div>
+      
     </div>  )
 }
 

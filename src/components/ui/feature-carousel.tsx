@@ -56,7 +56,7 @@ export const HeroSection = React.forwardRef<HTMLDivElement, HeroProps>(
                   <div
                     key={index}
                     className={cn(
-                      'absolute   w-80  h-[28rem] transition-all duration-500 ease-in-out',
+                      'absolute  px-4 lg:px-0  w-80  h-[28rem] transition-all duration-500 ease-in-out',
                       'flex items-center justify-center'
                     )}
                     style={{

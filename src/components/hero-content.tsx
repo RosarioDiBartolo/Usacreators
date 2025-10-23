@@ -1,6 +1,8 @@
 import React from "react";
 import { motion, type Variants } from "framer-motion";
 import { Button } from "./ui/button";
+import { Link } from "react-router-dom";
+import { ArrowBigDown, ArrowDown } from "lucide-react";
 interface AnimatedTextProps {
 
   delay?: number;
@@ -49,7 +51,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
   const itemVariants = itemVariantsTemplate(duration);
   return (
     <motion.div
-      className="text-center w-full flex flex-col gap-10 max-w-3xl mx-auto   relative z-10   px-4"
+      className="text-center w-full flex flex-col gap-8 max-w-3xl mx-auto   relative z-10   px-4"
       variants={containerVariants}
       custom={delay}
       initial="hidden"
@@ -81,8 +83,12 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
         
         We connect <span className=" text-white">brands</span> with our's top <span className=" text-white"> content creators </span> for authentic, engaging social media <br/>presence.      </motion.p>
      </div>
+     <p className=" underline flex justify-center gap-2 items-center underline-offset-4 font-black text-white">
+      Get started <ArrowDown className=" animate-bounce" />
+      </p>
       <div 
-      className=" flex gap-3 justify-center">
+      className=" flex flex-col lg:flex-row gap-8 justify-center max-w-full">
+        <Link  to={"/creators"}> 
         <MotionButton
           variants={itemVariants}
           variant="outline"
@@ -92,10 +98,13 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
             target?.scrollIntoView({ behavior: "smooth" });
           }}
           size="lg"
-          className=" "
+          className="max-w-full"
         >
           <motion.span>I'm a creator</motion.span>
         </MotionButton>
+        </Link>
+                <Link  to={"/catalog"}> 
+
         <MotionButton
           variants={itemVariants}
           variant="black"
@@ -105,9 +114,11 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
             target?.scrollIntoView({ behavior: "smooth" });
           }}
           size="lg"
+          className="max-w-full"
         >
           <motion.span>I'm a brand</motion.span>
         </MotionButton>
+         </Link>
       </div>
       {/* CTA Button
       <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">

@@ -27,7 +27,7 @@ const App = () => {
   
 
   return (
-    <div className=" my-30">
+    <div className=" my-30 ">
       <HeroSection
           images={images}
        
