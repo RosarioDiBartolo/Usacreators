@@ -20,7 +20,7 @@ export default function Step0PersonalInfo({
   return (
     <>
       <CardHeader>
-        <CardTitle>Tell us about yourself</CardTitle>
+        <CardTitle className=" text-primary">Tell us about yourself</CardTitle>
         <CardDescription>Let&apos;s start with some basic information</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

@@ -155,9 +155,8 @@ const OnboardingForm = () => {
 }
 
   return (
-    <div className="w-full h-screen md:h-fit flex flex-col max-w-lg mx-auto py-6 sm:py-8 px-3 sm:px-4 relative">
-      <motion.div className="flex-1" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-        <Card className="border h-full shadow-md rounded-3xl overflow-hidden flex flex-col">
+       <motion.div className=" " initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+        <  Card className=" bg-transparent">
           {currentStep !== 3 && <StepIndicator currentStep={currentStep} steps={steps} />}
           <form
             onSubmit={(e) => {
@@ -218,8 +217,7 @@ const OnboardingForm = () => {
           </form>
         </Card>
       </motion.div>
-    </div>
-  );
+   );
 };
 
 export default OnboardingForm;

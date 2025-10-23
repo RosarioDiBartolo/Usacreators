@@ -30,7 +30,7 @@ function AdditionalInfo({
       {" "}
       <CardHeader>
         {" "}
-        <CardTitle>Anything Else?</CardTitle>{" "}
+        <CardTitle className = "text-primary">Anything Else?</CardTitle>{" "}
         <CardDescription>Add any extra details</CardDescription>{" "}
       </CardHeader>{" "}
       <CardContent className="space-y-4">

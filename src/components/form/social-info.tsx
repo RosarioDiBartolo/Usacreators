@@ -29,7 +29,7 @@ export default function Step0PersonalInfo({
      
         <CardHeader>
           {" "}
-          <CardTitle>Location & Socials</CardTitle>{" "}
+          <CardTitle className = "text-primary">Location & Socials</CardTitle>{" "}
           <CardDescription>
             {" "}
             Tell us where you are and your profiles{" "}
