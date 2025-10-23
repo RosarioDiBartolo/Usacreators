@@ -42,7 +42,7 @@ function AdditionalInfo({
           {" "}
            <motion.div variants={fadeInUp}>
                     <Label htmlFor="profilePicture">Profile Picture</Label>
-                    <Input type="file" accept="image/*" onChange={(e) => handleProfileFile(e.target.files?.[0] || null)} />
+                    <Input type="file" className=" accent-blue" accept="image/*" onChange={(e) => handleProfileFile(e.target.files?.[0] || null)} />
                   </motion.div>
           <Label htmlFor="additionalInfo">
             {" "}
