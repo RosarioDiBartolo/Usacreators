@@ -107,12 +107,12 @@ function Section({
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="relative z-10 p-8 sm:p-12 lg:p-16 pb-20 w-full"
+        className="relative z-10 p-6 sm:p-8 lg:p-12 xl:p-16 pb-16 sm:pb-20 w-full"
       >
-        <div className="max-w-[571px] space-y-8 lg:space-y-12">
+        <div className="max-w-[571px] space-y-6 sm:space-y-8 lg:space-y-12">
           <motion.h2
             variants={itemVariants(factor)}
-            className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight"
+            className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black leading-tight"
           >
             <span className="text-white">{titlePrefix}</span>
             <span
@@ -127,7 +127,7 @@ function Section({
 
           <motion.p
             variants={itemVariants(factor)}
-            className="text-[var(--creator-brand-overlay-light)] text-xl font-normal leading-normal tracking-[1.6px] max-w-[571px]"
+            className="text-[var(--creator-brand-overlay-light)] text-base sm:text-lg lg:text-xl font-normal leading-relaxed sm:leading-normal tracking-wide sm:tracking-[1.6px] max-w-[571px]"
           >
             {description}
           </motion.p>
@@ -186,7 +186,7 @@ const sections = [
 export default function CreatorsBrands() {
   return (
     <section className="w-full max-w-[1200px] mx-auto font-poppins">
-      <div className="flex flex-col lg:flex-row rounded-t-[60px] overflow-hidden lg:rounded-t-[100px] min-h-[150vh] lg:min-h-[903px]">
+      <div className="flex flex-col lg:flex-row rounded-t-3xl sm:rounded-t-[60px] overflow-hidden lg:rounded-t-[100px] min-h-screen sm:min-h-[150vh] lg:min-h-[903px]">
         {sections.map((section) => (
           <Section key={section.id} {...section}>
             {section.children}
