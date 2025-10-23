@@ -83,9 +83,12 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
         
         We connect <span className=" text-white">brands</span> with our's top <span className=" text-white"> content creators </span> for authentic, engaging social media <br/>presence.      </motion.p>
      </div>
-     <p className=" underline flex justify-center gap-2 items-center underline-offset-4 font-black text-white">
+     <motion.p 
+             variants={itemVariants}
+
+     className=" underline flex justify-center gap-2 items-center underline-offset-4 font-black text-white">
       Get started <ArrowDown className=" animate-bounce" />
-      </p>
+      </motion.p >
       <div
       className="flex flex-col lg:flex-row gap-6 sm:gap-8 justify-center w-full px-4">
         <Link to={"/creators"} className="w-full lg:w-auto">

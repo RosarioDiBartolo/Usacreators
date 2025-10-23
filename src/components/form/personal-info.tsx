@@ -9,20 +9,17 @@ import { Textarea } from "../ui/textarea";
 export default function Step0PersonalInfo({
   formData,
   errors,
-  updateFormData,
-  handleProfileFile,
+  updateFormData, 
 }: {
   formData: FormDataType;
   errors: Record<string, string>;
   updateFormData: <K extends keyof FormDataType>(field: K, value: FormDataType[K]) => void;
-  handleProfileFile: (file: File | null) => void;
-}) {
+ }) {
   return (
     <>
       <CardHeader>
-        <CardTitle className=" text-primary">Tell us about yourself</CardTitle>
-        <CardDescription>Let&apos;s start with some basic information</CardDescription>
-      </CardHeader>
+        <CardTitle className=" text- text-primary">Tell us about yourself</CardTitle>
+       </CardHeader>
       <CardContent className="space-y-4">
         <motion.div variants={fadeInUp}>
           <Label htmlFor="name">Full Name</Label>
@@ -36,10 +33,7 @@ export default function Step0PersonalInfo({
           {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
         </motion.div>
 
-        <motion.div variants={fadeInUp}>
-          <Label htmlFor="profilePicture">Profile Picture</Label>
-          <Input type="file" accept="image/*" onChange={(e) => handleProfileFile(e.target.files?.[0] || null)} />
-        </motion.div>
+       
 
         <motion.div variants={fadeInUp}>
           <Label htmlFor="bio">Short Bio</Label>

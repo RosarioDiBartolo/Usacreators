@@ -10,15 +10,18 @@ import { Textarea } from "../ui/textarea";
 import { fadeInUp } from "./utils";
 import { Label } from "../ui/label";
 import type { FormDataType } from "@/lib/form-schemas";
+import { Input } from "../ui/input";
 
 function AdditionalInfo({
   formData,
   errors,
+  handleProfileFile,
   updateFormData,
   setErrors
 }: {
   formData: FormDataType;
   errors: Record<string, string>;
+    handleProfileFile: (file: File | null) => void;
   updateFormData: <K extends keyof FormDataType>(
     field: K,
     value: FormDataType[K]
@@ -37,10 +40,15 @@ function AdditionalInfo({
         {" "}
         <motion.div variants={fadeInUp} className="space-y-2">
           {" "}
+           <motion.div variants={fadeInUp}>
+                    <Label htmlFor="profilePicture">Profile Picture</Label>
+                    <Input type="file" accept="image/*" onChange={(e) => handleProfileFile(e.target.files?.[0] || null)} />
+                  </motion.div>
           <Label htmlFor="additionalInfo">
             {" "}
             Anything else we should know?{" "}
           </Label>{" "}
+          
           <Textarea
             id="additionalInfo"
             name="additionalInfo"

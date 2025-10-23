@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="w-full rounded-t-3xl sm:rounded-t-[60px] lg:rounded-b-[100px] max-w-[1200px] mx-auto bg-gradient-to-b from-[#454444] to-[#2C2C2C] font-poppins">
+    <footer className="w-full   lg:rounded-b-[100px] max-w-[1200px] mx-auto bg-gradient-to-b from-[#454444] to-[#2C2C2C] font-poppins">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 py-8 sm:py-12 lg:py-16">
         {/* Top Section */}
         <div className="flex flex-col lg:flex-row justify-between gap-8 sm:gap-10 lg:gap-16">

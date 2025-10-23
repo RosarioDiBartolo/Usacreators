@@ -16,7 +16,7 @@ export default function FeaturesSection({ data, media, meta }) {
       <div className="mx-auto max-w-7xl px-5 md:px-10 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12">
         {/* Image */}
         <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
-        className="max-w-xl w-full lg:order-2 overflow-hidden px-4"
+        className="max-w-xl w-full lg:order-2 overflow-hidden px-4 mx-auto"
         >
           <Carousel/>
         </motion.div>
