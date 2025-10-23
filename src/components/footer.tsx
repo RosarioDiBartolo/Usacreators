@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-
+import logo from "../assets/logo-no-text.png";
 function Footer() {
   return (
     <footer className="w-full   lg:rounded-b-[100px] max-w-[1200px] mx-auto bg-gradient-to-b from-[#454444] to-[#2C2C2C] font-poppins">
@@ -13,7 +13,7 @@ function Footer() {
             <div className="flex items-center sm:items-end gap-4 sm:gap-6">
               <div className="overflow-hidden rounded-full bg-primary flex items-center justify-center flex-shrink-0">
                 <img
-                  src="/src/assets/logo-no-text.png"
+                  src={logo}
                   alt="Miami Creators Logo"
                   className="w-10 sm:w-12 lg:w-16 aspect-square"
                 />
