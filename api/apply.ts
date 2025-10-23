@@ -137,7 +137,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           }),
         });
 
-        const verifyData = await verifyResp.json();
+        const verifyData = await verifyResp.json() as { success: boolean;  };
         if (!verifyData.success) {
           console.warn(`[${requestId}] ❌ Turnstile verification failed`);
           return res.status(403).json({
