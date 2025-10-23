@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import {  CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import {  CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { fadeInUp } from "./utils";
 import type { FormDataType } from "@/lib/form-schemas";
 import { Label } from "../ui/label";

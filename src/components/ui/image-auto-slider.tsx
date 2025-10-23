@@ -1,5 +1,4 @@
-import React from 'react';
-
+ 
 export const Component = () => {
   // Images for the infinite scroll - using Unsplash URLs
   const images = [

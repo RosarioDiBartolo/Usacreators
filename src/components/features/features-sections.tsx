@@ -1,8 +1,6 @@
 import Thumbnail from "@/assets/good-faces-T4p72-fc2_A-unsplash.jpg";
-import { Globe2, Link2, ShieldCheck, Zap, Layers, Compass, Cpu, Timer } from "lucide-react";
+import { Globe2, Link2, ShieldCheck, Zap } from "lucide-react";
 import FirstSection from "./first-section";
-import SecondSection from "./second-section";
-import ThirdSection from "./third-section";
 
 export default function FeaturesWrapper() {
   const content = {
@@ -51,7 +49,7 @@ export default function FeaturesWrapper() {
 
   return (
     <>
-      <FirstSection data={content.section1} media={content.media} meta={content.meta} />
+      <FirstSection data={content.section1}  meta={content.meta} />
     </>
   );
 }

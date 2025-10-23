@@ -5,14 +5,14 @@ import { cn } from '@/lib/utils'; // Assuming you have a utility for class names
 
 // --- TYPES ---
 interface HeroProps extends React.HTMLAttributes<HTMLDivElement> {
-  title: React.ReactNode;
+  heroTitle: React.ReactNode;
   subtitle: string;
   images: { src: string; alt: string; }[];
 }
 
 // --- HERO SECTION COMPONENT ---
 export const HeroSection = React.forwardRef<HTMLDivElement, HeroProps>(
-  ({ title, subtitle, images, className, ...props }, ref) => {
+  ({ heroTitle, subtitle, images, className, ...props }, ref) => {
     const [currentIndex, setCurrentIndex] = React.useState(Math.floor(images.length / 2));
 
     const handleNext = React.useCallback(() => {
@@ -50,7 +50,7 @@ export const HeroSection = React.forwardRef<HTMLDivElement, HeroProps>(
           {/* Header Section */}
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter max-w-4xl">
-              {title}
+              {heroTitle}
             </h1>
             <p className="max-w-2xl mx-auto text-muted-foreground md:text-xl">
               {subtitle}

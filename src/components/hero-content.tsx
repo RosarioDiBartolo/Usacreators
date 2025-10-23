@@ -2,7 +2,7 @@ import React from "react";
 import { motion, type Variants } from "framer-motion";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
-import { ArrowBigDown, ArrowDown } from "lucide-react";
+import {  ArrowDown } from "lucide-react";
 interface AnimatedTextProps {
 
   delay?: number;

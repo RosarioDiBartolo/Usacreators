@@ -1,4 +1,3 @@
-import CreatorsAvatars from "./creators-avatars";
 import HeroContent from "./hero-content";
 import RandomCircles from "./ui/random-circles";
 

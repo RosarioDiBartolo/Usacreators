@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import { motion, LayoutGroup } from "framer-motion";
  
 
 const CreatorsAvatars = () => {

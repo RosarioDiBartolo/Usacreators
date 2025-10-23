@@ -18,6 +18,7 @@ import {
   useRef,
   useState,
   useMemo,
+  type KeyboardEventHandler,
 } from "react";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./button";
@@ -191,7 +192,7 @@ export const Comparison = ({
  
 
   // keyboard a11y
-  const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+  const onKeyDown: KeyboardEventHandler<HTMLDivElement>  = (e ) => {
     if (disabled) return;
     switch (e.key) {
       case "ArrowLeft":

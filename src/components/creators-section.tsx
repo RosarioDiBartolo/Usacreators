@@ -14,7 +14,7 @@ function CreatorsSection() {
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-20 lg:grid-cols-2">
           {/* Left: Carousel */}
           <div className=" order-2 w-full">
-            <Carousel title={undefined} />
+            <Carousel    />
           </div>
 
           {/* Right: Copy + CTAs */}

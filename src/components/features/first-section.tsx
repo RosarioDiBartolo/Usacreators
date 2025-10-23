@@ -1,11 +1,31 @@
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle2, Sparkles, ShieldCheck } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import Carousel from "../carousel";
+import type { JSX } from "react";
 
-export default function FeaturesSection({ data, media, meta }) {
+export default function FeaturesSection({ data,  meta }:  {
+  data: {
+    title: string;
+    description: string;
+    ctaPrimary: string;
+    ctaSecondary: string;
+    features: {
+        icon: JSX.Element;
+        title: string;
+        desc: string;
+    }[];
+    stats: {
+        label: string;
+        value: string;
+    }[];
+}; 
+meta: {
+    version: string;
+    badge: string;
+};
+}) {
   return (
     <section id="features" className="relative w-full py-20">
       {/* Background glow */}
