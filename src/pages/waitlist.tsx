@@ -173,16 +173,16 @@ function WaitlistPage() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          <h2 className="text-4xl md:text-5xl font-black text-white text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-black text-white text-left mb-12">
             Stop Wasting Time on Generic Gigs
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <motion.div
-              className="space-y-6"
+              className="space-y-6 flex flex-col justify-start items-start"
               variants={itemVariants}
             >
-              <h3 className="text-2xl font-bold text-white">The Problem</h3>
+              <h3 className="text-2xl font-bold text-white mb-5">The Problem</h3>
               <p className="text-lg text-white/70 leading-relaxed">
                 Tired of low-ball offers from brands outside of Miami who don't understand your local audience? Generic platforms treat all creators the same, ignoring the unique culture and value of Miami's creative community.
               </p>
@@ -206,7 +206,7 @@ function WaitlistPage() {
               variants={itemVariants}
               custom={0.2}
             >
-              <h3 className="text-2xl font-bold text-white">The Solution</h3>
+              <h3 className="text-2xl font-bold text-white mb-5">The Solution</h3>
               <p className="text-lg text-white/70 leading-relaxed">
                 Connect directly with vetted, serious Miami-based businesses looking for local influence. Our platform celebrates the unique content culture of South Florida and connects you with brands that actually understand your audience.
               </p>
