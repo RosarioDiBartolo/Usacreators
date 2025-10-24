@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import WaitlistForm from "@/components/waitlist-form";
 import CountdownTimer from "@/components/countdown-timer";
 import RandomCircles from "@/components/ui/random-circles";
+import { HeroSection } from "@/components/ui/carousel";
 import { CheckCircle2, Users, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
