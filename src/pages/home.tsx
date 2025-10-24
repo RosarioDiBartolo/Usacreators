@@ -3,6 +3,7 @@ import Header from '@/components/header'
 import Hero from '@/components/hero'
 import CreatorsBrands from '@/components/creator-brand'
 import Footer from '@/components/footer'
+import VideosSlider from '@/components/videos-slider'
 
 function Home() {
   return (
@@ -11,6 +12,7 @@ function Home() {
         <Header />
 
         <Hero />
+        <VideosSlider />
         <Features />
        </div>
       <div className=' bg-gradient-to-b from-background to-primary/50 
