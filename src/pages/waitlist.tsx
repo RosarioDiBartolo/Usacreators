@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 
 function WaitlistPage() {
   const [signedUp, setSignedUp] = useState(false);
+  const [remainingSpots] = useState(() => Math.floor(Math.random() * 50) + 25);
 
   const sectionVariants = {
     hidden: { opacity: 0, y: 40 },
