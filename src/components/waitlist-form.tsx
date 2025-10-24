@@ -58,15 +58,15 @@ function WaitlistForm({ onSuccess }: WaitlistFormProps) {
     setIsLoading(true);
 
     try {
-      // TODO: Replace with actual API endpoint
+      // Simulate API call - replace with actual endpoint in production
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      console.log("Waitlist signup:", formData);
       toast.success("You've been added to the waitlist! Check your email.");
 
       setFormData({ email: "", niche: "", instagram: "" });
       onSuccess?.();
     } catch (error) {
+      console.error("Waitlist signup error:", error);
       toast.error("Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
@@ -78,7 +78,7 @@ function WaitlistForm({ onSuccess }: WaitlistFormProps) {
       onSubmit={handleSubmit}
       className="w-full max-w-lg mx-auto space-y-4 text-left"
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
       <div className="space-y-2">
