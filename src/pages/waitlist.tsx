@@ -276,15 +276,14 @@ function WaitlistPage() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          <h2 className="text-4xl md:text-5xl font-black text-white mb-8">
-            Built By Creators, For Miami
-          </h2>
-
           <motion.div
             className="bg-white/5 border border-white/10 rounded-2xl p-10 md:p-14"
             variants={itemVariants}
           >
-            <p className="text-xl md:text-2xl text-white/90 leading-relaxed">
+            <h2 className="text-4xl md:text-5xl font-black text-white mb-8">
+              Built By Creators, For Miami
+            </h2>
+            <p className="text-xl md:text-2xl text-white/90 leading-relaxed -mt-1">
               Our goal is simple: to create the most efficient, transparent, and high-quality collaboration platform that actually celebrates the unique content culture of South Florida. We're not just another platform—we're built by creators who understand the Miami community.
             </p>
           </motion.div>
