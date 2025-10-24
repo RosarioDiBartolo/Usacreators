@@ -76,7 +76,7 @@ function WaitlistForm({ onSuccess }: WaitlistFormProps) {
   return (
     <motion.form
       onSubmit={handleSubmit}
-      className="w-full max-w-lg mx-auto space-y-4"
+      className="w-full max-w-lg mx-auto space-y-4 text-left"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
