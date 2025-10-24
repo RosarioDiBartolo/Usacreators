@@ -256,7 +256,7 @@ function WaitlistPage() {
             variants={itemVariants}
           >
             <p className="text-lg font-semibold text-primary mb-6">
-              Only {Math.floor(Math.random() * 50) + 25} early access spots remaining
+              Only {remainingSpots} early access spots remaining
             </p>
             <div className="relative inline-block">
               <div className="absolute inset-0 bg-gradient-to-r from-primary to-amber-400 rounded-full blur-xl opacity-30" />
