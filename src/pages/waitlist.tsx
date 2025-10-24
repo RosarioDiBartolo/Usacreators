@@ -87,6 +87,8 @@ function WaitlistPage() {
               className="h-fit"
             >
               <HeroSection
+                heroTitle=""
+                subtitle=""
                 images={[
                   {
                     src: "https://images.pexels.com/photos/8368744/pexels-photo-8368744.jpeg",
