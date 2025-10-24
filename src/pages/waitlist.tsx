@@ -36,42 +36,76 @@ function WaitlistPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
 
         <motion.div
-          className="relative z-10 max-w-4xl mx-auto text-center"
+          className="relative z-10 w-full max-w-6xl mx-auto"
           variants={sectionVariants}
           initial="hidden"
           animate="visible"
         >
-          <motion.div
-            className="mb-6 inline-block"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="px-4 py-2 rounded-full bg-gradient-to-r from-primary/20 to-primary/10 border border-primary/30 text-primary font-semibold text-sm">
-              Launching Soon
-            </span>
-          </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Text & Form */}
+            <div className="text-center lg:text-left">
+              <motion.div
+                className="mb-6 inline-block"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6 }}
+              >
+                <span className="px-4 py-2 rounded-full bg-gradient-to-r from-primary/20 to-primary/10 border border-primary/30 text-primary font-semibold text-sm">
+                  Launching Soon
+                </span>
+              </motion.div>
 
-          <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
-            Get Whitelisted:<br />
-            <span className="bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">
-              The Miami Creator Catalog
-            </span>
-          </h1>
+              <h1 className="text-5xl md:text-6xl font-black text-white mb-6 leading-tight">
+                Get Whitelisted:<br />
+                <span className="bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">
+                  The Miami Creator Catalog
+                </span>
+              </h1>
 
-          <motion.p
-            className="text-xl md:text-2xl text-white/80 mb-8 max-w-2xl mx-auto leading-relaxed"
-            variants={itemVariants}
-          >
-            Stop wasting time on generic platforms. Get early access to the exclusive directory connecting local brands with Miami's top creators.
-          </motion.p>
+              <motion.p
+                className="text-lg md:text-xl text-white/80 mb-10 leading-relaxed"
+                variants={itemVariants}
+              >
+                Stop wasting time on generic platforms. Get early access to the exclusive directory connecting local brands with Miami's top creators.
+              </motion.p>
 
-          <motion.div
-            className="relative z-20"
-            variants={itemVariants}
-          >
-            <WaitlistForm onSuccess={() => setSignedUp(true)} />
-          </motion.div>
+              <motion.div
+                className="relative z-20 max-w-sm mx-auto lg:mx-0"
+                variants={itemVariants}
+              >
+                <WaitlistForm onSuccess={() => setSignedUp(true)} />
+              </motion.div>
+            </div>
+
+            {/* Images */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-fit">
+              <motion.div
+                className="rounded-2xl overflow-hidden shadow-2xl"
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              >
+                <img
+                  src="https://images.pexels.com/photos/8368744/pexels-photo-8368744.jpeg"
+                  alt="Young adults recording an energetic video with smartphones"
+                  className="w-full h-64 md:h-72 object-cover"
+                />
+              </motion.div>
+
+              <motion.div
+                className="rounded-2xl overflow-hidden shadow-2xl"
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+              >
+                <img
+                  src="https://images.pexels.com/photos/5325763/pexels-photo-5325763.jpeg"
+                  alt="Vibrant group of teenagers in colorful outfits posing with accessories"
+                  className="w-full h-64 md:h-72 object-cover"
+                />
+              </motion.div>
+            </div>
+          </div>
         </motion.div>
       </section>
 
