@@ -134,7 +134,7 @@ function WaitlistForm({ onSuccess }: WaitlistFormProps) {
         type="submit"
         size="lg"
         disabled={isLoading}
-        className="w-full rounded-full font-bold text-lg"
+        className="w-full rounded-full font-bold text-lg mt-[18px] mb-4"
       >
         {isLoading ? "Securing Your Spot..." : "Secure My Early Access Spot"}
       </Button>
