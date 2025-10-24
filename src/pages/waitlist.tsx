@@ -78,34 +78,35 @@ function WaitlistPage() {
               </motion.div>
             </div>
 
-            {/* Images */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-fit">
-              <motion.div
-                className="rounded-2xl overflow-hidden shadow-2xl"
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-              >
-                <img
-                  src="https://images.pexels.com/photos/8368744/pexels-photo-8368744.jpeg"
-                  alt="Young adults recording an energetic video with smartphones"
-                  className="w-full h-64 md:h-72 object-cover"
-                />
-              </motion.div>
-
-              <motion.div
-                className="rounded-2xl overflow-hidden shadow-2xl"
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
-              >
-                <img
-                  src="https://images.pexels.com/photos/5325763/pexels-photo-5325763.jpeg"
-                  alt="Vibrant group of teenagers in colorful outfits posing with accessories"
-                  className="w-full h-64 md:h-72 object-cover"
-                />
-              </motion.div>
-            </div>
+            {/* Carousel */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="h-fit"
+            >
+              <HeroSection
+                images={[
+                  {
+                    src: "https://images.pexels.com/photos/8368744/pexels-photo-8368744.jpeg",
+                    alt: "Young adults recording an energetic video with smartphones",
+                  },
+                  {
+                    src: "https://images.pexels.com/photos/5325763/pexels-photo-5325763.jpeg",
+                    alt: "Vibrant group of teenagers in colorful outfits posing with accessories",
+                  },
+                  {
+                    src: "https://images.pexels.com/photos/3622622/pexels-photo-3622622.jpeg",
+                    alt: "Diverse content creators collaborating together",
+                  },
+                  {
+                    src: "https://images.pexels.com/photos/3807517/pexels-photo-3807517.jpeg",
+                    alt: "Young creators using smartphones for content creation",
+                  },
+                ]}
+                className="!bg-transparent !p-0 !min-h-auto"
+              />
+            </motion.div>
           </div>
         </motion.div>
       </section>
