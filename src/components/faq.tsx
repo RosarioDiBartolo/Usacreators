@@ -181,6 +181,8 @@ const faqItems = [
   {
     id: "ultimate-goal",
     question: "What's the ultimate goal of Miami Creators?",
+    icon: Target,
+    iconColor: "text-cyan-500",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
