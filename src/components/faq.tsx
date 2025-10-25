@@ -184,15 +184,15 @@ export default function FAQ() {
     <section id="faq" className="relative w-full py-20">
       {/* Background glow */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute right-1/2 top-20 h-56 w-[48rem] translate-x-1/2 rounded-full bg-gradient-to-l from-primary/25 via-primary/10 to-primary/25 blur-3xl" />
+        <div className="absolute left-1/3 top-10 h-56 w-[48rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-primary/25 via-primary/10 to-primary/25 blur-3xl" />
       </div>
 
-      <div className="mx-auto max-w-3xl px-5 md:px-10">
+      <div className="w-full px-5 md:px-10 lg:px-20">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col gap-2 mb-12"
+          className="flex flex-col gap-2 mb-12 max-w-4xl"
         >
           <Badge variant="secondary" className="rounded-full px-3 py-1 w-fit">
             FAQ
@@ -200,7 +200,7 @@ export default function FAQ() {
           <h2 className="text-3xl md:text-4xl font-bold leading-tight tracking-tight">
             Everything You Need to Know
           </h2>
-          <p className="text-base leading-relaxed text-muted-foreground max-w-2xl">
+          <p className="text-base leading-relaxed text-muted-foreground">
             Welcome to the Miami Creators Community. Here's a full breakdown of
             how the platform works, how you earn, and why being here matters.
           </p>
@@ -211,14 +211,14 @@ export default function FAQ() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <Accordion type="single" collapsible className="space-y-3">
+          <Accordion type="single" collapsible className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
             {faqItems.map((item) => (
               <AccordionItem
                 key={item.id}
                 value={item.id}
                 className="border border-accent/20 rounded-lg bg-gradient-to-br from-accent/5 to-tertiary/10 overflow-hidden transition-all duration-300 hover:border-accent/40 hover:shadow-lg hover:bg-gradient-to-br hover:from-accent/10 hover:to-tertiary/15"
               >
-                <AccordionTrigger className="px-6 py-4 font-semibold text-foreground hover:no-underline">
+                <AccordionTrigger className="px-6 py-4 font-semibold text-foreground hover:no-underline text-left">
                   {item.question}
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-4 pt-0">
