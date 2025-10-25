@@ -229,20 +229,24 @@ export default function FAQ() {
           transition={{ duration: 0.6, delay: 0.1 }}
         >
           <Accordion type="single" collapsible className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-            {faqItems.map((item) => (
-              <AccordionItem
-                key={item.id}
-                value={item.id}
-                className="border border-accent/20 rounded-lg bg-gradient-to-br from-accent/5 to-tertiary/10 overflow-hidden transition-all duration-300 hover:border-accent/40 hover:shadow-lg hover:bg-gradient-to-br hover:from-accent/10 hover:to-tertiary/15"
-              >
-                <AccordionTrigger className="px-6 py-4 font-semibold text-foreground hover:no-underline text-left">
-                  {item.question}
-                </AccordionTrigger>
-                <AccordionContent className="px-6 pb-4 pt-0">
-                  {item.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
+            {faqItems.map((item) => {
+              const IconComponent = item.icon;
+              return (
+                <AccordionItem
+                  key={item.id}
+                  value={item.id}
+                  className="border border-accent/20 rounded-lg bg-gradient-to-br from-accent/5 to-tertiary/10 overflow-hidden transition-all duration-300 hover:border-accent/40 hover:shadow-lg hover:bg-gradient-to-br hover:from-accent/10 hover:to-tertiary/15"
+                >
+                  <AccordionTrigger className="px-6 py-4 font-semibold text-foreground hover:no-underline text-left flex gap-3 items-center">
+                    <IconComponent className={`${item.iconColor} w-5 h-5 flex-shrink-0`} />
+                    <span>{item.question}</span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4 pt-0">
+                    {item.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              );
+            })}
           </Accordion>
         </motion.div>
       </div>
