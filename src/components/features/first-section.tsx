@@ -27,13 +27,13 @@ meta: {
 };
 }) {
   return (
-    <section id="features" className="relative w-full py-20">
+    <section id="features" className="relative w-full" style={{ padding: "99px 80px" }}>
       {/* Background glow */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute left-1/2 top-10 h-56 w-[48rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-primary/25 via-primary/10 to-primary/25 blur-3xl" />
       </div>
 
-      <div className="w-full px-5 md:px-10 lg:px-20 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12">
+      <div className="w-full lg:grid lg:grid-cols-2 lg:items-center lg:gap-12">
         {/* Image */}
         <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
         className="max-w-xl w-full lg:order-2 overflow-hidden px-4 mx-auto"
