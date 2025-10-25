@@ -159,6 +159,8 @@ const faqItems = [
   {
     id: "notifications",
     question: "How will I be notified about new opportunities?",
+    icon: Bell,
+    iconColor: "text-red-500",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>You'll be updated in two ways:</p>
