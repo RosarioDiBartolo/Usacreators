@@ -27,13 +27,13 @@ meta: {
 };
 }) {
   return (
-    <section id="features" className="relative w-full py-20">
+    <section id="features" className="relative w-full" style={{ padding: "99px 80px" }}>
       {/* Background glow */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute left-1/2 top-10 h-56 w-[48rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-primary/25 via-primary/10 to-primary/25 blur-3xl" />
       </div>
 
-      <div className="mx-auto max-w-7xl px-5 md:px-10 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12">
+      <div className="w-full lg:grid lg:grid-cols-2 lg:items-center lg:gap-12">
         {/* Image */}
         <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
         className="max-w-xl w-full lg:order-2 overflow-hidden px-4 mx-auto"
@@ -46,8 +46,8 @@ meta: {
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="flex flex-col gap-6 lg:order-1">
-          <div className="flex items-center gap-2">
+        className="flex flex-col gap-6 lg:order-1 w-full">
+          <div className="flex items-center gap-2 w-full">
             <Badge variant="secondary" className="rounded-full px-3 py-1">
               {meta.badge}
             </Badge>
