@@ -198,13 +198,8 @@ const faqItems = [
 
 export default function FAQ() {
   return (
-    <section id="faq" className="relative w-full py-20 lg:pr-20 lg:pl-20">
-      {/* Background glow */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute left-1/3 top-10 h-56 w-[48rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-primary/25 via-primary/10 to-primary/25 blur-3xl" />
-      </div>
-
-      <div className="w-full px-5 md:px-10">
+    <section id="faq" className="relative w-full" style={{ padding: "80px" }}>
+      <div className="w-full" style={{ paddingRight: "40px" }}>
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
