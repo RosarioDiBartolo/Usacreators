@@ -142,6 +142,8 @@ const faqItems = [
   {
     id: "brand-requests-channel",
     question: "How does the \"specific-brand-requests\" channel work?",
+    icon: MessageSquare,
+    iconColor: "text-pink-500",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
