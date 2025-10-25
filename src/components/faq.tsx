@@ -6,11 +6,14 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
+import { Zap, DollarSign, Users, BookOpen, TrendingUp, MessageSquare, Bell, Target } from "lucide-react";
 
 const faqItems = [
   {
     id: "how-works",
     question: "How does the Miami Creators platform actually work?",
+    icon: Zap,
+    iconColor: "text-blue-500",
     answer: (
       <div className="space-y-4 text-muted-foreground">
         <p>
