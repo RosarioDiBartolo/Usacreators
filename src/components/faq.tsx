@@ -79,6 +79,8 @@ const faqItems = [
   {
     id: "why-active",
     question: "Why is it worth staying active in this community?",
+    icon: Users,
+    iconColor: "text-purple-500",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
