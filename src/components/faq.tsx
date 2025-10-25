@@ -195,7 +195,7 @@ export default function FAQ() {
           className="flex flex-col gap-2 mb-12 max-w-4xl"
         >
           <Badge variant="secondary" className="rounded-full px-3 py-1 w-fit">
-            FAQ
+            Frequent Asked Qusetions
           </Badge>
           <h2 className="text-3xl md:text-4xl font-bold leading-tight tracking-tight">
             Everything You Need to Know
