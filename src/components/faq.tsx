@@ -198,29 +198,31 @@ const faqItems = [
 
 export default function FAQ() {
   return (
-    <section id="faq" className="relative w-full py-20">
+    <section id="faq" className="relative w-full py-20 lg:pr-20 lg:pl-20">
       {/* Background glow */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute left-1/3 top-10 h-56 w-[48rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-primary/25 via-primary/10 to-primary/25 blur-3xl" />
       </div>
 
-      <div className="w-full px-5 md:px-10 lg:px-20">
+      <div className="w-full px-5 md:px-10">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col gap-2 mb-12 max-w-4xl"
+          className="flex flex-col gap-6 mb-12"
         >
           <Badge variant="secondary" className="rounded-full px-3 py-1 w-fit">
             Frequent Asked Qusetions
           </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold leading-tight tracking-tight">
-            Everything You Need to Know
-          </h2>
-          <p className="text-base leading-relaxed text-muted-foreground">
-            Welcome to the Miami Creators Community. Here's a full breakdown of
-            how the platform works, how you earn, and why being here matters.
-          </p>
+          <div className="flex flex-col gap-2">
+            <h2 className="text-3xl md:text-4xl font-bold leading-tight tracking-tight">
+              Everything You Need to Know
+            </h2>
+            <p className="text-base leading-relaxed text-muted-foreground">
+              Welcome to the Miami Creators Community. Here's a full breakdown of
+              how the platform works, how you earn, and why being here matters.
+            </p>
+          </div>
         </motion.div>
 
         <motion.div
