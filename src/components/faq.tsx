@@ -101,6 +101,8 @@ const faqItems = [
   {
     id: "what-learn",
     question: "What can I learn inside this community?",
+    icon: BookOpen,
+    iconColor: "text-orange-500",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
