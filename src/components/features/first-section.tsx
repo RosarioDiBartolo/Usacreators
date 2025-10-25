@@ -46,8 +46,8 @@ meta: {
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="flex flex-col gap-6 lg:order-1">
-          <div className="flex items-center gap-2">
+        className="flex flex-col gap-6 lg:order-1 w-full">
+          <div className="flex items-center gap-2 w-full">
             <Badge variant="secondary" className="rounded-full px-3 py-1">
               {meta.badge}
             </Badge>
