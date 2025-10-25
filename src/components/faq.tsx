@@ -60,6 +60,8 @@ const faqItems = [
   {
     id: "how-earn",
     question: "How do creators make money?",
+    icon: DollarSign,
+    iconColor: "text-green-500",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
