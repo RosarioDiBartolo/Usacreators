@@ -121,6 +121,8 @@ const faqItems = [
     id: "increase-income",
     question:
       "How can this help me increase my income (even passively)?",
+    icon: TrendingUp,
+    iconColor: "text-emerald-500",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
