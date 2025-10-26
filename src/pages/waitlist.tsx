@@ -271,7 +271,7 @@ function WaitlistPage() {
       </section>
 
       {/* Creator Promise Section */}
-      <section className="relative py-20 px-4 md:px-6 lg:px-8 bg-gradient-to-r from-primary/10 via-transparent to-amber-500/10">
+      <section className="relative py-20 px-4 md:px-6 lg:px-8 bg-gradient-to-r from-primary/10 via-transparent to-tertiary/10">
         <motion.div
           className="max-w-4xl mx-auto text-center"
           variants={sectionVariants}

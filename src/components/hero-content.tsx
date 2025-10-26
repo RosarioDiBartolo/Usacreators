@@ -146,7 +146,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
               block: "start",
             });
           }}
-          className=" cursor-pointer tracking-tight shadow-xl shadow-amber-900/50  max-w-56 w-full        rounded-2xl bg-gradient-to-b from-primary to-amber-500 text-primary-foreground  p-4 px-8"
+          className=" cursor-pointer tracking-tight shadow-xl shadow-amber-900/50  max-w-56 w-full        rounded-2xl bg-gradient-to-b from-primary to-tertiary text-primary-foreground  p-4 px-8"
         >
           Brand
         </MotionButton>

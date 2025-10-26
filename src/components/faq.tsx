@@ -6,7 +6,16 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
-import { Zap, DollarSign, Users, BookOpen, TrendingUp, MessageSquare, Bell, Target } from "lucide-react";
+import {
+  Zap,
+  DollarSign,
+  Users,
+  BookOpen,
+  TrendingUp,
+  MessageSquare,
+  Bell,
+  Target,
+} from "lucide-react";
 
 const faqItems = [
   {
@@ -86,8 +95,8 @@ const faqItems = [
         <p>
           Because you'll be the first to know when new brands enter our
           ecosystem. Whenever a new company buys catalog access, we announce it
-          here and send you all the contact details, this way, you can reach
-          out before anyone else.
+          here and send you all the contact details, this way, you can reach out
+          before anyone else.
         </p>
         <p>
           And when a premium brand deal comes in, we only post it here. Staying
@@ -119,8 +128,7 @@ const faqItems = [
   },
   {
     id: "increase-income",
-    question:
-      "How can this help me increase my income (even passively)?",
+    question: "How can this help me increase my income (even passively)?",
     icon: TrendingUp,
     iconColor: "text-emerald-500",
     answer: (
@@ -141,7 +149,7 @@ const faqItems = [
   },
   {
     id: "brand-requests-channel",
-    question: "How does the \"specific-brand-requests\" channel work?",
+    question: 'How does the "specific-brand-requests" channel work?',
     icon: MessageSquare,
     iconColor: "text-pink-500",
     answer: (
@@ -198,57 +206,71 @@ const faqItems = [
 
 export default function FAQ() {
   return (
-    <section id="faq"   >
-      <div className="w-full" style={{ paddingRight: "40px" }}>
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col gap-6 mb-12"
-        >
+    <section
+      id="faq"
+      className=" 
+    section-padding 
+    text-secondary "
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="flex flex-col gap-6 mb-12"
+      >
+        <div className="flex items-center gap-2 w-full  text-secondary">
           <Badge variant="secondary" className="rounded-full px-3 py-1 w-fit">
-            Frequent Asked Qusetions
+            <span className="bg-gradient-to-b bg-clip-text text-transparent from-primary to-tertiary ">
+              Frequent Asked Qusetions
+            </span>
           </Badge>
-          <div className="flex flex-col gap-2">
-            <h2 className="text-3xl md:text-4xl font-bold leading-tight tracking-tight">
-              Everything You Need to Know
-            </h2>
-            <p className="text-base leading-relaxed text-muted-foreground">
-              Welcome to the Miami Creators Community. Here's a full breakdown of
-              how the platform works, how you earn, and why being here matters.
-            </p>
-          </div>
-        </motion.div>
+          <span className="text-xs text-muted-foreground">F.A.Q.</span>
+        </div>
+        <div className="flex flex-col gap-2">
+          <h2 className="text-3xl md:text-4xl font-bold leading-tight tracking-tight">
+            Everything You Need to Know
+          </h2>
+          <p className="text-base leading-relaxed text-muted-foreground">
+            Welcome to the Miami Creators Community. Here's a full breakdown of
+            how the platform works, how you earn, and why being here matters.
+          </p>
+        </div>
+      </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+      >
+        <Accordion
+          type="single"
+          collapsible
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full"
         >
-          <Accordion type="single" collapsible className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-            {faqItems.map((item) => {
-              const IconComponent = item.icon;
-              return (
-                <AccordionItem
-                  key={item.id}
-                  value={item.id}
-                  className="border border-accent/20 rounded-lg bg-gradient-to-br from-accent/5 to-tertiary/10 overflow-hidden transition-all duration-300 hover:border-accent/40 hover:shadow-lg hover:bg-gradient-to-br hover:from-accent/10 hover:to-tertiary/15"
-                >
-                  <AccordionTrigger className="px-6 py-4 font-semibold text-foreground hover:no-underline text-left flex justify-between items-center ">
-                  <div className=" flex gap-4"> 
-                    <IconComponent className={`${item.iconColor} w-5 h-5 flex-shrink-0`} />
-                    <span>{item.question}</span>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4 pt-0">
-                    {item.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              );
-            })}
-          </Accordion>
-        </motion.div>
-      </div>
+          {faqItems.map((item) => {
+            const IconComponent = item.icon;
+            return (
+              <AccordionItem
+                key={item.id}
+                value={item.id}
+                className="border  border-accent/20 rounded-lg bg-gradient-to-br from-accent/5 to-secondary/5 overflow-hidden transition-all duration-300 hover:border-accent/40 hover:shadow-lg hover:bg-gradient-to-br hover:from-accent/10 hover:to-accent/15"
+              >
+                <AccordionTrigger className="px-6 py-4 font-semibold  hover:no-underline text-left flex justify-between items-center ">
+                  <div className=" flex gap-4 items-center">
+                    <IconComponent
+                      className={`${item.iconColor} w-5 h-5 flex-shrink-0`}
+                    />
+                    <span className=" font-bold text-xl">{item.question}</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-4 pt-0">
+                  {item.answer}
+                </AccordionContent>
+              </AccordionItem>
+            );
+          })}
+        </Accordion>
+      </motion.div>
     </section>
   );
 }

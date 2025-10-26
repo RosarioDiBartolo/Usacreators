@@ -50,7 +50,7 @@ function CountdownTimer({ launchDate }: CountdownTimerProps) {
     label: string;
   }) => (
     <div className="flex flex-col items-center gap-2 sm:gap-3">
-      <div className="relative w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-b from-primary to-amber-500 rounded-lg flex items-center justify-center shadow-lg">
+      <div className="relative w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-b from-primary to-tertiary rounded-lg flex items-center justify-center shadow-lg">
         <span className="text-2xl sm:text-3xl font-black text-white">
           {String(value).padStart(2, "0")}
         </span>

@@ -32,7 +32,7 @@ export default function FeaturesSection({
   return (
     <section
       id="features"
-      className=" flex flex-col justify-center gap-12"
+      className="  "
     >
       {/* Background glow */}
       <div
@@ -42,13 +42,13 @@ export default function FeaturesSection({
         <div className="absolute left-1/2 top-10 h-56 w-[48rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-primary/25 via-primary/10 to-primary/25 blur-3xl" />
       </div>
 
-      <div className="w-full lg:grid lg:grid-cols-2 lg:items-center lg:gap-12">
+      <div className="w-full lg:grid lg:grid-cols-3 lg:items-center lg:gap-12">
         {/* Image */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-xl w-full lg:order-2 overflow-hidden px-4 mx-auto"
+          className="max-w-xl w-full lg:order-2 overflow-hidden   px-4 mx-auto"
         >
           <Carousel />
         </motion.div>
@@ -58,18 +58,18 @@ export default function FeaturesSection({
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="flex flex-col gap-6 lg:order-1 w-full"
+          className=" section-padding flex flex-col gap-6 lg:order-1 w-full col-span-2"
         >
-          <div className="flex items-center gap-2 w-full">
-            <Badge variant="secondary" className="rounded-full px-3 py-1">
-              {meta.badge}
+          <div className="flex items-center gap-2 w-full  text-secondary">
+            <Badge variant="secondary" className="rounded-full px-3 py-1  ">
+              <span className="bg-gradient-to-b bg-clip-text text-transparent from-primary to-tertiary "> {meta.badge}</span>
             </Badge>
             <span className="text-xs text-muted-foreground">
               {meta.version}
             </span>
           </div>
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold leading-tight tracking-tight">
+            <h2 className="  text-3xl md:text-4xl font-bold leading-tight tracking-tight">
               {data.title}
             </h2>
 
@@ -81,13 +81,16 @@ export default function FeaturesSection({
             {data.features.map((f) => (
               <li
                 key={f.title}
-                className="flex items-start gap-3 rounded-2xl border border-accent/20 bg-gradient-to-br from-accent/5 to-tertiary/10 p-5 transition-all duration-300 hover:border-accent/40 hover:shadow-lg hover:bg-gradient-to-br hover:from-accent/10 hover:to-tertiary/15"
+                className="flex group items-start gap-3 rounded-2xl
+                 border border-transparent  
+                  p-5 transition-all duration-300 hover:border-tertiary/40 hover:shadow-lg hover:bg-gradient-to-br hover:from-accent/10 hover:to-accent/15"
               >
-                <div className="rounded-lg bg-primary/10 p-3 text-primary flex-shrink-0">
+                {/* <div className="rounded-lg bg-secondary p-3 text-primary flex-shrink-0">
                   {f.icon}
-                </div>
+                </div> */}
                 <div>
-                  <h3 className="text-foreground text-base font-semibold">
+                  <h3 className=" bg-clip-text text-foreground transition group-hover:text-transparent bg-gradient-to-b from-primary to-tertiary
+ text-xl font-bold">
                     {f.title}
                   </h3>
                   <p className="text-sm text-muted-foreground mt-1">{f.desc}</p>
@@ -107,7 +110,7 @@ export default function FeaturesSection({
           </div>
 
           <div className="grid gap-4 pt-4">
-            <div className="grid grid-cols-3 gap-4 rounded-2xl border border-accent/20 bg-gradient-to-br from-accent/5 to-tertiary/5 p-6">
+            <div className="grid grid-cols-3 gap-4 rounded-2xl border border-accent/20 bg-gradient-to-br from-accent/5 to-primary/5 p-6">
               {data.stats.map((s) => (
                 <div key={s.label} className="text-center">
                   <div className="text-2xl font-bold text-foreground">
