@@ -1,5 +1,11 @@
 import { motion } from "motion/react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "../ui/card";
 import { Button } from "../ui/button";
 import { CheckCircle, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -24,33 +30,27 @@ function SuccessStep() {
             <>🎉 Subscription Successful!</>
           </CardTitle>
           <CardDescription className="text-center text-green-600 max-w-xs">
-            Thank you for subscribing! Our platform is still developing, and we'll notify you via email about updates. Feel free to check back from time to time.
+            Thank you for subscribing! Our platform is still developing, and
+            we'll notify you via email about updates. Feel free to check back
+            from time to time.
           </CardDescription>
         </CardHeader>
 
-    
         <CardContent className="flex flex-col items-center space-y-4 mt-4">
           <p className="text-center text-green-700 font-medium">
-            Don’t miss any updates! Join our Discord community to get real-time news and announcements.
+            Don’t miss any updates! Join our Discord community to get real-time
+            news and announcements.
           </p>
 
           <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-3 sm:space-y-0 mt-2">
-            <Button
-              
-               className="bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105"
-            >
+            <Button className="bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105">
               Join our Discord
             </Button>
-
-            <Button
-              asChild
-               className="bg-green-500 hover:bg-green-600 text-white text-lg font-semibold px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105"
-            >
-              <Link
-              to={"/"}> 
-              Go Back Home
-              </Link>
-            </Button>
+            <Link to={"/"}>
+              <Button className="bg-green-500 hover:bg-green-600 text-white text-lg font-semibold px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105">
+                Go Back Home
+              </Button>
+            </Link>
           </div>
         </CardContent>
       </Card>

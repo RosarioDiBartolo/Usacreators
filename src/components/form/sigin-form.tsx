@@ -223,7 +223,10 @@ const OnboardingForm = () => {
                   setErrors={setErrors}
                 />
               )}
-              {currentStep === 3 && <SuccessStep />}
+              {currentStep === 3 && (
+                <SuccessStep />
+                )
+              }
             </motion.div>
           </AnimatePresence>
           {currentStep !== 3 && (
