@@ -107,9 +107,9 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
       }}
       transition={{ duration: 0.4, ease: "easeInOut" }}
       className={cn(
-        " transition-colors hidden lg:flex z-[60] mx-auto   w-fit flex-row items-center  gap-12  rounded-full px-6 py-3  ",
+        " transition-colors hidden lg:flex z-[60] mx-auto   w-full flex-row items-center  gap-12  rounded-full px-6 py-3  ",
         visible
-          ? "!bg-background/70 text-primary"
+          ? "!bg-background/70 text-foreground"
           : " text-white  ",
         className
       )}
@@ -308,7 +308,7 @@ export const NavbarButton = ({
   as?: React.ElementType;
   children: React.ReactNode;
   className?: string;
-  variant?: "primary" | "secondary" | "dark" | "gradient";
+  variant?: "primary" | "outline" |"secondary" | "dark" | "gradient";
 } & (
   | React.ComponentPropsWithoutRef<"a">
   | React.ComponentPropsWithoutRef<"button">
@@ -317,6 +317,9 @@ export const NavbarButton = ({
     "px-4 py-2 rounded-full text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center whitespace-nowrap";
 
   const variantStyles = {
+    outline:
+      "shadow-none bg-gradient-to-t from-primary/10 to-tertiary/40 text-primary-foreground border border-accent  hover:bg-accent hover:text-accent-foreground", 
+   
     primary:
       "bg-primary text-primary-foreground shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] hover:bg-primary hover:text-primary-foreground",
     secondary:

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Carousel from "../carousel";
 import type { JSX } from "react";
+import { Link } from "react-router-dom";
 
 export default function FeaturesSection({
   data,
@@ -100,11 +101,13 @@ export default function FeaturesSection({
           </ul>
 
           <div className="flex flex-col gap-3 sm:flex-row pt-2">
-            <Button  variant={"secondary"} className="h-11 gap-2 text-base rounded-lg">
+            <Link to={"/creators"} >
+            <Button size={"lg"} variant={"default"} className=" gap-2   ">
               {data.ctaPrimary}
               <ArrowRight className="h-4 w-4" />
             </Button>
-            <Button variant="outline" className="h-11 text-base rounded-lg">
+            </Link>
+            <Button variant="outline" size={"lg"} className="  ">
               {data.ctaSecondary}
             </Button>
           </div>

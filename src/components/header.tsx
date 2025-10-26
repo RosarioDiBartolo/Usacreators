@@ -38,7 +38,7 @@ export default function NavbarDemo() {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
-             <NavbarButton variant="secondary">Book a call</NavbarButton>
+             <NavbarButton variant="outline">Book a call</NavbarButton>
                          <NavbarButton variant="gradient">Login</NavbarButton>
 
           </div>
