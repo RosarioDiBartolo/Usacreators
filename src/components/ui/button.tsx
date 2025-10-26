@@ -1,34 +1,39 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
+import { motion } from "framer-motion";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center  cursor-pointer  justify-center gap-2 whitespace-nowrap rounded-lg sm:rounded-xl font-bold text-sm sm:text-base disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive ",
+  "relative overflow-visible isolate  inline-flex items-center cursor-pointer justify-center gap-2 whitespace-nowrap rounded-full font-semibold transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 aria-invalid:ring-2 aria-invalid:ring-destructive",
   {
     variants: {
       variant: {
-        default: "bg-gradient-to-b from-primary to-tertiary text-primary-foreground   hover:bg-primary/90",
+        default:
+          "bg-gradient-to-b from-primary to-primary/90 text-primary-foreground shadow-sm hover:opacity-90",
         destructive:
-          "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         black:
-          "border bg-black text-white shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
+          "bg-black text-white border border-input shadow-sm hover:bg-black/90 dark:bg-zinc-950 dark:hover:bg-zinc-900",
         outline:
-          "border bg-background text-foreground shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
-
-          secondary:
-          "bg-secondary bg-radial to-secondary from-stone-700 border border-transparent hover:border-secondary-foreground    text-secondary-foreground  ",
-        ghost:
-          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
+          "border border-input bg-background text-foreground shadow-sm hover:bg-accent hover:text-accent-foreground",
+        secondary:
+          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
         none: "",
-        default: "h-9 sm:h-10 px-3 sm:px-4 py-2 has-[>svg]:px-2.5 sm:has-[>svg]:px-3",
-        sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "!px-6 sm:!px-8 !py-3 sm:!py-4 text-lg sm:text-2xl has-[>svg]:px-3 sm:has-[>svg]:px-4",
-        icon: "size-9 sm:size-10",
+        xs: "h-7 px-2.5 text-xs",
+        sm: "h-9 px-3 text-sm",
+        default: "h-10 px-4 py-2",
+        lg: "h-11 px-8 text-base",
+        xl: "h-12 px-10 text-lg",
+        "2xl": "h-14 px-12 text-xl",
+        icon: "size-10",
+        "icon-sm": "size-8",
+        "icon-lg": "size-12",
       },
     },
     defaultVariants: {
@@ -36,27 +41,63 @@ const buttonVariants = cva(
       size: "default",
     },
   }
-)
+);
+
+const glowColors = {
+  default: "rgba(var(--primary), 0.5)",
+  destructive: "rgba(239, 68, 68, 0.5)",
+  black: "rgba(255, 255, 255, 0.3)",
+  outline: "rgba(var(--primary), 0.3)",
+  secondary: "rgba(var(--secondary), 0.4)",
+  ghost: "rgba(var(--accent), 0.3)",
+  link: "transparent",
+};
 
 function Button({
   className,
-  variant,
+  variant = "default",
   size,
   asChild = false,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
+    asChild?: boolean;
   }) {
-  const Comp = asChild ? Slot : "button"
+  const Comp = asChild ? Slot : "button";
+  const showGlow = variant !== "link" && variant !== "ghost";
 
   return (
     <Comp
-      data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
-  )
+  data-slot="button"
+  className={ 
+     buttonVariants({ variant, size, className })
+  }
+  {...props}
+>
+      {showGlow && (
+        <motion.span
+  className="absolute -inset-0.5 rounded-full blur-md"
+  initial={{ opacity: 0.5 }}
+  animate={{
+    opacity: [0.4, 0.7, 0.4],
+    scale: [0.95, 1.05, 0.95],
+  }}
+  transition={{
+    duration: 2,
+    repeat: Infinity,
+    ease: "easeInOut",
+  }}
+  style={{
+    background: glowColors[variant as keyof typeof glowColors],
+    filter: "blur(8px)",
+  }}
+  aria-hidden="true"
+/>
+
+      )}
+<span className="relative z-10">{props.children}</span>
+    </Comp>
+  );
 }
 
-export { Button, buttonVariants }
+export { Button, buttonVariants };

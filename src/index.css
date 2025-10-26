@@ -8,7 +8,6 @@
 @theme inline {
   /* Fonts */
   --font-poppins: "Poppins", sans-serif;
-   
 
   /* Radii */
   --radius-sm: calc(var(--radius) - 4px);
@@ -71,7 +70,7 @@
 
   /* CTA Secondario */
   --secondary: #2a1f1d;          /* Espresso caldo */
-  --secondary-foreground: #999694FF;
+  --secondary-foreground: rgb(209, 209, 209);
 
   /* Tertiary */
   --tertiary: var(--color-amber-500);           /* Beige ivory */
@@ -150,4 +149,13 @@
 
   /* Se vuoi usare la stack “system” in alcune aree:
      <div class="font-body">…</div> */
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
