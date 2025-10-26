@@ -18,7 +18,7 @@ export default function Step0PersonalInfo({
   return (
     <>
       <CardHeader>
-        <CardTitle className=" text- text-primary">Tell us about yourself</CardTitle>
+        <CardTitle className=" ">Tell us about yourself</CardTitle>
        </CardHeader>
       <CardContent className="space-y-4">
         <motion.div variants={fadeInUp}>

@@ -175,7 +175,7 @@ const OnboardingForm = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
     >
-      <Card className=" bg-transparent text-background backdrop-brightness-40">
+      <Card className=" bg-secondary text-secondary-foreground backdrop-brightness-40">
         {currentStep !== 3 && (
           <StepIndicator currentStep={currentStep} steps={steps} />
         )}

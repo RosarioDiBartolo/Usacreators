@@ -21,7 +21,7 @@ function SuccessStep() {
         <CardHeader className="flex flex-col items-center space-y-2">
           <CheckCircle className="w-14 h-14 text-green-600" />
           <CardTitle className="text-2xl text-green-700 font-bold text-center">
-            🎉 Subscription Successful!
+            <>🎉 Subscription Successful!</>
           </CardTitle>
           <CardDescription className="text-center text-green-600 max-w-xs">
             Thank you for subscribing! Our platform is still developing, and we'll notify you via email about updates. Feel free to check back from time to time.

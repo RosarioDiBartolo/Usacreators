@@ -3,6 +3,7 @@ import React, {
   useEffect, 
   type PropsWithChildren,
 } from "react";
+import { Link } from "react-router-dom";
  
 // Reusable Shader Background Hook
 const useShaderBackground = () => {
@@ -475,11 +476,13 @@ export const Hero = ( ) => (
       {  (
         <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10 animate-fade-in-up animation-delay-800">
           {  (
+            <Link to={"/creators"}>
             <button
                className="px-8 py-4 bg-gradient-to-r from-primary to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-black rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/25"
             >
               I am a Creator
             </button>
+            </Link>
           )}
           {  (
             <button
