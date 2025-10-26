@@ -59,7 +59,7 @@ export default function FeaturesSection({
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className=" section-padding pr-0 flex flex-col gap-6 lg:order-1 w-full col-span-2"
+          className=" section-padding flex flex-col gap-6 lg:order-1 w-full col-span-2"
         >
           <div className="flex items-center gap-2 w-full  text-secondary">
             <Badge variant="secondary" className="rounded-full px-3 py-1  ">

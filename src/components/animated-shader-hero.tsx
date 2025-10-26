@@ -341,7 +341,7 @@ const HeroCanvas: React.FC<PropsWithChildren<{
 
   return (
     <div
-      className={`relative w-full h-[90vh] overflow-hidden bg-black ${className}`}
+      className={`relative w-full h-[110vh] overflow-hidden bg-black ${className}`}
     >
       <style>{`
         @keyframes fade-in-down {

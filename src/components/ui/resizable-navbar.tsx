@@ -154,7 +154,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="absolute inset-0 h-full w-full rounded-full bg-primary"
+                className="absolute inset-0 h-full w-full rounded-full bg-gradient-to-t from-primary to-tertiary"
                 transition={{ duration: 0.15 }}
               />
             )}
