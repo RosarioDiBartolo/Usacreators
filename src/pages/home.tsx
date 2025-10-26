@@ -1,10 +1,10 @@
 import Features from '@/components/features/features-sections'
 import Header from '@/components/header'
-import Hero from '@/components/hero'
 import CreatorsBrands from '@/components/creator-brand'
 import Footer from '@/components/footer'
 import VideosSlider from '@/components/videos-slider'
 import FAQ from '@/components/faq'
+import Hero from "@/components/animated-shader-hero";
 
 function Home() {
   return (
@@ -12,7 +12,9 @@ function Home() {
       <div className=" pb-28 ">
         <Header />
 
-        <Hero />
+        <Hero 
+          
+        />
         <VideosSlider />
         <Features />
         <FAQ />

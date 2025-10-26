@@ -95,7 +95,7 @@ function Button({
 />
 
       )}
-<span className="relative z-10">{props.children}</span>
+ {props.children} 
     </Comp>
   );
 }

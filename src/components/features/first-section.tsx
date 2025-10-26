@@ -100,7 +100,7 @@ export default function FeaturesSection({
           </ul>
 
           <div className="flex flex-col gap-3 sm:flex-row pt-2">
-            <Button className="h-11 gap-2 text-base rounded-lg">
+            <Button  variant={"secondary"} className="h-11 gap-2 text-base rounded-lg">
               {data.ctaPrimary}
               <ArrowRight className="h-4 w-4" />
             </Button>

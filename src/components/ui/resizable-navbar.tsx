@@ -76,7 +76,7 @@ export const Navbar = ({
         className
       )}
     >
-      <div className="mx-auto w-full max-w-7xl lg:px-4 lg:pt-4 pointer-events-auto">
+      <div className="mx-auto  w-full max-w-7xl lg:px-4 lg:pt-4 pointer-events-auto">
         {React.Children.map(children, (child) =>
           React.isValidElement(child)
             ? React.cloneElement(
@@ -99,9 +99,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
       }}
       animate={{
         backdropFilter: visible ? "blur(12px)" : "blur(0px)",
-        backgroundColor: visible
-          ? "rgba(255,255,255,0.75)"
-          : "rgba(255,255,255,0)",
+       
         boxShadow: visible
           ? "0 8px 24px rgba(0,0,0,0.08)"
           : "0 0 0 rgba(0,0,0,0)",
@@ -109,10 +107,10 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
       }}
       transition={{ duration: 0.4, ease: "easeInOut" }}
       className={cn(
-        " hidden lg:flex z-[60] mx-auto   w-fit flex-row items-center  gap-12  rounded-full px-6 py-3  ",
+        " transition-colors hidden lg:flex z-[60] mx-auto   w-fit flex-row items-center  gap-12  rounded-full px-6 py-3  ",
         visible
-          ? "text-primary"
-          : "bg-transparent text-secondary  ",
+          ? "!bg-background/70 text-primary"
+          : " text-white  ",
         className
       )}
     >
@@ -320,12 +318,12 @@ export const NavbarButton = ({
 
   const variantStyles = {
     primary:
-      "bg-white text-black shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] hover:bg-primary hover:text-primary-foreground",
+      "bg-primary text-primary-foreground shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] hover:bg-primary hover:text-primary-foreground",
     secondary:
-      "bg-secondary shadow-none text-primary dark:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800",
+      "bg-secondary shadow-none text-secondary-foreground  hover:bg-accent hover:text-accent-foreground", 
     dark: "bg-black text-white shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]",
     gradient:
-      "bg-gradient-to-b from-blue-500 to-blue-700 text-white shadow-[0px_2px_0px_0px_rgba(255,255,255,0.3)_inset]",
+      "bg-gradient-to-t from-primary to-tertiary text-white shadow-[0px_2px_0px_0px_rgba(255,255,255,0.3)_inset]",
   };
 
   return (
