@@ -36,7 +36,7 @@ function Footer() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-primary text-white text-base sm:text-lg lg:text-xl font-bold px-6 sm:px-10 lg:px-12 py-2 sm:py-3 rounded-2xl sm:rounded-[18px] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] w-fit"
+              className="bg-gradient-to-t from-primary to-tertiary text-white text-base sm:text-lg lg:text-xl font-bold px-6 sm:px-10 lg:px-12 py-2 sm:py-3 rounded-2xl sm:rounded-[18px] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] w-fit"
             >
               Get Started
             </motion.button>

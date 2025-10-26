@@ -171,7 +171,7 @@ const sections = [
     description:
       "We’ve already onboarded top creators ready to deliver on-brand content for your business.",
     children: (
-      <CTALink colorVar="--primary" className="bg-primary       " to="/creators">
+      <CTALink colorVar="--primary" className="bg-gradient-to-t from-primary to-tertiary       " to="/creators">
             <UserPlus strokeWidth={3}   />
 
        Apply as a Creator 
