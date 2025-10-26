@@ -42,13 +42,13 @@ export default function FeaturesSection({
         <div className="absolute left-1/2 top-10 h-56 w-[48rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-primary/25 via-primary/10 to-primary/25 blur-3xl" />
       </div>
 
-      <div className="w-full lg:grid lg:grid-cols-3 lg:items-center lg:gap-12">
+      <div className="w-full lg:grid lg:grid-cols-3 lg:items-center ">
         {/* Image */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-xl w-full lg:order-2 overflow-hidden   px-4 mx-auto"
+          className="max-w-xl w-full lg:order-2 overflow-hidden "
         >
           <Carousel />
         </motion.div>
@@ -58,7 +58,7 @@ export default function FeaturesSection({
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className=" section-padding flex flex-col gap-6 lg:order-1 w-full col-span-2"
+          className=" section-padding pr-0 flex flex-col gap-6 lg:order-1 w-full col-span-2"
         >
           <div className="flex items-center gap-2 w-full  text-secondary">
             <Badge variant="secondary" className="rounded-full px-3 py-1  ">
