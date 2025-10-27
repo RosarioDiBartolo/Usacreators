@@ -10,15 +10,18 @@ export function CarouselItem({ title, description, image }: CarouselItemProps) {
   return (
     <Card className=" w-full overflow-hidden  mx-auto !max-w-none shadow-xl border border-border/60 flex flex-col">
       {image && (
-        <img
-          src={image}
-          alt={title}
-          className=" flex-1 h-full w-full object-cover"
-        />
+       <div className="relative flex-1 h-full w-full">
+    <img
+      src={image}
+      alt={title}
+      className="h-full w-full object-cover"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80"></div>
+  </div>
       )}
       <div className=" text-center w-full absolute bottom-0 " >
 
-        <CardHeader>
+        <CardHeader className=" max-w-xl mx-auto !p-8">
           <CardTitle className=" font-semibold">{title}</CardTitle>
           <p className="text-lg text-background">{description}</p>
 

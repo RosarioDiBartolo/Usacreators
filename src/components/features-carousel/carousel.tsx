@@ -30,8 +30,8 @@ export function Carousel({ items, autoPlay = false, interval = 4000 }: CarouselP
   }, [current, autoPlay, interval, next])
 
   return (
-    <section className="relative w-full ">
-      <div className="flex items-center justify-between absolute top-1/2 left-0 w-full px-4 z-10">
+    <section id = "features" className="relative w-full ">
+      <div className="    flex items-center justify-between absolute top-1/2 left-0 w-full px-4 z-10">
         <Button variant="ghost" size="icon" onClick={prev}>
           <ChevronLeft className="h-6 w-6" />
         </Button>
@@ -40,7 +40,7 @@ export function Carousel({ items, autoPlay = false, interval = 4000 }: CarouselP
         </Button>
       </div>
 
-      <div className="relative h-[70vh] flex items-center justify-center">
+      <div className="relative mx-auto max-w-5xl h-[70vh] flex items-center justify-center">
         <AnimatePresence initial={false}>
           <motion.div
             key={current}
@@ -62,7 +62,7 @@ export function Carousel({ items, autoPlay = false, interval = 4000 }: CarouselP
             key={index}
             onClick={() => setCurrent(index)}
             className={`w-2.5 h-2.5 rounded-full transition-all ${
-              index === current ? "bg-primary" : "bg-muted-foreground/30"
+              index === current ? "bg-primary" : "bg-accent"
             }`}
           />
         ))}
