@@ -32,7 +32,9 @@ const items = [
 ];
 
 function Features() {
-  return <Carousel items={items} autoPlay interval={5000} />;
+  return  <section id = "features" className="relative w-full ">
+ <Carousel items={items} autoPlay interval={5000} />
+ </section>
 }
 
 export default Features;

@@ -30,8 +30,8 @@ export function Carousel({ items, autoPlay = false, interval = 4000 }: CarouselP
   }, [current, autoPlay, interval, next])
 
   return (
-    <section id = "features" className="relative w-full ">
-      <div className="    flex items-center justify-between absolute top-1/2 left-0 w-full px-4 z-10">
+    <>
+       <div className="    flex items-center justify-between absolute top-1/2 left-0 w-full px-4 z-10">
         <Button variant="ghost" size="icon" onClick={prev}>
           <ChevronLeft className="h-6 w-6" />
         </Button>
@@ -67,6 +67,6 @@ export function Carousel({ items, autoPlay = false, interval = 4000 }: CarouselP
           />
         ))}
       </div>
-    </section>
+    </ >
   )
 }

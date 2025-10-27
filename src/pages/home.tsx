@@ -1,22 +1,21 @@
- 
 import Header from "@/components/header";
 import CreatorsBrands from "@/components/creator-brand";
 import Footer from "@/components/footer";
-import VideosSlider from "@/components/videos-slider";
+import Videos from "@/components/videos";
 import FAQ from "@/components/faq";
 import Hero from "@/components/animated-shader-hero";
-import Features from "@/components/features-carousel";
- 
+import Features from "@/components/features";
+
 function Home() {
   return (
     <div className="flex flex-col gap-20">
       <Header />
 
       <Hero />
-      <VideosSlider /> 
-      
-    <Features />
-       <FAQ />
+      <Videos  />
+
+      <Features />
+      <FAQ />
       <CreatorsBrands />
       <Footer />
     </div>
