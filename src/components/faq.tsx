@@ -16,7 +16,6 @@ import {
   Bell,
   Target,
 } from "lucide-react";
-
 const faqItems = [
   {
     id: "how-works",
@@ -26,42 +25,33 @@ const faqItems = [
     answer: (
       <div className="space-y-4 text-muted-foreground">
         <p>
-          Miami Creators connects local brands and real creators. We offer two
-          main services to companies that want to work with creators like you:
+          Miami Creators connects brands and creators directly — no agencies, no
+          middlemen. We offer two main services for companies looking to
+          collaborate with local talent:
         </p>
         <div className="space-y-3">
           <div>
-            <h4 className="font-semibold text-foreground">
-              Catalog Access (Standard Plan)
-            </h4>
+            <h4 className="font-semibold text-foreground">Catalog Access</h4>
             <p>
-              Brands can purchase access to our creator catalog, where they can
-              directly view your profile, niche, location, contact details, and
-              rates. Once they have access, they can reach out to you directly,
-              no middlemen, no fees, full transparency. Every time a brand
-              joins, we'll notify all members here on Discord and through email,
-              sharing the brand's contact info so you can reach out if you're
-              interested.
+              Brands can purchase access to our creator catalog, view verified
+              profiles, and contact creators directly using the contact details
+              provided. No platform fees or commissions — just direct
+              collaborations between brands and creators.
             </p>
           </div>
           <div>
-            <h4 className="font-semibold text-foreground">
-              Custom Selection (Premium Plan)
-            </h4>
+            <h4 className="font-semibold text-foreground">Custom Selection</h4>
             <p>
-              Some brands prefer that we personally select the right creators
-              for them. They tell us exactly what they're looking for, for
-              example: "We need a 22–30-year-old brunette female creator who
-              makes lifestyle UGC and charges up to $200 per video." In that
-              case, we post the opportunity inside the specific-brand-requests
-              channel and send an email with all the details. If you match the
-              description, you can apply directly.
+              For brands that want extra support, our team handpicks creators
+              that match their campaign goals — whether it’s niche, style,
+              audience, or budget. Once selected, brands contact the creators
+              directly to negotiate and collaborate.
             </p>
           </div>
         </div>
         <p>
-          <strong>In short:</strong> Standard: brand contacts creators. Premium:
-          we choose and connect the creators.
+          <strong>In both cases:</strong> brands contact creators directly, and
+          creators keep 100% of what they earn.
         </p>
       </div>
     ),
@@ -74,93 +64,74 @@ const faqItems = [
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
-          You earn directly from the brands that contact you or select you. We
-          don't take commissions, fees, or percentages, 100% of your payment
-          goes to you.
+          Creators earn by collaborating directly with brands that discover them
+          through our catalog or selection process. There are no commissions, no
+          platform fees, and no cuts — 100% of your earnings go to you.
         </p>
         <p>
-          Depending on the campaign, you'll be paid for UGC videos, TikToks,
-          product reviews, photo content, or collaborations.
+          You get paid for the content you create: UGC videos, TikToks, product
+          reviews, lifestyle photos, and more.
         </p>
       </div>
     ),
   },
   {
-    id: "why-active",
-    question: "Why is it worth staying active in this community?",
+    id: "why-join",
+    question: "Why is it worth joining the community?",
     icon: Users,
     iconColor: "text-purple-500",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
-          Because you'll be the first to know when new brands enter our
-          ecosystem. Whenever a new company buys catalog access, we announce it
-          here and send you all the contact details, this way, you can reach out
-          before anyone else.
+          Miami Creators gives you real exposure and local credibility. Every
+          time a brand joins our platform, you gain new potential collaborations
+          and more visibility in the Miami creator scene.
         </p>
         <p>
-          And when a premium brand deal comes in, we only post it here. Staying
-          active = faster access to deals, more visibility, and better
-          networking opportunities with other creators living the same Miami
-          energy.
+          Beyond deals, you’ll also be part of a growing community of creators
+          sharing insights, tips, and opportunities to grow together.
         </p>
       </div>
     ),
   },
   {
     id: "what-learn",
-    question: "What can I learn inside this community?",
+    question: "What can I learn by joining Miami Creators?",
     icon: BookOpen,
     iconColor: "text-orange-500",
     answer: (
       <div className="space-y-3 text-muted-foreground">
-        <p>
-          This isn't just a directory, it's a real creator hub. Here you'll
-          learn how to:
-        </p>
+        <p>You’ll learn how to:</p>
         <ul className="list-disc list-inside space-y-2">
-          <li>Improve your UGC structure and portfolio</li>
-          <li>Grow your TikTok/Instagram organically</li>
-          <li>Turn one brand deal into recurring monthly income</li>
+          <li>Build a professional creator portfolio</li>
+          <li>Negotiate better rates with brands</li>
+          <li>Communicate and close deals effectively</li>
+          <li>Turn one-time collaborations into long-term partnerships</li>
         </ul>
+        <p>
+          Our community and resources are built to help creators grow faster and
+          work smarter.
+        </p>
       </div>
     ),
   },
   {
     id: "increase-income",
-    question: "How can this help me increase my income (even passively)?",
+    question: "How can Miami Creators help me increase my income (even passively)?",
     icon: TrendingUp,
     iconColor: "text-emerald-500",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
-          Once you're part of the platform, brands can discover your profile
-          24/7 through the catalog. Even while you're not online, your profile
-          works for you, generating visibility and new paid opportunities
-          automatically.
+          Once you’re listed in the catalog, brands can find your profile anytime
+          — even while you’re offline. That means your presence can generate new
+          paid opportunities passively.
         </p>
         <p>
-          Plus, the most active and reliable creators in this community are
-          featured more often to brands who ask for recommendations. That means
-          more campaigns and higher chances of direct brand contacts over time.
+          The more active and professional you are, the more visible you become
+          to companies joining our network, increasing your chances for ongoing
+          collaborations.
         </p>
-      </div>
-    ),
-  },
-  {
-    id: "brand-requests-channel",
-    question: 'How does the "specific-brand-requests" channel work?',
-    icon: MessageSquare,
-    iconColor: "text-pink-500",
-    answer: (
-      <div className="space-y-3 text-muted-foreground">
-        <p>
-          This channel is only used for premium campaigns, where we handle the
-          creator selection process. We'll post detailed descriptions of what
-          the brand is looking for (age, niche, payment range, style, etc.) and
-          you'll be able to apply directly if you fit the profile.
-        </p>
-        <p>After that, we send your info straight to the brand for review.</p>
       </div>
     ),
   },
@@ -171,38 +142,41 @@ const faqItems = [
     iconColor: "text-red-500",
     answer: (
       <div className="space-y-3 text-muted-foreground">
-        <p>You'll be updated in two ways:</p>
+        <p>You’ll be notified in two main ways:</p>
         <ul className="list-disc list-inside space-y-2">
           <li>
-            <strong>Discord announcements</strong> → when new brands or
-            campaigns join.
+            <strong>Email notifications</strong> → whenever new brands or
+            campaigns join the platform.
           </li>
           <li>
-            <strong>Email notifications</strong> → for both catalog updates and
-            premium brand requests.
+            <strong>Discord community</strong> → optional space where creators
+            can connect, share experiences, and stay updated with the latest
+            collaborations.
           </li>
         </ul>
-        <p>So even if you're not online, you'll never miss a deal.</p>
       </div>
     ),
   },
   {
     id: "ultimate-goal",
-    question: "What's the ultimate goal of Miami Creators?",
+    question: "What’s the ultimate goal of Miami Creators?",
     icon: Target,
     iconColor: "text-cyan-500",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
-          To become the #1 creator network in Miami, helping local creators
-          grow, connect, and get paid, without agencies taking cuts. We're not
-          just a middleman. We're building a movement where creators win by
-          working smarter, together.
+          Our mission is to build the leading creator hub in Miami, where
+          authentic creators and brands connect easily — without fees, barriers,
+          or intermediaries.
+        </p>
+        <p>
+          We’re here to make collaborations faster, fairer, and more human. 🌴
         </p>
       </div>
     ),
   },
 ];
+
 
 export default function FAQ() {
   return (
