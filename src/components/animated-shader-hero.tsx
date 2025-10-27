@@ -427,10 +427,8 @@ const HeroCanvas: React.FC<PropsWithChildren<{
 export const Hero = ( ) => (
   <HeroCanvas className=' rounded-b-[8rem]'>
 
-    {/* Hero Content Overlay */}
-    {/* Trust Badge */}
-    {
-      <div className="mb-8 animate-fade-in-down">
+     {/* Trust Badge */}
+       <div className="mb-8 animate-fade-in-down">
         <div className="flex items-center gap-2 px-6 py-3 bg-primary/10 backdrop-blur-md border border-orange-300/30 rounded-full text-sm">
           {
             <div className="flex">
@@ -449,7 +447,7 @@ export const Hero = ( ) => (
           <span className="text-orange-100">Trusted by forward-thinking teams.</span>
         </div>
       </div>
-    }
+     
 
     <div className="text-center space-y-6 max-w-5xl mx-auto px-4">
       {/* Main Heading with Animation */}

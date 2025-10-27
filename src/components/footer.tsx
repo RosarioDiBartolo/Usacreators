@@ -80,7 +80,7 @@ function Footer() {
                 (link) => (
                   <a
                     key={link}
-                    href={`#${link.toLowerCase().replace(/\s/g, "-")}`}
+                    href={`${link.toLowerCase().replace(/\s/g, "-")}`}
                     className="text-white/70 text-sm uppercase tracking-[2px] hover:text-primary transition-colors"
                   >
                     {link}
