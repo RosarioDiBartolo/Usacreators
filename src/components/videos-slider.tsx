@@ -1,8 +1,8 @@
 import InfiniteSlider from "./ui/infinite-slider";
-import regina from "../assets/creators/regina_gs.mp4";
-import regina2 from "../assets/creators/regina2.mp4";
+import regina from "../assets/creators/regina2.mp4";
+import regina2 from "../assets/creators/video regina makeup.mp4";
 
-const videos = Array(3).fill(regina).concat( Array(3).fill(regina2))
+const videos = [ regina, regina2]
 function VideosSlider() {
   return (
     <section id = "videos" className="mx-auto max-w-6xl ">
