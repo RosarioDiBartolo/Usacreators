@@ -129,7 +129,7 @@ background-image: radial-gradient(circle, transparent 50%, var(--background) 90%
     @apply text-5xl text-white  font-black;
   }
 
-  section{
+  section, .section{
     @apply relative w-full max-w-7xl mx-auto  
   }
 

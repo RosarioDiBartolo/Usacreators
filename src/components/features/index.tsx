@@ -4,6 +4,8 @@ import img1 from "@/assets/features-carousel/phone.jpg";
 
 import img2 from "@/assets/features-carousel/phone2.jpg";
 import img3 from "@/assets/features-carousel/portatili.jpg";
+import img4 from "@/assets/features-carousel/portatili2.jpg";
+
 const items = [
   <CarouselItem
     key="1"
@@ -24,10 +26,10 @@ const items = [
     image={img3}
   />,
   <CarouselItem
-    key="3"
+    key="4"
     title="Instant exposure"
     description="Get featured in campaigns, lists, and brand searches as soon as you join."
-    image={img3}
+    image={img4}
   />,
 ];
 

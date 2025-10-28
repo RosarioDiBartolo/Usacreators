@@ -14,7 +14,7 @@ export function CarouselItem({ title, description, image }: CarouselItemProps) {
     <img
       src={image}
       alt={title}
-      className="h-full w-full object-cover"
+      className="h-full blur-[2px] w-full object-cover"
     />
     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80"></div>
   </div>

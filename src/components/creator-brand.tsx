@@ -19,7 +19,11 @@ const CTALink = ({
       <motion.button
         initial={{ boxShadow: `0 0 10px ${color}` }}
         animate={{
-          boxShadow: [`0 0 10px ${color}`, `0 0 20px ${color}`, `0 0 10px ${color}`],
+          boxShadow: [
+            `0 0 10px ${color}`,
+            `0 0 20px ${color}`,
+            `0 0 10px ${color}`,
+          ],
         }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
         whileHover={{
@@ -32,7 +36,7 @@ const CTALink = ({
         }}
         className={cn(
           className,
-          "flex items-center gap-2 text-white text-lg sm:text-2xl font-bold px-8 sm:px-14 py-3 rounded-2xl shadow-lg relative overflow-hidden transition-all duration-300"
+          " w-full te flex items-center justify-center gap-2 text-white text-lg sm:text-2xl font-bold px-8 sm:px-14 py-3 rounded-2xl shadow-lg relative overflow-hidden transition-all duration-300"
         )}
       >
         {children}
@@ -89,9 +93,8 @@ function Section({
       whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
-      className="flex-1 py-10 lg:py-30 relative overflow-hidden"
+      className="flex-1 py-15 relative overflow-hidden"
     >
-      
       {/* Background */}
       <div className="absolute inset-0">
         <img
@@ -108,9 +111,11 @@ function Section({
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="relative z-10 p-6 sm:p-8 lg:p-12 xl:p-16 !h-full block     "
+        className="relative z-10 p-6 sm:p-8 lg:p-12 xl:p-16 
+        !h-full 
+        flex flex-col justify-between gap-10  lg:gap-22"
       >
-        <div className=" flex-1">
+        <div>
           <motion.h2
             variants={itemVariants(factor)}
             className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black leading-tight"
@@ -128,13 +133,12 @@ function Section({
 
           <motion.p
             variants={itemVariants(factor)}
-            className="text-[var(--creator-brand-overlay-light)] text-base sm:text-lg lg:text-xl font-normal leading-relaxed sm:leading-normal tracking-wide sm:tracking-[1.6px] max-w-[571px]"
+            className="text-[var(--creator-brand-overlay-light)] text-base sm:text-lg lg:text-xl font-normal   tracking-wide sm:tracking-[1.6px] leading-loose "
           >
             {description}
           </motion.p>
-
-          <motion.div variants={itemVariants(factor)}>{children}</motion.div>
         </div>
+        <motion.div variants={itemVariants(factor)}>{children}</motion.div>
       </motion.div>
     </motion.div>
   );
@@ -152,9 +156,12 @@ const sections = [
     description:
       "Connect with verified creators who understand your brand vision and can produce authentic content that resonates.",
     children: (
-      <CTALink colorVar="--color-violet-500" className="bg-violet-500" to="/catalog">
-            <Search strokeWidth={3}   className=" " />
-
+      <CTALink
+        colorVar="--color-violet-500"
+        className="bg-violet-500"
+        to="/catalog"
+      >
+        <Search strokeWidth={3} className=" " />
         Explore our Catalog
       </CTALink>
     ),
@@ -172,10 +179,13 @@ const sections = [
     description:
       "We’ve already onboarded top creators ready to deliver on-brand content for your business.",
     children: (
-      <CTALink colorVar="--primary" className="bg-gradient-to-t from-primary to-tertiary       " to="/creators">
-            <UserPlus strokeWidth={3}   />
-
-       Apply as a Creator 
+      <CTALink
+        colorVar="--primary"
+        className="bg-gradient-to-t from-primary to-tertiary       "
+        to="/creators"
+      >
+        <UserPlus strokeWidth={3} />
+        Apply as a Creator
       </CTALink>
     ),
     image:
@@ -187,7 +197,7 @@ const sections = [
 export default function CreatorsBrands() {
   return (
     <section className="     ">
-      <div className="flex flex-col lg:flex-row    overflow-hidden  rounded-[100px] min-h-screen sm:min-h-[150vh] ">
+      <div className="flex flex-col text-center lg:text-start lg:flex-row    overflow-hidden  rounded-t-[100px] min-h-[80vh] ">
         {sections.map((section) => (
           <Section key={section.id} {...section}>
             {section.children}
