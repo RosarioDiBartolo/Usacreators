@@ -200,8 +200,8 @@ export default function FAQ() {
           </Badge>
           <span className="text-xs text-muted-foreground">F.A.Q.</span>
         </div>
-        <div className="flex flex-col gap-2">
-          <h2 className="text-3xl md:text-4xl font-bold leading-tight tracking-tight">
+        <div className=" ">
+          <h2 className="text-3xl md:text-4xl mb-1  font-bold leading-tight tracking-tight">
             Everything You Need to Know
           </h2>
           <p className="text-base leading-relaxed text-muted-foreground">

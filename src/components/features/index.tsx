@@ -34,7 +34,14 @@ const items = [
 ];
 
 function Features() {
-  return  <section id = "features" className="relative w-full ">
+  return  <section id = "features" className="relative w-full text-center ">
+    <h2 className="
+    text-center
+    my-3
+    bg-clip-text text-transparent
+    bg-gradient-to-t from-secondary    to-primary
+
+    ">Brand features</h2>
  <Carousel items={items} autoPlay interval={5000} />
  </section>
 }
