@@ -1,8 +1,11 @@
 import InfiniteSlider from "./ui/infinite-slider";
-import regina from "../assets/creators/regina2.mp4";
-import regina2 from "../assets/creators/video regina makeup.mp4";
+import video1 from "../assets/creators/regina.mp4";
+import video2 from "../assets/creators/regina2.mp4";
+import video3 from "../assets/creators/sabina.mp4";
+import video4 from "../assets/creators/sabina2.mp4";
+import video5 from "../assets/creators/sabina3.mp4";
 
-const videos = [ regina, regina2]
+const videos = [ video1, video2,video3, video4, video5]
 function VideosSlider() {
   return (
     <section id = "videos" className="mx-auto max-w-6xl ">
@@ -18,7 +21,7 @@ function VideosSlider() {
         inset-0 z-10 absolute" />
         <InfiniteSlider  gap={30} duration={50}  className="w-full py-5   ">
           {videos.map(
-            v => <video loop muted autoPlay className="   rounded-xl" src={v} alt="short" />
+            v => <video loop muted autoPlay className="   rounded-xl" src={v}  />
 
           )}
         </InfiniteSlider>
