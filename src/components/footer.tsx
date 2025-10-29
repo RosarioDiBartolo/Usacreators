@@ -1,7 +1,6 @@
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { motion } from "framer-motion"; 
 import { Mail, Instagram, Twitter, Youtube } from "lucide-react";
-import logo from "../assets/logo-no-text.png";
+import logo from "../assets/new-logo.png";
 
 function Footer() {
   return (
@@ -33,12 +32,12 @@ function Footer() {
             </a>
 
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                to="/creators"
+              <a
+                href="/creators"
                 className="inline-block bg-gradient-to-t from-primary to-tertiary text-white font-semibold text-lg px-8 py-3 rounded-2xl shadow-md hover:shadow-lg transition-all"
               >
                 Get Started
-              </Link>
+             </a>
             </motion.div>
 
             {/* Socials */}

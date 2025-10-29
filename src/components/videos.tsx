@@ -13,13 +13,12 @@ function VideosSlider() {
       <h2
         className="
           text-center
-          
-          mb-2
+           
           bg-clip-text text-transparent 
           bg-gradient-to-b from-secondary via-amber-900 to-amber-950
           "
       >
-        Miami's top creators <br /> creators across every niche
+        Miami's top creators <br /> across every niche
       </h2>
       <div className=" relative">
         <div
@@ -33,6 +32,7 @@ function VideosSlider() {
               autoPlay // autoplay video
               muted // must be muted for iOS
               playsInline // allow inline playback (prevents fullscreen)
+              preload="auto"
               loop // optional: repeat video
               className="   rounded-xl"
               src={v}

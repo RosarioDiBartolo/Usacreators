@@ -126,11 +126,11 @@ background-image: radial-gradient(circle, transparent 50%, var(--background) 90%
   }
 
   h1{
-    @apply text-5xl text-white  font-black;
+    @apply text-5xl    font-black;
   }
 
   h2{
-    @apply text-5xl md:text-6xl  leading-tight tracking-tight  ;
+    @apply my-12 text-5xl md:text-6xl  leading-tight tracking-tight  ;
   }
   section, .section{
     @apply relative w-full max-w-7xl mx-auto  
@@ -141,6 +141,13 @@ background-image: radial-gradient(circle, transparent 50%, var(--background) 90%
   }
   p{
     @apply tracking-wider leading-8   font-medium  ;
+  }
+
+  .bg-text{
+    @apply bg-clip-text text-transparent;
+  }
+  .bg-gradient{
+    @apply bg-gradient-to-t from-primary to-tertiary
   }
   /* Imposta il default: Poppins via font-sans */
   body {

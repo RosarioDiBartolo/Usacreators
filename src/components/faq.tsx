@@ -201,7 +201,7 @@ export default function FAQ() {
           <span className="text-xs text-muted-foreground">F.A.Q.</span>
         </div>
         <div className=" ">
-          <h2 className="text-3xl md:text-4xl mb-1  font-bold leading-tight tracking-tight">
+          <h2 className=" !mt-0">
             Everything You Need to Know
           </h2>
           <p className="text-base leading-relaxed text-muted-foreground">

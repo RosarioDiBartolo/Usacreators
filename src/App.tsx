@@ -5,10 +5,13 @@ import SignupPage from "./pages/signup";
 import WaitlistPage from "./pages/waitlist";
 import { Toaster } from "sonner";
 import PrivacPolicy from "./pages/privacy-policy";
+import Header from "./components/header";
 
 function App() {
   return (
     <BrowserRouter>
+          <Header />
+
       <Routes>
         <Route path="/" index element={<Home />} />
         <Route path="/creators" element={<SignupPage />} />
@@ -17,8 +20,7 @@ function App() {
         <Route path="/waitlist" element={<WaitlistPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>{" "}
-              <Toaster />
-
+      <Toaster />
     </BrowserRouter>
   );
 }

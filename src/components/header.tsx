@@ -40,7 +40,6 @@ export default function NavbarDemo() {
           <div className="flex items-center gap-4">
              <NavbarButton variant="outline">Book a call</NavbarButton>
                          <NavbarButton variant="gradient">Login</NavbarButton>
-
           </div>
         </NavBody>
 
