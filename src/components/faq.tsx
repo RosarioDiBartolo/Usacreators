@@ -184,7 +184,9 @@ export default function FAQ() {
       id="faq"
       className=" 
     section-padding 
-    text-secondary "
+    text-secondary
+    text-center
+    "
     >
       <motion.div
         initial={{ opacity: 0, y: 12 }}
@@ -192,7 +194,13 @@ export default function FAQ() {
         transition={{ duration: 0.6 }}
         className="flex flex-col gap-6 mb-12"
       >
-        <div className="flex items-center gap-2 w-full  text-secondary">
+         
+        <div className=" ">
+          <h2 className=" relative !mt-0"> 
+            Everything You Need to Know
+
+
+            <div className="  absolute -top-1/2 left-1/2 flex items-center gap-2 w-full  text-secondary">
           <Badge variant="secondary" className="rounded-full px-3 py-1 w-fit">
             <span className="bg-gradient-to-b bg-clip-text text-transparent from-primary to-tertiary ">
               Frequent Asked Qusetions
@@ -200,9 +208,6 @@ export default function FAQ() {
           </Badge>
           <span className="text-xs text-muted-foreground">F.A.Q.</span>
         </div>
-        <div className=" ">
-          <h2 className=" !mt-0">
-            Everything You Need to Know
           </h2>
           <p className="text-base leading-relaxed text-muted-foreground">
             Welcome to the Miami Creators Community. Here's a full breakdown of
