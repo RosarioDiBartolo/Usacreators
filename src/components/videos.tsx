@@ -29,7 +29,14 @@ function VideosSlider() {
         />
         <InfiniteSlider gap={30} duration={50} className="w-full py-5   ">
           {videos.map((v) => (
-            <video loop muted autoPlay className="   rounded-xl" src={v} />
+            <video
+              autoPlay // autoplay video
+              muted // must be muted for iOS
+              playsInline // allow inline playback (prevents fullscreen)
+              loop // optional: repeat video
+              className="   rounded-xl"
+              src={v}
+            />
           ))}
         </InfiniteSlider>
       </div>
