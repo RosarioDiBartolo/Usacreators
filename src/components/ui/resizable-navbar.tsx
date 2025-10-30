@@ -7,7 +7,7 @@ import {
   useScroll,
   useMotionValueEvent,
 } from "motion/react";
-import logo from "@/assets/logo-no-text.png";
+import logo from "@/assets/logo.png";
 import React, { useRef, useState, type SetStateAction } from "react";
 
 interface NavbarProps {

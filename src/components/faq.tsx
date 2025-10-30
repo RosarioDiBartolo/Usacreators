@@ -200,14 +200,7 @@ export default function FAQ() {
             Everything You Need to Know
 
 
-            <div className="  absolute -top-1/2 left-1/2 flex items-center gap-2 w-full  text-secondary">
-          <Badge variant="secondary" className="rounded-full px-3 py-1 w-fit">
-            <span className="bg-gradient-to-b bg-clip-text text-transparent from-primary to-tertiary ">
-              Frequent Asked Qusetions
-            </span>
-          </Badge>
-          <span className="text-xs text-muted-foreground">F.A.Q.</span>
-        </div>
+          
           </h2>
           <p className="text-base leading-relaxed text-muted-foreground">
             Welcome to the Miami Creators Community. Here's a full breakdown of
@@ -224,7 +217,7 @@ export default function FAQ() {
         <Accordion
           type="single"
           collapsible
-          className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full"
+          className=" space-y-5 w-full"
         >
           {faqItems.map((item) => {
             const IconComponent = item.icon;
