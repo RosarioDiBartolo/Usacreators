@@ -1,6 +1,6 @@
 import LegalPage from "@/components/legal-page";
 import { Button } from "@/components/ui/button";
-import { policies } from "@/lib/privacy-policies";
+import { privacyPolicy } from "@/lib/privacy-policies";
 
 function PrivacPolicy() {
   return (
@@ -14,7 +14,7 @@ function PrivacPolicy() {
           (collectively, the “Platform”). By using our Platform, you consent to
           this Privacy Policy. If you do not agree, please do not access or use
           the Platform.</>}
-     content={policies}/>
+     content={privacyPolicy}/>
   );
 }
 

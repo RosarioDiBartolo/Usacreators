@@ -32,7 +32,7 @@ function LegalPage({
       </p>
       <div
         className=" 
-        container max-w-2xl mx-auto space-y-5   
+        container max-w-3xl mx-auto space-y-5   
       "
       >
         <h1
@@ -40,7 +40,7 @@ function LegalPage({
  
         "
         >
-          Our privacy policy
+          {title}
         </h1>
         <p className=" text-ms leading-normal font-extralight ">
           {paragraph}

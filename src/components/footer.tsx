@@ -64,7 +64,7 @@ function Footer() {
           <div className="flex flex-col gap-4">
             <h3 className="text-white text-xl font-semibold">Legal</h3>
             <nav className="flex flex-col gap-3">
-              {["Terms of Service", "Privacy Policy", "Cookie Policy"].map(
+              {["Terms and conditions", "Privacy Policy", "Cookie Policy"].map(
                 (link) => (
                   <a
                     key={link}
