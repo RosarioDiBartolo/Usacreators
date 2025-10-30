@@ -1,6 +1,8 @@
 import { motion } from "framer-motion"; 
 import { Mail, Instagram, Twitter, Youtube } from "lucide-react";
 import logo from "../assets/new-logo.png";
+import { officialEmail } from "@/lib/constants";
+import { IconBrandTiktok } from "@tabler/icons-react";
 
 function Footer() {
   return (
@@ -28,7 +30,7 @@ function Footer() {
               className="flex items-center gap-2 text-white text-sm sm:text-base hover:text-primary transition-colors"
             >
               <Mail size={18} />
-              contact@miamicreators.com
+              {officialEmail}
             </a>
 
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
@@ -40,19 +42,6 @@ function Footer() {
              </a>
             </motion.div>
 
-            {/* Socials */}
-            <div className="flex items-center gap-4 mt-2">
-              {[Instagram, Twitter, Youtube].map((Icon, i) => (
-                <motion.a
-                  key={i}
-                  href="#"
-                  whileHover={{ scale: 1.1 }}
-                  className="text-white/80 hover:text-primary transition-colors"
-                >
-                  <Icon size={22} />
-                </motion.a>
-              ))}
-            </div>
           </div>
 
           {/* Middle - Quick Links */}
@@ -98,9 +87,20 @@ function Footer() {
           <p className="text-white/60 text-xs sm:text-sm">
             © {new Date().getFullYear()} Miami Creators. All rights reserved.
           </p>
-          <p className="text-white/60 text-xs sm:text-sm">
-            Built with ❤️ by Lift Media
-          </p>
+          
+            {/* Socials */}
+            <div className="flex items-center gap-4 mt-2">
+              {[IconBrandTiktok].map((Icon, i) => (
+                <motion.a
+                  key={i}
+                  href="#"
+                  whileHover={{ scale: 1.1 }}
+                  className="text-white/80 hover:text-primary transition-colors"
+                >
+                  <Icon size={22} />
+                </motion.a>
+              ))}
+            </div>
         </div>
       </div>
     </footer>

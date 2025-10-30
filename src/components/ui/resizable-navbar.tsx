@@ -110,7 +110,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
         " transition-colors hidden lg:flex z-[60] mx-auto   w-full flex-row items-center  gap-12  rounded-full px-6 py-3  ",
         visible
           ? "!bg-background/70 text-foreground"
-          : " text-white  ",
+          : " bg-transparent text-white  ",
         className
       )}
     >
@@ -190,7 +190,7 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
       }}
       className={cn(
         "relative z-50 flex w-full flex-col items-center justify-between   lg:hidden !p-3",
-          "bg-white/80 dark:bg-neutral-950/80" ,
+          visible && "bg-white/80" ,
         className
       )}
     >

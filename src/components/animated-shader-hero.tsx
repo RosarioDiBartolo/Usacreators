@@ -476,7 +476,7 @@ export const Hero = ( ) => (
           {  (
             <Link to={"/creators"}>
             <button
-               className="px-8 w-full lg:w-fit py-4 bg-gradient-to-r from-primary to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-black rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/25"
+               className="px-8 w-full sm:w-fit py-4 bg-gradient-to-r from-primary to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-black rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/25"
             >
               I am a Creator
             </button>
@@ -484,7 +484,7 @@ export const Hero = ( ) => (
           )}
           {  (
             <button
-               className="px-8  w-full lg:w-fit py-4 bg-primary/10 hover:bg-primary/20 border border-orange-300/30 hover:border-orange-300/50 text-orange-100 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 backdrop-blur-sm"
+               className="px-8  w-full sm:w-fit py-4 bg-primary/10 hover:bg-primary/20 border border-orange-300/30 hover:border-orange-300/50 text-orange-100 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 backdrop-blur-sm"
             >
               I am a Brand
             </button>

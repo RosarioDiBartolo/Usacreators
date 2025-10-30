@@ -3,7 +3,7 @@ import Squares from "@/components/squares-background";
 
 function SignupPage() {
   return (
-    <div className="relative flex items-center w-screen min-h-screen bg-secondary  ">
+    <div className="relative flex items-center w-screen min-h-screen bg-secondary py-30  ">
       <Squares
         speed={0.5}
         squareSize={40}
