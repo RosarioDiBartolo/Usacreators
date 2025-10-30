@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"; 
-import { Mail, Instagram, Twitter, Youtube } from "lucide-react";
-import logo from "../assets/new-logo.png";
+import { Mail  } from "lucide-react";
+import logo from "../assets/logo.png";
 import { officialEmail } from "@/lib/constants";
 import { IconBrandTiktok } from "@tabler/icons-react";
 
