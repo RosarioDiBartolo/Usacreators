@@ -1,5 +1,4 @@
-import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion"; 
 import {
   Accordion,
   AccordionItem,
@@ -11,8 +10,7 @@ import {
   DollarSign,
   Users,
   BookOpen,
-  TrendingUp,
-  MessageSquare,
+  TrendingUp, 
   Bell,
   Target,
 } from "lucide-react";
@@ -217,7 +215,7 @@ export default function FAQ() {
         <Accordion
           type="single"
           collapsible
-          className=" space-y-5 w-full"
+          className=" space-y-5 w-full text-start"
         >
           {faqItems.map((item) => {
             const IconComponent = item.icon;
