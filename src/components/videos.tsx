@@ -1,10 +1,10 @@
 import InfiniteSlider from "./ui/infinite-slider";
-import video1 from "../assets/creators/regina.mp4";
-import video2 from "../assets/creators/regina2.mp4";
-import video3 from "../assets/creators/sabina.mp4";
-import video4 from "../assets/creators/sabina2.mp4";
-import video5 from "../assets/creators/sabina3.mp4";
-import video6 from "../assets/creators/sabina4.mp4";
+import video1 from "@/assets/creators-videos/regina.mp4";
+import video2 from "@/assets/creators-videos/regina2.mp4";
+import video3 from "@/assets/creators-videos/sabina.mp4";
+import video4 from "@/assets/creators-videos/sabina2.mp4";
+import video5 from "@/assets/creators-videos/sabina3.mp4";
+import video6 from "@/assets/creators-videos/sabina4.mp4";
 
 const videos = [video1, video2, video3, video4, video5, video6];
 function VideosSlider() {
