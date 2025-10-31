@@ -35,7 +35,7 @@ const items = [
 
 function Features() {
   return (
-    <section id="features" className="relative w-full text-center ">
+    <section id="features" className="relative  overflow-hidden w-full text-center ">
       <h2
         className="
     text-center

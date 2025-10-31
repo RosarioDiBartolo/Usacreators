@@ -12,7 +12,7 @@ function LegalPage({
     content,
 }:LegalPageProps ) {
   return (
-<section className="text-center text-secondary mt-32">
+<section className="text-center text-secondary section-padding">
       {/* Trust Badge */}
       <h2
         className=" 
