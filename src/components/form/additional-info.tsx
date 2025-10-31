@@ -1,84 +1,99 @@
-import { motion } from "motion/react";
-
+// ============================================================================
+// FILE: components/onboarding/additional-info.tsx
+// ============================================================================
+"use client";
+import { type Control, Controller } from "react-hook-form";
+import { motion } from "framer-motion";
 import {
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "../ui/card";
-import { Textarea } from "../ui/textarea";
+  Field,
+  FieldLabel,
+  FieldError,
+  FieldGroup,
+  FieldDescription,
+} from "@/components/ui/field";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { fadeInUp } from "./utils";
-import { Label } from "../ui/label";
 import type { FormDataType } from "@/lib/form-schemas";
-import { Input } from "../ui/input";
+import { toast } from "sonner";
 
-function AdditionalInfo({
-  formData,
-  errors,
+export function AdditionalInfo({
+  control,
   handleProfileFile,
-  updateFormData,
-  setErrors
 }: {
-  formData: FormDataType;
-  errors: Record<string, string>;
-    handleProfileFile: (file: File | null) => void;
-  updateFormData: <K extends keyof FormDataType>(
-    field: K,
-    value: FormDataType[K]
-  ) => void;
-  setErrors: React.Dispatch<React.SetStateAction<Record<string, string>>>
+  control: Control<FormDataType>;
+  handleProfileFile: (file: File | null) => void;
 }) {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] ?? null;
+    if (!file) return handleProfileFile(null);
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please select an image file.");
+      return;
+    }
+    if (file.size > 3 * 1024 * 1024) {
+      toast.error("Image must be under 3MB.");
+      return;
+    }
+    handleProfileFile(file);
+  };
+
   return (
-    <>
-      {" "}
-      <CardHeader>
-        {" "}
-        <CardTitle className = "">Anything Else?</CardTitle>{" "}
-        <CardDescription>Add any extra details</CardDescription>{" "}
-      </CardHeader>{" "}
-      <CardContent className="space-y-4">
-        {" "}
-        <motion.div variants={fadeInUp} className="space-y-2">
-          {" "}
-           <motion.div variants={fadeInUp}>
-                    <Label htmlFor="profilePicture">Profile Picture</Label>
-                    <Input type="file" className=" accent-blue" accept="image/*" onChange={(e) => handleProfileFile(e.target.files?.[0] || null)} />
-                  </motion.div>
-          <Label htmlFor="additionalInfo">
-            {" "}
-            Anything else we should know?{" "}
-          </Label>{" "}
-          
-          <Textarea
-            id="additionalInfo"
-            name="additionalInfo"
-            maxLength={2000}
-            value={formData.additionalInfo}
-            onChange={(e) => {
-              updateFormData("additionalInfo", e.target.value);
-              // Optional: clear error on change
-              if (errors.additionalInfo)
-                setErrors(errors=> ({ ...errors, additionalInfo: "" }));
-            }}
-            aria-invalid={!!errors.additionalInfo}
-            aria-describedby={
-              errors.additionalInfo ? "err-additionalInfo" : undefined
-            }
+    <FieldGroup className="space-y-6">
+      <motion.div variants={fadeInUp}>
+        <Controller
+          name="bio"
+          control={control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="bio">Bio</FieldLabel>
+              <Textarea
+                id="bio"
+                placeholder="Tell us a bit about yourself..."
+                {...field}
+                aria-invalid={fieldState.invalid}
+              />
+              <FieldDescription>Max 1000 characters.</FieldDescription>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+      </motion.div>
+      <motion.div variants={fadeInUp}>
+        <Controller
+          name="additionalInfo"
+          control={control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="additionalInfo">Additional Info</FieldLabel>
+              <Textarea
+                id="additionalInfo"
+                placeholder="Anything else you'd like us to know?"
+                {...field}
+                aria-invalid={fieldState.invalid}
+              />
+              <FieldDescription>
+                Optional. Max 2000 characters.
+              </FieldDescription>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+      </motion.div>
+      <motion.div variants={fadeInUp}>
+        <Field>
+          <FieldLabel htmlFor="profilePictureFile">
+            Profile Picture (optional)
+          </FieldLabel>
+          <Input
+            id="profilePictureFile"
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
           />
-          {errors.additionalInfo && (
-            <motion.p
-              id="err-additionalInfo"
-              className="text-xs text-destructive mt-1"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-            >
-              {errors.additionalInfo}
-            </motion.p>
-          )}{" "}
-        </motion.div>{" "}
-      </CardContent>{" "}
-    </>
+          <FieldDescription>JPG, PNG, or WEBP under 3MB.</FieldDescription>
+        </Field>
+      </motion.div>
+    </FieldGroup>
   );
 }
-
-export default AdditionalInfo;

@@ -182,7 +182,7 @@ const sections = [
       <CTALink
         colorVar="--primary"
         className="bg-gradient-to-t from-primary to-tertiary       "
-        to="/creators"
+        to="/creators/apply"
       >
         <UserPlus strokeWidth={3} />
         Apply as a Creator

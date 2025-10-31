@@ -56,7 +56,7 @@
 
   /* Base */
   --background: #E9E9E9FF;
-  --foreground: #000000FF;
+  --foreground: var(--secondary);
 
   /* Card / Popover */
   --card: #ffffff;
@@ -79,6 +79,10 @@
   /* Accent */
   --accent: #e4d5bd;
   --accent-foreground: #2a1f1d;
+
+  /* Muted */
+  --muted: #e2ded9;
+  --muted-foreground: #3a3a3a;
 
   /* Destructive */
   --destructive: #b94b3d;

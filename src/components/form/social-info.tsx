@@ -1,134 +1,96 @@
+// ============================================================================
+// FILE: components/onboarding/social-info.tsx
+// ============================================================================
+"use client";
+import { type Control, Controller } from "react-hook-form";
 import { motion } from "framer-motion";
 import {
- 
-   CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
+  Field,
+  FieldLabel,
+  FieldError,
+  FieldGroup,
+  FieldDescription,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 import { fadeInUp } from "./utils";
-import type { FormDataType, YesNo } from "@/lib/form-schemas";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+import type { FormDataType } from "@/lib/form-schemas";
 
-export default function Step0PersonalInfo({
-  formData,
-  errors,
-  updateFormData,
- }: {
-  formData: FormDataType;
-  errors: Record<string, string>;
-  updateFormData: <K extends keyof FormDataType>(
-    field: K,
-    value: FormDataType[K]
-  ) => void;
- }) {
+export function SocialInfo({ control }: { control: Control<FormDataType> }) {
   return (
-    <>
-     
-        <CardHeader>
-          {" "}
-          <CardTitle className = "">Location & Socials</CardTitle>{" "}
-          <CardDescription>
-            {" "}
-            Tell us where you are and your profiles{" "}
-          </CardDescription>{" "}
-        </CardHeader>{" "}
-        <CardContent className="space-y-4">
-          {" "}
-          <motion.div variants={fadeInUp} className="space-y-2">
-            {" "}
-            <Label>Do you live in Miami?</Label>{" "}
-            <RadioGroup
-              name="locationYesNo"
-              value={formData.locationYesNo}
-              onValueChange={(v) => updateFormData("locationYesNo", v as YesNo)}
-              className="flex items-center gap-6"
-            >
-              {" "}
-              <div className="flex items-center gap-2">
-                {" "}
-                <RadioGroupItem value="yes" id="miami-yes" />{" "}
-                <Label htmlFor="miami-yes">Yes</Label>{" "}
-              </div>{" "}
-              <div className="flex items-center gap-2">
-                {" "}
-                <RadioGroupItem value="no" id="miami-no" />{" "}
-                <Label htmlFor="miami-no">No</Label>{" "}
-              </div>{" "}
-            </RadioGroup>{" "}
-            {errors.locationYesNo && (
-              <p className="text-xs text-destructive mt-1">
-                {" "}
-                {errors.locationYesNo}{" "}
-              </p>
-            )}{" "}
-          </motion.div>{" "}
-          <motion.div variants={fadeInUp} className="space-y-2">
-            {" "}
-            <Label htmlFor="instagram">Instagram Profile</Label>{" "}
-            <Input
-              id="instagram"
-              name="instagram"
-              placeholder="@yourhandle or URL"
-              value={formData.instagram}
-              onChange={(e) => updateFormData("instagram", e.target.value)}
-              aria-invalid={!!errors.instagram}
-              aria-describedby={errors.instagram ? "err-instagram" : undefined}
-            />{" "}
-            {errors.instagram && (
-              <p id="err-instagram" className="text-xs text-destructive mt-1">
-                {" "}
-                {errors.instagram}{" "}
-              </p>
-            )}{" "}
-          </motion.div>{" "}
-          <motion.div variants={fadeInUp} className="space-y-2">
-            {" "}
-            <Label htmlFor="tiktok">TikTok Profile</Label>{" "}
-            <Input
-              id="tiktok"
-              name="tiktok"
-              placeholder="@yourhandle or URL"
-              value={formData.tiktok}
-              onChange={(e) => updateFormData("tiktok", e.target.value)}
-              aria-invalid={!!errors.tiktok}
-              aria-describedby={errors.tiktok ? "err-tiktok" : undefined}
-            />{" "}
-            {errors.tiktok && (
-              <p id="err-tiktok" className="text-xs text-destructive mt-1">
-                {" "}
-                {errors.tiktok}{" "}
-              </p>
-            )}{" "}
-          </motion.div>{" "}
-          <motion.div variants={fadeInUp} className="space-y-2">
-            {" "}
-            <Label htmlFor="instagramPost"> Instagram Post Link </Label>{" "}
-            <Input
-              id="instagramPost"
-              name="instagramPost"
-              placeholder="https://instagram.com/..."
-              value={formData.instagramPost}
-              onChange={(e) => updateFormData("instagramPost", e.target.value)}
-              aria-invalid={!!errors.instagramPost}
-              aria-describedby={
-                errors.instagramPost ? "err-instagramPost" : undefined
-              }
-            />{" "}
-            {errors.instagramPost && (
-              <p
-                id="err-instagramPost"
-                className="text-xs text-destructive mt-1"
+    <FieldGroup className="space-y-6">
+      <motion.div variants={fadeInUp}>
+        <Controller
+          name="locationYesNo"
+          control={control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel>Do you live in Miami?</FieldLabel>
+              <RadioGroup
+                onValueChange={field.onChange}
+                value={field.value}
+                className="flex items-center gap-6"
               >
-                {" "}
-                {errors.instagramPost}{" "}
-              </p>
-            )}{" "}
-          </motion.div>{" "}
-        </CardContent>{" "}
-     
-    </>
+                <div className="flex items-center gap-2">
+                  <RadioGroupItem value="yes" id="miami-yes" />
+                  <Label htmlFor="miami-yes">Yes</Label>
+                </div>
+                <div className="flex items-center gap-2">
+                  <RadioGroupItem value="no" id="miami-no" />
+                  <Label htmlFor="miami-no">No</Label>
+                </div>
+              </RadioGroup>
+              <FieldDescription>
+                We ask this to connect with nearby creators for events.
+              </FieldDescription>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+      </motion.div>
+      <motion.div variants={fadeInUp}>
+        <Controller
+          name="instagram"
+          control={control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="instagram">Instagram Profile</FieldLabel>
+              <Input
+                id="instagram"
+                placeholder="@yourhandle or full URL"
+                {...field}
+                aria-invalid={fieldState.invalid}
+              />
+              <FieldDescription>
+                Example: @miamicreator or https://instagram.com/miamicreator
+              </FieldDescription>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+      </motion.div>
+      <motion.div variants={fadeInUp}>
+        <Controller
+          name="tiktok"
+          control={control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="tiktok">TikTok Profile</FieldLabel>
+              <Input
+                id="tiktok"
+                placeholder="@yourhandle or full URL"
+                {...field}
+                aria-invalid={fieldState.invalid}
+              />
+              <FieldDescription>
+                Example: @miamivibes or https://tiktok.com/@miamivibes
+              </FieldDescription>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+      </motion.div>
+    </FieldGroup>
   );
 }

@@ -1,46 +1,39 @@
-import { motion } from "framer-motion";
-import {  CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { fadeInUp } from "./utils";
+// ============================================================================
+// FILE: components/onboarding/personal-info.tsx
+// (minor a11y tweaks)
+// ============================================================================
+"use client";
+import { Controller, type Control } from "react-hook-form";
+import { Field, FieldLabel, FieldError, FieldGroup } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 import type { FormDataType } from "@/lib/form-schemas";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
 
-export default function Step0PersonalInfo({
-  formData,
-  errors,
-  updateFormData, 
-}: {
-  formData: FormDataType;
-  errors: Record<string, string>;
-  updateFormData: <K extends keyof FormDataType>(field: K, value: FormDataType[K]) => void;
- }) {
-  return (
-    <>
-      <CardHeader>
-        <CardTitle className=" ">Tell us about yourself</CardTitle>
-       </CardHeader>
-      <CardContent className="space-y-4">
-        <motion.div variants={fadeInUp}>
-          <Label htmlFor="name">Full Name</Label>
-          <Input id="name" value={formData.name} onChange={(e) => updateFormData("name", e.target.value)} />
-          {errors.name && <p className="text-xs text-destructive">{errors.name}</p>}
-        </motion.div>
 
-        <motion.div variants={fadeInUp}>
-          <Label htmlFor="email">Email</Label>
-          <Input id="email" value={formData.email} onChange={(e) => updateFormData("email", e.target.value)} />
-          {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
-        </motion.div>
-
-       
-
-        <motion.div variants={fadeInUp}>
-          <Label htmlFor="bio">Short Bio</Label>
-          <Textarea id="bio" value={formData.bio} onChange={(e) => updateFormData("bio", e.target.value)} />
-          {errors.bio && <p className="text-xs text-destructive">{errors.bio}</p>}
-        </motion.div>
-      </CardContent>
-    </>
-  );
+export function PersonalInfo({ control }: { control: Control<FormDataType> }) {
+return (
+<FieldGroup>
+<Controller
+name="name"
+control={control}
+render={({ field, fieldState }) => (
+<Field data-invalid={fieldState.invalid}>
+<FieldLabel htmlFor="name">Name</FieldLabel>
+<Input id="name" {...field} aria-invalid={fieldState.invalid} autoComplete="name" />
+{fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+</Field>
+)}
+/>
+<Controller
+name="email"
+control={control}
+render={({ field, fieldState }) => (
+<Field data-invalid={fieldState.invalid}>
+<FieldLabel htmlFor="email">Email</FieldLabel>
+<Input id="email" type="email" {...field} aria-invalid={fieldState.invalid} autoComplete="email" />
+{fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+</Field>
+)}
+/>
+</FieldGroup>
+);
 }

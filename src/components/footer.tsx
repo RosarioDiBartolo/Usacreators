@@ -35,7 +35,7 @@ function Footer() {
 
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <a
-                href="/creators"
+                href="/creators/apply"
                 className="inline-block bg-gradient-to-t from-primary to-tertiary text-white font-semibold text-lg px-8 py-3 rounded-2xl shadow-md hover:shadow-lg transition-all"
               >
                 Get Started
