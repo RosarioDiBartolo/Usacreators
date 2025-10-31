@@ -8,7 +8,7 @@ import Features from "@/components/features";
 
 function Home() {
   return (
-    <div className="flex flex-col gap-20 pb-20">
+    <div className="flex flex-col gap-20">
  
       <Hero />
       <Videos />

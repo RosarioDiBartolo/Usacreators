@@ -6,7 +6,7 @@ import { IconBrandTiktok } from "@tabler/icons-react";
 
 function Footer() {
   return (
-    <footer className=" section  bg-gradient-to-b from-[var(--creator-brand-overlay-dark)] to-stone-800 lg:mb-30 font-poppins lg:rounded-b-[80px]">
+    <footer className=" section  bg-gradient-to-b from-[var(--creator-brand-overlay-dark)] to-stone-800 xl:mb-30 font-poppins xl:rounded-b-[80px]">
       <div className="max-w-[1280px] mx-auto px-6 sm:px-10 lg:px-16 py-12 sm:py-16 lg:py-20">
         {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-16">

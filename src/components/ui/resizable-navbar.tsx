@@ -76,7 +76,7 @@ export const Navbar = ({
         className
       )}
     >
-      <div className="mx-auto  w-full max-w-7xl lg:px-4 lg:pt-4 pointer-events-auto">
+      <div className="mx-auto  w-full max-w-7xl md:px-4 md:pt-4 pointer-events-auto">
         {React.Children.map(children, (child) =>
           React.isValidElement(child)
             ? React.cloneElement(
@@ -107,7 +107,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
       }}
       transition={{ duration: 0.4, ease: "easeInOut" }}
       className={cn(
-        " transition-colors hidden lg:flex z-[60] mx-auto   w-full flex-row items-center  gap-12  rounded-full px-6 py-3  ",
+        " transition-colors hidden md:flex z-[60] mx-auto   w-full flex-row items-center  gap-12  rounded-full px-6 py-3  ",
         visible
           ? "!bg-background/70 text-foreground"
           : " bg-transparent text-white  ",
@@ -182,14 +182,13 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
           ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
           : "0 0 0 0 rgba(0, 0, 0, 0)",
  
-        borderRadius:   "12px"  
       }}
       transition={{
         duration: 0.3,
         ease: "easeInOut",
       }}
       className={cn(
-        "relative z-50 flex w-full flex-col items-center justify-between   lg:hidden !p-3",
+        "relative z-50 flex w-full flex-col items-center justify-between   md:hidden !p-3",
           visible && "bg-white/80" ,
         className
       )}
@@ -241,15 +240,18 @@ export const MobileNavMenu = ({
 
 export const MobileNavToggle = ({
   isOpen,
+  visible,
   onClick,
 }: {
   isOpen: boolean;
+  visible: boolean;
   onClick: () => void;
 }) => {
   return (
     <button
+      disabled={!visible}
       onClick={onClick}
-      className="p-2 z-50 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors duration-200"
+      className="p-2 z-50  hover:bg-background rounded-lg transition-colors duration-200"
       aria-label={isOpen ? "Close menu" : "Open menu"}
     >
       <AnimatePresence mode="wait" initial={false}>

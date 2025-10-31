@@ -16,15 +16,15 @@ export default function NavbarDemo() {
   const navItems = [
     {
       name: "Features",
-      link: "#features",
+      link: "/#features",
     },
     {
       name: "Pricing",
       link: "#pricing",
     },
     {
-      name: "Contact",
-      link: "#contact",
+      name: "FAQ",
+      link: "/#faq",
     },
   ];
 
