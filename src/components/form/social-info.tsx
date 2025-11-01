@@ -15,8 +15,9 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { fadeInUp } from "./utils";
-import type { FormDataType } from "@/lib/shared/form-schemas";
+import type { ClientFormData as FormDataType } from "@shared/creator-apply-client";
 
+ 
 export function SocialInfo({ control }: { control: Control<FormDataType> }) {
   return (
     <FieldGroup className="space-y-6">

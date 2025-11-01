@@ -1,4 +1,4 @@
-import { officialEmail } from "@/lib/constants"
+import { officialEmail } from "@shared/constants"
 
 function EmailAddress() {
   return (

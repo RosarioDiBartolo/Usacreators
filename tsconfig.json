@@ -1,15 +1,13 @@
 {
   "files": [],
   "references": [
-    { "path": "./tsconfig.app.json" },  // (Frontend/Vite config - keep original settings)
-    { "path": "./tsconfig.node.json" },
-    { "path": "./tsconfig.api.json" }   // 👈 Add the new API config here
-  ],
+    { "path": "./tsconfig.app.json" },
+   ],
   "compilerOptions": {
-    "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@shared/*": ["shared/*"],
+      "@/*": ["src/*"]
     }
   }
 }

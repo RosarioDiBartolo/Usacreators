@@ -4,14 +4,14 @@
 // ============================================================================
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import type { Step } from "@/lib/shared/form-schemas";
-
+import type { Step } from "@shared/creator-apply-client";
+  
 export default function StepIndicator({
   currentStep,
   steps,
 }: {
   currentStep: number;
-  steps: Step[];
+steps: ReadonlyArray<Step>
 }) {
   const pct = (currentStep / (steps.length - 1)) * 100;
   return (
@@ -39,7 +39,7 @@ export default function StepIndicator({
                   : "bg-muted"
               )}
               aria-current={index === currentStep ? "step" : undefined}
-              aria-label={step.title}
+              aria-label={step.id}
             />
             <span
               className={cn(
@@ -49,7 +49,7 @@ export default function StepIndicator({
                   : "text-muted-foreground"
               )}
             >
-              {step.title}
+              {step.id}
             </span>
           </motion.div>
         ))}

@@ -14,7 +14,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { fadeInUp } from "./utils";
-import type { FormDataType } from "@/lib/shared/form-schemas";
+import type { ClientFormData as FormDataType  } from "@shared/creator-apply-client";
 import { toast } from "sonner";
 
 export function AdditionalInfo({

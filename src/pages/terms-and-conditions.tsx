@@ -1,5 +1,5 @@
 import LegalPage from '@/components/legal-page'
-import { domain } from '@/lib/constants'  
+import { domain } from '@shared/constants'  
 import { termsData } from '@/lib/terms-and-conditions'
 function TermsAndConditions() {
   return (

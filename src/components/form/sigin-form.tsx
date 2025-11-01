@@ -9,11 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, type Resolver, type UseFormSetError } from "react-hook-form";
-import {
-   stepKeysMap,
-   steps,
-   
-} from "@/lib/schemas/creator-form/client-schema";
+
 import StepIndicator from "./step-indicator";
 import { PersonalInfo } from "./personal-info";
 import { SocialInfo } from "./social-info";
@@ -23,7 +19,14 @@ import { StepNavigation } from "./step-navigation";
 import { uploadProfileImage, opt, contentVariants } from "./utils";
 import { SuccessStep } from "./success";
 
-// ---- helpers (add once near the component top) ----
+import {
+  stepKeysMap,
+  steps,
+  fullSchema,                // zod schema used by the client
+  type ClientFormData,       // <- use this everywhere
+} from "@shared/creator-apply-client";
+
+// ---- helpers ----
 type ApiError = {
   success?: boolean;
   code?: string;
@@ -32,18 +35,18 @@ type ApiError = {
   requestId?: string;
   reason?: string; // e.g., "version_mismatch"
   termsVersion?: string;
-  privacyPolicyVersion?: string;
+  privacyVersion?: string;
 };
 
 function applyFieldErrorsFromApi(
-  setError: UseFormSetError<FormDataType>,
+  setError: UseFormSetError<ClientFormData>,
   details?: ApiError["details"]
 ) {
   if (!details?.fieldErrors) return;
   for (const [name, errs] of Object.entries(details.fieldErrors)) {
     const message = Array.isArray(errs) ? errs[0] : String(errs);
-    // @ts-expect-error index assignment is ok at runtime
-    if (name in ({} as FormDataType)) setError(name, { type: "server", message });
+    // Cast the key so TS is happy; server can send only valid field names by contract
+    setError(name as keyof ClientFormData, { type: "server", message });
   }
 }
 
@@ -67,31 +70,29 @@ function toastApiError(err: ApiError, status: number) {
 
 async function handleNonOkResponse(
   res: Response,
-  setError: UseFormSetError<FormDataType>
+  setError: UseFormSetError<ClientFormData>
 ) {
   const data = (await res.json()) as ApiError;
   if (res.status === 400 && data?.details?.fieldErrors) {
     applyFieldErrorsFromApi(setError, data.details);
   }
-  // consumers may still inspect returned data for 409 handling
   toastApiError(data, res.status);
   return data;
 }
 
 // (Optional) Turnstile helper — replace with your actual integration
 async function getTurnstileToken(): Promise<string | undefined> {
-  // Implement if you use Turnstile; otherwise return undefined
   return undefined;
 }
 
 // ⚖️ Load current legal versions from static registry (no-store to avoid staleness)
-async function fetchLegalVersions(): Promise<{ termsVersion: string; privacyPolicyVersion: string }> {
+async function fetchLegalVersions(): Promise<{ termsVersion: string; privacyVersion: string }> {
   const res = await fetch("/legal/registry.json", { cache: "no-store" });
   if (!res.ok) throw new Error("Failed to load legal registry");
   const reg = await res.json();
   return {
     termsVersion: String(reg?.terms?.current ?? ""),
-    privacyPolicyVersion: String(reg?.privacy?.current ?? ""),
+    privacyVersion: String(reg?.privacy?.current ?? ""),
   };
 }
 
@@ -100,23 +101,22 @@ export default function OnboardingForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [legalVersions, setLegalVersions] = useState<{
     termsVersion: string;
-    privacyPolicyVersion: string;
+    privacyVersion: string;
   } | null>(null);
 
-  const form = useForm<FormDataType>({
-    resolver: zodResolver(fullSchema) as unknown as Resolver<FormDataType>,
+  const form = useForm<ClientFormData>({
+    resolver: zodResolver(fullSchema) as unknown as Resolver<ClientFormData>,
     defaultValues: {
       name: "",
       email: "",
-      profilePictureFile: null,
+      profilePictureFile: undefined,    // <- not null; matches optional File
       bio: undefined,
-      locationYesNo: "yes" as YesNo,
+      locationYesNo: "yes",             // <- no external YesNo type needed
       instagram: undefined,
       tiktok: undefined,
       instagramPost: undefined,
       additionalInfo: undefined,
       termsAccepted: false,
-      // NOTE: do NOT include acceptedAt here; server will stamp it.
     },
     mode: "onSubmit",
   });
@@ -132,14 +132,15 @@ export default function OnboardingForm() {
 
   async function nextStep() {
     const stepKeys = stepKeysMap[currentStep];
-    const isValid = await trigger(stepKeys);
+    const isValid = await trigger(stepKeys  );
     if (isValid) setCurrentStep((s) => s + 1);
   }
   function prevStep() {
     if (currentStep > 0) setCurrentStep((s) => s - 1);
   }
 
-  async function onSubmit(data: FormDataType) {
+  async function onSubmit(data: ClientFormData) {
+    console.log("Sughi")
     try {
       setIsSubmitting(true);
 
@@ -165,7 +166,7 @@ export default function OnboardingForm() {
 
         // Send server the exact versions we are showing
         termsVersion: current.termsVersion,
-        privacyPolicyVersion: current.privacyPolicyVersion,
+        privacyVersion: current.privacyVersion,
       };
 
       // 4) Post to API
@@ -182,10 +183,10 @@ export default function OnboardingForm() {
 
           // If server says versions changed, update local state and force re-accept
           if (err?.reason === "version_mismatch") {
-            if (err.termsVersion && err.privacyPolicyVersion) {
+            if (err.termsVersion && err.privacyVersion) {
               setLegalVersions({
                 termsVersion: err.termsVersion,
-                privacyPolicyVersion: err.privacyPolicyVersion,
+                privacyVersion: err.privacyVersion,
               });
             } else {
               // Fallback: re-fetch registry
@@ -243,18 +244,17 @@ export default function OnboardingForm() {
             {currentStep === 2 && (
               <AdditionalInfo
                 control={control}
-                handleProfileFile={(file) => setValue("profilePictureFile", file)}
+                handleProfileFile={(file) => setValue("profilePictureFile", file || undefined)}
               />
             )}
 
-            {/* If you want to show the exact version links in the consent step,
-               pass them down (update ReviewConsentStep signature accordingly). */}
+            {/* Pass exact version strings to the consent step (optional UI) */}
             {currentStep === 3 && (
               <ReviewConsentStep
                 control={control}
-                // @ts-expect-error Add these props in the component if desired
+                // @ts-expect-error Add these props to the component if desired
                 termsVersion={legalVersions?.termsVersion}
-                privacyPolicyVersion={legalVersions?.privacyPolicyVersion}
+                privacyVersion={legalVersions?.privacyVersion}
               />
             )}
 

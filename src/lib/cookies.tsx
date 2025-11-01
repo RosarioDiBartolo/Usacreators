@@ -1,5 +1,5 @@
 import EmailAddress from "@/components/email-address";
-import { companyName } from "./constants";
+import { companyName } from "../../shared/constants";
 
 export const cookiePolicy = [
   {

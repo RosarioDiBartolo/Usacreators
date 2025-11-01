@@ -26,6 +26,17 @@ export const normalizeIGPost = (v?: string | null) => {
   return /^https?:\/\//i.test(s) ? s : undefined;
 };
 
+
+export function normalizeEmail(email: string) {
+  return email.trim().toLowerCase();
+}
+
+export function hashEmail(email: string) {
+  const salt = process.env.EMAIL_HASH_SALT ?? "";
+  // SHA-256(salt + email)
+  return crypto.createHash("sha256").update(salt + email).digest("hex");
+}
+
 export const hashIP = (ip: string) => crypto.createHash("sha256").update(ip).digest("hex");
 
 export const RATE_WINDOW_MINUTES = Number(process.env.RATE_WINDOW_MINUTES || "5");

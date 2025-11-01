@@ -39,7 +39,7 @@ export function useLegalDialog() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           termsVersion: versions.termsVersion,
-          privacyPolicyVersion: versions.privacyVersion,
+          privacyVersion: versions.privacyVersion,
           context: "site_dialog",
         }),
         keepalive: true,

@@ -4,13 +4,13 @@ import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 import { z } from "zod";
-import { db } from "api/firebase-admin.ts";
+import { db } from "../firebase-admin.ts";
 
  const now = () => admin.firestore.FieldValue.serverTimestamp();
 
 const Body = z.object({
   termsVersion: z.string(),
-  privacyPolicyVersion: z.string().optional(),
+  privacyVersion: z.string().optional(),
   context: z.string().default("site_banner"),
 });
 
@@ -42,7 +42,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(409).json({
       reason: "version_mismatch",
       termsVersion: currentTerms,
-      privacyPolicyVersion: currentPrivacy,
+      privacyVersion: currentPrivacy,
     });
   }
 
@@ -54,7 +54,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     anonId,
     context,
     termsVersion: currentTerms,
-    privacyPolicyVersion: currentPrivacy,
+    privacyVersion: currentPrivacy,
     acceptedAt: now(),
     userAgent: ua,
     country,

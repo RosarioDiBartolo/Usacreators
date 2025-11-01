@@ -1,9 +1,8 @@
-import { serverSchema } from  "../src/lib/schemas/creator-form/server-schema.ts"
+import { serverSchema } from "../shared/creator-apply-server.js";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { z } from "zod";
-import crypto from "crypto";
- import admin from "firebase-admin";
-import { db } from "./firebase-admin.ts";
+ import crypto from "crypto";
+import admin from "firebase-admin";
+import { db } from "./firebase-admin.js";
 import {
   withId,
   hashIP,
@@ -12,17 +11,11 @@ import {
   normalizeTT,
   normalizeIGPost,
   asUrl,
-} from "./utils.ts";
-import { readCurrentLegal } from "./legal.ts";
+} from "./utils.js";
+import { readCurrentLegal } from "./legal.js";
 
 // Derive server input schema from the app form schema
-const ServerSchema = serverSchema.omit({ profilePictureFile: true }).extend({
-  profilePictureUrl: z.string().trim().url().optional().nullable(),
-  turnstileToken: z.string().optional(),
-  termsVersion: z.string().optional(),
-  privacyVersion: z.string().optional(),
-  acceptedAt: z.string().datetime().optional(),
-});
+ 
 
 // ---------- Handler ----------
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -57,7 +50,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     // 🧩 Step 1: Parse & validate payload (USE ServerSchema)
-    const parsed = ServerSchema.safeParse(req.body);
+    const parsed = serverSchema.safeParse(req.body);
     if (!parsed.success) {
       const flat = parsed.error.flatten();
       console.warn(`[${requestId}] ⚠️ Invalid payload:`, flat);
@@ -294,20 +287,30 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         ipHash, // hashed, not raw IP
         legal: {
           termsVersion: currentTerms,
-          privacyPolicyVersion: currentPrivacy,
+          privacyVersion: currentPrivacy,
           acceptedAt: now,
         },
       });
 
-      // 5) Write *append-only audit*
+      // Hash email (for cross-application lookup)
+      const emailHash = crypto
+        .createHash("sha256")
+        .update((process.env.EMAIL_HASH_SALT || "") + d.email.toLowerCase())
+        .digest("hex");
+
       await db.collection("legal_acceptances").add({
-        applicationId: docRef.id,
+        subjectType: "application",
+        subjectId: docRef.id,
         context: "application_submit",
+
+        emailHash, // ✅ hashed—not raw email
+        ipHash, // ✅ already computed, privacy-safe
+        userAgent: ua,
+        country,
+
         termsVersion: currentTerms,
         privacyVersion: currentPrivacy,
-        acceptedAt: now,
-        ua,
-        country,
+        acceptedAt: now, // server timestamp
       });
 
       console.log(`[${requestId}] ✅ Firestore document created: ${docRef.id}`);
