@@ -44,11 +44,10 @@ export type Step = {
 };
 
 export const steps = [
-  { id: "personal", fields: ["name", "email"] },
+  { id: "personal", fields: ["name", "email", "profilePictureFile"] },
   { id: "social",   fields: ["locationYesNo", "instagram", "tiktok", "instagramPost"] },
   { id: "details",  fields: ["bio", "additionalInfo"] },
-  { id: "media",    fields: ["profilePictureFile"] },
-  { id: "legal",    fields: ["termsAccepted"] },
+   { id: "legal",    fields: ["termsAccepted"] },
 ] as const satisfies ReadonlyArray<Step>;
 
 export const stepKeysMap: Record<number, readonly (keyof ClientFormData)[]> =

@@ -23,7 +23,7 @@ steps: ReadonlyArray<Step>
   prevStep: () => void;
   handleSubmit: () => void;
 }) {
-  const isLastInteractiveStep = currentStep === steps.length - 2; // before success
+  const isLastInteractiveStep = currentStep === steps.length - 1; // before success
 
    return (
     <div className="flex gap-3 sm:gap-4 justify-between pt-6 sm:pt-8 pb-4 sm:pb-6 px-4 sm:px-6">

@@ -27,8 +27,7 @@ steps: ReadonlyArray<Step>
       transition={{ duration: 0.5 }}
     >
        
-      
-        <motion.h2
+         <motion.h2
          layoutId = {step.id}
         className=" capitalize my-0 bg-text bg-gradient">{step.id}</motion.h2>
         

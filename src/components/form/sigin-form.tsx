@@ -240,7 +240,7 @@ export default function OnboardingForm() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
     >
-      {currentStep !== steps.length - 1 && (
+      {currentStep !== steps.length   && (
         <StepIndicator
         setCurrentStep = {setCurrentStep}
         currentStep={currentStep} steps={steps} />
@@ -290,7 +290,7 @@ export default function OnboardingForm() {
           </motion.div>
         </AnimatePresence>
 
-        {currentStep !== steps.length - 1 && (
+        {currentStep !== steps.length   && (
           <StepNavigation
             currentStep={currentStep}
             steps={steps}
