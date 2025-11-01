@@ -17,7 +17,7 @@ const profilePictureClient = z
  
 // Apply cross-field rule once, at the top level
  // 1) NON unire più consentClientSchema nel clientFormSchema
-const baseClientObj = sharedBaseFormSchema
+const baseClientObj =  sharedBaseFormSchema
   .merge(z.object({ profilePictureFile: profilePictureClient }));
 export const clientFormSchema =  baseClientObj ;
 
@@ -29,7 +29,10 @@ export const clientUiOnlySchema = z.object({
 export const clientSubmitSchema = baseClientObj
   .omit({ profilePictureFile: true })
   .merge(clientUiOnlySchema);
-export const fullSchema = clientFormSchema; // <-- ora non richiede le versioni
+
+
+
+export const fullSchema = requireAtLeastOneSocial(clientFormSchema); // <-- ora non richiede le versioni
 
 // RHF types
 export type ClientFormData = z.infer<typeof clientFormSchema>;

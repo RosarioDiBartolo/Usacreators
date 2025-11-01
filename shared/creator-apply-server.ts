@@ -34,11 +34,11 @@ const baseServerObj = sharedBaseFormSchema
   .merge(serverWireExtras);
 
 // ---- Apply cross-field rule AFTER object construction ----
-export const serverSchema = baseServerObj ;
+export const serverSchema  =requireAtLeastOneSocial(baseServerObj) ;
 
 // ---- Persistence schema (what we actually store) ----
 // NOTE: never call .omit on ZodEffects; omit on the object, then (optionally) re-apply the effect.
-export const persistSchema =  
+export const persistSchema =   requireAtLeastOneSocial(
   baseServerObj
     .omit({
       turnstileToken: true,
@@ -67,7 +67,7 @@ export const persistSchema =
       source: z.literal("vercel-api"),
       createdAt: z.any(),           // Firestore server timestamp
     })
-  ;
+  )
 
 export type ServerInput = z.infer<typeof serverSchema>;
 export type PersistRecord = z.infer<typeof persistSchema>;
