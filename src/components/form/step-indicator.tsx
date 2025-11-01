@@ -4,7 +4,7 @@
 // ============================================================================
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import type { Step } from "@/lib/form-schemas";
+import type { Step } from "@/lib/shared/form-schemas";
 
 export default function StepIndicator({
   currentStep,

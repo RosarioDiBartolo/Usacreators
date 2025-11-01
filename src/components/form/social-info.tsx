@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { fadeInUp } from "./utils";
-import type { FormDataType } from "@/lib/form-schemas";
+import type { FormDataType } from "@/lib/shared/form-schemas";
 
 export function SocialInfo({ control }: { control: Control<FormDataType> }) {
   return (

@@ -6,7 +6,7 @@ import { type Control, Controller } from "react-hook-form";
 import { motion } from "framer-motion";
 import { fadeInUp } from "./utils";
 import { Checkbox } from "@/components/ui/checkbox";
-import type { FormDataType } from "@/lib/form-schemas";
+import type { FormDataType } from "@/lib/shared/form-schemas";
 import { Field, FieldLabel, FieldGroup, FieldError } from "@/components/ui/field";
 import {
   Accordion,

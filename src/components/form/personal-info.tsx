@@ -6,7 +6,7 @@
 import { Controller, type Control } from "react-hook-form";
 import { Field, FieldLabel, FieldError, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import type { FormDataType } from "@/lib/form-schemas";
+import type { FormDataType } from "@/lib/shared/form-schemas";
 
 
 export function PersonalInfo({ control }: { control: Control<FormDataType> }) {

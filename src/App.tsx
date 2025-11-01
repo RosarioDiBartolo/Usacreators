@@ -7,12 +7,14 @@ import PrivacPolicy from "./pages/privacy-policy";
 import Header from "./components/header";
 import TermsAndConditions from "./pages/terms-and-conditions";
 import CookiePolicy from "./pages/cookie-policy";
+import { LegalTermsDialog } from "./components/legal-banner";
 
 
 function App() {
   return (
     <BrowserRouter>
            
+      <LegalTermsDialog />
 
       <Routes>
         <Route path="/" index element={

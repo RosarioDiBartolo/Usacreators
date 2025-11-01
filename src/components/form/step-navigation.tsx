@@ -4,7 +4,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Check, Loader2 } from "lucide-react";
-import type { Step } from "@/lib/form-schemas";
+import type { Step } from "@/lib/shared/form-schemas";
 
 
 export function StepNavigation({

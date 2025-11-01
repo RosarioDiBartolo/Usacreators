@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "generate-legal-registry": "node src/scripts/generate-registry.js",
     "dev": "vite --host",
     "build": "vite build",
     "type-check": "tsc --noEmit",
