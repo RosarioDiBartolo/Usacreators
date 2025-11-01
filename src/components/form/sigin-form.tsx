@@ -24,6 +24,7 @@ import {
   fullSchema, // zod schema used by the client
   type ClientFormData, // <- use this everywhere
 } from "@shared/creator-apply-client";
+import { useNavigate } from "react-router-dom";
 
 // ---- helpers ----
 type ApiError = {
@@ -116,6 +117,7 @@ export default function OnboardingForm() {
     termsVersion: string;
     privacyVersion: string;
   } | null>(null);
+  const navigate = useNavigate();
 
   const form = useForm<ClientFormData>({
     resolver: zodResolver(fullSchema) as unknown as Resolver<ClientFormData>,
@@ -152,6 +154,7 @@ export default function OnboardingForm() {
     if (currentStep > 0) setCurrentStep((s) => s - 1);
   }
 
+    
   async function onSubmit(data: ClientFormData) {
     try {
       setIsSubmitting(true);
@@ -225,6 +228,8 @@ export default function OnboardingForm() {
       }
 
       toast.success("Application submitted successfully!");
+
+      navigate("/success")
       setCurrentStep((s) => s + 1);
     } catch (e) {
       toast.error(
