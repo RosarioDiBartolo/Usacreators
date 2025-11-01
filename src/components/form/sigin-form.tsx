@@ -140,8 +140,7 @@ export default function OnboardingForm() {
   }
 
   async function onSubmit(data: ClientFormData) {
-    console.log("Sughi")
-    try {
+     try {
       setIsSubmitting(true);
 
       // 1) Always refresh current legal versions right before submit
@@ -237,7 +236,7 @@ export default function OnboardingForm() {
             animate="visible"
             exit="exit"
             variants={contentVariants}
-            className="flex-1 flex sm:items-center"
+            className="flex-1 flex "
           >
             {currentStep === 0 && <PersonalInfo control={control} />}
             {currentStep === 1 && <SocialInfo control={control} />}

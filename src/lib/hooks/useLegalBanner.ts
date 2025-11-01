@@ -21,8 +21,8 @@ export function useLegalDialog() {
     fetchLegalVersions()
       .then(v => {
         setVersions(v);
-        const last = localStorage.getItem("legal:lastSeenTerms") || "";
-        if (v.termsVersion && v.termsVersion !== last) setOpen(true);
+        const last = localStorage.getItem("legal:lastSeenTerms") 
+        if (last && v.termsVersion && v.termsVersion !== last) setOpen(true);
       })
       .catch(() => {});
   }, []);

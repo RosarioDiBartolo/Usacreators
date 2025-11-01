@@ -4,7 +4,7 @@ import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 import { z } from "zod";
-import { db } from "../firebase-admin.ts";
+import { db } from "../firebase-admin.js";
 
  const now = () => admin.firestore.FieldValue.serverTimestamp();
 

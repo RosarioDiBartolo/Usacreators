@@ -6,6 +6,7 @@ function SignupPage() {
       <h1 className="
        bg-text
        bg-gradient
+       pb-2
       ">Apply to our Catalog</h1>
 
       <SiginForm />
