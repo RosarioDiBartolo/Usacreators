@@ -17,13 +17,12 @@ import { AdditionalInfo } from "./additional-info";
 import { ReviewConsentStep } from "./review-consent-step";
 import { StepNavigation } from "./step-navigation";
 import { uploadProfileImage, opt, contentVariants } from "./utils";
-import { SuccessStep } from "./success";
 
 import {
   stepKeysMap,
   steps,
-  fullSchema,                // zod schema used by the client
-  type ClientFormData,       // <- use this everywhere
+  fullSchema, // zod schema used by the client
+  type ClientFormData, // <- use this everywhere
 } from "@shared/creator-apply-client";
 
 // ---- helpers ----
@@ -54,17 +53,28 @@ function toastApiError(err: ApiError, status: number) {
   const base = err.message || "Something went wrong.";
   const ref = err.requestId ? ` • Ref: ${err.requestId}` : "";
   switch (status) {
-    case 400: return toast.error(`Invalid data. ${base}${ref}`);
-    case 403: return toast.error(`Captcha failed. ${base}${ref}`);
-    case 429: return toast.error(`Too many requests. ${base}${ref}`);
+    case 400:
+      return toast.error(`Invalid data. ${base}${ref}`);
+    case 403:
+      return toast.error(`Captcha failed. ${base}${ref}`);
+    case 429:
+      return toast.error(`Too many requests. ${base}${ref}`);
     case 409:
-      if (err.code === "DUPLICATE_EMAIL") return toast.error(`This email already applied.${ref}`);
-      if (err.code === "DUPLICATE_INSTAGRAM") return toast.error(`This Instagram already applied.${ref}`);
-      if (err.code === "DUPLICATE_TIKTOK") return toast.error(`This TikTok already applied.${ref}`);
-      if (err.reason === "version_mismatch") return toast.error(`Our Terms/Privacy changed. Please review and accept the new version.`);
+      if (err.code === "DUPLICATE_EMAIL")
+        return toast.error(`This email already applied.${ref}`);
+      if (err.code === "DUPLICATE_INSTAGRAM")
+        return toast.error(`This Instagram already applied.${ref}`);
+      if (err.code === "DUPLICATE_TIKTOK")
+        return toast.error(`This TikTok already applied.${ref}`);
+      if (err.reason === "version_mismatch")
+        return toast.error(
+          `Our Terms/Privacy changed. Please review and accept the new version.`
+        );
       return toast.error(`Conflict. ${base}${ref}`);
-    case 503: return toast.error(`Captcha unavailable. ${base}${ref}`);
-    default:  return toast.error(`${base}${ref}`);
+    case 503:
+      return toast.error(`Captcha unavailable. ${base}${ref}`);
+    default:
+      return toast.error(`${base}${ref}`);
   }
 }
 
@@ -86,7 +96,10 @@ async function getTurnstileToken(): Promise<string | undefined> {
 }
 
 // ⚖️ Load current legal versions from static registry (no-store to avoid staleness)
-async function fetchLegalVersions(): Promise<{ termsVersion: string; privacyVersion: string }> {
+async function fetchLegalVersions(): Promise<{
+  termsVersion: string;
+  privacyVersion: string;
+}> {
   const res = await fetch("/legal/registry.json", { cache: "no-store" });
   if (!res.ok) throw new Error("Failed to load legal registry");
   const reg = await res.json();
@@ -109,9 +122,9 @@ export default function OnboardingForm() {
     defaultValues: {
       name: "",
       email: "",
-      profilePictureFile: undefined,    // <- not null; matches optional File
+      profilePictureFile: undefined, // <- not null; matches optional File
       bio: undefined,
-      locationYesNo: "yes",             // <- no external YesNo type needed
+      locationYesNo: "yes", // <- no external YesNo type needed
       instagram: undefined,
       tiktok: undefined,
       instagramPost: undefined,
@@ -121,7 +134,7 @@ export default function OnboardingForm() {
     mode: "onSubmit",
   });
 
-  const { handleSubmit, control, trigger, setValue } = form;
+  const { handleSubmit, control, trigger, setValue, getValues } = form;
 
   // Load legal versions on mount so you can link to exact versions in your consent UI
   useEffect(() => {
@@ -132,7 +145,7 @@ export default function OnboardingForm() {
 
   async function nextStep() {
     const stepKeys = stepKeysMap[currentStep];
-    const isValid = await trigger(stepKeys  );
+    const isValid = await trigger(stepKeys);
     if (isValid) setCurrentStep((s) => s + 1);
   }
   function prevStep() {
@@ -140,7 +153,7 @@ export default function OnboardingForm() {
   }
 
   async function onSubmit(data: ClientFormData) {
-     try {
+    try {
       setIsSubmitting(true);
 
       // 1) Always refresh current legal versions right before submit
@@ -178,7 +191,10 @@ export default function OnboardingForm() {
       if (!res.ok) {
         // Special handling for version mismatch (409)
         if (res.status === 409) {
-          const err = (await handleNonOkResponse(res, form.setError)) as ApiError;
+          const err = (await handleNonOkResponse(
+            res,
+            form.setError
+          )) as ApiError;
 
           // If server says versions changed, update local state and force re-accept
           if (err?.reason === "version_mismatch") {
@@ -197,7 +213,10 @@ export default function OnboardingForm() {
               }
             }
             // Force user to re-tick consent (they must accept the new version)
-            setValue("termsAccepted", false, { shouldValidate: true, shouldTouch: true });
+            setValue("termsAccepted", false, {
+              shouldValidate: true,
+              shouldTouch: true,
+            });
           }
         } else {
           await handleNonOkResponse(res, form.setError);
@@ -208,20 +227,23 @@ export default function OnboardingForm() {
       toast.success("Application submitted successfully!");
       setCurrentStep((s) => s + 1);
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Network error. Please try again.");
+      toast.error(
+        e instanceof Error ? e.message : "Network error. Please try again."
+      );
     } finally {
       setIsSubmitting(false);
     }
   }
-
-  return (
+   return (
     <motion.div
       className="flex-1 flex flex-col"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
     >
       {currentStep !== steps.length - 1 && (
-        <StepIndicator currentStep={currentStep} steps={steps} />
+        <StepIndicator
+        setCurrentStep = {setCurrentStep}
+        currentStep={currentStep} steps={steps} />
       )}
 
       <form
@@ -238,12 +260,19 @@ export default function OnboardingForm() {
             variants={contentVariants}
             className="flex-1 flex "
           >
-            {currentStep === 0 && <PersonalInfo control={control} />}
+            {currentStep === 0 && (
+              <PersonalInfo
+                control={control}
+                 handleProfileFile={(file) =>
+                  setValue("profilePictureFile", file || undefined)
+                }
+              />
+            )}
             {currentStep === 1 && <SocialInfo control={control} />}
             {currentStep === 2 && (
               <AdditionalInfo
                 control={control}
-                handleProfileFile={(file) => setValue("profilePictureFile", file || undefined)}
+                
               />
             )}
 
@@ -257,7 +286,7 @@ export default function OnboardingForm() {
               />
             )}
 
-            {currentStep === 4 && <SuccessStep />}
+            {/* {currentStep === 4 && <SuccessStep />} */}
           </motion.div>
         </AnimatePresence>
 

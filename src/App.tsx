@@ -8,6 +8,7 @@ import Header from "./components/header";
 import TermsAndConditions from "./pages/terms-and-conditions";
 import CookiePolicy from "./pages/cookie-policy";
 import { LegalTermsDialog } from "./components/legal-banner";
+import Success from "./components/form/success";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/cookie-policy" element={<CookiePolicy />} />
+        <Route path="/success" element={<Success />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>{" "}

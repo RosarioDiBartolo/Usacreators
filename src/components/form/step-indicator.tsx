@@ -5,14 +5,19 @@
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import type { Step } from "@shared/creator-apply-client";
+import { Dispatch, SetStateAction } from "react";
   
 export default function StepIndicator({
   currentStep,
+  setCurrentStep,
   steps,
 }: {
+  setCurrentStep: Dispatch<SetStateAction<number>>;
   currentStep: number;
 steps: ReadonlyArray<Step>
 }) {
+
+  const step = steps[currentStep]
   const pct = (currentStep / (steps.length - 1)) * 100;
   return (
     <motion.div
@@ -21,15 +26,35 @@ steps: ReadonlyArray<Step>
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className=" hidden sm:flex gap-1 sm:gap-6 sm:justify-between">
+       
+      
+        <motion.h2
+         layoutId = {step.id}
+        className=" capitalize my-0 bg-text bg-gradient">{step.id}</motion.h2>
+        
+            <div className="w-full bg-muted h-1 sm:h-1.5 rounded-full overflow-hidden mt-2 sm:mt-3">
+        <motion.div
+          className="  h-full bg-gradient-to-r from-amber-400 to-primary"
+          initial={{ width: 0 }}
+          animate={{ width: `${pct}%` }}
+          transition={{ duration: 0.3 }}
+        />
+        
+      </div>
+      <div className=" py-4 hidden sm:flex gap-1 sm:gap-6 sm:justify-between">
         {steps.map((step, index) => (
-          <motion.div
+          <motion.button
+          disabled = {index > currentStep}
+          onClick={()=>{
+                setCurrentStep(index)
+              }}
+              type="button"
             key={step.id}
-            className="flex flex-col items-center flex-1 sm:flex-none"
+            className="flex disabled:cursor-not-allowed cursor-pointer flex-col items-center flex-1 sm:flex-none"
             whileHover={{ scale: 1.05 }}
           >
-            <motion.button
-              type="button"
+            <motion.div
+ 
               className={cn(
                 "w-2 h-2 sm:w-3 sm:h-3 rounded-full cursor-default transition-colors",
                 index < currentStep
@@ -51,16 +76,8 @@ steps: ReadonlyArray<Step>
             >
               {step.id}
             </span>
-          </motion.div>
+          </motion.button>
         ))}
-      </div>
-      <div className="w-full bg-muted h-1 sm:h-1.5 rounded-full overflow-hidden mt-2 sm:mt-3">
-        <motion.div
-          className="  h-full bg-gradient-to-r from-amber-400 to-primary"
-          initial={{ width: 0 }}
-          animate={{ width: `${pct}%` }}
-          transition={{ duration: 0.3 }}
-        />
       </div>
     </motion.div>
   );

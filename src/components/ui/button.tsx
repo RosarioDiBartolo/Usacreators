@@ -6,20 +6,20 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "relative overflow-visible isolate  inline-flex items-center cursor-pointer justify-center gap-2 whitespace-nowrap rounded-full font-semibold transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 aria-invalid:ring-2 aria-invalid:ring-destructive",
+  "relative overflow-visible isolate h-fit  inline-flex items-center cursor-pointer justify-center gap-2 whitespace-nowrap   font-semibold transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none  4 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 aria-invalid:ring-2 aria-invalid:ring-destructive",
   {
     variants: {
       variant: {
         default:
-          "bg-gradient-to-t from-primary to-tertiary text-primary-foreground shadow-sm hover:opacity-90",
+          "rounded-full bg-gradient-to-t from-primary to-tertiary text-primary-foreground shadow-sm hover:opacity-90",
         destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+          "rounded-full bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         black:
-          "bg-black text-white border border-input shadow-sm hover:bg-black/90 dark:bg-zinc-950 dark:hover:bg-zinc-900",
+          "rounded-full bg-black text-white border border-input shadow-sm hover:bg-black/90 dark:bg-zinc-950 dark:hover:bg-zinc-900",
         outline:
-          "border border-input bg-background text-foreground shadow-sm hover:bg-accent hover:text-accent-foreground",
+          "  border border-input  rounded-md bg-input text-foreground shadow-sm hover:bg-accent hover:text-accent-foreground",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+          "rounded-full bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "bg-background text-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
