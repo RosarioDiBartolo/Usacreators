@@ -177,7 +177,7 @@ const sections = [
       "from-white via-white to-[var(--creator-brand-gradient-orange)]",
     subtitle: "looking for Brand collaborations",
     description:
-      "We’ve already onboarded top creators ready to deliver on-brand content for your business.",
+      "Join the fastest-growing network of verified creators trusted by top brands in Miami",
     children: (
       <CTALink
         colorVar="--primary"
