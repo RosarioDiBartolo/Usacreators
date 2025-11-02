@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, ArrowRight, Copy, ExternalLink } from "lucide-react";
-import LightRays from "../lights";
+import LightRays from "../components/lights";
+import { DISCORD_INVITE_URL } from "@shared/constants";
 
 /**
  * SuccessPage
@@ -14,11 +15,7 @@ import LightRays from "../lights";
  * - discordInviteUrl: string  -> invite link to your Discord
  * - onClose: () => void       -> optional handler for "Back to Home"
  */
-export default function SuccessPage({
-  discordInviteUrl = "https://discord.gg/your-invite",
- }: {
-  discordInviteUrl?: string;
- }) {
+export default function SuccessPage( ) {
   const [copied, setCopied] = useState(false);
 
   // small confetti burst using radial-gradients
@@ -31,7 +28,7 @@ export default function SuccessPage({
 
   const copyInvite = async () => {
     try {
-      await navigator.clipboard.writeText(discordInviteUrl);
+      await navigator.clipboard.writeText(DISCORD_INVITE_URL);
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch (e) {
@@ -84,7 +81,7 @@ export default function SuccessPage({
 
             <div className="flex w-full   gap-2    sm:items-center">
               <a
-                href={discordInviteUrl}
+                href={DISCORD_INVITE_URL}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex flex-4 items-center justify-center gap-2 rounded-xl border border-neutral-800 bg-secondary px-4 py-2 text-sm font-medium text-white transition hover:opacity-95 active:opacity-90"

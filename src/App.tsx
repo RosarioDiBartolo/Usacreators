@@ -8,7 +8,7 @@ import Header from "./components/header";
 import TermsAndConditions from "./pages/terms-and-conditions";
 import CookiePolicy from "./pages/cookie-policy";
 import { LegalTermsDialog } from "./components/legal-banner";
-import Success from "./components/form/success";
+import Success from "./pages/success";
 
 
 function App() {
