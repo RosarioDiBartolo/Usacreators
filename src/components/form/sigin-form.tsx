@@ -136,7 +136,7 @@ export default function OnboardingForm() {
     mode: "onSubmit",
   });
 
-  const { handleSubmit, control, trigger, setValue, getValues } = form;
+  const { handleSubmit, control, trigger, setValue } = form;
 
   // Load legal versions on mount so you can link to exact versions in your consent UI
   useEffect(() => {
@@ -154,7 +154,6 @@ export default function OnboardingForm() {
     if (currentStep > 0) setCurrentStep((s) => s - 1);
   }
 
-    
   async function onSubmit(data: ClientFormData) {
     try {
       setIsSubmitting(true);
@@ -229,7 +228,7 @@ export default function OnboardingForm() {
 
       toast.success("Application submitted successfully!");
 
-      navigate("/success")
+      navigate("/success");
       setCurrentStep((s) => s + 1);
     } catch (e) {
       toast.error(
@@ -239,16 +238,18 @@ export default function OnboardingForm() {
       setIsSubmitting(false);
     }
   }
-   return (
+  return (
     <motion.div
       className="flex-1 flex flex-col"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
     >
-      {currentStep !== steps.length   && (
+      {currentStep !== steps.length && (
         <StepIndicator
-        setCurrentStep = {setCurrentStep}
-        currentStep={currentStep} steps={steps} />
+          setCurrentStep={setCurrentStep}
+          currentStep={currentStep}
+          steps={steps}
+        />
       )}
 
       <form
@@ -268,18 +269,11 @@ export default function OnboardingForm() {
             {currentStep === 0 && (
               <PersonalInfo
                 control={control}
-                 handleProfileFile={(file) =>
-                  setValue("profilePictureFile", file || undefined)
-                }
+            
               />
             )}
             {currentStep === 1 && <SocialInfo control={control} />}
-            {currentStep === 2 && (
-              <AdditionalInfo
-                control={control}
-                
-              />
-            )}
+            {currentStep === 2 && <AdditionalInfo control={control} />}
 
             {/* Pass exact version strings to the consent step (optional UI) */}
             {currentStep === 3 && (
@@ -295,7 +289,7 @@ export default function OnboardingForm() {
           </motion.div>
         </AnimatePresence>
 
-        {currentStep !== steps.length   && (
+        {currentStep !== steps.length && (
           <StepNavigation
             currentStep={currentStep}
             steps={steps}

@@ -5,14 +5,13 @@ import {
   emptyToUndef,
   type StepId,
 } from "./shared-creators-apply";
+import { MAX_PIC_SIZE } from "./constants";
 
 // Client-only file field
 const profilePictureClient = z
   .instanceof(File)
-  .optional()
-  .refine((f) => !f || f.size <= 3 * 1024 * 1024, { message: "Image must be under 3MB." });
-
- 
+  .refine((f) => !f || ["image/jpeg","image/png","image/webp"].includes(f.type), "Allowed: JPG, PNG, WEBP.")
+  .refine((f) => !f || f.size <= MAX_PIC_SIZE * 1024 * 1024, "Max size is 3 MB.")
 
  
 // Apply cross-field rule once, at the top level

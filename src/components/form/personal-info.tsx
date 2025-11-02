@@ -8,30 +8,20 @@ import {
   Field,
   FieldLabel,
   FieldError,
-  FieldGroup, 
+  FieldGroup,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import type { ClientFormData as FormDataType } from "@shared/creator-apply-client";
- 
-import FileUpload from "./file-upload";
-import { toast } from "sonner";
 
-export function PersonalInfo({ control, handleProfileFile }: { control: Control<FormDataType>;  handleProfileFile: (file: File | null) => void;
+import FileUpload from "./file-upload";
+ 
+export function PersonalInfo({
+  control,
+ }: {
+  control: Control<FormDataType>;
  }) {
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0] ?? null;
-        if (!file) return handleProfileFile(null);
-        if (!file.type.startsWith("image/")) {
-          toast.error("Please select an image file.");
-          return;
-        }
-        if (file.size > 3 * 1024 * 1024) {
-          toast.error("Image must be under 3MB.");
-          return;
-        }
-        handleProfileFile(file);
-      };
-    return (
+   
+  return (
     <FieldGroup>
       <Controller
         name="name"
@@ -65,8 +55,27 @@ export function PersonalInfo({ control, handleProfileFile }: { control: Control<
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>
         )}
-      />
-             <FileUpload  handleFileChange={handleFileChange}/>
+      /> 
+      <Controller
+  control={control}
+  name="profilePictureFile"
+  // Optional: client-side rules; for strict checks, prefer Zod in the schema
+  rules={{
+    validate: (file: File | undefined) => {
+      if (!file) return true;                     // allow empty unless required
+      if (!["image/jpeg","image/png","image/webp"].includes(file.type)) return "Allowed: JPG, PNG, WEBP.";
+      if (file.size > 3 * 1024 * 1024) return "Max size is 3 MB.";
+      return true;
+    },
+  }}
+  render={({ field, fieldState }) => (
+    <FileUpload
+      field={field}
+      fieldState={fieldState}
+    />
+  )}
+/>
+
     </FieldGroup>
   );
 }
