@@ -19,7 +19,7 @@ const SnapItem = ({ children }: PropsWithChildren) => {
   const percentFromCenter = useTransform(scrollXProgress, [0, 0.5, 1], [-100, 0, 100]);
 
   // Example effect: scale up at center
-  const scale = useTransform(scrollXProgress, [0, .4, .6, .9, 1.3], [.2, .8, 1.2, .8, .2]);
+  const scale = useTransform(scrollXProgress, [0.2, .4, .5, .9, 1.3], [.2, .8, 1.2, .8, .2]);
 
   // Debug / UI readout
   const [pct, setPct] = useState(0);
