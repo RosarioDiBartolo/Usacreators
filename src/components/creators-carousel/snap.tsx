@@ -1,15 +1,14 @@
 import * as React from "react";
 import { motion, useMotionValueEvent, useTransform } from "motion/react";
 import { useCenterProgress } from "./use-center-progress";
+import { cn } from "@/lib/utils";
 
 const ScrollCtx = React.createContext<React.RefObject<HTMLDivElement | null> | undefined  >(undefined);
 
 type ScrollContainerProps = {
   /** Visual padding left/right so first/last cards can center */
-  edgePadding?: number; // px
-  /** Classes applied to the *inner track* (gap, padding, etc.) */
-  trackClassName?: string;
-  /** Classes applied to the *outer scroller* (rarely needed) */
+   /** Classes applied to the *inner track* (gap, padding, etc.) */
+   /** Classes applied to the *outer scroller* (rarely needed) */
   className?: string;
   children: React.ReactNode;
 };
@@ -18,10 +17,16 @@ type ScrollContainerProps = {
  * Outer scroller (no padding) + inner track (your layout).
  * We pass the *outer scroller* to the hook to keep geometry exact.
  */
+
+ 
+export const ScrollContent = ({className, children}:React.PropsWithChildren<{className?: string}>)=>(
+ <div className={cn( " h-full items-center flex gap-16 px-6 py-8 snap-x snap-mandatory   ", className)}
+ >
+  {children}
+  </div>
+)
 export function ScrollContainer({
-  edgePadding = 64,
-  trackClassName = " flex gap-16 px-6 py-8 snap-x snap-mandatory items-stretch",
-  className = " w-xl mx-auto relative  overflow-x-auto",
+    className  ,
   children,
 }: ScrollContainerProps) {
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -29,21 +34,16 @@ export function ScrollContainer({
   return (
     <div
       ref={containerRef}
-      className={className}
+      className={cn("container mx-auto relative  overflow-x-auto",className)}
       // allows snapping to consider space before/after
       style={{
         scrollSnapType: "x mandatory",
-        scrollPaddingLeft: edgePadding,
-        scrollPaddingRight: edgePadding,
+     
       }}
     >
       <ScrollCtx.Provider value={containerRef}>
-        <div className={trackClassName}>
-          {/* real spacers so first/last can center */}
-          <div style={{ width: edgePadding, flex: "0 0 auto" }} aria-hidden />
-          {children}
-          <div style={{ width: edgePadding, flex: "0 0 auto" }} aria-hidden />
-        </div>
+           {/* real spacers so first/last can center */}
+           {children}
       </ScrollCtx.Provider>
     </div>
   );
