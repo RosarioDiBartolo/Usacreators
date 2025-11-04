@@ -20,7 +20,7 @@ type ScrollContainerProps = {
  */
 export function ScrollContainer({
   edgePadding = 64,
-  trackClassName = "flex gap-8 px-6 py-8 snap-x snap-mandatory items-stretch",
+  trackClassName = "flex gap-16 px-6 py-8 snap-x snap-mandatory items-stretch",
   className = "w-full overflow-x-auto",
   children,
 }: ScrollContainerProps) {
@@ -81,6 +81,8 @@ export function SnapItem({
 
   // Example effect: scale up at center
   const scale = useTransform(progress, [0, 0.5, 1], scaleRange);
+  const zIndex = useTransform(progress, [0, 0.5, 1], [1, 10, 1]);
+   const y = useTransform(progress, [0, 0.5, 1], [0,  0, 0]);
 
   // Optional debug readout
   const [p, setP] = React.useState(0);
@@ -89,7 +91,7 @@ export function SnapItem({
   return (
     <motion.div
       ref={itemRef}
-      style={{ scale }}
+      style={{ scale, zIndex, y   }}
       className={className}
     >
       {children}
