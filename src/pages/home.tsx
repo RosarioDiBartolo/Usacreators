@@ -15,8 +15,7 @@ function Home() {
       <Videos />
 
       <Features />
-      <FAQ />
-      <SnapScroll />
+      <FAQ /> 
       <div>
         <CreatorsBrands />
         <Footer />

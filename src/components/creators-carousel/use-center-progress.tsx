@@ -10,8 +10,8 @@ export function useCenterProgress({
   axis = "x",
   clamp = true,
 }: {
-  container?: React.RefObject<HTMLElement>;
-  target: React.RefObject<HTMLElement>;
+  container?: React.RefObject<HTMLElement | null>;
+  target: React.RefObject<HTMLElement | null>;
   axis?: Axis;
   clamp?: boolean;
 }): {

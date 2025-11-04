@@ -2,7 +2,7 @@ import * as React from "react";
 import { motion, useMotionValueEvent, useTransform } from "motion/react";
 import { useCenterProgress } from "./use-center-progress";
 
-const ScrollCtx = React.createContext<React.RefObject<HTMLDivElement> | null>(null);
+const ScrollCtx = React.createContext<React.RefObject<HTMLDivElement | null> | undefined  >(undefined);
 
 type ScrollContainerProps = {
   /** Visual padding left/right so first/last cards can center */
@@ -20,8 +20,8 @@ type ScrollContainerProps = {
  */
 export function ScrollContainer({
   edgePadding = 64,
-  trackClassName = "flex gap-16 px-6 py-8 snap-x snap-mandatory items-stretch",
-  className = "w-full overflow-x-auto",
+  trackClassName = " flex gap-16 px-6 py-8 snap-x snap-mandatory items-stretch",
+  className = " w-xl mx-auto relative  overflow-x-auto",
   children,
 }: ScrollContainerProps) {
   const containerRef = React.useRef<HTMLDivElement>(null);
