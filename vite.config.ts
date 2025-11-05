@@ -1,21 +1,24 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-import tailwindcss from '@tailwindcss/vite'
-import path from "path"
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import {tanstackRouter} from "@tanstack/router-vite-plugin";
+import vercel from "vite-plugin-vercel";
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
-   tailwindcss(),
-
+    tanstackRouter(),
+    vercel({
+      entries: {
+        ssr: { id: "endpoints/ssr.ts", name: "ssr", route: "/api/ssr" },
+        hello: { id: "endpoints/api/hello.ts", name: "hello", route: "/api/hello" },
+        creator: { id: "endpoints/api/creator.ts", name: "creator", route: "/api/creator" },
+      },
+      rewrites: [
+        { source: "/api/(.*)", destination: "/api/$1" },
+        { source: "/assets/(.*)", destination: "/assets/$1" },
+        { source: "/(.*)", destination: "/api/ssr" },
+      ],
+      defaultSupportsResponseStreaming: true,
+    }),
   ],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-            "@shared": path.resolve(__dirname, "./shared"),
-
-    },
-  },
-
-})
+});
