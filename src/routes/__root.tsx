@@ -1,49 +1,56 @@
-// src/routes/__root.tsx
-/// <reference types="vite/client" />
-import type { ReactNode } from 'react'
 import {
-  Outlet,
   createRootRoute,
+  Outlet,
   HeadContent,
   Scripts,
-} from '@tanstack/react-router'
+} from "@tanstack/react-router";
+import appCss from "../index.css?url";
+import { db } from "../lib/firebase/client";
+import { doc, getDoc } from "firebase/firestore";
 
+const fallbackTitle =  "1000+ Creatos from Miami"
 export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      {
-        charSet: 'utf-8',
+  // Static defaults
+  head: ({ loaderData }) => {
+    return {
+       meta: [
+        {
+        title: loaderData?.title ?? fallbackTitle,
       },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
-      },
-      {
-        title: 'TanStack Start Starter',
-      },
-    ],
-  }),
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+      ],
+      links: [{ rel: "stylesheet", href: appCss }],
+    };
+  },
+
+  // SSR Loader
+  loader: async () => {
+    try {
+      const snap = await getDoc(doc(db, "pages", "home"));
+      const title =
+        (snap.exists()
+          ? (snap.data().title as string | undefined)
+          : undefined)  ;
+      return { title };
+    } catch (err) {
+      console.error(err)
+      return { title: "Fallback Title" };
+    }
+  },
+
   component: RootComponent,
-})
+});
 
 function RootComponent() {
   return (
-    <RootDocument>
-      <Outlet />
-    </RootDocument>
-  )
-}
-
-function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
-  return (
     <html>
       <head>
-        <HeadContent />
+        <HeadContent /> {/* ✅ gestisce *automaticamente* <title> + <meta> */}
       </head>
       <body>
-        {children}
+        <Outlet />
         <Scripts />
       </body>
     </html>
-  )
+  );
 }
