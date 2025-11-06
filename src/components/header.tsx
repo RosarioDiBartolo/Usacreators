@@ -10,7 +10,6 @@ import {
   MobileNavToggle,
   MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
-import { IconBrandGithub } from "@tabler/icons-react";
 import { PhoneCall } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 
@@ -22,11 +21,7 @@ const AdditionalButtons = ({
   const onClick = ()=> setIsMobileMenuOpen &&  setIsMobileMenuOpen(false);
   return(
   <>
-    <NavbarButton 
-    onClick = {onClick}
-    variant="outline">
-      Star Us on <IconBrandGithub size={20} />
-    </NavbarButton>
+   
 
     <NavbarButton
         onClick = {onClick}

@@ -3,7 +3,7 @@ import React, {
   useEffect, 
   type PropsWithChildren,
 } from "react";
-import { Link } from "react-router-dom";
+import { Link } from '@tanstack/react-router'
  
 // Reusable Shader Background Hook
 const useShaderBackground = () => {

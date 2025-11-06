@@ -1,4 +1,10 @@
 {
+  "pnpm": {
+  "overrides": {
+    "h3": "1.11.1"
+  }
+}
+,
   "name": "creators",
   "private": true,
   "version": "0.0.0",

@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { motion, type Variants } from "framer-motion";
 import type { PropsWithChildren, ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link } from '@tanstack/react-router'
 import { UserPlus, Search } from "lucide-react";
 
 /* CTA Button */
