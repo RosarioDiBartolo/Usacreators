@@ -1,11 +1,8 @@
-import React from "react";
-import { renderToReadableStream } from "react-dom/server";
-import { createRouter, RouterProvider } from "@tanstack/react-router";
-import { createMemoryHistory } from "@tanstack/react-router";
-import { routeTree } from "./routeTree.gen";
-export async function render(url: string) {
-  const history = createMemoryHistory({ initialEntries: [url] });
-  const router = createRouter({ routeTree, history, context: {} });
-  await router.load();
-  return renderToReadableStream(<RouterProvider router={router} />);
-}
+// src/server.ts
+import handler, { type ServerEntry } from '@tanstack/react-start/server-entry'
+
+export default {
+  fetch(request) {
+    return handler.fetch(request)
+  },
+} satisfies ServerEntry

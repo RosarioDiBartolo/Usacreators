@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import {tanstackRouter} from "@tanstack/router-vite-plugin";
+import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import vercel from "vite-plugin-vercel";
 
 export default defineConfig({
