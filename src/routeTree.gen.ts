@@ -9,16 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as CreatorsApplyRouteImport } f./routes/creators-applyators-apply'
 import { Route as CatalogRouteImport } from './routes/catalog'
 import { Route as _notFoundRouteImport } from './routes/__not-found'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CreatorsApplyRouteImport } from './routes/creators/apply'
 
-const CreatorsApplyRoute = CreatorsApplyRouteImport.update({
-  id: '/creators-apply',
-  path: '/creators-apply',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CatalogRoute = CatalogRouteImport.update({
   id: '/catalog',
   path: '/catalog',
@@ -33,30 +28,35 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CreatorsApplyRoute = CreatorsApplyRouteImport.update({
+  id: '/creators/apply',
+  path: '/creators/apply',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/catalog': typeof CatalogRoute
-  '/creators-apply': typeof CreatorsApplyRoute
+  '/creators/apply': typeof CreatorsApplyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/catalog': typeof CatalogRoute
-  '/creators-apply': typeof CreatorsApplyRoute
+  '/creators/apply': typeof CreatorsApplyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/__not-found': typeof _notFoundRoute
   '/catalog': typeof CatalogRoute
-  '/creators-apply': typeof CreatorsApplyRoute
+  '/creators/apply': typeof CreatorsApplyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/catalog' | '/creators-apply'
+  fullPaths: '/' | '/catalog' | '/creators/apply'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/catalog' | '/creators-apply'
-  id: '__root__' | '/' | '/__not-found' | '/catalog' | '/creators-apply'
+  to: '/' | '/catalog' | '/creators/apply'
+  id: '__root__' | '/' | '/__not-found' | '/catalog' | '/creators/apply'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -68,13 +68,6 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/creators-apply': {
-      id: '/creators-apply'
-      path: '/creators-apply'
-      fullPath: '/creators-apply'
-      preLoaderRoute: typeof CreatorsApplyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/catalog': {
       id: '/catalog'
       path: '/catalog'
@@ -94,6 +87,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/creators/apply': {
+      id: '/creators/apply'
+      path: '/creators/apply'
+      fullPath: '/creators/apply'
+      preLoaderRoute: typeof CreatorsApplyRouteImport
       parentRoute: typeof rootRouteImport
     }
   }

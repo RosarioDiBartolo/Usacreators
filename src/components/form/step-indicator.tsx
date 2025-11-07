@@ -4,7 +4,7 @@
 // ============================================================================
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import type { Step } from "@shared/creator-apply-client";
+import type { Step } from "@/lib/creators/schemas/creator-apply-client";
 import { Dispatch, SetStateAction } from "react";
   
 export default function StepIndicator({

@@ -1,70 +1,82 @@
 // ============================================================================
 // FILE: components/onboarding/additional-info.tsx
+// TanStack Form version (no RHF).
 // ============================================================================
 "use client";
-import { type Control, Controller } from "react-hook-form";
+
 import { motion } from "framer-motion";
 import {
-  Field,
+  Field as DSField,
   FieldLabel,
   FieldError,
   FieldGroup,
   FieldDescription,
 } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
- import { fadeInUp } from "./utils";
-import type { ClientFormData as FormDataType  } from "@shared/creator-apply-client";
+import { fadeInUp } from "./utils";
+import {
+  clientFormSchema,
+ } from "@/lib/creators/schemas/creator-apply-client";
+import { FormType } from "./useCreatorsApplyForm";
  
-export function AdditionalInfo({
-  control,
- }: {
-  control: Control<FormDataType>;
- }) {
-   
+function errorsFromMeta(meta: any): string[] {
+  const touchedErrs = (meta?.touchedErrors as string[] | undefined) ?? [];
+  const submitErr = (meta?.errors?.onSubmit as string | undefined) ?? undefined;
+  return touchedErrs.length ? touchedErrs : submitErr ? [submitErr] : [];
+}
 
+export function AdditionalInfo({ form }: { form: FormType
+}) {
   return (
     <FieldGroup className="space-y-6">
       <motion.div variants={fadeInUp}>
-        <Controller
-          name="bio"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="bio">Bio</FieldLabel>
-              <Textarea
-                id="bio"
-                placeholder="Tell us a bit about yourself..."
-                {...field}
-                aria-invalid={fieldState.invalid}
-              />
-              <FieldDescription>Max 1000 characters.</FieldDescription>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
-        />
+        <form.Field name="bio" validators={{ onChange: clientFormSchema.shape.bio }}>
+          {(f) => {
+            const errs = errorsFromMeta(f.state.meta);
+            return (
+              <DSField data-invalid={!!errs.length}>
+                <FieldLabel htmlFor="bio">Bio</FieldLabel>
+                <Textarea
+                  id="bio"
+                  placeholder="Tell us a bit about yourself..."
+                  value={f.state.value ?? ""}
+                  onChange={(e) => f.handleChange(e.target.value)}
+                  onBlur={f.handleBlur}
+                  aria-invalid={!!errs.length}
+                />
+                <FieldDescription>Max 1000 characters.</FieldDescription>
+                {!!errs.length && <FieldError errors={errs.map((m) => ({ message: m }))} />}
+              </DSField>
+            );
+          }}
+        </form.Field>
       </motion.div>
+
       <motion.div variants={fadeInUp}>
-        <Controller
+        <form.Field
           name="additionalInfo"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="additionalInfo">Additional Info</FieldLabel>
-              <Textarea
-                id="additionalInfo"
-                placeholder="Anything else you'd like us to know?"
-                {...field}
-                aria-invalid={fieldState.invalid}
-              />
-              <FieldDescription>
-                Optional. Max 2000 characters.
-              </FieldDescription>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
-        />
+          validators={{ onChange: clientFormSchema.shape.additionalInfo }}
+        >
+          {(f) => {
+            const errs = errorsFromMeta(f.state.meta);
+            return (
+              <DSField data-invalid={!!errs.length}>
+                <FieldLabel htmlFor="additionalInfo">Additional Info</FieldLabel>
+                <Textarea
+                  id="additionalInfo"
+                  placeholder="Anything else you'd like us to know?"
+                  value={f.state.value ?? ""}
+                  onChange={(e) => f.handleChange(e.target.value)}
+                  onBlur={f.handleBlur}
+                  aria-invalid={!!errs.length}
+                />
+                <FieldDescription>Optional. Max 2000 characters.</FieldDescription>
+                {!!errs.length && <FieldError errors={errs.map((m) => ({ message: m }))} />}
+              </DSField>
+            );
+          }}
+        </form.Field>
       </motion.div>
-       
     </FieldGroup>
   );
 }

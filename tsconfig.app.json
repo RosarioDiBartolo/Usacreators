@@ -10,7 +10,7 @@
     "lib": ["ES2022", "DOM"],
       "baseUrl": ".",
      "paths": {
-      "@shared/*": ["shared/*"],
+      "@shared/*": ["src/lib/creators/*"],
       "@/*": ["src/*"]
     }
   },

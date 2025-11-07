@@ -46,8 +46,9 @@ export const socialSchema = z.object({
 });
 
 // “Additional” base WITHOUT file (client/server add their own)
-export const additionalBaseSchema = z.object({
-  bio: emptyToUndef(z.string().max(MAX_BIO, `Max ${MAX_BIO} characters`).optional()),
+
+
+bio: emptyToUndef(z.string().max(MAX_BIO, `Max ${MAX_BIO} characters`).optional()),
   additionalInfo: emptyToUndef(
     z.string().max(MAX_ADDITIONAL, `Max ${MAX_ADDITIONAL} characters`).optional()
   ),

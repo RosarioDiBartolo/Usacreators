@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, ArrowRight, Copy, ExternalLink } from "lucide-react";
 import LightRays from "../components/lights";
-import { DISCORD_INVITE_URL } from "@shared/constants";
+import { DISCORD_INVITE_URL } from "@/lib/creators/constants";
 
 /**
  * SuccessPage

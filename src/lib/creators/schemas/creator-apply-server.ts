@@ -3,7 +3,7 @@ import { z } from "zod";
 import {
   sharedBaseFormSchema,
   requireAtLeastOneSocial,
-} from "./shared-creators-apply.js";
+} from "./creators-apply-shared.js";
 
 // ---- Upload meta (wire) ----
 const uploadMetaSchema = z
@@ -68,6 +68,17 @@ export const persistSchema =   requireAtLeastOneSocial(
       createdAt: z.any(),           // Firestore server timestamp
     })
   )
+export const EmailVerificationSchema = z.object({
+  id: z
+    .string()
+    .min(1, "Missing id")
+    .regex(/^[a-zA-Z0-9_-]{5,100}$/, "Invalid document id"), // Firestore-safe
+
+  token: z
+    .string()
+    .min(1, "Missing token"), // Do NOT regex — tokens are opaque
+});
 
 export type ServerInput = z.infer<typeof serverSchema>;
 export type PersistRecord = z.infer<typeof persistSchema>;
+export type EmailVerification  = z.infer<typeof EmailVerificationSchema>;

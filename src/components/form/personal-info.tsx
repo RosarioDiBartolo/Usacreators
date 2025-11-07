@@ -1,81 +1,90 @@
 // ============================================================================
 // FILE: components/onboarding/personal-info.tsx
-// (minor a11y tweaks)
+// TanStack Form version (no RHF).
 // ============================================================================
 "use client";
-import { Controller, type Control } from "react-hook-form";
-import {
-  Field,
-  FieldLabel,
-  FieldError,
-  FieldGroup,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import type { ClientFormData as FormDataType } from "@shared/creator-apply-client";
 
+import { Field as DSField, FieldLabel, FieldError, FieldGroup } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import {
+  clientFormSchema,
+ } from "@/lib/creators/schemas/creator-apply-client"; 
 import FileUpload from "./file-upload";
- 
-export function PersonalInfo({
-  control,
- }: {
-  control: Control<FormDataType>;
- }) {
-   
+import { FormType } from "./useCreatorsApplyForm";
+
+function errorsFromMeta(meta: any): string[] {
+  const touchedErrs = (meta?.touchedErrors as string[] | undefined) ?? [];
+  const submitErr = (meta?.errors?.onSubmit as string | undefined) ?? undefined;
+  return touchedErrs.length ? touchedErrs : submitErr ? [submitErr] : [];
+}
+
+export function PersonalInfo({ form }: { form:FormType 
+
+}) {
   return (
     <FieldGroup>
-      <Controller
-        name="name"
-        control={control}
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor="name">Name</FieldLabel>
-            <Input
-              id="name"
-              {...field}
-              aria-invalid={fieldState.invalid}
-              autoComplete="name"
-            />
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
-      <Controller
-        name="email"
-        control={control}
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor="email">Email</FieldLabel>
-            <Input
-              id="email"
-              type="email"
-              {...field}
-              aria-invalid={fieldState.invalid}
-              autoComplete="email"
-            />
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      /> 
-      <Controller
-  control={control}
-  name="profilePictureFile"
-  // Optional: client-side rules; for strict checks, prefer Zod in the schema
-  rules={{
-    validate: (file: File | undefined) => {
-      if (!file) return true;                     // allow empty unless required
-      if (!["image/jpeg","image/png","image/webp"].includes(file.type)) return "Allowed: JPG, PNG, WEBP.";
-      if (file.size > 3 * 1024 * 1024) return "Max size is 3 MB.";
-      return true;
-    },
-  }}
-  render={({ field, fieldState }) => (
-    <FileUpload
-      field={field}
-      fieldState={fieldState}
-    />
-  )}
-/>
+      {/* name */}
+      <form.Field name="name" validators={{ onChange: clientFormSchema.shape.name }}>
+        {(f) => {
+          const errs = errorsFromMeta(f.state.meta);
+          return (
+            <DSField data-invalid={!!errs.length}>
+              <FieldLabel htmlFor="name">Name</FieldLabel>
+              <Input
+                id="name"
+                value={f.state.value ?? ""}
+                onChange={(e) => f.handleChange(e.target.value)}
+                onBlur={f.handleBlur}
+                aria-invalid={!!errs.length}
+                autoComplete="name"
+              />
+              {!!errs.length && <FieldError errors={errs.map((m) => ({ message: m }))} />}
+            </DSField>
+          );
+        }}
+      </form.Field>
 
+      {/* email */}
+      <form.Field name="email" validators={{ onChange: clientFormSchema.shape.email }}>
+        {(f) => {
+          const errs = errorsFromMeta(f.state.meta);
+          return (
+            <DSField data-invalid={!!errs.length}>
+              <FieldLabel htmlFor="email">Email</FieldLabel>
+              <Input
+                id="email"
+                type="email"
+                value={f.state.value ?? ""}
+                onChange={(e) => f.handleChange(e.target.value)}
+                onBlur={f.handleBlur}
+                aria-invalid={!!errs.length}
+                autoComplete="email"
+              />
+              {!!errs.length && <FieldError errors={errs.map((m) => ({ message: m }))} />}
+            </DSField>
+          );
+        }}
+      </form.Field>
+
+      {/* profilePictureFile */}
+      <form.Field
+        name="profilePictureFile"
+        // validazione su submit (schema controlla tipo e size)
+        validators={{ onSubmit: clientFormSchema.shape.profilePictureFile }}
+      >
+        {(f) => {
+          const errs = errorsFromMeta(f.state.meta);
+          return (
+            <FileUpload
+              name={f.name}
+              value={f.state.value}
+              onChange={(v) => f.handleChange(v)}
+              onBlur={f.handleBlur}
+              errors={errs}
+            />
+          );
+        }}
+      </form.Field>
     </FieldGroup>
   );
 }

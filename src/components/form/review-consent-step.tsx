@@ -1,14 +1,22 @@
 // ============================================================================
 // FILE: components/onboarding/review-consent-step.tsx
+// TanStack Form version (no RHF).
 // ============================================================================
 "use client";
-import { type Control, Controller } from "react-hook-form";
+
 import { motion } from "framer-motion";
 import { fadeInUp } from "./utils";
 import { Checkbox } from "@/components/ui/checkbox";
-import type { ClientFormData as FormDataType } from "@shared/creator-apply-client";
+import {
+  Field as DSField,
+  FieldLabel,
+  FieldGroup,
+  FieldError,
+} from "@/components/ui/field";
+import {
+  clientFormSchema,
+ } from "@/lib/creators/schemas/creator-apply-client"; 
 
-import { Field, FieldLabel, FieldGroup, FieldError } from "@/components/ui/field";
 import {
   Accordion,
   AccordionContent,
@@ -18,15 +26,23 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { termsData } from "@/lib/terms-and-conditions";
 import { privacyPolicy } from "@/lib/privacy-policies";
+import { FormType } from "./useCreatorsApplyForm";
 
-// ✅ Assicurati che questi file esistano.
-//    - terms-data.tsx è quello con il contenuto che hai incollato
- 
+function errorsFromMeta(meta: any): string[] {
+  const touchedErrs = (meta?.touchedErrors as string[] | undefined) ?? [];
+  const submitErr = (meta?.errors?.onSubmit as string | undefined) ?? undefined;
+  return touchedErrs.length ? touchedErrs : submitErr ? [submitErr] : [];
+}
 
-// ❕Se NON hai ancora la privacy, commenta le 2 righe seguenti e le parti marcate sotto:
-// import { privacyData } from "@/components/legal/privacy-data";
-
-export function ReviewConsentStep({ control }: { control: Control<FormDataType> }) {
+export function ReviewConsentStep({
+  form,
+  termsVersion,
+  privacyVersion,
+}: {
+  form: FormType ;
+  termsVersion?: string;
+  privacyVersion?: string;
+}) {
   return (
     <FieldGroup className="space-y-6">
       <motion.div variants={fadeInUp}>
@@ -39,11 +55,9 @@ export function ReviewConsentStep({ control }: { control: Control<FormDataType> 
           <Tabs defaultValue="terms" className="w-full">
             <TabsList className="grid grid-cols-2 w-full mb-2">
               <TabsTrigger value="terms">Terms & Conditions</TabsTrigger>
-              {/* Se non hai ancora privacyData, commenta questa riga: */}
               <TabsTrigger value="privacy">Privacy Policy</TabsTrigger>
             </TabsList>
 
-            {/* TERMS */}
             <TabsContent value="terms">
               <Accordion type="multiple" className="w-full">
                 {termsData.map((item, idx) => (
@@ -57,7 +71,6 @@ export function ReviewConsentStep({ control }: { control: Control<FormDataType> 
               </Accordion>
             </TabsContent>
 
-             
             <TabsContent value="privacy">
               <Accordion type="multiple" className="w-full">
                 {privacyPolicy.map((item, idx) => (
@@ -70,32 +83,36 @@ export function ReviewConsentStep({ control }: { control: Control<FormDataType> 
                 ))}
               </Accordion>
             </TabsContent>
-             
           </Tabs>
         </div>
       </motion.div>
 
       <motion.div variants={fadeInUp}>
-        <Controller
+        <form.Field
           name="termsAccepted"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <div className="flex items-center gap-2">
-                <Checkbox
-                  id="termsAccepted"
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                  aria-invalid={fieldState.invalid}
-                />
-                <FieldLabel htmlFor="termsAccepted" className="leading-snug">
-                  I have read and agree to the Terms & Conditions and the Privacy Policy.
-                </FieldLabel>
-              </div>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
-        />
+          validators={{ onChange: clientFormSchema.shape.termsAccepted }}
+        >
+          {(f) => {
+            const errs = errorsFromMeta(f.state.meta);
+            return (
+              <DSField data-invalid={!!errs.length}>
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    id="termsAccepted"
+                    checked={!!f.state.value}
+                    onCheckedChange={(v) => f.handleChange(!!v)}
+                    onBlur={f.handleBlur}
+                    aria-invalid={!!errs.length}
+                  />
+                  <FieldLabel htmlFor="termsAccepted" className="leading-snug">
+                    I have read and agree to the Terms & Conditions and the Privacy Policy.
+                  </FieldLabel>
+                </div>
+                {!!errs.length && <FieldError errors={errs.map((m) => ({ message: m }))} />}
+              </DSField>
+            );
+          }}
+        </form.Field>
       </motion.div>
     </FieldGroup>
   );

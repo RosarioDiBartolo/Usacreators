@@ -1,10 +1,9 @@
 {
   "pnpm": {
-  "overrides": {
-    "h3": "1.11.1"
-  }
-}
-,
+    "overrides": {
+      "h3": "1.11.1"
+    }
+  },
   "name": "creators",
   "private": true,
   "version": "0.0.0",
@@ -30,10 +29,12 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tabs": "^1.1.13",
     "@tabler/icons-react": "^3.35.0",
+    "@tanstack/react-form": "^1.23.8",
     "@tanstack/react-router": "^1.134.13",
     "@tanstack/react-start": "^1.134.13",
     "@tanstack/router-devtools": "^1.134.13",
     "@tanstack/start": "^1.120.20",
+    "@tanstack/zod-form-adapter": "^0.42.1",
     "@vercel/node": "^5.3.26",
     "busboy": "^1.6.0",
     "class-variance-authority": "^0.7.1",
@@ -48,8 +49,8 @@
     "ogl": "^1.0.11",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-hook-form": "^7.65.0",
     "react-use-measure": "^2.1.7",
+    "resend": "^6.4.1",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.13",

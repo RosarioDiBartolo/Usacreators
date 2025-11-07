@@ -1,5 +1,5 @@
 import EmailAddress from "@/components/email-address";
-import { companyName } from "../../shared/constants";
+import { companyName } from "./creators/constants";
 
 export const privacyPolicy = [
   {

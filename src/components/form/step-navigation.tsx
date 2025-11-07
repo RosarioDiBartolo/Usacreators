@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight, Check, Loader2 } from "lucide-react";
 
 import {
  type Step      // <- use this everywhere
-} from "@shared/creator-apply-client";
+} from "@/lib/creators/schemas/creator-apply-client";
 export function StepNavigation({
   currentStep,
   steps,

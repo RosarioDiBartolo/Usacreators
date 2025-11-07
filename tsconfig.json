@@ -6,7 +6,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@shared/*": ["shared/*"],
+      "@shared/*": ["src/lib/creators/*"],
       "@/*": ["src/*"]
     }
   }

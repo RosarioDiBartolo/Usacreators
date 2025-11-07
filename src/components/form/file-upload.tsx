@@ -1,55 +1,56 @@
-// FileUpload.tsx
+// ============================================================================
+// FILE: components/onboarding/file-upload.tsx
+// Purpose: Decoupled from RHF. Works with TanStack form fields.
+// ============================================================================
+"use client";
+
 import { Images } from "lucide-react";
 import React, { useRef } from "react";
 import { Button } from "../ui/button";
 import { Field, FieldLabel, FieldDescription, FieldError } from "../ui/field";
 import { Input } from "../ui/input";
-import type { ControllerRenderProps, ControllerFieldState } from "react-hook-form";
-import type {ClientFormData} from "@shared/creator-apply-client"
-import { MAX_PIC_SIZE } from "@shared/constants";
+import { MAX_PIC_SIZE } from "@/lib/creators/constants";
+
 type Props = {
-  field: ControllerRenderProps<ClientFormData , "profilePictureFile">;
-  fieldState: ControllerFieldState;
+  name: string;
+  value?: File | undefined;
+  onChange: (file: File | undefined) => void;
+  onBlur: () => void;
+  errors?: string[]; // collected errors for this field
 };
 
-function FileUpload({ field, fieldState }: Props) {
+function FileUpload({ name, value, onChange, onBlur, errors }: Props) {
   const inpRef = useRef<HTMLInputElement>(null);
-  const selectedName =    field.value?.name ?? undefined  
+  const selectedName = value?.name ?? undefined;
+
   return (
-    <Field>
-      <FieldLabel htmlFor="profilePictureFile">Profile Picture</FieldLabel>
+    <Field data-invalid={!!errors?.length}>
+      <FieldLabel htmlFor={name}>Profile Picture</FieldLabel>
 
-         <Button className="" type="button" onClick={() => inpRef.current?.click()}>
-          <Images size={24} />
-          {selectedName || <span className="ml-2">Upload</span>}
-        </Button>
+      <Button type="button" onClick={() => inpRef.current?.click()}>
+        <Images size={24} />
+        {selectedName || <span className="ml-2">Upload</span>}
+      </Button>
 
-         
       <Input
-        ref={(el) => {
-          inpRef.current = el!;
-          field.ref(el);
-        }}
-        id="profilePictureFile"
-        name={field.name}
+        ref={inpRef}
+        id={name}
+        name={name}
         type="file"
         accept="image/*"
         className="hidden"
-        // IMPORTANT: forward to RHF
         onChange={(e) => {
           const file = e.target.files?.[0];
-          field.onChange(file ?? undefined); // keep as a single File (not FileList)
+          onChange(file ?? undefined);
         }}
-        onBlur={field.onBlur}
+        onBlur={onBlur}
       />
 
-      <FieldDescription id="profilePictureFile-desc">
+      <FieldDescription id={`${name}-desc`}>
         JPG, PNG, or WEBP under {MAX_PIC_SIZE}MB.
       </FieldDescription>
 
-      {fieldState.invalid && (
-        <FieldError errors={[fieldState.error]} />
-      )}
+      {!!errors?.length && <FieldError errors={errors.map((m) => ({ message: m }))} />}
     </Field>
   );
 }

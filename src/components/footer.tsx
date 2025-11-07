@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"; 
 import { Mail  } from "lucide-react";
 import logo from "../assets/logo.png";
-import { officialEmail } from "@shared/constants";
+import { officialEmail } from "@/lib/creators/constants";
 import { IconBrandTiktok } from "@tabler/icons-react";
 
 function Footer() {
