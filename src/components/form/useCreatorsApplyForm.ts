@@ -1,5 +1,4 @@
-import { z } from "zod";
-import { useForm } from "@tanstack/react-form"; 
+ import { useForm } from "@tanstack/react-form"; 
 import { useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
@@ -7,8 +6,7 @@ import { uploadProfileImage, opt } from "./utils";
 
 // Import both client + submit schemas
 import {
-  clientFormSchema, // leaf/field-level shape (includes File | undefined)
-  fullSchema,       // submit-time (cross-field) schema
+  clientSubmitSchema, ClientFormData
 } from "@/lib/creators/schemas/creator-apply-client";
 
 // ---- Types ----
@@ -24,8 +22,7 @@ type ApiError = {
 };
 
 // Use the *input* of the CLIENT schema as the canonical form shape
-type FormData = z.input<typeof clientFormSchema>;
-
+ 
 // ---- API error helpers ----
 function applyFieldErrorsFromApiTanStack(
   form: FormType,
@@ -119,7 +116,7 @@ const useCreatorApplyForm = () => {
   }, []);
 
   // Strongly type defaults to the Zod *input* so unions match (File | undefined, "yes" | "no", etc.)
-  const defaultValues: FormData = {
+  const defaultValues: ClientFormData = {
     name: "",
     email: "",
     profilePictureFile: undefined as File | undefined,
@@ -139,7 +136,7 @@ const useCreatorApplyForm = () => {
     defaultValues,
 
     // 3) Submit-time cross-field validation (adapter wrapper)
-    validators: { onSubmit: fullSchema  },
+    validators: { onSubmit: clientSubmitSchema  },
 
     onSubmit: async ({ value }) => {
       try {
@@ -188,7 +185,7 @@ const useCreatorApplyForm = () => {
               }
               form.setFieldValue("termsAccepted", false);
               // ✅ valid cause name in new API:
-              form.validateField("termsAccepted", "onChange");
+              form.validateField("termsAccepted", "change");
             }
           } else {
             await handleNonOkResponse(res, form);

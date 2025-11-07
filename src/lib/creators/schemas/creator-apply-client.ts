@@ -1,13 +1,14 @@
 import { z } from "zod";
 import {
-  sharedBaseFormSchema,
-  requireAtLeastOneSocial,
+  applyStandardRules,
   emptyToUndef,
+  // IMPORTANT: import the pure object (no effects) so we can extend/omit/merge safely
+  sharedBaseFormObject,
   type StepId,
 } from "./creators-apply-shared";
 import { MAX_PIC_SIZE } from "../constants";
 
-// Client-only file field (opzionale)
+// Client-only file field (optional)
 const profilePictureClient = z
   .instanceof(File)
   .optional()
@@ -20,28 +21,28 @@ const profilePictureClient = z
     `Max size is ${MAX_PIC_SIZE} MB.`
   );
 
-// Base client: NON includere qui i legal versions
-const baseClientObj = sharedBaseFormSchema.merge(
-  z.object({
-    profilePictureFile: profilePictureClient, // opzionale
-  })
-);
+// 1) Start from the base object and extend with UI/client fields
+const clientFormObject = sharedBaseFormObject.extend({
+  profilePictureFile: profilePictureClient, // optional
+});
 
-// ✅ Schema del form sul client (singolo-step / field-level validators useranno questo)
-export const clientFormSchema = baseClientObj;
+// 2) Apply the always-on cross-field rule inline (now becomes ZodEffects)
+export const clientFormSchema =   applyStandardRules(clientFormObject);
 
-// ✅ UI-only stuff: fuori dalla validazione dei dati “contrattuali”
+
+// 3) UI-only stuff: outside of “contractual” data
 export const clientUiOnlySchema = z.object({
   turnstileToken: emptyToUndef(z.string().optional()),
 });
 
-// ✅ Payload di submit dal client (esempio: se vuoi togliere il File nativo)
-export const clientSubmitSchema = baseClientObj
+// 4) Submit payload (strip the File, then add UI-only token) — compose on objects first
+const clientSubmitObject = clientFormObject
   .omit({ profilePictureFile: true })
   .merge(clientUiOnlySchema);
 
-// ✅ Cross-field: “almeno un social” (solo al submit)
-export const fullSchema = requireAtLeastOneSocial(clientFormSchema);
+// 5) Apply the same always-on rule to the submit payload
+export const clientSubmitSchema = applyStandardRules(clientSubmitObject);
+
 
 // Types
 export type ClientFormData = z.infer<typeof clientFormSchema>;
@@ -54,10 +55,7 @@ export type Step = {
 
 export const steps = [
   { id: "personal", fields: ["name", "email", "profilePictureFile"] },
-  {
-    id: "social",
-    fields: ["locationYesNo", "instagram", "tiktok", "instagramPost"],
-  },
+  { id: "social", fields: ["locationYesNo", "instagram", "tiktok", "instagramPost"] },
   { id: "details", fields: ["bio", "additionalInfo"] },
   { id: "legal", fields: ["termsAccepted"] },
 ] as const satisfies ReadonlyArray<Step>;

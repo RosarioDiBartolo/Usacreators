@@ -9,7 +9,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "generate-legal-registry": "node src/scripts/generate-registry.js",
+    "legal-registry": "npx tsx --env-file=.env.local src/scripts/legal 2025-01-01 ",
     "dev": "vite --host",
     "build": "vite build",
     "type-check": "tsc --noEmit",

@@ -4,34 +4,44 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import appCss from "../index.css?url";
-import { db } from "../lib/firebase/client";
-import { doc, getDoc } from "firebase/firestore";
+import appCss from "../index.css?url"; 
 import Header from "@/components/header";
+import { getLegalVersions } from "@/lib/legal/utils";
+import { getPlatformMeta } from "@/lib/meta";
 
 const fallbackTitle = "1000+ Creators from Miami";
 export const Route = createRootRoute({
   // Static defaults
   head: ({ loaderData }) => {
+    if (!loaderData){
+      return {}
+    }
+    const {meta} = loaderData
+    
     return {
       meta: [
         {
-          title: loaderData?.title ?? fallbackTitle,
+          
+        },
+        {
+          title: meta?.title ?? fallbackTitle,
         },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
       ],
-      links: [{ rel: "stylesheet", href: appCss }],
+      links: [{ rel: "stylesheet", href: appCss }, {
+        rel: "icon", href : "/favicon.svg"
+      }],
     };
   },
 
   // SSR Loader
   loader: async () => {
     try {
-      const snap = await getDoc(doc(db, "pages", "home"));
-      const title = snap.exists()
-        ? (snap.data().title as string | undefined)
-        : undefined;
-      return { title: title ?? "Fallback Title" };
+
+      const legal = await getLegalVersions()
+      const meta = await getPlatformMeta()
+       
+      return { legal, meta };
     } catch (err) {
       console.error(err);
     }

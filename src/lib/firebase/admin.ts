@@ -5,7 +5,8 @@ const base64 = process.env.FIREBASE_SERVICE_ACCOUNT;
 if (!base64) {
   throw new Error("Missing FIREBASE_SERVICE_ACCOUNT env variable");
 }
-const serviceAccount = JSON.parse(Buffer.from(base64, "base64").toString("utf8"));
+
+ const serviceAccount = JSON.parse(Buffer.from(base64, "base64").toString("utf8"));
 
 // ---------- Environment Safety Check ----------
 const requiredEnv = ["ALLOW_ORIGIN"];
