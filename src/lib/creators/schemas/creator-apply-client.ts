@@ -22,7 +22,7 @@ const profilePictureClient = z
   );
 
 // 1) Start from the base object and extend with UI/client fields
-const clientFormObject = sharedBaseFormObject.extend({
+export const clientFormObject = sharedBaseFormObject.extend({
   profilePictureFile: profilePictureClient, // optional
 });
 
@@ -31,7 +31,7 @@ export const clientFormSchema =   applyStandardRules(clientFormObject);
 
 
 // 3) UI-only stuff: outside of “contractual” data
-export const clientUiOnlySchema = z.object({
+  const clientUiOnlySchema = z.object({
   turnstileToken: emptyToUndef(z.string().optional()),
 });
 
@@ -45,7 +45,7 @@ export const clientSubmitSchema = applyStandardRules(clientSubmitObject);
 
 
 // Types
-export type ClientFormData = z.infer<typeof clientFormSchema>;
+export type ClientFormData = z.infer<typeof clientFormObject>;
 
 // Steps: ids are UI-level; fields are actual form keys
 export type Step = {

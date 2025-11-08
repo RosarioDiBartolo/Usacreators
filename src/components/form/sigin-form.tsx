@@ -16,8 +16,7 @@ import { contentVariants } from "./utils";
 
 import {
   stepKeysMap,
-  steps,
-  type ClientFormData,
+  steps, 
 } from "@/lib/creators/schemas/creator-apply-client";
  
 import useCreatorApplyForm from "./useCreatorsApplyForm"

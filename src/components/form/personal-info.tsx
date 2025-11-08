@@ -7,12 +7,13 @@
 import { Field as DSField, FieldLabel, FieldError, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
-  clientFormSchema,
+  clientFormObject,
  } from "@/lib/creators/schemas/creator-apply-client"; 
 import FileUpload from "./file-upload";
 import { FormType } from "./useCreatorsApplyForm";
+import type { AnyFieldApi } from '@tanstack/react-form'
 
-function errorsFromMeta(meta: any): string[] {
+function errorsFromMeta({state: {meta}}: AnyFieldApi): string[] {
   const touchedErrs = (meta?.touchedErrors as string[] | undefined) ?? [];
   const submitErr = (meta?.errors?.onSubmit as string | undefined) ?? undefined;
   return touchedErrs.length ? touchedErrs : submitErr ? [submitErr] : [];
@@ -24,13 +25,14 @@ export function PersonalInfo({ form }: { form:FormType
   return (
     <FieldGroup>
       {/* name */}
-      <form.Field name="name" validators={{ onChange: clientFormSchema.shape.name }}>
+      <form.Field name="name" validators={{ onChange: clientFormObject.shape.name }}>
         {(f) => {
           const errs = errorsFromMeta(f.state.meta);
           return (
             <DSField data-invalid={!!errs.length}>
               <FieldLabel htmlFor="name">Name</FieldLabel>
               <Input
+                
                 id="name"
                 value={f.state.value ?? ""}
                 onChange={(e) => f.handleChange(e.target.value)}
@@ -45,7 +47,7 @@ export function PersonalInfo({ form }: { form:FormType
       </form.Field>
 
       {/* email */}
-      <form.Field name="email" validators={{ onChange: clientFormSchema.shape.email }}>
+      <form.Field name="email" validators={{ onChange: clientFormObject.shape.email }}>
         {(f) => {
           const errs = errorsFromMeta(f.state.meta);
           return (
@@ -70,7 +72,7 @@ export function PersonalInfo({ form }: { form:FormType
       <form.Field
         name="profilePictureFile"
         // validazione su submit (schema controlla tipo e size)
-        validators={{ onSubmit: clientFormSchema.shape.profilePictureFile }}
+        validators={{ onSubmit: clientFormObject.shape.profilePictureFile }}
       >
         {(f) => {
           const errs = errorsFromMeta(f.state.meta);

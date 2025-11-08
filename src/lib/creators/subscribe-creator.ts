@@ -8,7 +8,7 @@ import { hashIP } from '@/lib/http'
 import {   getRequestHeader, setResponseHeader, setResponseStatus } from '@tanstack/react-start/server'
  import { serverSchema as FormSchema,   EmailVerificationSchema, persistSchema} from "@/lib/creators/schemas/creator-apply-server" 
  
-
+expo
 export const subscribeCreator = createServerFn({ method: 'POST' })
   .inputValidator( FormSchema)
    .handler(async ({ data }) => {

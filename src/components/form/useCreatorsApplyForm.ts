@@ -8,6 +8,7 @@ import { uploadProfileImage, opt } from "./utils";
 import {
   clientSubmitSchema, ClientFormData
 } from "@/lib/creators/schemas/creator-apply-client";
+import { getLegalVersions } from "@/lib/legal/utils";
 
 // ---- Types ----
 type ApiError = {
@@ -142,7 +143,7 @@ const useCreatorApplyForm = () => {
       try {
         setIsSubmitting(true);
 
-        const current = await fetchLegalVersions();
+        const current = await getLegalVersions();
 
         const profilePictureUrl = value.profilePictureFile
           ? await uploadProfileImage(value.profilePictureFile)
