@@ -16,17 +16,12 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { fadeInUp } from "./utils";
-import {
-  clientFormObject,
- } from "@/lib/creators/schemas/creator-apply-client";
-import type {   } from "@tanstack/react-form";
+import { clientFormObject } from "@/lib/creators/schemas/creator-apply-client";
+import type {} from "@tanstack/react-form";
 import { FormType } from "./useCreatorsApplyForm";
 import { getFieldErrors } from "@/lib/field";
 
- 
-export function SocialInfo({ form }: { form:FormType 
-
-}) {
+export function SocialInfo({ form }: { form: FormType }) {
   return (
     <FieldGroup className="space-y-6">
       <motion.div variants={fadeInUp}>
@@ -35,7 +30,7 @@ export function SocialInfo({ form }: { form:FormType
           validators={{ onChange: clientFormObject.shape.locationYesNo }}
         >
           {(f) => {
-             const errs = getFieldErrors(f);
+            const errs = getFieldErrors(f);
             return (
               <DSField data-invalid={!!errs.length}>
                 <FieldLabel>Do you live in Miami?</FieldLabel>
@@ -56,7 +51,7 @@ export function SocialInfo({ form }: { form:FormType
                 <FieldDescription>
                   We ask this to connect with nearby creators for events.
                 </FieldDescription>
-                {!!errs.length && <FieldError errors={errs.map((m) => ({ message: m }))} />}
+                {!!errs.length && <FieldError errors={errs} />}
               </DSField>
             );
           }}
@@ -66,10 +61,20 @@ export function SocialInfo({ form }: { form:FormType
       <motion.div variants={fadeInUp}>
         <form.Field
           name="instagram"
-          validators={{ onChange: clientFormObject.shape.instagram }}
+          validators={{
+            onChangeListenTo: ["tiktok"],
+            onChange: ({ value, fieldApi }) => {
+              const tiktok = fieldApi.form.getFieldValue("tiktok");
+              if (!(tiktok || value)) {
+                return [{ message: "Provide at least one social (Instagram or TikTok)."}];
+              }
+              return clientFormObject.shape.tiktok.safeParse(value).error;
+            },
+          }}
         >
           {(f) => {
             const errs = getFieldErrors(f);
+
             return (
               <DSField data-invalid={!!errs.length}>
                 <FieldLabel htmlFor="instagram">Instagram Profile</FieldLabel>
@@ -84,7 +89,7 @@ export function SocialInfo({ form }: { form:FormType
                 <FieldDescription>
                   Example: @miamicreator or https://instagram.com/miamicreator
                 </FieldDescription>
-                {!!errs.length && <FieldError errors={errs.map((m) => ({ message: m }))} />}
+                {!!errs.length && <FieldError errors={errs} />}
               </DSField>
             );
           }}
@@ -94,10 +99,23 @@ export function SocialInfo({ form }: { form:FormType
       <motion.div variants={fadeInUp}>
         <form.Field
           name="tiktok"
-          validators={{ onChange: clientFormObject.shape.tiktok }}
+          validators={{
+            onChangeListenTo: ["instagram"],
+
+            onChange: ({ value, fieldApi }) => {
+              const instagram = fieldApi.form.getFieldValue("instagram");
+              if (!(instagram || value)) {
+                return [{ message: "Provide at least one social (Instagram or TikTok)."}];
+              }
+
+ 
+              return clientFormObject.shape.tiktok.safeParse(value).error;
+            },
+          }}
         >
           {(f) => {
             const errs = getFieldErrors(f);
+            console.log({instagram: errs})
             return (
               <DSField data-invalid={!!errs.length}>
                 <FieldLabel htmlFor="tiktok">TikTok Profile</FieldLabel>
@@ -112,7 +130,7 @@ export function SocialInfo({ form }: { form:FormType
                 <FieldDescription>
                   Example: @miamivibes or https://tiktok.com/@miamivibes
                 </FieldDescription>
-                {!!errs.length && <FieldError errors={errs.map((m) => ({ message: m }))} />}
+                {!!errs.length && <FieldError errors={errs} />}
               </DSField>
             );
           }}
@@ -122,13 +140,15 @@ export function SocialInfo({ form }: { form:FormType
       <motion.div variants={fadeInUp}>
         <form.Field
           name="instagramPost"
-          validators={{ onChange:  clientFormObject.shape.instagramPost }}
+          validators={{ onChange: clientFormObject.shape.instagramPost }}
         >
           {(f) => {
             const errs = getFieldErrors(f);
             return (
               <DSField data-invalid={!!errs.length}>
-                <FieldLabel htmlFor="instagramPost">Instagram post URL (optional)</FieldLabel>
+                <FieldLabel htmlFor="instagramPost">
+                  Instagram post URL (optional)
+                </FieldLabel>
                 <Input
                   id="instagramPost"
                   placeholder="https://instagram.com/p/..."
@@ -137,7 +157,7 @@ export function SocialInfo({ form }: { form:FormType
                   onBlur={f.handleBlur}
                   aria-invalid={!!errs.length}
                 />
-                {!!errs.length && <FieldError errors={errs.map((m) => ({ message: m }))} />}
+                {!!errs.length && <FieldError errors={errs} />}
               </DSField>
             );
           }}

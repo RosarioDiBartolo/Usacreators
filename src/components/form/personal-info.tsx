@@ -28,8 +28,7 @@ export function PersonalInfo({ form }: { form: FormType }) {
 
           const errors = getFieldErrors(f)
             
-          console.error({[f.name]:f.state.meta.errorMap})
-          return (
+           return (
             <DSField data-invalid={!!errors.length}>
               <FieldLabel htmlFor="name">Name</FieldLabel>
               <Input
@@ -83,7 +82,7 @@ export function PersonalInfo({ form }: { form: FormType }) {
       <form.Field
         name="profilePictureFile"
         // validazione su submit (schema controlla tipo e size)
-        validators={{ onSubmit: clientFormObject.shape.profilePictureFile }}
+        validators={{ onChange:   clientFormObject.shape.profilePictureFile }}
       >
         {(f) => {
           const errs = getFieldErrors(f);
@@ -91,7 +90,7 @@ export function PersonalInfo({ form }: { form: FormType }) {
             <FileUpload
               name={f.name}
               value={f.state.value}
-              onChange={(v) => f.handleChange(v)}
+              onChange={  f.handleChange}
               onBlur={f.handleBlur}
               errors={errs}
             />

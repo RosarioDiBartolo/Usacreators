@@ -50,7 +50,7 @@ function FileUpload({ name, value, onChange, onBlur, errors }: Props) {
         JPG, PNG, or WEBP under {MAX_PIC_SIZE}MB.
       </FieldDescription>
 
-      {!!errors?.length && <FieldError errors={errors.map((m) => ({ message: m }))} />}
+      {!!errors?.length && <FieldError errors={errors} />}
     </Field>
   );
 }

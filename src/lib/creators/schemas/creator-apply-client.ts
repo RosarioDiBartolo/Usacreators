@@ -12,6 +12,7 @@ import { MAX_PIC_SIZE } from "../constants";
 const profilePictureClient = z
   .instanceof(File)
   .optional()
+  .refine(f => f !== undefined, "A profile picture is required.")
   .refine(
     (f) => !f || ["image/jpeg", "image/png", "image/webp"].includes(f.type),
     "Allowed: JPG, PNG, WEBP."

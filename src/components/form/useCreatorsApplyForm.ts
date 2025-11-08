@@ -10,6 +10,7 @@ import {
   ClientFormData,
 } from "@/lib/creators/schemas/creator-apply-client";
 import { getLegalVersions } from "@/lib/legal/utils";
+import z from "zod";
 
 // ---- Types ----
 type ApiError = {
@@ -118,10 +119,10 @@ const useCreatorApplyForm = () => {
   }, []);
 
   // Strongly type defaults to the Zod *input* so unions match (File | undefined, "yes" | "no", etc.)
-  const defaultValues: ClientFormData = {
+  const defaultValues: z.infer< typeof clientSubmitSchema> = {
     name: "",
     email: "",
-    profilePictureFile: undefined as File | undefined,
+    profilePictureFile: undefined ,
     bio: undefined,
     locationYesNo: "yes",
     instagram: undefined,
