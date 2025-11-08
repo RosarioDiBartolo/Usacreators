@@ -1,7 +1,7 @@
 import * as React from "react";
 import { motion, useMotionValueEvent, useTransform } from "motion/react";
 import { useCenterProgress } from "./use-center-progress";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/fe-utils";
 
 const ScrollCtx = React.createContext<React.RefObject<HTMLDivElement | null> | undefined  >(undefined);
 

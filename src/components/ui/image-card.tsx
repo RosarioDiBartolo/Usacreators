@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cn } from "@/lib/utils"; // Your utility for merging class names
+import { cn } from "@/lib/fe-utils"; // Your utility for merging class names
 import { ArrowRight } from "lucide-react";
 
 // Define the props for the DestinationCard component

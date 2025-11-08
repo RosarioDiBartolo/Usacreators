@@ -4,52 +4,61 @@
 // ============================================================================
 "use client";
 
-import { Field as DSField, FieldLabel, FieldError, FieldGroup } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
 import {
-  clientFormObject,
- } from "@/lib/creators/schemas/creator-apply-client"; 
+  Field as DSField,
+  FieldLabel,
+   FieldGroup,
+  FieldError,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { clientFormObject } from "@/lib/creators/schemas/creator-apply-client";
 import FileUpload from "./file-upload";
 import { FormType } from "./useCreatorsApplyForm";
-import type { AnyFieldApi } from '@tanstack/react-form'
-
-function errorsFromMeta({state: {meta}}: AnyFieldApi): string[] {
-  const touchedErrs = (meta?.touchedErrors as string[] | undefined) ?? [];
-  const submitErr = (meta?.errors?.onSubmit as string | undefined) ?? undefined;
-  return touchedErrs.length ? touchedErrs : submitErr ? [submitErr] : [];
-}
-
-export function PersonalInfo({ form }: { form:FormType 
-
-}) {
+import { getFieldErrors } from "@/lib/field";
+ 
+export function PersonalInfo({ form }: { form: FormType }) {
   return (
     <FieldGroup>
       {/* name */}
-      <form.Field name="name" validators={{ onChange: clientFormObject.shape.name }}>
+      <form.Field
+        name="name"
+        validators={{ onChange: clientFormObject.shape.name }}
+      >
         {(f) => {
-          const errs = errorsFromMeta(f.state.meta);
+
+          const errors = getFieldErrors(f)
+            
+          console.error({[f.name]:f.state.meta.errorMap})
           return (
-            <DSField data-invalid={!!errs.length}>
+            <DSField data-invalid={!!errors.length}>
               <FieldLabel htmlFor="name">Name</FieldLabel>
               <Input
-                
                 id="name"
                 value={f.state.value ?? ""}
                 onChange={(e) => f.handleChange(e.target.value)}
                 onBlur={f.handleBlur}
-                aria-invalid={!!errs.length}
+                aria-invalid={!!errors?.length}
                 autoComplete="name"
               />
-              {!!errs.length && <FieldError errors={errs.map((m) => ({ message: m }))} />}
+              
+              {!!errors?.length && (
+                <FieldError errors={  errors  } />
+              )}
             </DSField>
           );
         }}
       </form.Field>
 
       {/* email */}
-      <form.Field name="email" validators={{ onChange: clientFormObject.shape.email }}>
+      <form.Field
+        name="email"
+        validators={{ onChange: clientFormObject.shape.email }}
+      >
         {(f) => {
-          const errs = errorsFromMeta(f.state.meta);
+          
+
+          const errs = getFieldErrors(f)
+
           return (
             <DSField data-invalid={!!errs.length}>
               <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -62,7 +71,9 @@ export function PersonalInfo({ form }: { form:FormType
                 aria-invalid={!!errs.length}
                 autoComplete="email"
               />
-              {!!errs.length && <FieldError errors={errs.map((m) => ({ message: m }))} />}
+               {!!errs?.length && (
+                <FieldError errors={ errs } />
+              )}
             </DSField>
           );
         }}
@@ -75,7 +86,7 @@ export function PersonalInfo({ form }: { form:FormType
         validators={{ onSubmit: clientFormObject.shape.profilePictureFile }}
       >
         {(f) => {
-          const errs = errorsFromMeta(f.state.meta);
+          const errs = getFieldErrors(f);
           return (
             <FileUpload
               name={f.name}

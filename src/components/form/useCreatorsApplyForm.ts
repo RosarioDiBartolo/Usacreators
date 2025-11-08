@@ -1,4 +1,4 @@
- import { useForm } from "@tanstack/react-form"; 
+import {  useForm } from "@tanstack/react-form";
 import { useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
@@ -6,7 +6,8 @@ import { uploadProfileImage, opt } from "./utils";
 
 // Import both client + submit schemas
 import {
-  clientSubmitSchema, ClientFormData
+  clientSubmitSchema,
+  ClientFormData,
 } from "@/lib/creators/schemas/creator-apply-client";
 import { getLegalVersions } from "@/lib/legal/utils";
 
@@ -23,7 +24,7 @@ type ApiError = {
 };
 
 // Use the *input* of the CLIENT schema as the canonical form shape
- 
+
 // ---- API error helpers ----
 function applyFieldErrorsFromApiTanStack(
   form: FormType,
@@ -132,12 +133,14 @@ const useCreatorApplyForm = () => {
 
   const form = useForm({
     // 1) Tell TanStack how to use Zod
- 
+
     // 2) Defaults that conform to clientFormSchema input
     defaultValues,
 
     // 3) Submit-time cross-field validation (adapter wrapper)
-    validators: { onSubmit: clientSubmitSchema  },
+    validators: {
+      onSubmit: clientSubmitSchema,
+     },
 
     onSubmit: async ({ value }) => {
       try {
@@ -211,4 +214,5 @@ const useCreatorApplyForm = () => {
 };
 
 export type FormType = ReturnType<typeof useCreatorApplyForm>["form"];
+ 
 export default useCreatorApplyForm;

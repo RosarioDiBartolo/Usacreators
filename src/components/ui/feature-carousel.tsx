@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@/lib/utils'; // Assuming you have a utility for class names
+import { cn } from '@/lib/fe-utils'; // Assuming you have a utility for class names
 
 // --- TYPES ---
 interface HeroProps extends React.HTMLAttributes<HTMLDivElement> {

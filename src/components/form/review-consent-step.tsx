@@ -14,7 +14,7 @@ import {
   FieldError,
 } from "@/components/ui/field";
 import {
-  clientFormSchema,
+  clientFormObject,
  } from "@/lib/creators/schemas/creator-apply-client"; 
 
 import {
@@ -90,7 +90,7 @@ export function ReviewConsentStep({
       <motion.div variants={fadeInUp}>
         <form.Field
           name="termsAccepted"
-          validators={{ onChange: clientFormSchema.shape.termsAccepted }}
+          validators={{ onChange: clientFormObject.shape.termsAccepted }}
         >
           {(f) => {
             const errs = errorsFromMeta(f.state.meta);

@@ -3,7 +3,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { motion } from "framer-motion";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/fe-utils";
 
 const buttonVariants = cva(
   "relative overflow-visible isolate h-fit  inline-flex items-center cursor-pointer justify-center gap-2 whitespace-nowrap   font-semibold transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none  4 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 aria-invalid:ring-2 aria-invalid:ring-destructive",

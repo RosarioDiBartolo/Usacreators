@@ -17,17 +17,13 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { fadeInUp } from "./utils";
 import {
-  clientFormSchema,
+  clientFormObject,
  } from "@/lib/creators/schemas/creator-apply-client";
 import type {   } from "@tanstack/react-form";
 import { FormType } from "./useCreatorsApplyForm";
+import { getFieldErrors } from "@/lib/field";
 
-function errorsFromMeta(meta: any): string[] {
-  const touchedErrs = (meta?.touchedErrors as string[] | undefined) ?? [];
-  const submitErr = (meta?.errors?.onSubmit as string | undefined) ?? undefined;
-  return touchedErrs.length ? touchedErrs : submitErr ? [submitErr] : [];
-}
-
+ 
 export function SocialInfo({ form }: { form:FormType 
 
 }) {
@@ -36,10 +32,10 @@ export function SocialInfo({ form }: { form:FormType
       <motion.div variants={fadeInUp}>
         <form.Field
           name="locationYesNo"
-          validators={{ onChange: clientFormSchema.shape.locationYesNo }}
+          validators={{ onChange: clientFormObject.shape.locationYesNo }}
         >
           {(f) => {
-            const errs = errorsFromMeta(f.state.meta);
+             const errs = getFieldErrors(f);
             return (
               <DSField data-invalid={!!errs.length}>
                 <FieldLabel>Do you live in Miami?</FieldLabel>
@@ -70,10 +66,10 @@ export function SocialInfo({ form }: { form:FormType
       <motion.div variants={fadeInUp}>
         <form.Field
           name="instagram"
-          validators={{ onChange: clientFormSchema.shape.instagram }}
+          validators={{ onChange: clientFormObject.shape.instagram }}
         >
           {(f) => {
-            const errs = errorsFromMeta(f.state.meta);
+            const errs = getFieldErrors(f);
             return (
               <DSField data-invalid={!!errs.length}>
                 <FieldLabel htmlFor="instagram">Instagram Profile</FieldLabel>
@@ -98,10 +94,10 @@ export function SocialInfo({ form }: { form:FormType
       <motion.div variants={fadeInUp}>
         <form.Field
           name="tiktok"
-          validators={{ onChange: clientFormSchema.shape.tiktok }}
+          validators={{ onChange: clientFormObject.shape.tiktok }}
         >
           {(f) => {
-            const errs = errorsFromMeta(f.state.meta);
+            const errs = getFieldErrors(f);
             return (
               <DSField data-invalid={!!errs.length}>
                 <FieldLabel htmlFor="tiktok">TikTok Profile</FieldLabel>
@@ -126,10 +122,10 @@ export function SocialInfo({ form }: { form:FormType
       <motion.div variants={fadeInUp}>
         <form.Field
           name="instagramPost"
-          validators={{ onChange: clientFormSchema.shape.instagramPost }}
+          validators={{ onChange:  clientFormObject.shape.instagramPost }}
         >
           {(f) => {
-            const errs = errorsFromMeta(f.state.meta);
+            const errs = getFieldErrors(f);
             return (
               <DSField data-invalid={!!errs.length}>
                 <FieldLabel htmlFor="instagramPost">Instagram post URL (optional)</FieldLabel>

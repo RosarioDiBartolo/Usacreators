@@ -4,11 +4,10 @@ import admin from 'firebase-admin'
 import { db } from '@/lib/firebase/admin'
 import crypto from 'crypto' 
 import { readCurrentLegal } from '../../../api/legal'
-import { hashIP } from '@/lib/http'
+import { hashIP } from '@/lib/utils'
 import {   getRequestHeader, setResponseHeader, setResponseStatus } from '@tanstack/react-start/server'
  import { serverSchema as FormSchema,   EmailVerificationSchema, persistSchema} from "@/lib/creators/schemas/creator-apply-server" 
- 
-expo
+  
 export const subscribeCreator = createServerFn({ method: 'POST' })
   .inputValidator( FormSchema)
    .handler(async ({ data }) => {

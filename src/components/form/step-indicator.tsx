@@ -3,7 +3,7 @@
 // (unchanged logic with minor polish)
 // ============================================================================
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/fe-utils";
 import type { Step } from "@/lib/creators/schemas/creator-apply-client";
 import { Dispatch, SetStateAction } from "react";
   

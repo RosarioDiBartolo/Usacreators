@@ -15,7 +15,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { fadeInUp } from "./utils";
 import {
-  clientFormSchema,
+  clientFormObject,
  } from "@/lib/creators/schemas/creator-apply-client";
 import { FormType } from "./useCreatorsApplyForm";
  
@@ -30,7 +30,7 @@ export function AdditionalInfo({ form }: { form: FormType
   return (
     <FieldGroup className="space-y-6">
       <motion.div variants={fadeInUp}>
-        <form.Field name="bio" validators={{ onChange: clientFormSchema.shape.bio }}>
+        <form.Field name="bio" validators={{ onChange: clientFormObject.shape.bio }}>
           {(f) => {
             const errs = errorsFromMeta(f.state.meta);
             return (
@@ -55,7 +55,7 @@ export function AdditionalInfo({ form }: { form: FormType
       <motion.div variants={fadeInUp}>
         <form.Field
           name="additionalInfo"
-          validators={{ onChange: clientFormSchema.shape.additionalInfo }}
+          validators={{ onChange: clientFormObject.shape.additionalInfo }}
         >
           {(f) => {
             const errs = errorsFromMeta(f.state.meta);

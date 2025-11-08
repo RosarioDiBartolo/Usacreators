@@ -16,23 +16,31 @@ import { contentVariants } from "./utils";
 
 import {
   stepKeysMap,
-  steps, 
+  steps,
 } from "@/lib/creators/schemas/creator-apply-client";
- 
-import useCreatorApplyForm from "./useCreatorsApplyForm"
-  
+
+import useCreatorApplyForm from "./useCreatorsApplyForm"; 
 
 export default function OnboardingForm() {
-  
-
-  const {form, isSubmitting, currentStep, setCurrentStep, legalVersions}=  useCreatorApplyForm()
-     
-
-  async function nextStep() {
-    const names = stepKeysMap[currentStep]  
-const results = await Promise.all(names.map((n) => form.validateField(n, "change")));
+  const { form, isSubmitting, currentStep, setCurrentStep, legalVersions } =
+    useCreatorApplyForm();
+    async function nextStep() {
+    const names = stepKeysMap[currentStep];
+    const results = await Promise.all(
+      names.map((n) => form.validateField(n, "change"))
+    );
     const stepHasErrors = results.some((r) => r?.length);
-    if (!stepHasErrors) setCurrentStep((s) => s + 1);
+
+    if (stepHasErrors) {
+      console.error(
+        "Error when trying to jump to next\n Step:",
+        currentStep,
+        "errors:",
+        results
+      );
+    } else {
+      setCurrentStep((s) => s + 1);
+    }
   }
   function prevStep() {
     if (currentStep > 0) setCurrentStep((s) => s - 1);

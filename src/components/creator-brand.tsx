@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/fe-utils";
 import { motion, type Variants } from "framer-motion";
 import type { PropsWithChildren, ReactNode } from "react";
 import { Link } from '@tanstack/react-router'
