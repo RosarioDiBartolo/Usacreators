@@ -6,20 +6,11 @@ import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 
 export default defineConfig({
-    optimizeDeps: {
-    exclude: [ 'q'],
-    
-  },
-  build: {
-    rollupOptions: {
-      external: [ 'q'],
-    },
-  },
+   
   plugins: [tanstackStart(), nitroV2Plugin(), react(), tailwindcss()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      "@shared": path.resolve(__dirname, "./shared")
-    },
+     },
   },
 })
