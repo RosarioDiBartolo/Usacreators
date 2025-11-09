@@ -1,3 +1,4 @@
+ 
 import { z } from "zod";
 
 // --- enum & tipo riutilizzabili
@@ -6,14 +7,17 @@ export type YesNo = z.infer<typeof yesNoEnum>;
 
 // --- helper
 export const emptyToUndef = <T extends z.ZodTypeAny>(schema: T) =>
-  z.preprocess(v => (typeof v === "string" && v.trim() === "" ? undefined : v), schema);
+  z.preprocess(
+    (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
+    schema
+  );
 
-const urlOrHandle = z
+export const urlOrHandle = z
   .string()
   .trim()
   .optional()
   .refine(
-    v =>
+    (v) =>
       v === undefined ||
       /^@[a-zA-Z0-9_.]{2,30}$/.test(v) ||
       /^https?:\/\//.test(v),
@@ -22,26 +26,10 @@ const urlOrHandle = z
 
 export const MAX_BIO = 1000;
 export const MAX_ADDITIONAL = 2000;
- 
-export const sharedBaseFormObject = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters."),
-  email: z.string().email("Enter a valid email address."),
-  locationYesNo: yesNoEnum,
-  instagram: urlOrHandle,
-  tiktok: urlOrHandle,
-  instagramPost: emptyToUndef(z.string().url("Enter a valid URL.").optional()),
-  bio: emptyToUndef(z.string().max(MAX_BIO, `Max ${MAX_BIO} characters`).optional()),
-  additionalInfo: emptyToUndef(
-    z.string().max(MAX_ADDITIONAL, `Max ${MAX_ADDITIONAL} characters`).optional()
-  ),
-  termsAccepted: z.boolean().refine(v => v === true, {
-    message: "You must accept terms to continue.",
-  }),
-});
 
 // 🔹 One tiny helper to apply standard cross-field rules everywhere
 export const applyStandardRules = <T extends z.ZodTypeAny>(obj: T) =>
-  (obj ).superRefine((data, ctx: z.RefinementCtx) => {
+  obj.superRefine((data, ctx: z.RefinementCtx) => {
     // Always-on: at least one social
     if (!data.instagram && !data.tiktok) {
       ctx.addIssue({
@@ -57,9 +45,50 @@ export const applyStandardRules = <T extends z.ZodTypeAny>(obj: T) =>
     }
   });
 
-// Ready-to-use shared schema if someone just needs “the base form”
-export const sharedBaseFormSchema = applyStandardRules(sharedBaseFormObject);
- 
+export const sharedBaseFormObject = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters."),
+  email: z.string().email("Enter a valid email address."),
+  locationYesNo: yesNoEnum,
+  instagram: urlOrHandle,
+  tiktok: urlOrHandle,
+  instagramPost: emptyToUndef(z.string().url("Enter a valid URL.").optional()),
+  bio: emptyToUndef(
+    z.string().max(MAX_BIO, `Max ${MAX_BIO} characters`).optional()
+  ),
+  additionalInfo: emptyToUndef(
+    z
+      .string()
+      .max(MAX_ADDITIONAL, `Max ${MAX_ADDITIONAL} characters`)
+      .optional()
+  ),
+});
 
-export type SharedBaseForm = z.infer<typeof sharedBaseFormSchema>;
+// ---- Versions sent by client (optional, but if present must be YYYY-MM-DD) ----
+export const consentServerAdditions = z.object({
+  termsVersion: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .optional(),
+  privacyVersion: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .optional(),
+});
+
+// ---- Build plain object first (no effects here) ----
+export const payloadObject = sharedBaseFormObject
+  .strict() // reject unknown base fields early
+  .merge(consentServerAdditions)
+  .merge(
+    z.object({
+      profilePictureUrl: z.string().trim().url().optional().nullable(),
+      //profilePicture: uploadMetaSchema, // optional as a whole
+      turnstileToken: z.string().optional(),
+    })
+  );
+
+ export const payloadSchema = applyStandardRules(payloadObject)
+  
+export type Payload = z.infer<typeof payloadObject>;
+ 
 export type StepId = "personal" | "social" | "details" | "media" | "legal";

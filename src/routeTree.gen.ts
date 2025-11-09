@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as CatalogRouteImport } from './routes/catalog'
 import { Route as _notFoundRouteImport } from './routes/__not-found'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ImagesUploadRouteImport } from ./routes/images/uploadad'
 import { Route as CreatorsApplyRouteImport } from './routes/creators/apply'
 
 const CatalogRoute = CatalogRouteImport.update({
@@ -29,11 +28,6 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ImagesUploadRoute = ImagesUploadRouteImport.update({
-  id: '/images/upload',
-  path: '/images/upload',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CreatorsApplyRoute = CreatorsApplyRouteImport.update({
   id: '/creators/apply',
   path: '/creators/apply',
@@ -44,13 +38,11 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/catalog': typeof CatalogRoute
   '/creators/apply': typeof CreatorsApplyRoute
-  '/images/upload': typeof ImagesUploadRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/catalog': typeof CatalogRoute
   '/creators/apply': typeof CreatorsApplyRoute
-  '/images/upload': typeof ImagesUploadRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -58,20 +50,13 @@ export interface FileRoutesById {
   '/__not-found': typeof _notFoundRoute
   '/catalog': typeof CatalogRoute
   '/creators/apply': typeof CreatorsApplyRoute
-  '/images/upload': typeof ImagesUploadRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/catalog' | '/creators/apply' | '/images/upload'
+  fullPaths: '/' | '/catalog' | '/creators/apply'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/catalog' | '/creators/apply' | '/images/upload'
-  id:
-    | '__root__'
-    | '/'
-    | '/__not-found'
-    | '/catalog'
-    | '/creators/apply'
-    | '/images/upload'
+  to: '/' | '/catalog' | '/creators/apply'
+  id: '__root__' | '/' | '/__not-found' | '/catalog' | '/creators/apply'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -79,7 +64,6 @@ export interface RootRouteChildren {
   _notFoundRoute: typeof _notFoundRoute
   CatalogRoute: typeof CatalogRoute
   CreatorsApplyRoute: typeof CreatorsApplyRoute
-  ImagesUploadRoute: typeof ImagesUploadRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -105,13 +89,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/images/upload': {
-      id: '/images/upload'
-      path: '/images/upload'
-      fullPath: '/images/upload'
-      preLoaderRoute: typeof ImagesUploadRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/creators/apply': {
       id: '/creators/apply'
       path: '/creators/apply'
@@ -127,7 +104,6 @@ const rootRouteChildren: RootRouteChildren = {
   _notFoundRoute: _notFoundRoute,
   CatalogRoute: CatalogRoute,
   CreatorsApplyRoute: CreatorsApplyRoute,
-  ImagesUploadRoute: ImagesUploadRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

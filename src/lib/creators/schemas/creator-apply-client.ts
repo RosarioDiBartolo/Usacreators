@@ -1,9 +1,8 @@
 import { z } from "zod";
 import {
-  applyStandardRules,
-  emptyToUndef,
+  applyStandardRules, 
   // IMPORTANT: import the pure object (no effects) so we can extend/omit/merge safely
-  sharedBaseFormObject,
+  sharedBaseFormObject, 
   type StepId,
 } from "./creators-apply-shared";
 import { MAX_PIC_SIZE } from "../constants";
@@ -12,7 +11,7 @@ import { MAX_PIC_SIZE } from "../constants";
 const profilePictureClient = z
   .instanceof(File)
   .optional()
-  .refine(f => f !== undefined, "A profile picture is required.")
+  .refine((f) => f !== undefined, "A profile picture is required.")
   .refine(
     (f) => !f || ["image/jpeg", "image/png", "image/webp"].includes(f.type),
     "Allowed: JPG, PNG, WEBP."
@@ -25,26 +24,17 @@ const profilePictureClient = z
 // 1) Start from the base object and extend with UI/client fields
 export const clientFormObject = sharedBaseFormObject.extend({
   profilePictureFile: profilePictureClient, // optional
+  termsAccepted: z.boolean().refine((v) => v === true, {
+    message: "You must accept terms to continue.",
+  }),
 });
 
 // 2) Apply the always-on cross-field rule inline (now becomes ZodEffects)
-export const clientFormSchema =   applyStandardRules(clientFormObject);
-
+export const clientSubmitSchema = applyStandardRules(clientFormObject);
 
 // 3) UI-only stuff: outside of “contractual” data
-  const clientUiOnlySchema = z.object({
-  turnstileToken: emptyToUndef(z.string().optional()),
-});
-
-// 4) Submit payload (strip the File, then add UI-only token) — compose on objects first
-const clientSubmitObject = clientFormObject
-  .omit({ profilePictureFile: true })
-  .merge(clientUiOnlySchema);
-
-// 5) Apply the same always-on rule to the submit payload
-export const clientSubmitSchema = applyStandardRules(clientSubmitObject);
-
-
+ 
+ 
 // Types
 export type ClientFormData = z.infer<typeof clientFormObject>;
 
@@ -56,7 +46,10 @@ export type Step = {
 
 export const steps = [
   { id: "personal", fields: ["name", "email", "profilePictureFile"] },
-  { id: "social", fields: ["locationYesNo", "instagram", "tiktok", "instagramPost"] },
+  {
+    id: "social",
+    fields: ["locationYesNo", "instagram", "tiktok", "instagramPost"],
+  },
   { id: "details", fields: ["bio", "additionalInfo"] },
   { id: "legal", fields: ["termsAccepted"] },
 ] as const satisfies ReadonlyArray<Step>;

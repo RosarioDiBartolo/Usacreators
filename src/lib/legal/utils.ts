@@ -12,7 +12,7 @@ export type LegalVersions = {
 };
 
 // ---- Timestamp guard (works across admin/emulator builds)
-const TimestampLike = z.custom<{ toDate: () => Date }>(
+export const TimestampLike = z.custom<{ toDate: () => Date }>(
   (v) => !!v && typeof v.toDate === "function",
   "Expected Firestore Timestamp-like object"
 );

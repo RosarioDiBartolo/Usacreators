@@ -4,12 +4,14 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
 // Import both client + submit schemas
-import { clientSubmitSchema } from "@/lib/creators/schemas/creator-apply-client";
+import { clientFormObject, clientSubmitSchema } from "@/lib/creators/schemas/creator-apply-client";
 import { getLegalVersions } from "@/lib/legal/utils";
-import z from "zod";
+import {z} from "zod";
 import { opt } from "@/lib/utils";
 import { uploadDirect } from "@/lib/upload";
 import { getUploadSignature } from "@/lib/upload-signature";
+import { submitCreatorApplication } from "@/lib/creators/subscribe-creator";
+import { Payload } from "@shared/schemas/creators-apply-shared";
 
 // ---- Types ----
 type ApiError = {
@@ -22,6 +24,7 @@ type ApiError = {
   termsVersion?: string;
   privacyVersion?: string;
 };
+ 
 
 // Use the *input* of the CLIENT schema as the canonical form shape
 
@@ -44,7 +47,7 @@ function applyFieldErrorsFromApiTanStack(
     }));
   }
 }
-
+ 
 function toastApiError(err: ApiError, status: number) {
   const base = err.message || "Something went wrong.";
   const ref = err.requestId ? ` • Ref: ${err.requestId}` : "";
@@ -73,16 +76,7 @@ function toastApiError(err: ApiError, status: number) {
       return toast.error(`${base}${ref}`);
   }
 }
-
-async function handleNonOkResponse(res: Response, form: FormType) {
-  const data = (await res.json()) as ApiError;
-  if (res.status === 400 && data?.details?.fieldErrors) {
-    applyFieldErrorsFromApiTanStack(form, data.details);
-  }
-  toastApiError(data, res.status);
-  return data;
-}
-
+ 
 // (Optional) Turnstile helper — replace with your actual integration
 async function getTurnstileToken(): Promise<string | undefined> {
   return undefined;
@@ -116,8 +110,10 @@ const useCreatorApplyForm = () => {
       .catch(() => setLegalVersions(null));
   }, []);
 
-  // Strongly type defaults to the Zod *input* so unions match (File | undefined, "yes" | "no", etc.)
-  const defaultValues: z.infer<typeof clientSubmitSchema> = {
+type FormValues = z.infer<typeof clientFormObject>
+ type DefaultValues = Omit<  FormValues , "profilePictureFile"> & {profilePictureFile?: FormValues["profilePictureFile"] }
+   // Strongly type defaults to the Zod *input* so unions match (File | undefined, "yes" | "no", etc.)
+  const defaultValues: DefaultValues = {
     name: "",
     email: "",
     profilePictureFile: undefined,
@@ -142,8 +138,13 @@ const useCreatorApplyForm = () => {
 
     onSubmit: async ({ value }) => {
       try {
+        
         setIsSubmitting(true);
 
+        const {profilePictureFile, ...stripped} = value
+        if (!profilePictureFile){
+          throw "Missing profilePictureFile."
+        }
         const current = await getLegalVersions();
         const policy = await getUploadSignature({
           data: {
@@ -151,13 +152,13 @@ const useCreatorApplyForm = () => {
             eager: "c_fill,w_768,h_768,q_auto,f_auto",
           },
         });
-        const profilePictureUrl = await uploadDirect(
-          value.profilePictureFile,
+        const {secure_url: profilePictureUrl} = await uploadDirect(
+          profilePictureFile,
           policy
         );
 
-        const payload = {
-          ...value,
+        const payload: Payload= {
+          ...stripped,
           profilePictureUrl,
           bio: opt(value.bio),
           instagram: opt(value.instagram),
@@ -169,39 +170,7 @@ const useCreatorApplyForm = () => {
           privacyVersion: current.privacyVersion,
         };
 
-        const res = await fetch("/api/apply", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-
-        if (!res.ok) {
-          if (res.status === 409) {
-            const err = (await handleNonOkResponse(res, form)) as ApiError;
-
-            if (err?.reason === "version_mismatch") {
-              if (err.termsVersion && err.privacyVersion) {
-                setLegalVersions({
-                  termsVersion: err.termsVersion,
-                  privacyVersion: err.privacyVersion,
-                });
-              } else {
-                try {
-                  const latest = await fetchLegalVersions();
-                  setLegalVersions(latest);
-                } catch (err) {
-                  console.error(err);
-                }
-              }
-              form.setFieldValue("termsAccepted", false);
-              // ✅ valid cause name in new API:
-              form.validateField("termsAccepted", "change");
-            }
-          } else {
-            await handleNonOkResponse(res, form);
-          }
-          return;
-        }
+        await submitCreatorApplication({ data: payload });
 
         toast.success("Application submitted successfully!");
         navigate({ to: "/success" });
@@ -209,6 +178,8 @@ const useCreatorApplyForm = () => {
         toast.error(
           e instanceof Error ? e.message : "Network error. Please try again."
         );
+
+        console.error(e)
       } finally {
         setIsSubmitting(false);
       }
