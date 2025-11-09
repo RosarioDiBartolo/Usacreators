@@ -1,16 +1,15 @@
-import {  useForm } from "@tanstack/react-form";
+import { useForm } from "@tanstack/react-form";
 import { useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import { uploadProfileImage, opt } from "./utils";
 
 // Import both client + submit schemas
-import {
-  clientSubmitSchema,
-  ClientFormData,
-} from "@/lib/creators/schemas/creator-apply-client";
+import { clientSubmitSchema } from "@/lib/creators/schemas/creator-apply-client";
 import { getLegalVersions } from "@/lib/legal/utils";
 import z from "zod";
+import { opt } from "@/lib/utils";
+import { uploadDirect } from "@/lib/upload";
+import { getUploadSignature } from "@/lib/upload-signature";
 
 // ---- Types ----
 type ApiError = {
@@ -104,7 +103,6 @@ async function fetchLegalVersions(): Promise<{
 }
 
 const useCreatorApplyForm = () => {
-  const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [legalVersions, setLegalVersions] = useState<{
     termsVersion: string;
@@ -119,10 +117,10 @@ const useCreatorApplyForm = () => {
   }, []);
 
   // Strongly type defaults to the Zod *input* so unions match (File | undefined, "yes" | "no", etc.)
-  const defaultValues: z.infer< typeof clientSubmitSchema> = {
+  const defaultValues: z.infer<typeof clientSubmitSchema> = {
     name: "",
     email: "",
-    profilePictureFile: undefined ,
+    profilePictureFile: undefined,
     bio: undefined,
     locationYesNo: "yes",
     instagram: undefined,
@@ -134,24 +132,29 @@ const useCreatorApplyForm = () => {
 
   const form = useForm({
     // 1) Tell TanStack how to use Zod
-
     // 2) Defaults that conform to clientFormSchema input
     defaultValues,
 
     // 3) Submit-time cross-field validation (adapter wrapper)
     validators: {
       onSubmit: clientSubmitSchema,
-     },
+    },
 
     onSubmit: async ({ value }) => {
       try {
         setIsSubmitting(true);
 
         const current = await getLegalVersions();
-
-        const profilePictureUrl = value.profilePictureFile
-          ? await uploadProfileImage(value.profilePictureFile)
-          : undefined;
+        const policy = await getUploadSignature({
+          data: {
+            folder: "users/avatars",
+            eager: "c_fill,w_768,h_768,q_auto,f_auto",
+          },
+        });
+        const profilePictureUrl = await uploadDirect(
+          value.profilePictureFile,
+          policy
+        );
 
         const payload = {
           ...value,
@@ -186,7 +189,9 @@ const useCreatorApplyForm = () => {
                 try {
                   const latest = await fetchLegalVersions();
                   setLegalVersions(latest);
-                } catch {}
+                } catch (err) {
+                  console.error(err);
+                }
               }
               form.setFieldValue("termsAccepted", false);
               // ✅ valid cause name in new API:
@@ -200,7 +205,6 @@ const useCreatorApplyForm = () => {
 
         toast.success("Application submitted successfully!");
         navigate({ to: "/success" });
-        setCurrentStep((s) => s + 1);
       } catch (e) {
         toast.error(
           e instanceof Error ? e.message : "Network error. Please try again."
@@ -211,9 +215,9 @@ const useCreatorApplyForm = () => {
     },
   });
 
-  return { form, isSubmitting, currentStep, setCurrentStep, legalVersions };
+  return { form, isSubmitting, legalVersions };
 };
 
 export type FormType = ReturnType<typeof useCreatorApplyForm>["form"];
- 
+
 export default useCreatorApplyForm;

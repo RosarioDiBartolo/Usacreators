@@ -19,12 +19,14 @@ import {
   steps,
 } from "@/lib/creators/schemas/creator-apply-client";
 
-import useCreatorApplyForm from "./useCreatorsApplyForm"; 
+import useCreatorApplyForm from "./useCreatorsApplyForm";
+import { useState } from "react";
 
 export default function OnboardingForm() {
-  const { form, isSubmitting, currentStep, setCurrentStep, legalVersions } =
-    useCreatorApplyForm();
-    async function nextStep() {
+  const { form, isSubmitting, legalVersions } = useCreatorApplyForm();
+  const [currentStep, setCurrentStep] = useState(0);
+
+  async function nextStep() {
     const names = stepKeysMap[currentStep];
     const results = await Promise.all(
       names.map((n) => form.validateField(n, "change"))
@@ -45,7 +47,6 @@ export default function OnboardingForm() {
   function prevStep() {
     if (currentStep > 0) setCurrentStep((s) => s - 1);
   }
-
   return (
     <motion.div
       className="flex-1 flex flex-col"

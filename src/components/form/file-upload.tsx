@@ -16,7 +16,7 @@ type Props = {
   value?: File | undefined;
   onChange: (file: File | undefined) => void;
   onBlur: () => void;
-  errors?: string[]; // collected errors for this field
+  errors?: {message: string}[]; // collected errors for this field
 };
 
 function FileUpload({ name, value, onChange, onBlur, errors }: Props) {

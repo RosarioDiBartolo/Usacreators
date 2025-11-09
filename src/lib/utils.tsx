@@ -1,6 +1,10 @@
 import type { VercelResponse } from "@vercel/node";
 import crypto from "crypto";
 
+export function opt<T extends string | undefined>(v: T) {
+return v && v.trim() !== "" ? v : undefined;
+}
+
 // ---------- Helpers ----------
 export const asUrl = (v?: string | null) => {
   if (!v) return undefined;
