@@ -18,16 +18,15 @@ export const emptyToUndef = <T extends z.ZodTypeAny>(schema: T) =>
   );
 
 // @handle or http(s):// URL
-export const urlOrHandle = z
+export const urlOrHandle = (message: string = "Enter @handle or a full URL." )=> z
   .string()
   .trim()
-  .optional()
   .refine(
     (v) =>
       v === undefined ||
       /^@[a-zA-Z0-9_.]{2,30}$/.test(v) ||
       /^https?:\/\//.test(v),
-    { message: "Enter @handle or a full URL." }
+    { message}
   );
 
 // ----- Base slices (neutral, no File, no env stuff)
@@ -38,8 +37,8 @@ export const personalInfoSchema = z.object({
 
 export const socialSchema = z.object({
   locationYesNo: yesNoEnum,
-  instagram: urlOrHandle,
-  tiktok: urlOrHandle,
+  instagram: urlOrHandle().optional(),
+  tiktok: urlOrHandle().optional(),
   instagramPost: emptyToUndef(
     z.string().url("Enter a valid URL.").optional()
   ),
@@ -47,6 +46,7 @@ export const socialSchema = z.object({
 
 // “Additional” base WITHOUT file (client/server add their own)
 export const additionalBaseSchema = z.object({
+  portfolio: urlOrHandle("Enter a full Url to a valid document"),
   bio: emptyToUndef(z.string().max(MAX_BIO, `Max ${MAX_BIO} characters`).optional()),
   additionalInfo: emptyToUndef(
     z.string().max(MAX_ADDITIONAL, `Max ${MAX_ADDITIONAL} characters`).optional()

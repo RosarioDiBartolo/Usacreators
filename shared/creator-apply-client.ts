@@ -45,7 +45,7 @@ export type Step = {
 export const steps = [
   { id: "personal", fields: ["name", "email", "profilePictureFile"] },
   { id: "social",   fields: ["locationYesNo", "instagram", "tiktok", "instagramPost"] },
-  { id: "details",  fields: ["bio", "additionalInfo"] },
+  { id: "details",  fields: ["bio", "additionalInfo", "portfolio"] },
    { id: "legal",    fields: ["termsAccepted"] },
 ] as const satisfies ReadonlyArray<Step>;
 
