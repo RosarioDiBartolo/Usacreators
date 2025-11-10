@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SuccessRouteImport } from './routes/success'
 import { Route as CatalogRouteImport } from './routes/catalog'
 import { Route as _notFoundRouteImport } from './routes/__not-found'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CreatorsApplyRouteImport } from './routes/creators/apply'
 
+const SuccessRoute = SuccessRouteImport.update({
+  id: '/success',
+  path: '/success',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CatalogRoute = CatalogRouteImport.update({
   id: '/catalog',
   path: '/catalog',
@@ -37,11 +43,13 @@ const CreatorsApplyRoute = CreatorsApplyRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/catalog': typeof CatalogRoute
+  '/success': typeof SuccessRoute
   '/creators/apply': typeof CreatorsApplyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/catalog': typeof CatalogRoute
+  '/success': typeof SuccessRoute
   '/creators/apply': typeof CreatorsApplyRoute
 }
 export interface FileRoutesById {
@@ -49,25 +57,40 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/__not-found': typeof _notFoundRoute
   '/catalog': typeof CatalogRoute
+  '/success': typeof SuccessRoute
   '/creators/apply': typeof CreatorsApplyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/catalog' | '/creators/apply'
+  fullPaths: '/' | '/catalog' | '/success' | '/creators/apply'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/catalog' | '/creators/apply'
-  id: '__root__' | '/' | '/__not-found' | '/catalog' | '/creators/apply'
+  to: '/' | '/catalog' | '/success' | '/creators/apply'
+  id:
+    | '__root__'
+    | '/'
+    | '/__not-found'
+    | '/catalog'
+    | '/success'
+    | '/creators/apply'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   _notFoundRoute: typeof _notFoundRoute
   CatalogRoute: typeof CatalogRoute
+  SuccessRoute: typeof SuccessRoute
   CreatorsApplyRoute: typeof CreatorsApplyRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/success': {
+      id: '/success'
+      path: '/success'
+      fullPath: '/success'
+      preLoaderRoute: typeof SuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/catalog': {
       id: '/catalog'
       path: '/catalog'
@@ -103,6 +126,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   _notFoundRoute: _notFoundRoute,
   CatalogRoute: CatalogRoute,
+  SuccessRoute: SuccessRoute,
   CreatorsApplyRoute: CreatorsApplyRoute,
 }
 export const routeTree = rootRouteImport
