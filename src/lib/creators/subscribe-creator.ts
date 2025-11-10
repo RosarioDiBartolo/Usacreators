@@ -3,11 +3,8 @@ import { getRequestHeader } from "@tanstack/react-start/server";
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import crypto from "crypto";
-import admin from "firebase-admin";
-import { db } from "@/lib/firebase/admin";
 import {
   hashIP,
-  RATE_WINDOW_MINUTES,
   normalizeIG,
   normalizeTT,
   normalizeIGPost,
@@ -17,11 +14,11 @@ import { getLegalVersions } from "@/lib/legal/utils";
 import {
   setResponseStatus,
   setResponseHeader,
-  getRequest, 
+  getRequest,
 } from "@tanstack/react-start/server";
 import { persistSchema } from "./schemas/creator-apply-server";
 import { payloadSchema } from "./schemas/creators-apply-shared";
-import {   normalizeIp } from "../ip";
+import { normalizeIp } from "../ip";
 
 // ---------- Types ----------
 type ApiOk = { success: true; id: string };
@@ -60,16 +57,16 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
   // Accept a single `data` object, validated here per docs
   .inputValidator(payloadSchema)
   .handler(async ({ data }) => {
-    setCorsHeaders();
+    const { db , admin} = await import("@/lib/firebase/admin");
+     setCorsHeaders();
     const request = getRequest();
-    
 
     const requestId = crypto.randomUUID();
     setResponseHeader("X-Request-ID", requestId);
     const started = Date.now();
 
     try {
-       const ip = normalizeIp(getRequestHeader("host"));
+      const ip = normalizeIp(getRequestHeader("host"));
       const ipHash = hashIP(ip as string);
 
       // ---- Turnstile (optional)
@@ -217,7 +214,7 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
         }
 
         // ---- Persist
-        const now = admin.firestore.FieldValue.serverTimestamp();
+     const now = admin.firestore.FieldValue.serverTimestamp();
         const ua = (request.headers.get("user-agent") || "").slice(0, 300);
         const country = request.headers.get("x-vercel-ip-country") || "unknown";
 

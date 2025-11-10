@@ -1,6 +1,6 @@
 // /src/server/get-upload-signature.ts
 import { createServerFn } from "@tanstack/react-start";
-import { cloudinary } from "./cloudinary";
+ 
 import { z } from "zod";
 
 // Allow only transforms you actually use
@@ -36,6 +36,7 @@ export type SignedUploadPolicy = {
 export const getUploadSignature = createServerFn({ method: "POST" })
   .inputValidator(Input)
   .handler(async ({ data }): Promise<SignedUploadPolicy> => {
+    const {cloudinary} = await import("./cloudinary")
     const { folder, eager } = data;
     const timestamp = Math.floor(Date.now() / 1000);
 

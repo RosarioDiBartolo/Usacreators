@@ -1,8 +1,7 @@
 // src/server/legal/get-legal-versions.ts
 import { z } from "zod";
 import { createServerFn } from '@tanstack/react-start'
-import { db } from "@/lib/firebase/admin"; // server-only
-
+ 
 // ---- Public type for UI (unchanged)
 export type LegalVersions = {
   termsVersion: string;    // e.g. "2025-11-01"
@@ -36,13 +35,14 @@ const RegistrySchema = z.object({
   updatedAt: TimestampLike,
 });
 
- 
-const ParamsSchema = z.object({
+ const ParamsSchema = z.object({
   includeUrls: z.boolean()
 }).optional()
 export type GetLegalVersionsOptions = z.infer< typeof ParamsSchema>
 // Server function (no caching). Can be called from loaders or client.
 export const getLegalVersions = createServerFn ({ method: "GET" }).inputValidator(ParamsSchema).handler(async ({ data }) => {
+    
+  const {db}  = await import("@/lib/firebase/admin");
   const includeUrls = data?.includeUrls ?? false;
 
   const snap = await db.doc("legal/registry").get();

@@ -1,4 +1,4 @@
-import type { VercelResponse } from "@vercel/node";
+ 
 import crypto from "crypto";
 
 export function opt<T extends string | undefined>(v: T) {
@@ -45,10 +45,7 @@ export const hashIP = (ip: string) => crypto.createHash("sha256").update(ip).dig
 
 export const RATE_WINDOW_MINUTES = Number(process.env.RATE_WINDOW_MINUTES || "5");
 
-// small helper to include requestId in every response
-export function withId(res: VercelResponse, status: number, body: object, requestId: string) {
-  return res.status(status).json({ requestId, ...body });
-}
+ 
 
 
  

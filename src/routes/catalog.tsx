@@ -1,4 +1,4 @@
-import * as React from "react";
+ 
 import { createFileRoute } from "@tanstack/react-router";
 
 type Creator = { id: string; name: string };

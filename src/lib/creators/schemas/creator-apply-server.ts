@@ -4,7 +4,7 @@ import {
   applyStandardRules,
   payloadObject,
  
-} from "./creators-apply-shared.js";
+} from "./creators-apply-shared";
 import { TimestampLike } from "@/lib/legal/utils.js";
 
 // ---- Upload meta (wire) ----

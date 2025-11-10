@@ -1,6 +1,5 @@
 import admin, { type ServiceAccount } from "firebase-admin";
-
-
+ 
 const base64 = process.env.FIREBASE_SERVICE_ACCOUNT;
 if (!base64) {
   throw new Error("Missing FIREBASE_SERVICE_ACCOUNT env variable");
@@ -28,5 +27,9 @@ if (!admin.apps.length) {
     throw new Error("Failed to initialize Firebase Admin.");
   }
 }
-export const db = admin.firestore();
-db.settings({ ignoreUndefinedProperties: true })
+  const db = admin.firestore();
+db.settings({ ignoreUndefinedProperties: true, preferRest: true, // <-- key line
+ })
+
+ export { db , admin}
+ 
