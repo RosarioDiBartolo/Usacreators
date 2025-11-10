@@ -248,8 +248,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           );
         }
       }
-
-      const igPost = normalizeIGPost(d.instagramPost);
+       const igPost = normalizeIGPost(d.instagramPost);
 
       const { termsVersion: currentTerms, privacyVersion: currentPrivacy } =
         readCurrentLegal();
@@ -271,8 +270,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       // 🧩 Step 6: Save to Firestore (also store termsVersion/acceptedAt if provided)
       const docRef = await db.collection("applications").add({
-        name: d.name,
+         name: d.name,
         email: d.email.toLowerCase(),
+        portfolio: d.portfolio,
         profilePictureUrl: asUrl(d.profilePictureUrl) ?? null,
         bio: d.bio || "",
         locationYesNo: d.locationYesNo,
