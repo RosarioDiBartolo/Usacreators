@@ -13,9 +13,7 @@ import {
   FieldGroup,
   FieldError,
 } from "@/components/ui/field";
-import {
-  clientFormObject,
- } from "@/lib/creators/schemas/creator-apply-client"; 
+import { clientFormObject } from "@/lib/creators/schemas/creator-apply-client";
 
 import {
   Accordion,
@@ -24,33 +22,50 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { termsData } from "@/lib/terms-and-conditions";
-import { privacyPolicy } from "@/lib/privacy-policies";
 import { FormType } from "./useCreatorsApplyForm";
-import { getLegalVersions } from "@/lib/legal/utils";
-import { useServerFn } from "@tanstack/react-start";
+import { getFieldErrors } from "@/lib/field";
+import {
+  getLegalFromPublic,
+  getLegalVersions,
+  Policy,
+  PolicyVersion,
+} from "@/lib/legal/utils";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { SectionBlocks } from "../legal/policy";
 
-function errorsFromMeta(meta: any): string[] {
-  const touchedErrs = (meta?.touchedErrors as string[] | undefined) ?? [];
-  const submitErr = (meta?.errors?.onSubmit as string | undefined) ?? undefined;
-  return touchedErrs.length ? touchedErrs : submitErr ? [submitErr] : [];
-}
+const versionQuery = queryOptions({
+  queryKey: ["policy"],
+  queryFn: () => getLegalVersions(),
+});
 
+const PolicyContent = (policy: Policy, version: PolicyVersion) =>
+  queryOptions({
+    queryKey: ["legal", policy],
+    queryFn: () => getLegalFromPublic({ data: { policy: "terms", version } }),
+  });
 export function ReviewConsentStep({
-  form, 
+  form,
 }: {
-  form: FormType ; 
+  form: FormType;
+ 
 }) {
-  const getLegal = useServerFn( getLegalVersions)
-  const legal = getLegal({data: {includeUrls: true}})
-  
+  const { data: currentVersions } = useSuspenseQuery(versionQuery);
+
+  const { data: termsData } = useSuspenseQuery(
+    PolicyContent("terms", currentVersions.terms)
+  );
+  const { data: privacyData } = useSuspenseQuery(
+    PolicyContent("privacy", currentVersions.privacy)
+  );
+
   return (
     <FieldGroup className="space-y-6">
       <motion.div variants={fadeInUp}>
         <div className="rounded-xl border bg-card text-card-foreground p-4 sm:p-6">
           <h3 className="text-lg font-semibold mb-3">Review Terms & Privacy</h3>
           <p className="text-sm text-muted-foreground mb-4">
-            Please review the key sections below. Expand items to read the full text.
+            Please review the key sections below. Expand items to read the full
+            text.
           </p>
 
           <Tabs defaultValue="terms" className="w-full">
@@ -61,11 +76,20 @@ export function ReviewConsentStep({
 
             <TabsContent value="terms">
               <Accordion type="multiple" className="w-full">
-                {termsData.map((item, idx) => (
-                  <AccordionItem key={`terms-${idx}`} value={`terms-${idx}`}>
-                    <AccordionTrigger className="text-left">{item.title}</AccordionTrigger>
+                {privacyData.parsed.sections.map((section) => (
+                  <AccordionItem
+                    key={`terms-${section.title}`}
+                    value={`terms-${section.title}`}
+                  >
+                    <AccordionTrigger className="text-left">
+                      {section.title}
+                    </AccordionTrigger>
                     <AccordionContent className="prose prose-sm max-w-none dark:prose-invert">
-                      {item.content}
+                      <SectionBlocks
+                        blocks={section.blocks}
+                        vars={{}}
+                        startLevel={2}
+                      />
                     </AccordionContent>
                   </AccordionItem>
                 ))}
@@ -74,11 +98,20 @@ export function ReviewConsentStep({
 
             <TabsContent value="privacy">
               <Accordion type="multiple" className="w-full">
-                {privacyPolicy.map((item, idx) => (
-                  <AccordionItem key={`privacy-${idx}`} value={`privacy-${idx}`}>
-                    <AccordionTrigger className="text-left">{item.title}</AccordionTrigger>
+                {termsData.parsed.sections.map((section) => (
+                  <AccordionItem
+                    key={`terms-${section.title}`}
+                    value={`terms-${section.title}`}
+                  >
+                    <AccordionTrigger className="text-left">
+                      {section.title}
+                    </AccordionTrigger>
                     <AccordionContent className="prose prose-sm max-w-none dark:prose-invert">
-                      {item.content}
+                      <SectionBlocks
+                        blocks={section.blocks}
+                        vars={{}}
+                        startLevel={2}
+                      />
                     </AccordionContent>
                   </AccordionItem>
                 ))}
@@ -94,7 +127,7 @@ export function ReviewConsentStep({
           validators={{ onChange: clientFormObject.shape.termsAccepted }}
         >
           {(f) => {
-            const errs = errorsFromMeta(f.state.meta);
+            const errs = getFieldErrors(f);
             return (
               <DSField data-invalid={!!errs.length}>
                 <div className="flex items-center gap-2">
@@ -106,10 +139,13 @@ export function ReviewConsentStep({
                     aria-invalid={!!errs.length}
                   />
                   <FieldLabel htmlFor="termsAccepted" className="leading-snug">
-                    I have read and agree to the Terms & Conditions and the Privacy Policy.
+                    I have read and agree to the Terms & Conditions and the
+                    Privacy Policy.
                   </FieldLabel>
                 </div>
-                {!!errs.length && <FieldError errors={errs.map((m) => ({ message: m }))} />}
+                {!!errs.length && (
+                  <FieldError errors={errs.map((m) => ({ message: m }))} />
+                )}
               </DSField>
             );
           }}

@@ -1,4 +1,4 @@
-import LegalPage from '@/components/legal-page'
+import LegalPage from '@/components/legal/legal-page'
 import { domain } from '@/lib/creators/constants'  
 import { termsData } from '@/lib/terms-and-conditions'
 function TermsAndConditions() {

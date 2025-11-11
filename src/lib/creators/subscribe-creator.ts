@@ -195,8 +195,10 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
         const igPost = normalizeIGPost(data.instagramPost);
 
         // ---- Legal version check
-        const { termsVersion: currentTerms, privacyVersion: currentPrivacy } =
+        const { terms: currentTerms, privacy: currentPrivacy } =
           await getLegalVersions();
+
+          
         if (
           data.termsVersion !== currentTerms ||
           data.privacyVersion !== currentPrivacy

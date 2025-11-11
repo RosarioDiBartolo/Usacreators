@@ -20,11 +20,10 @@ import {
 } from "@/lib/creators/schemas/creator-apply-client";
 
 import useCreatorApplyForm from "./useCreatorsApplyForm";
-import { useState } from "react";
-import { getLegalVersions } from "@/lib/legal/utils";
+import { Suspense, useState } from "react";
 
 export default function OnboardingForm() {
-  const { form, isSubmitting } = useCreatorApplyForm();
+  const { form, isSubmitting  } = useCreatorApplyForm();
   const [currentStep, setCurrentStep] = useState(0);
   async function nextStep() {
     const names = stepKeysMap[currentStep];
@@ -82,10 +81,11 @@ export default function OnboardingForm() {
             {currentStep === 1 && <SocialInfo form={form} />}
             {currentStep === 2 && <AdditionalInfo form={form} />}
             {currentStep === 3 && (
-              <ReviewConsentStep
-                form={form}
-               
-              />
+              <Suspense
+                fallback={<p>Loading most recent legal related data...</p>}
+              >
+                <ReviewConsentStep form={form} />
+              </Suspense>
             )}
           </motion.div>
         </AnimatePresence>

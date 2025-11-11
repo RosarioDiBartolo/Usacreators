@@ -12,8 +12,7 @@ import { uploadDirect } from "@/lib/upload";
 import { getUploadSignature } from "@/lib/upload-signature";
 import { submitCreatorApplication } from "@/lib/creators/subscribe-creator";
 import { Payload } from "@/lib/creators/schemas/creators-apply-shared";
-
-
+ 
 // ---- Types ----
 type ApiError = {
   success?: boolean;
@@ -102,7 +101,7 @@ type FormValues = z.infer<typeof clientFormObject>
         if (!profilePictureFile){
           throw "Missing profilePictureFile."
         }
-        const current = await getLegalVersions();
+        const currentVersions = await getLegalVersions();
         const policy = await getUploadSignature({
           data: {
             folder: "users/avatars",
@@ -123,8 +122,8 @@ type FormValues = z.infer<typeof clientFormObject>
           instagramPost: opt(value.instagramPost),
           additionalInfo: opt(value.additionalInfo),
           turnstileToken: await getTurnstileToken(),
-          termsVersion: current.termsVersion,
-          privacyVersion: current.privacyVersion,
+          termsVersion: currentVersions.terms,
+          privacyVersion: currentVersions.privacy,
         };
 
         await submitCreatorApplication({ data: payload });

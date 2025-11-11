@@ -1,56 +1,55 @@
-import {
-  createRootRoute,
+import { 
   Outlet,
   HeadContent,
   Scripts,
-} from "@tanstack/react-router";
+  createRootRouteWithContext,
+ } from "@tanstack/react-router";
 import appCss from "../index.css?url";
 import Header from "@/components/header";
 import { getPlatformMeta } from "@/lib/meta";
 import { Toaster } from "sonner"; 
-
+import { type QueryClient  } from "@tanstack/react-query";
+ 
 const fallbackTitle = "1000+ Creators from Miami";
-export const Route = createRootRoute({
-  // Static defaults
-  head: ({ loaderData }) => {
-    if (!loaderData) {
-      return {}
-    }
-    const { meta } = loaderData
+export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
+  {
+    // Static defaults
+    head: ({ loaderData }) => {
+      if (!loaderData) {
+        return {};
+      }
+      const { meta } = loaderData;
 
-    return {
-      meta: [
-        {
+      return {
+        meta: [
+          {},
+          {
+            title: meta?.title ?? fallbackTitle,
+          },
+          { name: "viewport", content: "width=device-width, initial-scale=1" },
+        ],
+        links: [
+          { rel: "stylesheet", href: appCss },
+          {
+            rel: "icon",
+            href: "/favicon.svg",
+          },
+        ],
+      };
+    },
 
-        },
-        {
-          title: meta?.title ?? fallbackTitle,
-        },
-        { name: "viewport", content: "width=device-width, initial-scale=1" },
-      ],
-      links: [{ rel: "stylesheet", href: appCss }, {
-        rel: "icon", href: "/favicon.svg"
-      }],
-    };
-  },
+    // SSR Loader
+    loader: async ( ) => {
+       const meta = await getPlatformMeta();
+      return ({ meta });
+    },
 
-  // SSR Loader
-  loader: async () => {
-    try {
+    staleTime: Infinity,
+    gcTime: Infinity,
 
-      const meta = await getPlatformMeta()
-   
-      return { meta };
-    } catch (err) {
-      console.error(err);
-    }
-  },
-
-  staleTime: Infinity,
-  gcTime: Infinity,
-
-  component: RootComponent,
-});
+    component: RootComponent,
+  }
+);
 
 function RootComponent() {
   return (

@@ -4,7 +4,7 @@ import { z } from "zod";
 import { createServerFn } from "@tanstack/react-start";
 
 const MetaSchema = z.object({
-  title: z.string().optional(),
+  title: z.string() ,
 });
 
 export const getPlatformMeta = createServerFn({ method: "GET" }).handler(

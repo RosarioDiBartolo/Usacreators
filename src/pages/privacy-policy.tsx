@@ -1,4 +1,4 @@
-import LegalPage from "@/components/legal-page";
+import LegalPage from "@/components/legal/legal-page";
 import WebsiteLink from "@/components/website-link";
 import { privacyPolicy } from "@/lib/privacy-policies";
 
