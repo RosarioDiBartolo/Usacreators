@@ -5,7 +5,7 @@ import {
   payloadObject,
  
 } from "./creators-apply-shared";
-import { TimestampLike } from "@/lib/legal/utils.js";
+import { TimestampLike } from "@/lib/firebase/utils.js";
 
 // ---- Upload meta (wire) ----
 const uploadMetaSchema = z

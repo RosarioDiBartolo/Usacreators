@@ -21,11 +21,11 @@ import {
 
 import useCreatorApplyForm from "./useCreatorsApplyForm";
 import { useState } from "react";
+import { getLegalVersions } from "@/lib/legal/utils";
 
 export default function OnboardingForm() {
-  const { form, isSubmitting, legalVersions } = useCreatorApplyForm();
+  const { form, isSubmitting } = useCreatorApplyForm();
   const [currentStep, setCurrentStep] = useState(0);
-
   async function nextStep() {
     const names = stepKeysMap[currentStep];
     const results = await Promise.all(
@@ -84,8 +84,7 @@ export default function OnboardingForm() {
             {currentStep === 3 && (
               <ReviewConsentStep
                 form={form}
-                termsVersion={legalVersions?.termsVersion}
-                privacyVersion={legalVersions?.privacyVersion}
+               
               />
             )}
           </motion.div>

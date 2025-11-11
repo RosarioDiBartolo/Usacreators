@@ -4,24 +4,24 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import appCss from "../index.css?url"; 
+import appCss from "../index.css?url";
 import Header from "@/components/header";
- import { getPlatformMeta } from "@/lib/meta";
-import { Toaster } from "sonner";
+import { getPlatformMeta } from "@/lib/meta";
+import { Toaster } from "sonner"; 
 
 const fallbackTitle = "1000+ Creators from Miami";
 export const Route = createRootRoute({
   // Static defaults
   head: ({ loaderData }) => {
-    if (!loaderData){
+    if (!loaderData) {
       return {}
     }
-    const {meta} = loaderData
-    
+    const { meta } = loaderData
+
     return {
       meta: [
         {
-          
+
         },
         {
           title: meta?.title ?? fallbackTitle,
@@ -29,7 +29,7 @@ export const Route = createRootRoute({
         { name: "viewport", content: "width=device-width, initial-scale=1" },
       ],
       links: [{ rel: "stylesheet", href: appCss }, {
-        rel: "icon", href : "/favicon.svg"
+        rel: "icon", href: "/favicon.svg"
       }],
     };
   },
@@ -38,9 +38,9 @@ export const Route = createRootRoute({
   loader: async () => {
     try {
 
-       const meta = await getPlatformMeta()
-       
-      return {  meta };
+      const meta = await getPlatformMeta()
+   
+      return { meta };
     } catch (err) {
       console.error(err);
     }

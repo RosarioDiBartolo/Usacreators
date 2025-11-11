@@ -1,0 +1,91 @@
+{
+  "lastUpdated": "2025-11-11",
+  "vars": ["companyName", "contactEmail"],
+  "sections": [
+    {
+      "title": "1. What Are Cookies",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Cookies are small text files stored on your device (computer, tablet, or smartphone) when you visit a website. They help us recognize your browser, remember your preferences, and improve your overall experience."
+        },
+        {
+          "type": "p",
+          "text": "Cookies may be *session cookies* (which expire when you close your browser) or *persistent cookies* (which remain stored until deleted)."
+        }
+      ]
+    },
+    {
+      "title": "2. How We Use Cookies",
+      "blocks": [
+        { "type": "p", "text": "{{companyName}} uses cookies and similar technologies for the following purposes:" },
+        { "type": "h4", "text": "2(a) Essential Cookies" },
+        { "type": "p", "text": "Necessary for the basic functionality of our Platform — for example, to enable secure log-ins, form submissions, and navigation. You cannot disable these cookies through our interface because the site would not function properly without them." },
+        { "type": "h4", "text": "2(b) Performance & Analytics Cookies" },
+        { "type": "p", "text": "Used to understand how visitors interact with our Platform — such as which pages are visited most often, how users navigate, and whether they experience errors. This helps us improve the usability and performance of our services." },
+        { "type": "h4", "text": "2(c) Functional Cookies" },
+        { "type": "p", "text": "These remember your preferences (such as language or region) to provide a more personalized experience on the Platform." },
+        { "type": "h4", "text": "2(d) Marketing & Advertising Cookies" },
+        { "type": "p", "text": "We may use these to deliver more relevant advertisements or to measure the effectiveness of marketing campaigns (for example, through platforms like TikTok or Meta). These cookies can track user activity across websites and may be used to build a profile of your interests. You can disable these cookies at any time (see Section 5)." }
+      ]
+    },
+    {
+      "title": "3. Third-Party Cookies",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Certain third-party services integrated into our Platform (e.g., analytics, advertising, or embedded media) may place their own cookies on your device. These providers may collect data in accordance with their own privacy policies, over which {{companyName}} has no control. We encourage you to review the policies of these providers for more information."
+        }
+      ]
+    },
+    {
+      "title": "4. Your Choices",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Most web browsers automatically accept cookies, but you can usually modify your browser settings to decline cookies or notify you before accepting them. If you choose to disable cookies, some parts of our Platform may not function properly."
+        },
+        { "type": "p", "text": "You may also:" },
+        {
+          "type": "ul",
+          "items": [
+            "Delete existing cookies from your device",
+            "Block third-party cookies in your browser settings",
+            "Use “Do Not Track” or privacy modes available in most browsers"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "5. Opt-Out Options for Targeted Advertising",
+      "blocks": [
+        { "type": "p", "text": "If you wish to opt out of targeted advertising or cross-site tracking, you can use the following industry tools:" },
+        {
+          "type": "ul-links",
+          "items": [
+            { "text": "Network Advertising Initiative Opt-Out Tool", "href": "https://optout.networkadvertising.org/" },
+            { "text": "Digital Advertising Alliance Opt-Out Tool", "href": "https://optout.aboutads.info/" },
+            { "text": "YourAdChoices", "href": "https://youradchoices.com/" }
+          ]
+        },
+        { "type": "p", "text": "*Note: opting out does not remove ads entirely but may make them less relevant to your interests.*" }
+      ]
+    },
+    {
+      "title": "6. Changes to This Cookie Policy",
+      "blocks": [
+        { "type": "p", "text": "We may update this Cookie Policy periodically to reflect changes in technology or applicable laws. Revised versions will be posted on this page with the updated “Last Updated” date. We encourage you to review this page regularly to stay informed." }
+      ]
+    },
+    {
+      "title": "7. Contact Us",
+      "blocks": [
+        { "type": "p", "text": "If you have any questions or concerns about our use of cookies or this Policy, please contact:" },
+        { "type": "p", "text": "**{{companyName}}**  " },
+        { "type": "p", "text": "Miami-Dade County, Florida, USA  " },
+        { "type": "p", "text": "📧 {{contactEmail}}" },
+        { "type": "p", "text": "By using our Platform, you acknowledge that you have read, understood, and consent to this Cookie Policy." }
+      ]
+    }
+  ]
+}

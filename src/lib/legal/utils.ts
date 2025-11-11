@@ -1,6 +1,7 @@
 // src/server/legal/get-legal-versions.ts
 import { z } from "zod";
 import { createServerFn } from '@tanstack/react-start'
+import { TimestampLike } from "../firebase/utils";
  
 // ---- Public type for UI (unchanged)
 export type LegalVersions = {
@@ -9,12 +10,6 @@ export type LegalVersions = {
   termsUrl?: string;
   privacyUrl?: string;
 };
-
-// ---- Timestamp guard (works across admin/emulator builds)
-export const TimestampLike = z.custom<{ toDate: () => Date }>(
-  (v) => !!v && typeof v.toDate === "function",
-  "Expected Firestore Timestamp-like object"
-);
 
 // ---- Artifact schema (mirrors writer)
 const ArtifactSchema = z.object({
@@ -41,7 +36,6 @@ const RegistrySchema = z.object({
 export type GetLegalVersionsOptions = z.infer< typeof ParamsSchema>
 // Server function (no caching). Can be called from loaders or client.
 export const getLegalVersions = createServerFn ({ method: "GET" }).inputValidator(ParamsSchema).handler(async ({ data }) => {
-    
   const {db}  = await import("@/lib/firebase/admin");
   const includeUrls = data?.includeUrls ?? false;
 
@@ -64,3 +58,6 @@ export const getLegalVersions = createServerFn ({ method: "GET" }).inputValidato
 
   return result;
 });
+export const getCurrentPolicy = (policy: "terms")=>{
+  const body = fetch("/policy/")
+}

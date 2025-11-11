@@ -77,7 +77,7 @@ const joinUrl = (base: string, pathPart: string) =>
     // make BOTH absolute
     const terms: Artifact = {
       versionYMD,
-      url: joinUrl(baseUrl, `legal/terms_${versionYMD}.md`),
+      url: joinUrl(baseUrl, `legal/terms/terms_${versionYMD}.md`),
       sha256: sha256Hex(termsBuf),
       size: termsBuf.byteLength,
       contentFormat: "markdown",
@@ -86,7 +86,7 @@ const joinUrl = (base: string, pathPart: string) =>
 
     const privacy: Artifact = {
       versionYMD,
-      url: joinUrl(baseUrl, `legal/privacy_${versionYMD}.md`),
+      url: joinUrl(baseUrl, `legal/terms/privacy_${versionYMD}.md`),
       sha256: sha256Hex(privacyBuf),
       size: privacyBuf.byteLength,
       contentFormat: "markdown",

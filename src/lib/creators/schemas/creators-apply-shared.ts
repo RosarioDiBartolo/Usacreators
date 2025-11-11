@@ -51,6 +51,7 @@ export const sharedBaseFormObject = z.object({
   locationYesNo: yesNoEnum,
   instagram: urlOrHandle,
   tiktok: urlOrHandle,
+  portfolio: urlOrHandle,
   instagramPost: emptyToUndef(z.string().url("Enter a valid URL.").optional()),
   bio: emptyToUndef(
     z.string().max(MAX_BIO, `Max ${MAX_BIO} characters`).optional()

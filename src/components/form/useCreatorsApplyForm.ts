@@ -11,7 +11,8 @@ import { opt } from "@/lib/utils";
 import { uploadDirect } from "@/lib/upload";
 import { getUploadSignature } from "@/lib/upload-signature";
 import { submitCreatorApplication } from "@/lib/creators/subscribe-creator";
-import { Payload } from "@shared/schemas/creators-apply-shared";
+import { Payload } from "@/lib/creators/schemas/creators-apply-shared";
+
 
 // ---- Types ----
 type ApiError = {
@@ -24,30 +25,7 @@ type ApiError = {
   termsVersion?: string;
   privacyVersion?: string;
 };
- 
-
-// Use the *input* of the CLIENT schema as the canonical form shape
-
-// ---- API error helpers ----
-function applyFieldErrorsFromApiTanStack(
-  form: FormType,
-  details?: ApiError["details"]
-) {
-  if (!details?.fieldErrors) return;
-
-  for (const [name, errs] of Object.entries(details.fieldErrors)) {
-    const key = name as keyof FormData;
-    const message = Array.isArray(errs) ? errs[0] : String(errs);
-
-    form.setFieldMeta(key, (prev) => ({
-      ...prev,
-      // Prefer errorMap so you can scope by cause (onSubmit here)
-      errorMap: { ...(prev?.errorMap ?? {}), onSubmit: message },
-      touched: true,
-    }));
-  }
-}
- 
+   
 function toastApiError(err: ApiError, status: number) {
   const base = err.message || "Something went wrong.";
   const ref = err.requestId ? ` • Ref: ${err.requestId}` : "";
@@ -81,34 +59,13 @@ function toastApiError(err: ApiError, status: number) {
 async function getTurnstileToken(): Promise<string | undefined> {
   return undefined;
 }
-
-// ⚖️ Load current legal versions from static registry (no-store to avoid staleness)
-async function fetchLegalVersions(): Promise<{
-  termsVersion: string;
-  privacyVersion: string;
-}> {
-  const res = await fetch("/legal/registry.json", { cache: "no-store" });
-  if (!res.ok) throw new Error("Failed to load legal registry");
-  const reg = await res.json();
-  return {
-    termsVersion: String(reg?.terms?.current ?? ""),
-    privacyVersion: String(reg?.privacy?.current ?? ""),
-  };
-}
+ 
 
 const useCreatorApplyForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [legalVersions, setLegalVersions] = useState<{
-    termsVersion: string;
-    privacyVersion: string;
-  } | null>(null);
+ 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetchLegalVersions()
-      .then(setLegalVersions)
-      .catch(() => setLegalVersions(null));
-  }, []);
+ 
 
 type FormValues = z.infer<typeof clientFormObject>
  type DefaultValues = Omit<  FormValues , "profilePictureFile"> & {profilePictureFile?: FormValues["profilePictureFile"] }
@@ -186,7 +143,7 @@ type FormValues = z.infer<typeof clientFormObject>
     },
   });
 
-  return { form, isSubmitting, legalVersions };
+  return { form, isSubmitting };
 };
 
 export type FormType = ReturnType<typeof useCreatorApplyForm>["form"];

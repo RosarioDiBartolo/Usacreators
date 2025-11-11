@@ -27,6 +27,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { termsData } from "@/lib/terms-and-conditions";
 import { privacyPolicy } from "@/lib/privacy-policies";
 import { FormType } from "./useCreatorsApplyForm";
+import { getLegalVersions } from "@/lib/legal/utils";
+import { useServerFn } from "@tanstack/react-start";
 
 function errorsFromMeta(meta: any): string[] {
   const touchedErrs = (meta?.touchedErrors as string[] | undefined) ?? [];
@@ -35,14 +37,13 @@ function errorsFromMeta(meta: any): string[] {
 }
 
 export function ReviewConsentStep({
-  form,
-  termsVersion,
-  privacyVersion,
+  form, 
 }: {
-  form: FormType ;
-  termsVersion?: string;
-  privacyVersion?: string;
+  form: FormType ; 
 }) {
+  const getLegal = useServerFn( getLegalVersions)
+  const legal = getLegal({data: {includeUrls: true}})
+  
   return (
     <FieldGroup className="space-y-6">
       <motion.div variants={fadeInUp}>
