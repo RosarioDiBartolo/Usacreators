@@ -14,7 +14,7 @@ export default defineConfig({
     tsConfigPaths({
       projects: ["./tsconfig.json"],
     }),
-    nitro({ config: { preset: 'vercel' } }), // or 'vercel-edge'
+    nitro({   preset: 'vercel'  }), // or 'vercel-edge'
     react(),
     tailwindcss(),
     ...(isAnalyze ? [Inspect(), visualizer({ filename: 'stats.html', gzipSize: true })] : []),
