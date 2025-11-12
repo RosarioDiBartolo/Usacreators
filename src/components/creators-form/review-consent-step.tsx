@@ -26,17 +26,14 @@ import { FormType } from "./useCreatorsApplyForm";
 import { getFieldErrors } from "@/lib/field";
 import {
   getLegalFromPublic,
-  getLegalVersions,
-  Policy,
+   Policy,
   PolicyVersion,
 } from "@/lib/legal/utils";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { SectionBlocks } from "../legal/policy";
+import { useCurrentLegal } from "@/lib/legal/hooks";
 
-const versionQuery = queryOptions({
-  queryKey: ["policy"],
-  queryFn: () => getLegalVersions(),
-});
+ 
 
 const PolicyContent = (policy: Policy, version: PolicyVersion) =>
   queryOptions({
@@ -49,7 +46,7 @@ export function ReviewConsentStep({
   form: FormType;
  
 }) {
-  const { data: currentVersions } = useSuspenseQuery(versionQuery);
+  const { data: currentVersions } = useCurrentLegal()
 
   const { data: termsData } = useSuspenseQuery(
     PolicyContent("terms", currentVersions.terms)
@@ -127,7 +124,8 @@ export function ReviewConsentStep({
           validators={{ onChange: clientFormObject.shape.termsAccepted }}
         >
           {(f) => {
-            const errs = getFieldErrors(f);
+            const errs = getFieldErrors(f)
+            
             return (
               <DSField data-invalid={!!errs.length}>
                 <div className="flex items-center gap-2">
@@ -144,7 +142,7 @@ export function ReviewConsentStep({
                   </FieldLabel>
                 </div>
                 {!!errs.length && (
-                  <FieldError errors={errs.map((m) => ({ message: m }))} />
+                  <FieldError errors={errs } />
                 )}
               </DSField>
             );

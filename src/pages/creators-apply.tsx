@@ -1,12 +1,13 @@
-import SiginForm from "@/components/form/sigin-form";
+import SiginForm from "@/components/creators-form";
+import { Suspense } from "react";
 
 function SignupPage() {
   return (
-    <section className="h-svh section-padding py-5 flex flex-col text-center container max-w-2xl mx-auto   ">
-   
-
-      <SiginForm />
-    </section>
+    <main className="h-svh section-padding py-5 flex flex-col text-center container max-w-2xl mx-auto   ">
+      <Suspense fallback={<p>Loading the most recent legal versions...</p>}>
+        <SiginForm />
+      </Suspense>
+    </main>
   );
 }
 

@@ -4,8 +4,7 @@ import {
   Scripts,
   createRootRouteWithContext,
  } from "@tanstack/react-router";
-import appCss from "../index.css?url";
-import Header from "@/components/header";
+import appCss from "../index.css?url"; 
 import { getPlatformMeta } from "@/lib/meta";
 import { Toaster } from "sonner"; 
 import { type QueryClient  } from "@tanstack/react-query";
@@ -58,9 +57,8 @@ function RootComponent() {
         <HeadContent /> {/* ✅ gestisce *automaticamente* <title> + <meta> */}
       </head>
       <body>
-        <Toaster />
-        <Header />
-        <Outlet />
+          <Toaster />
+         <Outlet />
         <Scripts />
       </body>
     </html>

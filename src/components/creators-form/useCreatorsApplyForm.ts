@@ -1,18 +1,21 @@
 import { useForm } from "@tanstack/react-form";
 import { useNavigate } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
 // Import both client + submit schemas
-import { clientFormObject, clientSubmitSchema } from "@/lib/creators/schemas/creator-apply-client";
-import { getLegalVersions } from "@/lib/legal/utils";
-import {z} from "zod";
+import {
+  clientFormObject,
+  clientSubmitSchema,
+} from "@/lib/creators/schemas/creator-apply-client";
+import { z } from "zod";
 import { opt } from "@/lib/utils";
 import { uploadDirect } from "@/lib/upload";
 import { getUploadSignature } from "@/lib/upload-signature";
 import { submitCreatorApplication } from "@/lib/creators/subscribe-creator";
 import { Payload } from "@/lib/creators/schemas/creators-apply-shared";
- 
+import { useMutation } from "@tanstack/react-query";
+import { useCurrentLegal } from "@/lib/legal/hooks";
+
 // ---- Types ----
 type ApiError = {
   success?: boolean;
@@ -24,7 +27,7 @@ type ApiError = {
   termsVersion?: string;
   privacyVersion?: string;
 };
-   
+
 function toastApiError(err: ApiError, status: number) {
   const base = err.message || "Something went wrong.";
   const ref = err.requestId ? ` • Ref: ${err.requestId}` : "";
@@ -53,22 +56,68 @@ function toastApiError(err: ApiError, status: number) {
       return toast.error(`${base}${ref}`);
   }
 }
- 
+
 // (Optional) Turnstile helper — replace with your actual integration
 async function getTurnstileToken(): Promise<string | undefined> {
   return undefined;
 }
- 
 
 const useCreatorApplyForm = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
- 
-  const navigate = useNavigate();
- 
+  //Use cached if any...
+  const { data: currentVersions } = useCurrentLegal();
 
-type FormValues = z.infer<typeof clientFormObject>
- type DefaultValues = Omit<  FormValues , "profilePictureFile"> & {profilePictureFile?: FormValues["profilePictureFile"] }
-   // Strongly type defaults to the Zod *input* so unions match (File | undefined, "yes" | "no", etc.)
+  const { mutateAsync: Submit, isPending } = useMutation({
+    mutationFn: async ({ value }: { value: DefaultValues }) => {
+      const { profilePictureFile, ...stripped } = value;
+      if (!profilePictureFile) {
+        throw "Missing profilePictureFile.";
+      }
+
+      //this is a block
+      const policy = await getUploadSignature({
+        data: {
+          folder: "users/avatars",
+          eager: "c_fill,w_768,h_768,q_auto,f_auto",
+        },
+      });
+      const { secure_url: profilePictureUrl } = await uploadDirect(
+        profilePictureFile,
+        policy
+      );
+      //Block End
+      const payload: Payload = {
+        ...stripped,
+        profilePictureUrl,
+        bio: opt(value.bio),
+        instagram: opt(value.instagram),
+        tiktok: opt(value.tiktok),
+        instagramPost: opt(value.instagramPost),
+        additionalInfo: opt(value.additionalInfo),
+        turnstileToken: await getTurnstileToken(),
+        termsVersion: currentVersions.terms,
+        privacyVersion: currentVersions.privacy,
+      };
+
+      await submitCreatorApplication({ data: payload });
+    },
+    onSuccess: () => {
+      toast.success("Application submitted successfully!");
+      navigate({ to: "/success" });
+    },
+    onError: (e: { result: ApiError }) => {
+      const error = e.result?.message ?? "Network error. Please try again.";
+      console.log("Mutation Error", e.result);
+      toast.error(error);
+    },
+  });
+
+  const navigate = useNavigate();
+
+  type FormValues = z.infer<typeof clientFormObject>;
+  type DefaultValues = Omit<FormValues, "profilePictureFile"> & {
+    profilePictureFile?: FormValues["profilePictureFile"];
+  };
+  // Strongly type defaults to the Zod *input* so unions match (File | undefined, "yes" | "no", etc.)
   const defaultValues: DefaultValues = {
     name: "",
     email: "",
@@ -92,57 +141,10 @@ type FormValues = z.infer<typeof clientFormObject>
       onSubmit: clientSubmitSchema,
     },
 
-    onSubmit: async ({ value }) => {
-      try {
-        
-        setIsSubmitting(true);
-
-        const {profilePictureFile, ...stripped} = value
-        if (!profilePictureFile){
-          throw "Missing profilePictureFile."
-        }
-        const currentVersions = await getLegalVersions();
-        const policy = await getUploadSignature({
-          data: {
-            folder: "users/avatars",
-            eager: "c_fill,w_768,h_768,q_auto,f_auto",
-          },
-        });
-        const {secure_url: profilePictureUrl} = await uploadDirect(
-          profilePictureFile,
-          policy
-        );
-
-        const payload: Payload= {
-          ...stripped,
-          profilePictureUrl,
-          bio: opt(value.bio),
-          instagram: opt(value.instagram),
-          tiktok: opt(value.tiktok),
-          instagramPost: opt(value.instagramPost),
-          additionalInfo: opt(value.additionalInfo),
-          turnstileToken: await getTurnstileToken(),
-          termsVersion: currentVersions.terms,
-          privacyVersion: currentVersions.privacy,
-        };
-
-        await submitCreatorApplication({ data: payload });
-
-        toast.success("Application submitted successfully!");
-        navigate({ to: "/success" });
-      } catch (e) {
-        toast.error(
-          e instanceof Error ? e.message : "Network error. Please try again."
-        );
-
-        console.error(e)
-      } finally {
-        setIsSubmitting(false);
-      }
-    },
+    onSubmit: Submit,
   });
 
-  return { form, isSubmitting };
+  return { form, isPending };
 };
 
 export type FormType = ReturnType<typeof useCreatorApplyForm>["form"];

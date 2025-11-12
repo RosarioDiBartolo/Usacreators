@@ -21,9 +21,9 @@ import {
 
 import useCreatorApplyForm from "./useCreatorsApplyForm";
 import { Suspense, useState } from "react";
-
+ 
 export default function OnboardingForm() {
-  const { form, isSubmitting  } = useCreatorApplyForm();
+  const { form, isPending } = useCreatorApplyForm();
   const [currentStep, setCurrentStep] = useState(0);
   async function nextStep() {
     const names = stepKeysMap[currentStep];
@@ -52,6 +52,7 @@ export default function OnboardingForm() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
     >
+       
       {currentStep !== steps.length && (
         <StepIndicator
           setCurrentStep={setCurrentStep}
@@ -94,7 +95,7 @@ export default function OnboardingForm() {
           <StepNavigation
             currentStep={currentStep}
             steps={steps}
-            isSubmitting={isSubmitting}
+            isSubmitting={isPending}
             nextStep={nextStep}
             prevStep={prevStep}
             handleSubmit={() => form.handleSubmit()}

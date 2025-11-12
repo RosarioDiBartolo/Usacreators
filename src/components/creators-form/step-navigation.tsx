@@ -27,6 +27,7 @@ steps: ReadonlyArray<Step>
 
    return (
     <div className="flex gap-3 sm:gap-4 justify-between pt-6 sm:pt-8 pb-4 sm:pb-6 px-4 sm:px-6">
+      
       <motion.div whileHover={{ scale: 1.05 }} className="flex-1 sm:flex-none">
         <Button
           type="button"

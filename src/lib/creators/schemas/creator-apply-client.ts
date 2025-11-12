@@ -24,9 +24,10 @@ const profilePictureClient = z
 // 1) Start from the base object and extend with UI/client fields
 export const clientFormObject = sharedBaseFormObject.extend({
   profilePictureFile: profilePictureClient, // optional
-  termsAccepted: z.boolean().refine((v) => v === true, {
-    message: "You must accept terms to continue.",
-  }),
+  termsAccepted: z.boolean().refine(
+    (v) => v === true, 
+  "You must accept terms to continue.",
+  ),
 });
 
 // 2) Apply the always-on cross-field rule inline (now becomes ZodEffects)
