@@ -53,7 +53,7 @@ async function getTurnstileToken(): Promise<string | undefined> {
   return undefined;
 }
 
-const useCreatorApplyForm = () => {
+const useApplicationForm = () => {
   //Use cached if any...
   const { data: currentVersions } = useCurrentLegal();
 
@@ -83,8 +83,7 @@ const useCreatorApplyForm = () => {
         instagram: value.instagram,
         portfolio: value.portfolio,
         tiktok: value.tiktok,
-        additionalInfo: opt(value.additionalInfo),
-        turnstileToken: await getTurnstileToken(),
+         turnstileToken: await getTurnstileToken(),
         termsVersion: currentVersions.terms,
         privacyVersion: currentVersions.privacy,
       };
@@ -114,13 +113,14 @@ const useCreatorApplyForm = () => {
     email: "",
     profilePictureFile: undefined,
     bio: undefined,
+    niches: [],
     locationYesNo: "yes",
     portfolio: "",
     instagram: "",
     tiktok: "",
-    additionalInfo: undefined,
     termsAccepted: false,
   } satisfies DefaultValues;
+
 
   const form = useForm({
     // 1) Tell TanStack how to use Zod
@@ -138,6 +138,6 @@ const useCreatorApplyForm = () => {
   return { form, isPending };
 };
 
-export type FormType = ReturnType<typeof useCreatorApplyForm>["form"];
+export type FormType = ReturnType<typeof useApplicationForm>["form"];
 
-export default useCreatorApplyForm;
+export default useApplicationForm;

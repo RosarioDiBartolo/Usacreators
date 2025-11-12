@@ -18,12 +18,13 @@ import { Label } from "@/components/ui/label";
 import { fadeInUp } from "./utils";
 import { clientFormObject } from "@/lib/creators/schemas/creator-apply-client";
 import type {} from "@tanstack/react-form";
-import { FormType } from "./useCreatorsApplyForm";
+import { FormType } from "./use-application-form";
 import { getFieldErrors } from "@/lib/field";
 
 export function SocialInfo({ form }: { form: FormType }) {
   return (
     <FieldGroup className="space-y-6">
+      {/* Miami yes/no */}
       <motion.div variants={fadeInUp}>
         <form.Field
           name="locationYesNo"
@@ -57,6 +58,7 @@ export function SocialInfo({ form }: { form: FormType }) {
           }}
         </form.Field>
       </motion.div>
+       {/* Portfolio */}
       <motion.div variants={fadeInUp}>
         <form.Field
           name="portfolio"
@@ -70,15 +72,22 @@ export function SocialInfo({ form }: { form: FormType }) {
                 <Input
                   id="portfolio"
                   placeholder="full URL"
-                  value={f.state.value ?? ""}
+                  value={f.state.value }
                   onChange={(e) => f.handleChange(e.target.value)}
                   onBlur={f.handleBlur}
                   aria-invalid={!!errs.length}
                 />
                 <FieldDescription>
-                  You don't have a Portfolio? Use our free{" "}
-                  <a className=" text-primary ">Template</a> for quick
-                  subscription.
+                  You don&apos;t have a portfolio? Use our free{" "}
+                  <a
+                    className="text-primary underline underline-offset-2"
+                    href="https://www.canva.com/design/DAG4IWo1-Zg/OwSss0CsHKWkd3PciOKM2Q/view?utm_content=DAG4IWo1-Zg&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink&mode=preview"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    template
+                  </a>{" "}
+                  for a quick setup.
                 </FieldDescription>
                 {!!errs.length && <FieldError errors={errs} />}
               </DSField>
@@ -86,6 +95,8 @@ export function SocialInfo({ form }: { form: FormType }) {
           }}
         </form.Field>
       </motion.div>
+
+      {/* Instagram */}
       <motion.div variants={fadeInUp}>
         <form.Field
           name="instagram"
@@ -93,15 +104,25 @@ export function SocialInfo({ form }: { form: FormType }) {
             onChangeListenTo: ["tiktok"],
             onChange: ({ value, fieldApi }) => {
               const tiktok = fieldApi.form.getFieldValue("tiktok");
-              if (!(tiktok || value)) {
-                return [
-                  {
-                    message:
-                      "Provide at least one social (Instagram or TikTok).",
-                  },
-                ];
+
+              // If both socials are empty → error
+              if (!value && !tiktok) {
+                return [{message: "Provide at least one social (Instagram or TikTok)."}];
               }
-              return clientFormObject.shape.instagram.safeParse(value).error;
+
+              // If this field has a value, validate it with Zod
+              if (value) {
+                const parsed =
+                  clientFormObject.shape.instagram.safeParse(value);
+                if (!parsed.success) {
+                  // Return the first issue message (what TanStack expects)
+                  return (
+                    parsed.error.issues  || [{message: "Invalid Instagram profile."}]
+                  );
+                }
+              }
+
+              return undefined;
             },
           }}
         >
@@ -110,7 +131,9 @@ export function SocialInfo({ form }: { form: FormType }) {
 
             return (
               <DSField data-invalid={!!errs.length}>
-                <FieldLabel htmlFor="instagram">Instagram Profile</FieldLabel>
+                <FieldLabel htmlFor="instagram">
+                  Instagram Profile
+                </FieldLabel>
                 <Input
                   id="instagram"
                   placeholder="@yourhandle or full URL"
@@ -129,30 +152,35 @@ export function SocialInfo({ form }: { form: FormType }) {
         </form.Field>
       </motion.div>
 
+      {/* TikTok */}
       <motion.div variants={fadeInUp}>
         <form.Field
           name="tiktok"
           validators={{
             onChangeListenTo: ["instagram"],
-
             onChange: ({ value, fieldApi }) => {
               const instagram = fieldApi.form.getFieldValue("instagram");
-              if (!(instagram || value)) {
-                return [
-                  {
-                    message:
-                      "Provide at least one social (Instagram or TikTok).",
-                  },
-                ];
+
+              // If both socials are empty → error
+              if (!value && !instagram) {
+                return [{message: "Provide at least one social (Instagram or TikTok)."}];
               }
 
-              return clientFormObject.shape.tiktok.safeParse(value).error;
+              // If this field has a value, validate it with Zod
+              if (value) {
+                const parsed = clientFormObject.shape.tiktok.safeParse(value);
+                if (!parsed.success) {
+                  return ( parsed.error.issues  || [{message: "Invalid TikTok profile."}] );
+                }
+              }
+
+              return undefined;
             },
           }}
         >
           {(f) => {
             const errs = getFieldErrors(f);
-            console.log({ instagram: errs });
+
             return (
               <DSField data-invalid={!!errs.length}>
                 <FieldLabel htmlFor="tiktok">TikTok Profile</FieldLabel>
@@ -173,8 +201,6 @@ export function SocialInfo({ form }: { form: FormType }) {
           }}
         </form.Field>
       </motion.div>
-
-      
     </FieldGroup>
   );
 }

@@ -51,7 +51,7 @@ export const steps = [
     id: "social",
     fields: ["locationYesNo", "portfolio", "instagram", "tiktok"],
   },
-  { id: "details", fields: ["bio", "additionalInfo"] },
+  { id: "details", fields: [ "niches", "bio"] },
   { id: "legal", fields: ["termsAccepted"] },
 ] as const satisfies ReadonlyArray<Step>;
 

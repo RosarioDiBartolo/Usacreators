@@ -19,11 +19,11 @@ import {
   steps,
 } from "@/lib/creators/schemas/creator-apply-client";
 
-import useCreatorApplyForm from "./useCreatorsApplyForm";
+import useApplicationForm from "./use-application-form";
 import { Suspense, useState } from "react";
  
 export default function OnboardingForm() {
-  const { form, isPending } = useCreatorApplyForm();
+  const { form, isPending } = useApplicationForm();
   const [currentStep, setCurrentStep] = useState(0);
   async function nextStep() {
     const names = stepKeysMap[currentStep];

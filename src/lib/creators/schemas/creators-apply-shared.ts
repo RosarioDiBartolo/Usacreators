@@ -14,9 +14,9 @@ export const emptyToUndef = <T extends z.ZodTypeAny>(schema: T) =>
 export const urlOrHandle = z
   .string()
   .trim()
-  .refine((v) => /^@[a-zA-Z0-9_.]{2,30}$/.test(v) || /^https?:\/\//.test(v), {
-    message: "Enter @handle or a full URL.",
-  });
+  .refine((v) => /^@[a-zA-Z0-9_.]{2,30}$/.test(v) || /^https?:\/\//.test(v),  
+   "Enter @handle or a full URL.",
+   );
 
 export const MAX_BIO = 1000;
 export const MAX_ADDITIONAL = 2000;
@@ -43,17 +43,14 @@ export const sharedBaseFormObject = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
   email: z.string().email("Enter a valid email address."),
   locationYesNo: yesNoEnum,
-  instagram: urlOrHandle,
-  tiktok: urlOrHandle,
+  instagram: urlOrHandle.optional(),
+  tiktok: urlOrHandle.optional(),
   portfolio: urlOrHandle,
-  bio: emptyToUndef(
-    z.string().max(MAX_BIO, `Max ${MAX_BIO} characters`).optional()
-  ),
-  additionalInfo: emptyToUndef(
-    z.string()
-      .max(MAX_ADDITIONAL, `Max ${MAX_ADDITIONAL} characters`)
-      .optional()
-  ),
+  niches: z.array(z.string()).refine( v=> v.length > 1, "Must select at least 1 niche."),
+  bio:  
+ 
+    z.string().max(MAX_BIO, `Max ${MAX_BIO} characters`).optional() ,  
+  
 });
 
 // ---- Versions sent by client (optional, but if present must be YYYY-MM-DD) ----
