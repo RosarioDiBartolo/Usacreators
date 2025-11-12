@@ -11,22 +11,13 @@ import { z } from "zod";
 import { opt } from "@/lib/utils";
 import { uploadDirect } from "@/lib/upload";
 import { getUploadSignature } from "@/lib/upload-signature";
-import { submitCreatorApplication } from "@/lib/creators/subscribe-creator";
+import {
+  ApiError,
+  submitCreatorApplication,
+} from "@/lib/creators/subscribe-creator";
 import { Payload } from "@/lib/creators/schemas/creators-apply-shared";
 import { useMutation } from "@tanstack/react-query";
 import { useCurrentLegal } from "@/lib/legal/hooks";
-
-// ---- Types ----
-type ApiError = {
-  success?: boolean;
-  code?: string;
-  message?: string;
-  details?: { fieldErrors?: Record<string, string[]>; formErrors?: string[] };
-  requestId?: string;
-  reason?: string; // e.g., "version_mismatch"
-  termsVersion?: string;
-  privacyVersion?: string;
-};
 
 function toastApiError(err: ApiError, status: number) {
   const base = err.message || "Something went wrong.";
@@ -89,9 +80,9 @@ const useCreatorApplyForm = () => {
         ...stripped,
         profilePictureUrl,
         bio: opt(value.bio),
-        instagram: opt(value.instagram),
-        tiktok: opt(value.tiktok),
-        instagramPost: opt(value.instagramPost),
+        instagram: value.instagram,
+        portfolio: value.portfolio,
+        tiktok: value.tiktok,
         additionalInfo: opt(value.additionalInfo),
         turnstileToken: await getTurnstileToken(),
         termsVersion: currentVersions.terms,
@@ -118,18 +109,18 @@ const useCreatorApplyForm = () => {
     profilePictureFile?: FormValues["profilePictureFile"];
   };
   // Strongly type defaults to the Zod *input* so unions match (File | undefined, "yes" | "no", etc.)
-  const defaultValues: DefaultValues = {
+  const defaultValues = {
     name: "",
     email: "",
     profilePictureFile: undefined,
     bio: undefined,
     locationYesNo: "yes",
-    instagram: undefined,
-    tiktok: undefined,
-    instagramPost: undefined,
+    portfolio: "",
+    instagram: "",
+    tiktok: "",
     additionalInfo: undefined,
     termsAccepted: false,
-  };
+  } satisfies DefaultValues;
 
   const form = useForm({
     // 1) Tell TanStack how to use Zod

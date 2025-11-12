@@ -57,7 +57,35 @@ export function SocialInfo({ form }: { form: FormType }) {
           }}
         </form.Field>
       </motion.div>
-
+      <motion.div variants={fadeInUp}>
+        <form.Field
+          name="portfolio"
+          validators={{ onChange: clientFormObject.shape.portfolio }}
+        >
+          {(f) => {
+            const errs = getFieldErrors(f);
+            return (
+              <DSField data-invalid={!!errs.length}>
+                <FieldLabel htmlFor="portfolio">Portfolio</FieldLabel>
+                <Input
+                  id="portfolio"
+                  placeholder="full URL"
+                  value={f.state.value ?? ""}
+                  onChange={(e) => f.handleChange(e.target.value)}
+                  onBlur={f.handleBlur}
+                  aria-invalid={!!errs.length}
+                />
+                <FieldDescription>
+                  You don't have a Portfolio? Use our free{" "}
+                  <a className=" text-primary ">Template</a> for quick
+                  subscription.
+                </FieldDescription>
+                {!!errs.length && <FieldError errors={errs} />}
+              </DSField>
+            );
+          }}
+        </form.Field>
+      </motion.div>
       <motion.div variants={fadeInUp}>
         <form.Field
           name="instagram"
@@ -66,9 +94,14 @@ export function SocialInfo({ form }: { form: FormType }) {
             onChange: ({ value, fieldApi }) => {
               const tiktok = fieldApi.form.getFieldValue("tiktok");
               if (!(tiktok || value)) {
-                return [{ message: "Provide at least one social (Instagram or TikTok)."}];
+                return [
+                  {
+                    message:
+                      "Provide at least one social (Instagram or TikTok).",
+                  },
+                ];
               }
-              return clientFormObject.shape.tiktok.safeParse(value).error;
+              return clientFormObject.shape.instagram.safeParse(value).error;
             },
           }}
         >
@@ -105,17 +138,21 @@ export function SocialInfo({ form }: { form: FormType }) {
             onChange: ({ value, fieldApi }) => {
               const instagram = fieldApi.form.getFieldValue("instagram");
               if (!(instagram || value)) {
-                return [{ message: "Provide at least one social (Instagram or TikTok)."}];
+                return [
+                  {
+                    message:
+                      "Provide at least one social (Instagram or TikTok).",
+                  },
+                ];
               }
 
- 
               return clientFormObject.shape.tiktok.safeParse(value).error;
             },
           }}
         >
           {(f) => {
             const errs = getFieldErrors(f);
-            console.log({instagram: errs})
+            console.log({ instagram: errs });
             return (
               <DSField data-invalid={!!errs.length}>
                 <FieldLabel htmlFor="tiktok">TikTok Profile</FieldLabel>
@@ -137,32 +174,7 @@ export function SocialInfo({ form }: { form: FormType }) {
         </form.Field>
       </motion.div>
 
-      <motion.div variants={fadeInUp}>
-        <form.Field
-          name="instagramPost"
-          validators={{ onChange: clientFormObject.shape.instagramPost }}
-        >
-          {(f) => {
-            const errs = getFieldErrors(f);
-            return (
-              <DSField data-invalid={!!errs.length}>
-                <FieldLabel htmlFor="instagramPost">
-                  Instagram post URL (optional)
-                </FieldLabel>
-                <Input
-                  id="instagramPost"
-                  placeholder="https://instagram.com/p/..."
-                  value={f.state.value ?? ""}
-                  onChange={(e) => f.handleChange(e.target.value)}
-                  onBlur={f.handleBlur}
-                  aria-invalid={!!errs.length}
-                />
-                {!!errs.length && <FieldError errors={errs} />}
-              </DSField>
-            );
-          }}
-        </form.Field>
-      </motion.div>
+      
     </FieldGroup>
   );
 }

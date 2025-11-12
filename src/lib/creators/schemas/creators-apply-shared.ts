@@ -1,4 +1,3 @@
- 
 import { z } from "zod";
 
 // --- enum & tipo riutilizzabili
@@ -15,14 +14,9 @@ export const emptyToUndef = <T extends z.ZodTypeAny>(schema: T) =>
 export const urlOrHandle = z
   .string()
   .trim()
-  .optional()
-  .refine(
-    (v) =>
-      v === undefined ||
-      /^@[a-zA-Z0-9_.]{2,30}$/.test(v) ||
-      /^https?:\/\//.test(v),
-    { message: "Enter @handle or a full URL." }
-  );
+  .refine((v) => /^@[a-zA-Z0-9_.]{2,30}$/.test(v) || /^https?:\/\//.test(v), {
+    message: "Enter @handle or a full URL.",
+  });
 
 export const MAX_BIO = 1000;
 export const MAX_ADDITIONAL = 2000;
@@ -52,13 +46,11 @@ export const sharedBaseFormObject = z.object({
   instagram: urlOrHandle,
   tiktok: urlOrHandle,
   portfolio: urlOrHandle,
-  instagramPost: emptyToUndef(z.string().url("Enter a valid URL.").optional()),
   bio: emptyToUndef(
     z.string().max(MAX_BIO, `Max ${MAX_BIO} characters`).optional()
   ),
   additionalInfo: emptyToUndef(
-    z
-      .string()
+    z.string()
       .max(MAX_ADDITIONAL, `Max ${MAX_ADDITIONAL} characters`)
       .optional()
   ),
@@ -88,8 +80,8 @@ export const payloadObject = sharedBaseFormObject
     })
   );
 
- export const payloadSchema = applyStandardRules(payloadObject)
-  
+export const payloadSchema = applyStandardRules(payloadObject);
+
 export type Payload = z.infer<typeof payloadObject>;
- 
+
 export type StepId = "personal" | "social" | "details" | "media" | "legal";

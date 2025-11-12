@@ -6,8 +6,7 @@ import crypto from "crypto";
 import {
   hashIP,
   normalizeIG,
-  normalizeTT,
-  normalizeIGPost,
+  normalizeTT, 
   asUrl,
 } from "@/lib/utils";
 import { getLegalVersions } from "@/lib/legal/utils";
@@ -16,28 +15,29 @@ import {
   setResponseHeader,
   getRequest,
 } from "@tanstack/react-start/server";
-import { persistSchema } from "./schemas/creator-apply-server";
+import { PersistRecord, persistSchema } from "./schemas/creator-apply-server";
 import { payloadSchema } from "./schemas/creators-apply-shared";
 import { normalizeIp } from "../ip";
 
 // ---------- Types ----------
 type ApiOk = { success: true; id: string };
-type ApiErr = {
-  success: false;
-  code: string;
-  message: string;
+ 
+// ---- Types ----
+export type ApiError = {
+  success?: boolean;
+  code?: string;
+  message?: string;
   details?: { fieldErrors?: Record<string, string[]>; formErrors?: string[] };
-  reason?: string;
+  requestId?: string;
+  reason?: string; // e.g., "version_mismatch"
   termsVersion?: string;
   privacyVersion?: string;
-  requestId?: string;
 };
-
 // Utility to emit JSON errors with a status
 const jsonErr = (
   status: number,
-  body: Omit<ApiErr, "success"> & { success?: false }
-): ApiErr => {
+  body: Omit<ApiError, "success"> & { success?: false }
+): ApiError => {
   setResponseStatus(status);
   return { success: false, ...body };
 };
@@ -57,8 +57,8 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
   // Accept a single `data` object, validated here per docs
   .inputValidator(payloadSchema)
   .handler(async ({ data }) => {
-    const { db , admin} = await import("@/lib/firebase/admin");
-     setCorsHeaders();
+    const { db, admin } = await import("@/lib/firebase/admin");
+    setCorsHeaders();
     const request = getRequest();
 
     const requestId = crypto.randomUUID();
@@ -192,13 +192,10 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
           }
         }
 
-        const igPost = normalizeIGPost(data.instagramPost);
-
         // ---- Legal version check
         const { terms: currentTerms, privacy: currentPrivacy } =
           await getLegalVersions();
 
-          
         if (
           data.termsVersion !== currentTerms ||
           data.privacyVersion !== currentPrivacy
@@ -212,37 +209,38 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
             code: "LEGAL_VERSION_MISMATCH",
             message: "Submitted legal versions are outdated.",
             requestId,
-          } satisfies ApiErr;
+          } satisfies ApiError;
         }
 
         // ---- Persist
-     const now = admin.firestore.FieldValue.serverTimestamp();
+        const now = admin.firestore.FieldValue.serverTimestamp();
         const ua = (request.headers.get("user-agent") || "").slice(0, 300);
         const country = request.headers.get("x-vercel-ip-country") || "unknown";
 
-        const docRef = await db.collection("applications").add(
-          await persistSchema.parseAsync({
-            name: data.name,
-            email: emailLower,
-            profilePictureUrl: asUrl(data.profilePictureUrl) ?? null,
-            bio: data.bio || "",
-            locationYesNo: data.locationYesNo,
-            instagram: ig ?? null,
-            tiktok: tt ?? null,
-            instagramPost: igPost ?? null,
-            additionalInfo: data.additionalInfo || "",
-            ua,
-            country,
-            createdAt: now,
-            source: "server-fn",
-            ipHash,
-            legal: {
-              termsVersion: currentTerms,
-              privacyVersion: currentPrivacy,
-              acceptedAt: now,
-            },
-          } as z.infer<typeof persistSchema>)
-        );
+        const application = {
+          name: data.name,
+          email: emailLower,
+          profilePictureUrl: asUrl(data.profilePictureUrl) ?? null,
+          bio: data.bio || "",
+          locationYesNo: data.locationYesNo,
+          instagram: ig ?? null,
+          tiktok: tt ?? null,
+          additionalInfo: data.additionalInfo || "",
+          ua,
+          country,
+          createdAt: now,
+          source: "server-fn",
+          ipHash,
+          legal: {
+            termsVersion: currentTerms,
+            privacyVersion: currentPrivacy,
+            acceptedAt: now,
+          },
+        } satisfies PersistRecord;
+
+        const docRef = await db
+          .collection("applications")
+          .add(await persistSchema.parseAsync(application));
 
         // ---- Legal acceptance log (hashed email)
         const emailHash = crypto
@@ -304,4 +302,4 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
 
 // ---------- Convenient TS exports ----------
 export type SubmitCreatorApplicationInput = z.infer<typeof payloadSchema>;
-export type SubmitCreatorApplicationResult = ApiOk | ApiErr;
+export type SubmitCreatorApplicationResult = ApiOk | ApiError;

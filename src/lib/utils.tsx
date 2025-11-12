@@ -24,12 +24,7 @@ export const normalizeTT = (v?: string | null) => {
   return s ? (/^https?:\/\//i.test(s) ? s : `https://tiktok.com/@${s}`) : undefined;
 };
 
-export const normalizeIGPost = (v?: string | null) => {
-  if (!v) return undefined;
-    const s = v.trim();
-  return /^https?:\/\//i.test(s) ? s : undefined;
-};
-
+ 
 
 export function normalizeEmail(email: string) {
   return email.trim().toLowerCase();

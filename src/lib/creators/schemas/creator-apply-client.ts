@@ -49,7 +49,7 @@ export const steps = [
   { id: "personal", fields: ["name", "email", "profilePictureFile"] },
   {
     id: "social",
-    fields: ["locationYesNo", "instagram", "tiktok", "instagramPost"],
+    fields: ["locationYesNo", "portfolio", "instagram", "tiktok"],
   },
   { id: "details", fields: ["bio", "additionalInfo"] },
   { id: "legal", fields: ["termsAccepted"] },
