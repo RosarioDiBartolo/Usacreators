@@ -70,22 +70,33 @@ const params = z.object({
   version: policyVersion,
 });
 
+const getOrigin = createServerFn({ method: "GET" }).handler(() =>
+  process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://127.0.0.1:5173"
+); // dev fallback)
 export const getLegalFromPublic = createServerFn({ method: "GET" })
   .inputValidator(params)
   .handler(async ({ data: { policy, version } }) => {
-    const fs = await import("node:fs/promises");
-    const path = await import("node:path");
+    const assetPath = `/legal/${policy}/${version}.json`;
 
-    const filePath = path.join(
-      process.cwd(),
-      "public",
-      "legal",
-      policy,
-      `${version}.json`
-    );
+    const origin = await getOrigin();
 
-    const rawStr = await fs.readFile(filePath, "utf8");
-    const raw = JSON.parse(rawStr);
+    const url = origin + assetPath;
+
+    // 3. Fetch from HTTP, not filesystem
+    const res = await fetch(url, {
+      // Nitro/Node fetch
+      cache: "force-cache",
+    });
+
+    if (!res.ok) {
+      throw new Error(
+        `Missing legal JSON: ${assetPath} (status ${res.status})`
+      );
+    }
+
+    const raw = await res.json();
     const parsed = validatePolicyDoc(raw);
     setResponseHeader(
       "Cache-Control",

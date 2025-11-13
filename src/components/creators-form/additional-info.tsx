@@ -29,7 +29,7 @@ import {
   Tags,
 } from "../ui/shadcn-io/tags";
 
-export const defaultTags = [
+  const defaultTags = [
   { id: "fitness", label: "Fitness" },
   { id: "body_transformation", label: "Body Transformation" },
   { id: "mens_health", label: "Men's Health" },
