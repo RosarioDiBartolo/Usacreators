@@ -25,35 +25,36 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FormType } from "../../lib/creators/use-application-form";
 import { getFieldErrors } from "@/lib/field";
 import {
-  getLegalFromPublic,
+  // getLegalFromPublic,
    Policy,
   PolicyVersion,
 } from "@/lib/legal/utils";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { SectionBlocks } from "../legal/policy";
 import { useCurrentLegal } from "@/lib/legal/hooks";
+import termsData from "@/assets/legal/terms/2025-01-01.json"
+ import privacyData from "@/assets/legal/terms/2025-01-01.json"
 
- 
 
-const PolicyContent = (policy: Policy, version: PolicyVersion) =>
-  queryOptions({
-    queryKey: ["legal", policy],
-    queryFn: () => getLegalFromPublic({ data: { policy: "terms", version } }),
-  });
+// const PolicyContent = (policy: Policy, version: PolicyVersion) =>
+//   queryOptions({
+//     queryKey: ["legal", policy],
+//     queryFn: () => getLegalFromPublic({ data: { policy: "terms", version } }),
+//   });
 export function ReviewConsentStep({
   form,
 }: {
   form: FormType;
  
 }) {
-  const { data: currentVersions } = useCurrentLegal()
+  //const { data: currentVersions } = useCurrentLegal()
 
-  const { data: termsData } = useSuspenseQuery(
-    PolicyContent("terms", currentVersions.terms)
-  );
-  const { data: privacyData } = useSuspenseQuery(
-    PolicyContent("privacy", currentVersions.privacy)
-  );
+  // const { data: termsData } = useSuspenseQuery(
+  //   PolicyContent("terms", currentVersions.terms)
+  // );
+  // const { data: privacyData } = useSuspenseQuery(
+  //   PolicyContent("privacy", currentVersions.privacy)
+  // );
 
   return (
     <FieldGroup className="space-y-6">
@@ -73,7 +74,7 @@ export function ReviewConsentStep({
 
             <TabsContent value="terms">
               <Accordion type="multiple" className="w-full">
-                {privacyData.parsed.sections.map((section) => (
+                {privacyData.sections.map((section) => (
                   <AccordionItem
                     key={`terms-${section.title}`}
                     value={`terms-${section.title}`}
@@ -95,7 +96,7 @@ export function ReviewConsentStep({
 
             <TabsContent value="privacy">
               <Accordion type="multiple" className="w-full">
-                {termsData.parsed.sections.map((section) => (
+                {termsData.sections.map((section) => (
                   <AccordionItem
                     key={`terms-${section.title}`}
                     value={`terms-${section.title}`}

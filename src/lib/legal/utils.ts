@@ -75,33 +75,35 @@ const getOrigin = createServerFn({ method: "GET" }).handler(() =>
     ? `https://${process.env.VERCEL_URL}`
     : "http://127.0.0.1:5173"
 ); // dev fallback)
-export const getLegalFromPublic = createServerFn({ method: "GET" })
-  .inputValidator(params)
-  .handler(async ({ data: { policy, version } }) => {
-    const assetPath = `/legal/${policy}/${version}.json`;
+// export const getLegalFromPublic = createServerFn({ method: "GET" })
+//   .inputValidator(params)
+//   .handler(async ({ data: { policy, version } }) => {
+//     const assetPath = `/legal/${policy}/${version}.json`;
 
-    const origin = await getOrigin();
+//     const origin = await getOrigin();
 
-    const url = origin + assetPath;
+//     const url = origin + assetPath;
 
-    // 3. Fetch from HTTP, not filesystem
-    const res = await fetch(url, {
-      // Nitro/Node fetch
-      cache: "force-cache",
-    });
+//     // 3. Fetch from HTTP, not filesystem
+//     const res = await fetch(url, {
+//       // Nitro/Node fetch
+//       cache: "force-cache",
+//     });
 
-    if (!res.ok) {
-      throw new Error(
-        `Missing legal JSON: ${assetPath} (status ${res.status})`
-      );
-    }
+//     if (!res.ok) {
+//       throw new Error(
+//         `Missing legal JSON: ${assetPath} (status ${res.status})`
+//       );
+//     }
 
-    const raw = await res.json();
-    const parsed = validatePolicyDoc(raw);
-    setResponseHeader(
-      "Cache-Control",
-      "public, max-age=300, stale-while-revalidate=86400"
-    );
+//     const raw = await res.json();
+//     const parsed = validatePolicyDoc(raw);
+//     setResponseHeader(
+//       "Cache-Control",
+//       "public, max-age=300, stale-while-revalidate=86400"
+//     );
 
-    return { version, parsed };
-  });
+//     return { version, parsed };
+//   });
+
+ 
