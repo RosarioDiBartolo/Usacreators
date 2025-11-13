@@ -43,7 +43,13 @@ steps: ReadonlyArray<Step>
       <motion.div whileHover={{ scale: 1.05 }} className="flex-1 sm:flex-none">
         <Button
           type="button"
-          onClick={() => (isLastInteractiveStep ? handleSubmit() : nextStep())}
+          onClick={() =>{
+             if(isLastInteractiveStep){ 
+           
+              handleSubmit();
+             }else{ nextStep()}
+
+          }}
           disabled={isSubmitting}
           className="rounded-xl sm:rounded-2xl w-full sm:w-auto text-sm sm:text-base"
         >

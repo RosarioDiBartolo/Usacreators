@@ -19,7 +19,7 @@ import {
   steps,
 } from "@/lib/creators/schemas/creator-apply-client";
 
-import useApplicationForm from "./use-application-form";
+import useApplicationForm from "../../lib/creators/use-application-form";
 import { Suspense, useState } from "react";
  
 export default function OnboardingForm() {

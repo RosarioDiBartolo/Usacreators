@@ -15,7 +15,10 @@ import {
   ApiError,
   submitCreatorApplication,
 } from "@/lib/creators/subscribe-creator";
-import { Payload } from "@/lib/creators/schemas/creators-apply-shared";
+import {
+  Payload,
+  payloadSchema,
+} from "@/lib/creators/schemas/creators-apply-shared";
 import { useMutation } from "@tanstack/react-query";
 import { useCurrentLegal } from "@/lib/legal/hooks";
 
@@ -59,7 +62,7 @@ const useApplicationForm = () => {
 
   const { mutateAsync: Submit, isPending } = useMutation({
     mutationFn: async ({ value }: { value: DefaultValues }) => {
-      const { profilePictureFile, ...stripped } = value;
+      const { profilePictureFile, termsAccepted, ...stripped } = value;
       if (!profilePictureFile) {
         throw "Missing profilePictureFile.";
       }
@@ -76,17 +79,17 @@ const useApplicationForm = () => {
         policy
       );
       //Block End
-      const payload: Payload = {
+      const payload = await payloadSchema.parseAsync({
         ...stripped,
         profilePictureUrl,
         bio: opt(value.bio),
         instagram: value.instagram,
         portfolio: value.portfolio,
         tiktok: value.tiktok,
-         turnstileToken: await getTurnstileToken(),
+        turnstileToken: await getTurnstileToken(),
         termsVersion: currentVersions.terms,
         privacyVersion: currentVersions.privacy,
-      };
+      } satisfies Payload);
 
       await submitCreatorApplication({ data: payload });
     },
@@ -95,8 +98,9 @@ const useApplicationForm = () => {
       navigate({ to: "/success" });
     },
     onError: (e: { result: ApiError }) => {
-      const error = e.result?.message ?? "Network error. Please try again.";
-      console.log("Mutation Error", e.result);
+      const error =
+        e.result?.message ?? "Error in form submission. Please try again.";
+      console.log("Mutation Error", e);
       toast.error(error);
     },
   });
@@ -116,11 +120,10 @@ const useApplicationForm = () => {
     niches: [],
     locationYesNo: "yes",
     portfolio: "",
-    instagram: "",
-    tiktok: "",
+    instagram: undefined,
+    tiktok: undefined,
     termsAccepted: false,
   } satisfies DefaultValues;
-
 
   const form = useForm({
     // 1) Tell TanStack how to use Zod

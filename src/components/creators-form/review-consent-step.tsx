@@ -22,7 +22,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FormType } from "./use-application-form";
+import { FormType } from "../../lib/creators/use-application-form";
 import { getFieldErrors } from "@/lib/field";
 import {
   getLegalFromPublic,

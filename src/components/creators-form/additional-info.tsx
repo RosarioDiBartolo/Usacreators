@@ -15,7 +15,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { fadeInUp } from "./utils";
 import { clientFormObject } from "@/lib/creators/schemas/creator-apply-client";
-import { FormType } from "./use-application-form";
+import { FormType } from "../../lib/creators/use-application-form";
 import { getFieldErrors } from "@/lib/field";
 import {
   TagsTrigger,
@@ -28,7 +28,6 @@ import {
   TagsItem,
   Tags,
 } from "../ui/shadcn-io/tags";
-import { useEffect, useState } from "react";
 
 const defaultTags = [
   { id: "react", label: "React" },
@@ -74,48 +73,54 @@ function Niches({
   };
 
   return (
-    <> <Tags className=" bg-muted ">
-      <TagsTrigger disabled = {value.length > 4} className="">
-        Select one or more niches
-      </TagsTrigger>
-     
-      <TagsContent>
-        <TagsInput placeholder="Search tag..." />
-
-        <TagsList>
-          <TagsEmpty />
-
-          <TagsGroup>
-            {defaultTags
-              .filter((t) => !selected.includes(t.id))
-              .map((t) => (
-                <TagsItem
-                  key={t.id}
-                  value={t.id}
-                  onSelect={() => handleSelect(t.id)}
-                >
-                  {t.label}
-                </TagsItem>
-              ))}
-          </TagsGroup>
-        </TagsList>
-      </TagsContent>
-    </Tags><div className="flex items-center gap-3 py-2">
+    <>
+       <div className="flex items-center gap-3 py-2">
         {selected.map((tagId) => {
           const tag = defaultTags.find((t) => t.id === tagId);
           if (!tag) return null;
 
           return (
-            <TagsValue className=" h-fit" key={tag.id} onRemove={() => handleRemove(tag.id)}>
+            <TagsValue
+              className=" h-fit"
+              key={tag.id}
+              onRemove={() => handleRemove(tag.id)}
+            >
               {tag.label}
             </TagsValue>
           );
         })}
-        </div></>
-    
+      </div>
+      <Tags className=" bg-muted ">
+        <TagsTrigger disabled={value.length > 4} className="">
+          Select one or more niches
+        </TagsTrigger>
+
+        <TagsContent>
+          <TagsInput placeholder="Search tag..." />
+
+          <TagsList>
+            <TagsEmpty />
+
+            <TagsGroup>
+              {defaultTags
+                .filter((t) => !selected.includes(t.id))
+                .map((t) => (
+                  <TagsItem
+                    key={t.id}
+                    value={t.id}
+                    onSelect={() => handleSelect(t.id)}
+                  >
+                    {t.label}
+                  </TagsItem>
+                ))}
+            </TagsGroup>
+          </TagsList>
+        </TagsContent>
+      </Tags>
+      
+    </>
   );
 }
-
 
 export function AdditionalInfo({ form }: { form: FormType }) {
   return (

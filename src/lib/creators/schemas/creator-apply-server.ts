@@ -7,15 +7,7 @@ import {
 } from "./creators-apply-shared";
 import { TimestampLike } from "@/lib/firebase/utils.js";
 
-// ---- Upload meta (wire) ----
-const uploadMetaSchema = z
-  .object({
-    url: z.string().url(),
-    mime: z.string().min(1),
-    size: z.number().max(3 * 1024 * 1024), // <= 3MB
-  })
-  .optional();
-
+ 
    
 
 // ---- Persistence schema (what we actually store) ----
@@ -83,5 +75,5 @@ export const EmailVerificationSchema = z.object({
   token: z.string().min(1, "Missing token"), // tokens are opaque
 });
 
- export type PersistRecord = z.infer<typeof persistSchema>;
+ export type PersistRecord = z.infer<typeof persistObject>;
 export type EmailVerification = z.infer<typeof EmailVerificationSchema>;

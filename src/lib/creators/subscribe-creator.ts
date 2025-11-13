@@ -3,12 +3,7 @@ import { getRequestHeader } from "@tanstack/react-start/server";
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import crypto from "crypto";
-import {
-  hashIP,
-  normalizeIG,
-  normalizeTT, 
-  asUrl,
-} from "@/lib/utils";
+import { hashIP, normalizeIG, normalizeTT, asUrl } from "@/lib/utils";
 import { getLegalVersions } from "@/lib/legal/utils";
 import {
   setResponseStatus,
@@ -16,12 +11,12 @@ import {
   getRequest,
 } from "@tanstack/react-start/server";
 import { PersistRecord, persistSchema } from "./schemas/creator-apply-server";
-import { payloadSchema } from "./schemas/creators-apply-shared";
+import { Payload, payloadSchema } from "./schemas/creators-apply-shared";
 import { normalizeIp } from "../ip";
 
 // ---------- Types ----------
 type ApiOk = { success: true; id: string };
- 
+
 // ---- Types ----
 export type ApiError = {
   success?: boolean;
@@ -56,7 +51,7 @@ function setCorsHeaders() {
 export const submitCreatorApplication = createServerFn({ method: "POST" })
   // Accept a single `data` object, validated here per docs
   .inputValidator(payloadSchema)
-  .handler(async ({ data }) => {
+  .handler(async ({ data }: { data: Payload }) => {
     const { db, admin } = await import("@/lib/firebase/admin");
     setCorsHeaders();
     const request = getRequest();
@@ -219,13 +214,14 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
 
         const application = {
           name: data.name,
+          locationYesNo: data.locationYesNo,
+          portfolio: data.portfolio,
+          niches: data.niches,
           email: emailLower,
           profilePictureUrl: asUrl(data.profilePictureUrl) ?? null,
-          bio: data.bio || "",
-          locationYesNo: data.locationYesNo,
+
           instagram: ig ?? null,
           tiktok: tt ?? null,
-          additionalInfo: data.additionalInfo || "",
           ua,
           country,
           createdAt: now,

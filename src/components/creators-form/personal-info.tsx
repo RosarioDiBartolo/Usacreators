@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { clientFormObject } from "@/lib/creators/schemas/creator-apply-client";
 import FileUpload from "./file-upload";
-import { FormType } from "./use-application-form";
+import { FormType } from "../../lib/creators/use-application-form";
 import { getFieldErrors } from "@/lib/field";
  
 export function PersonalInfo({ form }: { form: FormType }) {

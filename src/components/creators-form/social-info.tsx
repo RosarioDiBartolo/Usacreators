@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label";
 import { fadeInUp } from "./utils";
 import { clientFormObject } from "@/lib/creators/schemas/creator-apply-client";
 import type {} from "@tanstack/react-form";
-import { FormType } from "./use-application-form";
+import { FormType } from "../../lib/creators/use-application-form";
 import { getFieldErrors } from "@/lib/field";
 
 export function SocialInfo({ form }: { form: FormType }) {

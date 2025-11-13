@@ -189,8 +189,7 @@ function FieldError({
 }: React.ComponentProps<"div"> & {
   errors?: Array<{ message?: string } | undefined>
 }) {
-
-  console.log(errors)
+ 
   const content = useMemo(() => {
     if (children) {
       return children
