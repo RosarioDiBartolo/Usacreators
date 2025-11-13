@@ -46,55 +46,76 @@ const defaultTags = [
   { id: "php", label: "PHP" },
   { id: "go", label: "Go" },
 ];
-function Niches({ onChange }: { onChange: (v: string[]) => void }) {
-  const [selected, setSelected] = useState<string[]>([]);
+function Niches({
+  value,
+  onChange,
+}: {
+  value: string[];
+  onChange: (v: string[]) => void;
+}) {
+  const selected = value ?? [];
 
-  const handleRemove = (value: string) => {
-    if (!selected.includes(value)) {
+  const handleRemove = (tagId: string) => {
+    const next = selected.filter((v) => v !== tagId);
+    onChange(next);
+  };
+
+  const handleSelect = (tagId: string) => {
+    // toggle selection
+    if (selected.includes(tagId)) {
+      handleRemove(tagId);
       return;
     }
-    console.log(`removed: ${value}`);
-    setSelected((prev) => prev.filter((v) => v !== value));
+
+    if (selected.length >= 5) return; // UI enforcement
+
+    const next = [...selected, tagId];
+    onChange(next);
   };
-  const handleSelect = (value: string) => {
-    if (selected.includes(value)) {
-      handleRemove(value);
-      return;
-    }
-    console.log(`selected: ${value}`);
-    setSelected((prev) => [...prev, value]);
-  };
-  useEffect(() => {
-    if (selected.length > 0) onChange(selected);
-  }, [onChange, selected]);
 
   return (
-    <Tags className=" ">
-      <TagsTrigger>
-        {selected.map((tag) => (
-          <TagsValue key={tag} onRemove={() => handleRemove(tag)}>
-            {defaultTags.find((t) => t.id === tag)?.label}
-          </TagsValue>
-        ))}
+    <> <Tags className=" bg-muted ">
+      <TagsTrigger disabled = {value.length > 4} className="">
+        Select one or more niches
       </TagsTrigger>
+     
       <TagsContent>
         <TagsInput placeholder="Search tag..." />
+
         <TagsList>
           <TagsEmpty />
+
           <TagsGroup>
             {defaultTags
-              .filter((tag) => !selected.includes(tag.id))
-              .map((tag) => (
-                <TagsItem key={tag.id} onSelect={handleSelect} value={tag.id}>
-                  {tag.label}
+              .filter((t) => !selected.includes(t.id))
+              .map((t) => (
+                <TagsItem
+                  key={t.id}
+                  value={t.id}
+                  onSelect={() => handleSelect(t.id)}
+                >
+                  {t.label}
                 </TagsItem>
               ))}
           </TagsGroup>
         </TagsList>
       </TagsContent>
-    </Tags>
+    </Tags><div className="flex items-center gap-3 py-2">
+        {selected.map((tagId) => {
+          const tag = defaultTags.find((t) => t.id === tagId);
+          if (!tag) return null;
+
+          return (
+            <TagsValue className=" h-fit" key={tag.id} onRemove={() => handleRemove(tag.id)}>
+              {tag.label}
+            </TagsValue>
+          );
+        })}
+        </div></>
+    
   );
 }
+
 
 export function AdditionalInfo({ form }: { form: FormType }) {
   return (
@@ -109,7 +130,7 @@ export function AdditionalInfo({ form }: { form: FormType }) {
             return (
               <DSField data-invalid={!!errs.length}>
                 <FieldLabel htmlFor="niches">Niches</FieldLabel>
-                <Niches onChange={f.handleChange} />
+                <Niches value={f.state.value} onChange={f.handleChange} />
                 <FieldDescription>Add from 1 to 5 niches</FieldDescription>
                 {!!errs.length && <FieldError errors={errs} />}
               </DSField>

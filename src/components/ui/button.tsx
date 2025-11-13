@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/fe-utils";
 
 const buttonVariants = cva(
-  "relative overflow-visible isolate h-fit  inline-flex items-center cursor-pointer justify-center gap-2 whitespace-nowrap   font-semibold transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none  4 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 aria-invalid:ring-2 aria-invalid:ring-destructive",
+  "relative overflow-visible isolate h-fit inline-flex items-center cursor-pointer justify-center gap-2 whitespace-nowrap font-semibold transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 aria-invalid:ring-2 aria-invalid:ring-destructive",
   {
     variants: {
       variant: {
@@ -17,7 +17,7 @@ const buttonVariants = cva(
         black:
           "rounded-full bg-black text-white border border-input shadow-sm hover:bg-black/90 dark:bg-zinc-950 dark:hover:bg-zinc-900",
         outline:
-          "  border border-input  rounded-md bg-input text-foreground shadow-sm hover:bg-accent hover:text-accent-foreground",
+          "border border-input rounded-md bg-input text-foreground shadow-sm hover:bg-accent hover:text-accent-foreground",
         secondary:
           "rounded-full bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "bg-background text-foreground",
@@ -53,51 +53,59 @@ const glowColors = {
   link: "transparent",
 };
 
-function Button({
-  className,
-  variant = "default",
-  size,
-  asChild = false,
-  ...props
-}: React.ComponentProps<"button"> &
+export type ButtonProps = React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
-  }) {
-  const Comp = asChild ? Slot : "button";
-  const showGlow = variant !== "link" && variant !== "ghost";
+  };
 
-  return (
-    <Comp
-  data-slot="button"
-  className={ 
-     buttonVariants({ variant, size, className })
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      className,
+      variant = "default",
+      size,
+      asChild = false,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const Comp = asChild ? Slot : "button";
+    const showGlow = variant !== "link" && variant !== "ghost";
+
+    return (
+      <Comp
+        ref={ref}
+        data-slot="button"
+        className={cn(buttonVariants({ variant, size, className }))}
+        {...props}
+      >
+        {showGlow && (
+          <motion.span
+            className="absolute -inset-0.5 rounded-full blur-md"
+            initial={{ opacity: 0.5 }}
+            animate={{
+              opacity: [0.4, 0.7, 0.4],
+              scale: [0.95, 1.05, 0.95],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            style={{
+              background: glowColors[variant as keyof typeof glowColors],
+              filter: "blur(8px)",
+            }}
+            aria-hidden="true"
+          />
+        )}
+        {children}
+      </Comp>
+    );
   }
-  {...props}
->
-      {showGlow && (
-        <motion.span
-  className="absolute -inset-0.5 rounded-full blur-md"
-  initial={{ opacity: 0.5 }}
-  animate={{
-    opacity: [0.4, 0.7, 0.4],
-    scale: [0.95, 1.05, 0.95],
-  }}
-  transition={{
-    duration: 2,
-    repeat: Infinity,
-    ease: "easeInOut",
-  }}
-  style={{
-    background: glowColors[variant as keyof typeof glowColors],
-    filter: "blur(8px)",
-  }}
-  aria-hidden="true"
-/>
+);
 
-      )}
- {props.children} 
-    </Comp>
-  );
-}
+Button.displayName = "Button";
 
 export { Button, buttonVariants };

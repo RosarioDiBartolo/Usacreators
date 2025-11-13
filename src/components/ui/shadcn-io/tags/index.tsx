@@ -126,9 +126,7 @@ export const TagsTrigger = ({
     >
       <div className="flex flex-wrap items-center gap-1">
         {children}
-        <span className="px-2 py-px text-muted-foreground">
-          Select a tag...
-        </span>
+        
       </div>
     </Button>
   </PopoverTrigger>
@@ -142,7 +140,7 @@ export const TagsValue = ({
   onRemove,
   ...props
 }: TagsValueProps & { onRemove?: () => void }) => {
-  const handleRemove: MouseEventHandler<HTMLDivElement> = (event) => {
+  const handleRemove: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
     event.stopPropagation();
     onRemove?.();
@@ -152,14 +150,13 @@ export const TagsValue = ({
     <Badge className={cn('flex items-center gap-2', className)} {...props}>
       {children}
       {onRemove && (
-        // biome-ignore lint/a11y/noStaticElementInteractions: "This is a clickable badge"
-        // biome-ignore lint/a11y/useKeyWithClickEvents: "This is a clickable badge"
-        <div
-          className="size-auto cursor-pointer hover:text-muted-foreground"
+        <button
+          type="button"
+          className="inline-flex items-center justify-center size-auto cursor-pointer hover:text-muted-foreground"
           onClick={handleRemove}
         >
           <XIcon size={12} />
-        </div>
+        </button>
       )}
     </Badge>
   );
@@ -215,7 +212,7 @@ export type TagsItemProps = ComponentProps<typeof CommandItem>;
 
 export const TagsItem = ({ className, ...props }: TagsItemProps) => (
   <CommandItem
-    className={cn('cursor-pointer items-center justify-between', className)}
+    className={cn('cursor-pointer items-center justify-between ', className)}
     {...props}
   />
 );
