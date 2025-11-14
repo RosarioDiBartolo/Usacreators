@@ -5,11 +5,19 @@ export const yesNoEnum = z.enum(["yes", "no"]);
 export type YesNo = z.infer<typeof yesNoEnum>;
 
 // --- helpers
-export const emptyToUndef = <T extends z.ZodTypeAny>(schema: T) =>
+// Only use this on string-based schemas.
+export const emptyToUndef = <T extends z.ZodTypeAny>(
+  schema: T
+) =>
   z.preprocess(
     (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
     schema
-  );
+    // Zod types this as input = unknown; we narrow it for our use case:
+  ) as unknown as z.ZodEffects<
+    T,
+    z.output<T>,          // output type = whatever the inner schema outputs
+    string | undefined    // input type = what our form actually passes
+  >;
 
 // Accept either @handle (2-30) or a full URL.
 // NOTE: this is a *validator*, not optional by itself.
@@ -32,12 +40,30 @@ export const requiredUrl = z
   .url("Enter a valid URL (must start with http:// or https://).");
 
 export const MAX_BIO = 1000;
+ // 🔹 Cross-field rules (run after preprocess)
+export const applyStandardRules = <
+  TShape extends z.ZodRawShape & {
+    instagram: z.ZodTypeAny;
+    tiktok: z.ZodTypeAny;
+  }
+>(
+  obj: z.ZodObject<TShape>
+): z.ZodEffects<typeof obj> =>
+  obj.superRefine((data, ctx) => {
+    // data is typed as z.infer<typeof obj>
+    const d = data as z.infer<typeof obj>;
 
-// 🔹 Cross-field rules (run after preprocess)
-export const applyStandardRules = <T extends z.ZodTypeAny>(obj: T) =>
-  obj.superRefine((data, ctx: z.RefinementCtx) => {
-    // Ensure at least one social provided
-    if (!data.instagram && !data.tiktok) {
+    const hasInstagram =
+      d.instagram !== undefined &&
+      d.instagram !== null &&
+      d.instagram !== "";
+
+    const hasTiktok =
+      d.tiktok !== undefined &&
+      d.tiktok !== null &&
+      d.tiktok !== "";
+
+    if (!hasInstagram && !hasTiktok) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["instagram"],
@@ -50,7 +76,6 @@ export const applyStandardRules = <T extends z.ZodTypeAny>(obj: T) =>
       });
     }
   });
-
 // --- base object (normalize early)
 export const sharedBaseFormObject = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters."),
@@ -76,7 +101,7 @@ export const consentServerAdditions = z.object({
   privacyVersion: emptyToUndef(z.string().regex(/^\d{4}-\d{2}-\d{2}$/)).optional(),
 });
 
-// ---- Final payload (strict AFTER merging)
+// ---- Final creator (strict AFTER merging)
 export const payloadObject = sharedBaseFormObject
   .merge(consentServerAdditions)
   .merge(

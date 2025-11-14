@@ -10,8 +10,8 @@ import {
   setResponseHeader,
   getRequest,
 } from "@tanstack/react-start/server";
-import { PersistRecord, persistSchema } from "./schemas/creator-apply-server";
-import { Payload, payloadSchema } from "./schemas/creators-apply-shared";
+import { Creator, creatorSchema } from "./schemas/creator-apply-server";
+import { payloadSchema } from "./schemas/creators-apply-shared";
 import { normalizeIp } from "../ip";
 
 // ---------- Types ----------
@@ -51,7 +51,7 @@ function setCorsHeaders() {
 export const submitCreatorApplication = createServerFn({ method: "POST" })
   // Accept a single `data` object, validated here per docs
   .inputValidator(payloadSchema)
-  .handler(async ({ data }: { data: Payload }) => {
+  .handler(async ({ data } ) => {
     const { db, admin } = await import("@/lib/firebase/admin");
     setCorsHeaders();
     const request = getRequest();
@@ -232,11 +232,11 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
             privacyVersion: currentPrivacy,
             acceptedAt: now,
           },
-        } satisfies PersistRecord;
+        } satisfies Creator;
 
         const docRef = await db
           .collection("applications")
-          .add(await persistSchema.parseAsync(application));
+          .add(await creatorSchema.parseAsync(application));
 
         // ---- Legal acceptance log (hashed email)
         const emailHash = crypto

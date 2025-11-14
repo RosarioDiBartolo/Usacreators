@@ -12,7 +12,7 @@ import { TimestampLike } from "@/lib/firebase/utils.js";
 
 // ---- Persistence schema (what we actually store) ----
 // Omit on the object, extend, then re-apply the same rule.
-const persistObject = payloadObject
+export const creatorObject = payloadObject
   .omit({
     turnstileToken: true,
      // keep profilePictureUrl if you store the CDN URL
@@ -20,10 +20,10 @@ const persistObject = payloadObject
   .extend({
     // normalize/canonicalize before persisting
     email: z.string().email().transform((e) => e.toLowerCase()),
-    instagram: z.string().optional().nullable(), // normalized upstream
-    tiktok: z.string().optional().nullable(),
-    instagramPost: z.string().url().optional().nullable(),
-    profilePictureUrl: z.string().url().optional().nullable(),
+    instagram: z.string() , // normalized upstream
+    tiktok: z.string() ,
+    instagramPost: z.string().url() ,
+    profilePictureUrl: z.string().url() ,
 
     // legal block is authoritative server-side
     legal: z.object({
@@ -40,7 +40,7 @@ const persistObject = payloadObject
     createdAt: z.any(), // Firestore server timestamp
   });
 
-export const persistSchema = applyStandardRules(persistObject);
+export const creatorSchema = applyStandardRules(creatorObject);
  
 export const LegalAcceptanceSchema = z
   .object({
@@ -75,5 +75,5 @@ export const EmailVerificationSchema = z.object({
   token: z.string().min(1, "Missing token"), // tokens are opaque
 });
 
- export type PersistRecord = z.infer<typeof persistObject>;
+ export type Creator = z.infer<typeof creatorObject>;
 export type EmailVerification = z.infer<typeof EmailVerificationSchema>;

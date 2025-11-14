@@ -3,8 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
 // Import both client + submit schemas
-import {
-  clientFormObject,
+import { 
   clientSubmitSchema,
 } from "@/lib/creators/schemas/creator-apply-client";
 import { z } from "zod";
@@ -16,7 +15,7 @@ import {
   submitCreatorApplication,
 } from "@/lib/creators/subscribe-creator";
 import {
-  Payload,
+  type Payload,
   payloadSchema,
 } from "@/lib/creators/schemas/creators-apply-shared";
 import { useMutation } from "@tanstack/react-query";
@@ -79,7 +78,7 @@ const useApplicationForm = () => {
         policy
       );
       //Block End
-      const payload = await payloadSchema.parseAsync({
+      const creator = await payloadSchema.parseAsync({
         ...stripped,
         profilePictureUrl,
         bio: opt(value.bio),
@@ -91,7 +90,7 @@ const useApplicationForm = () => {
         privacyVersion: currentVersions.privacy,
       } satisfies Payload);
 
-      await submitCreatorApplication({ data: payload });
+      await submitCreatorApplication({ data: creator });
     },
     onSuccess: () => {
       toast.success("Application submitted successfully!");
@@ -107,10 +106,7 @@ const useApplicationForm = () => {
 
   const navigate = useNavigate();
 
-  type FormValues = z.infer<typeof clientFormObject>;
-  type DefaultValues = Omit<FormValues, "profilePictureFile"> & {
-    profilePictureFile?: FormValues["profilePictureFile"];
-  };
+type DefaultValues = z.input<typeof clientSubmitSchema>;
   // Strongly type defaults to the Zod *input* so unions match (File | undefined, "yes" | "no", etc.)
   const defaultValues = {
     name: "",
