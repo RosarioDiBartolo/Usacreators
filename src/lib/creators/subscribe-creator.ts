@@ -51,7 +51,7 @@ function setCorsHeaders() {
 export const submitCreatorApplication = createServerFn({ method: "POST" })
   // Accept a single `data` object, validated here per docs
   .inputValidator(payloadSchema)
-  .handler(async ({ data } ) => {
+  .handler(async ({ data }) => {
     const { db, admin } = await import("@/lib/firebase/admin");
     setCorsHeaders();
     const request = getRequest();
@@ -218,10 +218,9 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
           portfolio: data.portfolio,
           niches: data.niches,
           email: emailLower,
-          profilePictureUrl: asUrl(data.profilePictureUrl) ?? null,
-
-          instagram: ig ?? null,
-          tiktok: tt ?? null,
+          profilePictureUrl: asUrl(data.profilePictureUrl),
+          instagram: ig,
+          tiktok: tt,
           ua,
           country,
           createdAt: now,

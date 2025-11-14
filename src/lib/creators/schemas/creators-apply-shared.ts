@@ -106,7 +106,7 @@ export const payloadObject = sharedBaseFormObject
   .merge(consentServerAdditions)
   .merge(
     z.object({
-      profilePictureUrl: emptyToUndef(z.string().trim().url()).optional().nullable(),
+      profilePictureUrl: emptyToUndef(z.string().trim().url()) ,
       // profilePicture: uploadMetaSchema.optional(),
       turnstileToken: emptyToUndef(z.string().trim()).optional(),
     })

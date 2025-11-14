@@ -12,7 +12,7 @@ import { TimestampLike } from "@/lib/firebase/utils.js";
 
 // ---- Persistence schema (what we actually store) ----
 // Omit on the object, extend, then re-apply the same rule.
-export const creatorObject = payloadObject
+const creatorObject = payloadObject
   .omit({
     turnstileToken: true,
      // keep profilePictureUrl if you store the CDN URL
@@ -20,10 +20,9 @@ export const creatorObject = payloadObject
   .extend({
     // normalize/canonicalize before persisting
     email: z.string().email().transform((e) => e.toLowerCase()),
-    instagram: z.string() , // normalized upstream
-    tiktok: z.string() ,
-    instagramPost: z.string().url() ,
-    profilePictureUrl: z.string().url() ,
+    instagram: z.string().optional().nullable(), // normalized upstream
+    tiktok: z.string().optional().nullable(),
+     profilePictureUrl: z.string().url() ,
 
     // legal block is authoritative server-side
     legal: z.object({
