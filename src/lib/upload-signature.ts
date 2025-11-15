@@ -24,8 +24,7 @@ const Input = z.object({
 export type GetUploadSignatureInput = z.infer<typeof Input>;
 
 export type SignedUploadPolicy = {
-  apiKey: string;
-  signature: string;
+   signature: string;
   timestamp: number;
   folder: string;
   eager?: string;
@@ -49,8 +48,7 @@ export const getUploadSignature = createServerFn({ method: "POST" })
     );
 
     return {
-      apiKey: process.env.CLOUDINARY_API_KEY!,
-      signature,
+       signature,
       timestamp,
       folder,
       eager,

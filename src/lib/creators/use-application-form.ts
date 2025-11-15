@@ -8,9 +8,8 @@ import {
 } from "@/lib/creators/schemas/creator-apply-client";
 import { z } from "zod";
 import { opt } from "@/lib/utils";
-import { uploadDirect } from "@/lib/upload";
-import { getUploadSignature } from "@/lib/upload-signature";
-import {
+import { uploadToCloudinary } from "@/lib/upload";
+ import {
   ApiError,
   submitCreatorApplication,
 } from "@/lib/creators/subscribe-creator";
@@ -65,22 +64,15 @@ const useApplicationForm = () => {
       if (!profilePictureFile) {
         throw "Missing profilePictureFile.";
       }
-
-      //this is a block
-      const policy = await getUploadSignature({
-        data: {
-          folder: "users/avatars",
-          eager: "c_fill,w_768,h_768,q_auto,f_auto",
-        },
-      });
-      const { secure_url: profilePictureUrl } = await uploadDirect(
-        profilePictureFile,
-        policy
-      );
+      const fd = new FormData()
+      fd.set("file", profilePictureFile)
+      
+      const profilePictureUpload = await uploadToCloudinary({data: fd})
+       
       //Block End
       const creator = await payloadSchema.parseAsync({
         ...stripped,
-        profilePictureUrl,
+        profilePictureUrl: profilePictureUpload?.secure_url,
         bio: opt(value.bio),
         instagram: value.instagram,
         portfolio: value.portfolio,
