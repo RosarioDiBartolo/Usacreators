@@ -2,6 +2,7 @@
 import { z } from "zod";
 import { applyStandardRules, payloadObject } from "./creators-apply-shared";
 import { TimestampLike } from "@/lib/firebase/utils.js";
+import { withDefault } from "@/lib/zod-utils";
 
 // ---- Persistence schema (what we actually store) ----
 // Omit on the object, extend, then re-apply the same rule.
@@ -34,8 +35,36 @@ export const creatorObject = payloadObject
     source: z.literal("server-fn"),
     createdAt: z.any(), // Firestore server timestamp
   });
-
+//use to create new documents safely and possibly zod safe...
 export const creatorSchema = applyStandardRules(creatorObject);
+
+// ---- Persistence schema ----
+// Some fields might be missing for outdated versions of the forms and the schemas... use this for document retriving and sanatization
+export const firebaseCreatorRecord = payloadObject
+  .omit({
+    turnstileToken: true,
+  })
+  .extend({
+    bio: withDefault(z.string().optional(), undefined),
+    portfolio:  withDefault(z.string().url().optional().nullable(), null),
+
+    instagram: z.string().optional().nullable(),
+    tiktok: z.string().optional().nullable(),
+    profilePictureUrl: withDefault(z.string().url().optional().nullable(), null),
+    niches: withDefault(z.array(z.string()), []),
+     legal: z.object({
+      termsVersion: z.string(),
+      privacyVersion: z.string(),
+      acceptedAt: z.any(),
+    }),
+
+    ipHash: z.string(),
+    ua: z.string().max(300).optional(),
+    country: z.string().optional().default("unknown"),
+    source: withDefault(z.literal("server-fn"), "server-fn"),
+    createdAt: z.any(),
+  })
+  .passthrough();
 
 export const LegalAcceptanceSchema = z
   .object({

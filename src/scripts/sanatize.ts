@@ -1,11 +1,11 @@
 // src/scripts/sanatize.ts
 
 import { db, admin } from "../lib/firebase/admin";
-import { sanitizeSchema } from "../lib/sanatize";
+import { firebaseCreatorRecord } from "../lib/creators/schemas/creator-apply-server";
 import { z } from "zod";
 
 // Infer the sanitized type (optional but nice for type safety)
-type SanitizedDoc = z.infer<typeof sanitizeSchema>;
+type SanitizedDoc = z.infer<typeof firebaseCreatorRecord>;
 
 // Simple deep-ish equality check using JSON
 const isEqual = <T>(a: T, b: T): boolean =>
@@ -47,7 +47,7 @@ async function sanitizeApplicationsCollection(): Promise<void> {
         // This should never throw if sanitizeSchema is:
         // - .passthrough() or .strip()
         // - using .default() / .catch() for fields
-        parsed = sanitizeSchema.parse(raw);
+        parsed = firebaseCreatorRecord.parse(raw);
       } catch (err) {
         invalid++;
         console.error(
