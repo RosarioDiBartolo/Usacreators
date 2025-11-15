@@ -1,60 +1,17 @@
-// src/scripts/sanatize.ts (or sanitize-creators.ts)
+// src/scripts/sanatize.ts
 
-import { z } from "zod";
 import { db, admin } from "../lib/firebase/admin";
-import { payloadObject } from "@/lib/creators/schemas/creators-apply-shared";
+import { sanitizeSchema } from "../lib/sanatize";
+import { z } from "zod";
 
-// ---- Persistence schema (what we actually store) ----
-export const sanitizeSchema = payloadObject
-  .omit({
-    turnstileToken: true,
-    portfolio: true,
-    niches: true,
-  })
-  .extend({
-    email: z
-      .string()
-      .email()
-      .transform((e) => e.toLowerCase()),
-    portfolio: z.string().url().optional().nullable(),
-    instagram: z.string().optional().nullable(),
-    tiktok: z.string().optional().nullable(),
-    profilePictureUrl: z.string().url().optional(),
-    niches: z.array(z.string()).default([]),
-
-    legal: z.object({
-      termsVersion: z.string(),
-      privacyVersion: z.string(),
-      acceptedAt: z.any(),
-    }),
-
-    ipHash: z.string(),
-    ua: z.string().max(300).optional().default(""),
-    country: z.string().optional().default("unknown"),
-    source: z.literal("server-fn").default("server-fn"),
-    createdAt: z.any(),
-  })
-  .strip();
-
+// Infer the sanitized type (optional but nice for type safety)
 type SanitizedDoc = z.infer<typeof sanitizeSchema>;
 
-const defaultValues: Partial<SanitizedDoc> = {
-  name: "",
-  email: "",
-  profilePictureUrl: undefined,
-  // 👇 important: make bio a defined string so it stops being "Required"
-  bio: "",
-  niches: [],
-  locationYesNo: "yes",
-  portfolio: null,
-  instagram: undefined,
-  tiktok: undefined,
-};
-
-const isEqual = (a: unknown, b: unknown) =>
+// Simple deep-ish equality check using JSON
+const isEqual = <T>(a: T, b: T): boolean =>
   JSON.stringify(a) === JSON.stringify(b);
 
-async function sanitizeCreatorsCollection(): Promise<void> {
+async function sanitizeApplicationsCollection(): Promise<void> {
   const col = db.collection("applications");
 
   let lastDocId: string | undefined;
@@ -62,113 +19,85 @@ async function sanitizeCreatorsCollection(): Promise<void> {
   let updated = 0;
   let invalid = 0;
 
+  console.log("🚀 Starting sanitization of 'applications' collection...");
+
   while (true) {
     let query = col
       .orderBy(admin.firestore.FieldPath.documentId())
-      .limit(400);
+      .limit(400); // headroom for batch limit
 
     if (lastDocId) {
       query = query.startAfter(lastDocId);
     }
 
     const snap = await query.get();
-    if (snap.empty) break;
+    if (snap.empty) {
+      break;
+    }
 
     const batch = db.batch();
+    let batchWrites = 0;
 
     for (const doc of snap.docs) {
       processed++;
+      const raw = doc.data();
 
-      const rawUnknown = doc.data() as Record<string, unknown>;
-
-      let toValidate: Record<string, unknown> = {
-        ...defaultValues,
-        ...rawUnknown,
-      };
-
-      let parsed = sanitizeSchema.safeParse(toValidate);
-
-      if (!parsed.success) {
-        const { fieldErrors } = parsed.error.flatten();
-
-        const repairPatch: Partial<SanitizedDoc> = {};
-
-        // --- TARGETED REPAIRS ---
-
-        // profilePictureUrl: invalid blob / junk → unset it
-        if (fieldErrors.profilePictureUrl) {
-          repairPatch.profilePictureUrl = undefined;
-        }
-
-        // source: anything that's not "server-fn" → force it
-        if (fieldErrors.source) {
-          repairPatch.source = "server-fn";
-        }
-
-        // portfolio: invalid URL → null it out (schema allows nullable)
-        if (fieldErrors.portfolio) {
-          repairPatch.portfolio = null;
-        }
-
-        // 🔥 NEW: bio is required by your schema → default to empty string
-        if (fieldErrors.bio) {
-          repairPatch.bio = "";
-        }
-
-        // If we don't know how to fix any of the errors → count as invalid and skip
-        if (Object.keys(repairPatch).length === 0) {
-          invalid++;
-          console.warn(
-            `❌ Invalid doc ${doc.id}, nothing to auto-fix:`,
-            fieldErrors
-          );
-          continue;
-        }
-
-        // Apply patch and retry validation
-        toValidate = { ...toValidate, ...repairPatch };
-        const retry = sanitizeSchema.safeParse(toValidate);
-
-        if (!retry.success) {
-          invalid++;
-          console.warn(
-            `❌ Doc ${doc.id} still invalid after patch:`,
-            retry.error.flatten()
-          );
-          continue;
-        }
-
-        parsed = retry;
+      let parsed: SanitizedDoc;
+      try {
+        // This should never throw if sanitizeSchema is:
+        // - .passthrough() or .strip()
+        // - using .default() / .catch() for fields
+        parsed = sanitizeSchema.parse(raw);
+      } catch (err) {
+        invalid++;
+        console.error(
+          `❌ Doc ${doc.id} could not be parsed even with sanitizeSchema:`,
+          err
+        );
+        continue;
       }
 
-      // At this point, parsed is valid
-      const sanitized = parsed.data as SanitizedDoc;
-
-      // Only compare on known fields
-      const currentKnown: Partial<SanitizedDoc> = {};
-      for (const key of Object.keys(sanitized) as (keyof SanitizedDoc)[]) {
-        currentKnown[key] = rawUnknown[key] as SanitizedDoc[typeof key];
+      // Skip writes if nothing actually changed
+      if (isEqual(raw, parsed)) {
+        continue;
       }
 
-      if (!isEqual(currentKnown, sanitized)) {
-        batch.set(doc.ref, sanitized, { merge: true });
-        updated++;
-      }
+      // Overwrite doc with sanitized version.
+      // If sanitizeSchema is .passthrough(), extra fields are preserved.
+      // If it's .strip(), extra fields will be removed here.
+      batch.set(doc.ref, parsed  , { merge: false });
+      batchWrites++;
+      updated++;
     }
 
-    await batch.commit();
-    lastDocId = snap.docs[snap.docs.length - 1]?.id;
+    if (batchWrites > 0) {
+      await batch.commit();
+      console.log(
+        `✅ Page committed: processed so far=${processed}, updated=${updated}, invalid=${invalid}`
+      );
+    } else {
+      console.log(
+        `ℹ️ Page had no changes: processed so far=${processed}, updated=${updated}, invalid=${invalid}`
+      );
+    }
+
+    // Prepare next page
+    lastDocId = snap.docs[snap.docs.length - 1].id;
   }
 
-  console.log(JSON.stringify({ processed, updated, invalid }, null, 2));
+  console.log("🏁 Sanitization finished.");
+  console.log(`Total processed: ${processed}`);
+  console.log(`Total updated:   ${updated}`);
+  console.log(`Total invalid:   ${invalid}`);
 }
 
-sanitizeCreatorsCollection()
+// Run the script
+sanitizeApplicationsCollection()
   .then(() => {
-    console.log("✅ Done");
+    console.log("🎉 Done.");
     process.exit(0);
   })
   .catch((err) => {
-    console.error("🔥 Error in sanitizeCreatorsCollection", err);
+    console.error("💥 Fatal error during sanitization:", err);
     process.exit(1);
   });
