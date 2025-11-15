@@ -83,7 +83,7 @@ export const sharedBaseFormObject = z.object({
     .string()
     .email("Enter a valid email address.")
     .transform((e) => e.toLowerCase().trim()),
-  locationYesNo: yesNoEnum,
+  locationYesNo: yesNoEnum.default("yes"),
   // Socials from forms may be "" → undefined
   instagram: optionalUrlOrHandle,
   tiktok: optionalUrlOrHandle,
