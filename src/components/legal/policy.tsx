@@ -1,32 +1,11 @@
-import React, { JSX } from "react";
+import React, { type JSX } from "react";
+import { PolicyDoc } from "@/lib/legal/policy";
+import { Block, Level, Vars } from "@/lib/legal/types";
+import vars from "@/lib/legal/vars";
 
 /** ===== Types shared by all your JSON docs ===== */
 export type LinkItem = { text: string; href: string };
 
-export type Block =
-  | { type: "p"; text: string }
-  | { type: "h2"; text: string }
-  | { type: "h3"; text: string }
-  | { type: "h4"; text: string }
-  | { type: "ul"; items: string[] }
-  | { type: "ol"; items: string[] }
-  | { type: "ul-links"; items: LinkItem[] }
-  | { type: "blockquote"; text: string }
-  | { type: "hr" };
-
-export type Section = {
-  title: string;
-  blocks: Block[];
-};
-
-export type PolicyDoc = {
-  lastUpdated?: string;
-  vars?: string[];
-  sections: Section[];
-};
-
-type Vars = Record<string, string>;
-type Level = 1 | 2 | 3 | 4 | 5 | 6;
 export type PolicyRendererProps = {
   /** Parsed JSON document */
   doc: PolicyDoc;
@@ -92,7 +71,7 @@ function renderInline(text: string): React.ReactNode[] {
       } else if (token.startsWith("`")) {
         out.push(<code key={out.length}>{token.slice(1, -1)}</code>);
       } else {
-        const text = m[2];
+        const linkText = m[2];
         const href = m[3];
         out.push(
           <a
@@ -101,7 +80,7 @@ function renderInline(text: string): React.ReactNode[] {
             target="_blank"
             rel="noopener noreferrer"
           >
-            {text}
+            {linkText}
           </a>
         );
       }
@@ -116,17 +95,15 @@ function renderInline(text: string): React.ReactNode[] {
 
 export const SectionBlocks = ({
   blocks,
-  vars,
-  startLevel,
-}: {
+  startLevel = 2,
+ }: {
   blocks: Block[];
-  vars: Vars;
-  startLevel: Level;
-}) =>
+  startLevel?: Level;
+ }) =>
   blocks.map((b, i) => {
     switch (b.type) {
       case "p":
-        return <p key={i}>{renderInline(replaceVars(b.text, vars))}</p>;
+        return <p className="  " key={i}>{renderInline(replaceVars(b.text, vars))}</p>;
 
       case "h2":
       case "h3":
@@ -141,7 +118,7 @@ export const SectionBlocks = ({
 
       case "ul":
         return (
-          <ul key={i}>
+          <ul className=" list-disc  space-y-2  p-10 text-start text-secondary-foreground  rounded-3xl bg-secondary" key={i}>
             {b.items.map((it, k) => (
               <li key={k}>{renderInline(replaceVars(it, vars))}</li>
             ))}
@@ -189,13 +166,15 @@ export const SectionBlocks = ({
         return null;
     }
   });
+
 /** ===== Main Component ===== */
 export function PolicyRenderer({
   doc,
-  vars = {},
-  startLevel = 2,
+   startLevel = 2,
   className,
 }: PolicyRendererProps) {
+  // Merge global defaults with per-render overrides
+ 
   return (
     <div className={className}>
       {doc.lastUpdated && (
@@ -205,51 +184,16 @@ export function PolicyRenderer({
       )}
 
       {doc.sections.map((sec, sIdx) => {
-        const secTitle = replaceVars(sec.title, vars);
-        return (
+         return (
           <section key={sIdx} className="policy-section">
-            <H level={startLevel}>{renderInline(secTitle)}</H>
+            <H level={startLevel}>{renderInline(sec.title)}</H>
             <SectionBlocks
               blocks={sec.blocks}
-              vars={vars}
               startLevel={startLevel}
-            />
+             />
           </section>
         );
       })}
     </div>
   );
 }
-
-/* ===== Example usage for ANY file =====
-
-import terms from "./terms-and-conditions.json" assert { type: "json" }
-import privacy from "./privacy-policy.json" assert { type: "json" }
-import cookies from "./cookie-policy.json" assert { type: "json" }
-
-export default function PolicyPage() {
-  return (
-    <>
-      <PolicyRenderer
-        doc={terms}
-        vars={{ companyName: "Miami Creators LLC", contactEmail: "support@miamicreator.co" }}
-        startLevel={2}
-        className="prose max-w-none"
-      />
-      <PolicyRenderer
-        doc={privacy}
-        vars={{ companyName: "Miami Creators LLC", contactEmail: "support@miamicreator.co" }}
-        startLevel={2}
-        className="prose max-w-none mt-12"
-      />
-      <PolicyRenderer
-        doc={cookies}
-        vars={{ companyName: "Miami Creators LLC", contactEmail: "support@miamicreator.co" }}
-        startLevel={2}
-        className="prose max-w-none mt-12"
-      />
-    </>
-  )
-}
-
-===== */

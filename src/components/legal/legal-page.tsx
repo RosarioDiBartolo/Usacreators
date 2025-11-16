@@ -1,18 +1,16 @@
-import React from 'react'
-interface LegalPageProps {
-    title: string;
-    lastUpdated: string;
-    paragraph: React.ReactNode;
-    content: { title: string; content: React.ReactNode}[];
-}
+import { PolicyDoc } from "@/lib/legal/types";
+ 
+import { SectionBlocks } from "./policy";
+
 function LegalPage({
-    title,
-    lastUpdated,
-    paragraph,
-    content,
-}:LegalPageProps ) {
+  lastUpdated,
+   sections,
+  title,
+}: PolicyDoc & {
+  title: string;
+}) {
   return (
-<section className="text-center text-secondary section-padding">
+    <section className="text-center text-secondary section-padding">
       {/* Trust Badge */}
       <h2
         className=" 
@@ -42,20 +40,18 @@ function LegalPage({
         >
           {title}
         </h1>
-        <p className=" text-ms leading-normal font-extralight ">
+        {/* <p className=" text-ms leading-normal font-extralight ">
           {paragraph}
-        </p>
+        </p> */}
 
-        <div className=" space-y-7 ">
-          {content.map((section) => (
-            <div key={section.title} className="  space-y-2">
-              <h3 className=" text-3xl font-bold">{section.title}</h3>
-              <p className=" text-muted-foreground">{section.content}</p>
-            </div>
+     
+          {sections.map((s) => (
+            <SectionBlocks startLevel={2}   blocks={s.blocks} key={s.title} />
           ))}
-        </div>
+       
       </div>
-    </section>  )
+    </section>
+  );
 }
 
-export default LegalPage
+export default LegalPage;

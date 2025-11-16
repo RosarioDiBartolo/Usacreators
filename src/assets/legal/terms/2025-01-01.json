@@ -1,7 +1,6 @@
 {
   "lastUpdated": "2025-11-11",
-  "vars": ["companyName", "contactEmail"],
-  "sections": [
+   "sections": [
     {
       "title": "1. Purpose of the Platform",
       "blocks": [
