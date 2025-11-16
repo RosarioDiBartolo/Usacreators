@@ -1,7 +1,5 @@
+import { Timestamp } from "firebase-admin/firestore";
 import z from "zod";
 
 // ---- Timestamp guard (works across admin/emulator builds)
-export const TimestampLike = z.custom<{ toDate: () => Date }>(
-  (v) => !!v && typeof v.toDate === "function",
-  "Expected Firestore Timestamp-like object"
-);
+export const TimestampLike = z.instanceof(Timestamp).transform((ts) => ts.toDate());

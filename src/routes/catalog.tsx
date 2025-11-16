@@ -1,18 +1,26 @@
- 
-import TagsExample from "@/components/tags-example";
+import { creatorsQueryOptions } from "@/lib/creators/get-creators";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
-type Creator = { id: string; name: string };
-
 export const Route = createFileRoute("/catalog")({
-   
+  loader: ({ context }) =>
+    context.queryClient.ensureQueryData(creatorsQueryOptions),
+
   component: CatalogPage,
 });
 
 function CatalogPage() {
-   return (
+  const { data } = useSuspenseQuery(creatorsQueryOptions);
+
+  return (
     <main>
-      <TagsExample />
+      <h1>Creator Catalog</h1>
+      {data?.map((creator) => (
+        <div key={creator.id}>
+          <h2>{creator.name}</h2>
+          <p>{creator.bio}</p>
+        </div>
+      ))}
     </main>
   );
 }

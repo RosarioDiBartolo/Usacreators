@@ -55,14 +55,14 @@ export const firebaseCreatorRecord = payloadObject
      legal: z.object({
       termsVersion: z.string(),
       privacyVersion: z.string(),
-      acceptedAt: z.any(),
+      acceptedAt: TimestampLike,
     }),
 
     ipHash: z.string(),
     ua: z.string().max(300).optional(),
     country: z.string().optional().default("unknown"),
     source: withDefault(z.literal("server-fn"), "server-fn"),
-    createdAt: z.any(),
+    createdAt: TimestampLike,
   })
   .passthrough();
 
