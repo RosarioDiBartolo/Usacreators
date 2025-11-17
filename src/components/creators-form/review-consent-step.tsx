@@ -24,16 +24,10 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FormType } from "../../lib/creators/use-application-form";
 import { getFieldErrors } from "@/lib/field";
-import {
-  // getLegalFromPublic,
-   Policy,
-  PolicyVersion,
-} from "@/lib/legal/utils";
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { SectionBlocks } from "../legal/policy";
-import { useCurrentLegal } from "@/lib/legal/hooks";
 import termsData from "@/assets/legal/terms/2025-01-01.json"
  import privacyData from "@/assets/legal/terms/2025-01-01.json"
+import { Block } from "@/lib/legal/types";
 
 
 // const PolicyContent = (policy: Policy, version: PolicyVersion) =>
@@ -84,8 +78,8 @@ export function ReviewConsentStep({
                     </AccordionTrigger>
                     <AccordionContent className="prose prose-sm max-w-none dark:prose-invert">
                       <SectionBlocks
-                        blocks={section.blocks}
-                        vars={{}}
+                        blocks={section.blocks as Block[]}
+                      
                         startLevel={2}
                       />
                     </AccordionContent>
@@ -106,8 +100,8 @@ export function ReviewConsentStep({
                     </AccordionTrigger>
                     <AccordionContent className="prose prose-sm max-w-none dark:prose-invert">
                       <SectionBlocks
-                        blocks={section.blocks}
-                        vars={{}}
+                        blocks={section.blocks as Block[]}
+                     
                         startLevel={2}
                       />
                     </AccordionContent>

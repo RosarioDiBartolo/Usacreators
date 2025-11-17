@@ -118,7 +118,7 @@ export const SectionBlocks = ({
 
       case "ul":
         return (
-          <ul className=" list-disc  space-y-2  p-10 text-start text-secondary-foreground  rounded-3xl bg-secondary" key={i}>
+          <ul className=" list-decimal  space-y-2  p-10 text-start text-secondary-foreground  rounded-3xl bg-secondary" key={i}>
             {b.items.map((it, k) => (
               <li key={k}>{renderInline(replaceVars(it, vars))}</li>
             ))}

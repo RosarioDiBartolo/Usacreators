@@ -1,26 +1,25 @@
  
 import crypto from "crypto";
 
-export function opt<T extends string | undefined>(v: T) {
-return v && v.trim() !== "" ? v : undefined;
-}
+ 
 
 // ---------- Helpers ----------
 export const asUrl = (v : string ) => {
+ 
    const s = v.trim();
   return /^https?:\/\//i.test(s) ? s : `https://${s}` ;
 };
 
-export const normalizeIG = (v?: string ) => {
-  if (!v) return undefined;
+export const normalizeIG = (v : string | null ) => {
+  if (!v) return null;
   const s = v.trim().replace(/^@/, "");
-  return s ? (/^https?:\/\//i.test(s) ? s : `https://instagram.com/${s}`) : undefined;
+  return s ? (/^https?:\/\//i.test(s) ? s : `https://instagram.com/${s}`) : null;
 };
 
-export const normalizeTT = (v?: string ) => {
-  if (!v) return undefined;
+export const normalizeTT = (v : string | null ) => {
+  if (!v) return null;
     const s = v.trim().replace(/^@/, "");
-  return s ? (/^https?:\/\//i.test(s) ? s : `https://tiktok.com/@${s}`) : undefined;
+  return s ? (/^https?:\/\//i.test(s) ? s : `https://tiktok.com/@${s}`) : null;
 };
 
  

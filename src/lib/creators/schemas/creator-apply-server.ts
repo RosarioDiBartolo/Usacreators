@@ -1,33 +1,20 @@
 // src/lib/shared/creator-apply-server.ts
 import { z } from "zod";
-import { applyStandardRules, payloadObject } from "./creators-apply-shared";
+import { applyStandardRules, applyCreatorParamsObject } from "./creators-apply-shared";
 import { TimestampLike } from "@/lib/firebase/utils.js";
 import { withDefault } from "@/lib/zod-utils";
 
 // ---- Persistence schema (what we actually store) ----
 // Omit on the object, extend, then re-apply the same rule.
-export const creatorObject = payloadObject
+export const creatorObject = applyCreatorParamsObject
   .omit({
     turnstileToken: true,
     // keep profilePictureUrl if you store the CDN URL
   })
-  .extend({
-    // normalize/canonicalize before persisting
-    email: z
-      .string()
-      .email()
-      .transform((e) => e.toLowerCase()),
-    instagram: z.string().optional().nullable(), // normalized upstream
-    tiktok: z.string().optional().nullable(),
-    profilePictureUrl: z.string().url(),
-
-    // legal block is authoritative server-side
-    legal: z.object({
-      termsVersion: z.string(), // current versions from server registry
-      privacyVersion: z.string(),
-      acceptedAt: z.any(), // Firestore server timestamp
+  .extend({ 
+    legal: applyCreatorParamsObject.shape.legal.extend({
+      acceptedAt: z.any(),
     }),
-
     // audit / meta
     ipHash: z.string(),
     ua: z.string().max(300).optional().default(""),
@@ -40,7 +27,7 @@ export const creatorSchema = applyStandardRules(creatorObject);
 
 // ---- Persistence schema ----
 // Some fields might be missing for outdated versions of the forms and the schemas... use this for document retriving and sanatization
-export const firebaseCreatorRecord = payloadObject
+export const firebaseCreatorRecord = applyCreatorParamsObject
   .omit({
     turnstileToken: true,
   })

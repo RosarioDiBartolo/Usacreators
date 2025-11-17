@@ -11,7 +11,7 @@ import {
   getRequest,
 } from "@tanstack/react-start/server";
 import {    creatorSchema, FirestoreCreatorRecord } from "./schemas/creator-apply-server";
-import { payloadSchema } from "./schemas/creators-apply-shared";
+import { applyCreatorParamsSchema } from "./schemas/creators-apply-shared";
 import { normalizeIp } from "../ip";
 
 // ---------- Types ----------
@@ -50,7 +50,7 @@ function setCorsHeaders() {
 // ---------- Main submit function ----------
 export const submitCreatorApplication = createServerFn({ method: "POST" })
   // Accept a single `data` object, validated here per docs
-  .inputValidator(payloadSchema)
+  .inputValidator(applyCreatorParamsSchema)
   .handler(async ({ data }) => {
     const { db, admin } = await import("@/lib/firebase/admin");
     setCorsHeaders();
@@ -188,12 +188,11 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
         }
 
         // ---- Legal version check
-        const { terms: currentTerms, privacy: currentPrivacy } =
-          await getLegalVersions();
+        const { terms: currentTerms, privacy: currentPrivacy } = await getLegalVersions();
 
         if (
-          data.termsVersion !== currentTerms ||
-          data.privacyVersion !== currentPrivacy
+          data.legal.termsVersion !== currentTerms ||
+          data.legal.privacyVersion !== currentPrivacy
         ) {
           setResponseStatus(409);
           return {
@@ -218,6 +217,7 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
           portfolio: data.portfolio,
           niches: data.niches,
           email: emailLower,
+          bio: data.bio,
           profilePictureUrl: asUrl(data.profilePictureUrl),
           instagram: ig,
           tiktok: tt,
@@ -296,5 +296,5 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
   });
 
 // ---------- Convenient TS exports ----------
-export type SubmitCreatorApplicationInput = z.infer<typeof payloadSchema>;
+export type SubmitCreatorApplicationInput = z.infer<typeof applyCreatorParamsSchema>;
 export type SubmitCreatorApplicationResult = ApiOk | ApiError;

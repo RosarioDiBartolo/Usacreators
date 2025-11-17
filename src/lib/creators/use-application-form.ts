@@ -3,20 +3,16 @@ import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
 // Import both client + submit schemas
-import { 
-  clientSubmitSchema,
-} from "@/lib/creators/schemas/creator-apply-client";
-import { z } from "zod";
-import { opt } from "@/lib/utils";
+import { clientSubmitSchema } from "@/lib/creators/schemas/creator-apply-client";
+import { z } from "zod"; 
 import { uploadToCloudinary } from "@/lib/upload";
- import {
+import {
   ApiError,
   submitCreatorApplication,
 } from "@/lib/creators/subscribe-creator";
 import {
-  type Payload,
-  payloadSchema,
-} from "@/lib/creators/schemas/creators-apply-shared";
+  type ApplyCreatorParams,
+ } from "@/lib/creators/schemas/creators-apply-shared";
 import { useMutation } from "@tanstack/react-query";
 import { useCurrentLegal } from "@/lib/legal/hooks";
 
@@ -60,27 +56,31 @@ const useApplicationForm = () => {
 
   const { mutateAsync: Submit, isPending } = useMutation({
     mutationFn: async ({ value }: { value: DefaultValues }) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { profilePictureFile, termsAccepted, ...stripped } = value;
       if (!profilePictureFile) {
         throw "Missing profilePictureFile.";
       }
-      const fd = new FormData()
-      fd.set("file", profilePictureFile)
-      
-      const profilePictureUpload = await uploadToCloudinary({data: fd})
-       
+      const fd = new FormData();
+      fd.set("file", profilePictureFile);
+
+      const profilePictureUpload = await uploadToCloudinary({ data: fd });
+
       //Block End
-      const creator = await payloadSchema.parseAsync({
+      const creator =  {
         ...stripped,
+        locationYesNo: value.locationYesNo ?? defaultValues.locationYesNo,
         profilePictureUrl: profilePictureUpload?.secure_url,
-        bio: opt(value.bio),
+        bio: value.bio,
         instagram: value.instagram,
         portfolio: value.portfolio,
         tiktok: value.tiktok,
         turnstileToken: await getTurnstileToken(),
-        termsVersion: currentVersions.terms,
-        privacyVersion: currentVersions.privacy,
-      } satisfies Payload);
+        legal: {
+          termsVersion: currentVersions.terms,
+          privacyVersion: currentVersions.privacy,
+        },
+      } satisfies ApplyCreatorParams ;
 
       await submitCreatorApplication({ data: creator });
     },
@@ -98,18 +98,18 @@ const useApplicationForm = () => {
 
   const navigate = useNavigate();
 
-type DefaultValues = z.input<typeof clientSubmitSchema>;
+  type DefaultValues = z.input<typeof clientSubmitSchema>;
   // Strongly type defaults to the Zod *input* so unions match (File | undefined, "yes" | "no", etc.)
   const defaultValues = {
     name: "",
     email: "",
     profilePictureFile: undefined,
-    bio: undefined,
+    bio: null,
     niches: [],
     locationYesNo: "yes",
     portfolio: "",
-    instagram: undefined,
-    tiktok: undefined,
+    instagram: null,
+    tiktok: null,
     termsAccepted: false,
   } satisfies DefaultValues;
 

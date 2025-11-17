@@ -6,17 +6,15 @@ export type YesNo = z.infer<typeof yesNoEnum>;
 
 // --- helpers
 // Only use this on string-based schemas.
-export const emptyToUndef = <T extends z.ZodTypeAny>(
-  schema: T
-) =>
+export const emptyToMissing = <T extends z.ZodTypeAny>(schema: T) =>
   z.preprocess(
-    (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
+    (v) => (typeof v === "string" && v.trim() === "" ? null : v),
     schema
     // Zod types this as input = unknown; we narrow it for our use case:
   ) as unknown as z.ZodEffects<
     T,
-    z.output<T>,          // output type = whatever the inner schema outputs
-    string | undefined    // input type = what our form actually passes
+    z.output<T>, // output type = whatever the inner schema outputs
+    string // input type = what our form actually passes
   >;
 
 // Accept either @handle (2-30) or a full URL.
@@ -30,9 +28,6 @@ export const urlOrHandle = z
     "Enter @handle or a full URL."
   );
 
-// Convenience: optional social field coming from forms ("" -> undefined)
-export const optionalUrlOrHandle = urlOrHandle.optional();
-
 // If you want a *required* URL (e.g., portfolio), validate real URLs
 export const requiredUrl = z
   .string()
@@ -40,12 +35,12 @@ export const requiredUrl = z
   .url("Enter a valid URL (must start with http:// or https://).");
 
 export const MAX_BIO = 1000;
- // 🔹 Cross-field rules (run after preprocess)
+// 🔹 Cross-field rules (run after preprocess)
 export const applyStandardRules = <
   TShape extends z.ZodRawShape & {
     instagram: z.ZodTypeAny;
     tiktok: z.ZodTypeAny;
-  }
+  },
 >(
   obj: z.ZodObject<TShape>
 ): z.ZodEffects<typeof obj> =>
@@ -54,14 +49,10 @@ export const applyStandardRules = <
     const d = data as z.infer<typeof obj>;
 
     const hasInstagram =
-      d.instagram !== undefined &&
-      d.instagram !== null &&
-      d.instagram !== "";
+      d.instagram !== undefined && d.instagram !== null && d.instagram !== "";
 
     const hasTiktok =
-      d.tiktok !== undefined &&
-      d.tiktok !== null &&
-      d.tiktok !== "";
+      d.tiktok !== undefined && d.tiktok !== null && d.tiktok !== "";
 
     if (!hasInstagram && !hasTiktok) {
       ctx.addIssue({
@@ -85,36 +76,35 @@ export const sharedBaseFormObject = z.object({
     .transform((e) => e.toLowerCase().trim()),
   locationYesNo: yesNoEnum.default("yes"),
   // Socials from forms may be "" → undefined
-  instagram: optionalUrlOrHandle,
-  tiktok: optionalUrlOrHandle,
+  instagram: urlOrHandle.nullable(),
+  tiktok: urlOrHandle.nullable(),
   // Portfolio REQUIRED and must be a real URL
   portfolio: requiredUrl,
-  niches: z
-    .array(z.string().trim())
-    .min(1, "Must select at least 1 niche."),
-  bio: emptyToUndef(z.string().trim().max(MAX_BIO, `Max ${MAX_BIO} characters`)).optional(),
-});
-
-// ---- Versions (optional but, if present, must be YYYY-MM-DD)
-export const consentServerAdditions = z.object({
-  termsVersion: emptyToUndef(z.string().regex(/^\d{4}-\d{2}-\d{2}$/)).optional(),
-  privacyVersion: emptyToUndef(z.string().regex(/^\d{4}-\d{2}-\d{2}$/)).optional(),
+  niches: z.array(z.string().trim()).min(1, "Must select at least 1 niche."),
+  bio: emptyToMissing(
+    z.string().trim().max(MAX_BIO, `Max ${MAX_BIO} characters`)
+  ).nullable(),
 });
 
 // ---- Final creator (strict AFTER merging)
-export const payloadObject = sharedBaseFormObject
-  .merge(consentServerAdditions)
+export const applyCreatorParamsObject = sharedBaseFormObject
   .merge(
     z.object({
-      profilePictureUrl: emptyToUndef(z.string().trim().url()) ,
-      // profilePicture: uploadMetaSchema.optional(),
-      turnstileToken: emptyToUndef(z.string().trim()).optional(),
+      profilePictureUrl: emptyToMissing(z.string().trim().url()),
+      // legal block is authoritative server-side
+      legal: z.object({
+        termsVersion: z.string(), // current versions from server registry
+        privacyVersion: z.string(),
+       }),
+      turnstileToken: emptyToMissing(z.string().trim()).optional(),
     })
   )
   .strict(); // << strict over the entire merged shape
 
-export const payloadSchema = applyStandardRules(payloadObject);
+export const applyCreatorParamsSchema = applyStandardRules(
+  applyCreatorParamsObject
+);
 
 // Types
-export type Payload = z.infer<typeof payloadObject>;
+export type ApplyCreatorParams = z.infer<typeof applyCreatorParamsObject>;
 export type StepId = "personal" | "social" | "details" | "media" | "legal";

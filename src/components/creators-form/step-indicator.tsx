@@ -33,7 +33,7 @@ steps: ReadonlyArray<Step>
         
             <div className="w-full bg-muted h-1 sm:h-1.5 rounded-full overflow-hidden mt-2 sm:mt-3">
         <motion.div
-          className="  h-full bg-gradient-to-r from-amber-400 to-primary"
+          className="  h-full bg-linear-to-r from-amber-400 to-primary"
           initial={{ width: 0 }}
           animate={{ width: `${pct}%` }}
           transition={{ duration: 0.3 }}
@@ -57,9 +57,9 @@ steps: ReadonlyArray<Step>
               className={cn(
                 "w-2 h-2 sm:w-3 sm:h-3 rounded-full cursor-default transition-colors",
                 index < currentStep
-                  ? "bg-gradient-to-b from-amber-400 to-primary"
+                  ? "bg-linear-to-b from-amber-400 to-primary"
                   : index === currentStep
-                  ? "bg-gradient-to-b from-amber-400 to-primary ring-2 sm:ring-4 ring-primary/20"
+                  ? "bg-linear-to-b from-amber-400 to-primary ring-2 sm:ring-4 ring-primary/20"
                   : "bg-muted"
               )}
               aria-current={index === currentStep ? "step" : undefined}
