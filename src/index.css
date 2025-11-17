@@ -134,7 +134,7 @@ background-image: radial-gradient(circle, transparent 50%, var(--background) 90%
 }
 
 h2 {
-  @apply mt-12 mb-6 text-4xl md:text-5xl font-bold leading-tight tracking-tight;
+  @apply mt-12 mb-6 text-4xl md:text-5xl font-light leading-tight tracking-tight;
 }
 
 h3 {

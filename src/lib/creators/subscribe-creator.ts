@@ -10,7 +10,7 @@ import {
   setResponseHeader,
   getRequest,
 } from "@tanstack/react-start/server";
-import { Creator, creatorSchema } from "./schemas/creator-apply-server";
+import {    creatorSchema, FirestoreCreatorRecord } from "./schemas/creator-apply-server";
 import { payloadSchema } from "./schemas/creators-apply-shared";
 import { normalizeIp } from "../ip";
 
@@ -231,7 +231,7 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
             privacyVersion: currentPrivacy,
             acceptedAt: now,
           },
-        } satisfies Creator;
+        } satisfies FirestoreCreatorRecord;
 
         const docRef = await db
           .collection("applications")

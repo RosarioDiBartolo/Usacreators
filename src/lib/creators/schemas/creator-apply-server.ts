@@ -96,6 +96,7 @@ export const EmailVerificationSchema = z.object({
     .regex(/^[a-zA-Z0-9_-]{5,100}$/, "Invalid document id"), // Firestore-safe
   token: z.string().min(1, "Missing token"), // tokens are opaque
 });
+export type FirestoreCreatorRecord = z.infer<typeof creatorSchema>;
 
-export type Creator = z.infer<typeof creatorObject>;
+export type Creator = z.infer<typeof firebaseCreatorRecord>;
 export type EmailVerification = z.infer<typeof EmailVerificationSchema>;

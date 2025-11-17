@@ -1,29 +1,67 @@
-import { DestinationCard } from "../ui/image-card";
+import { Creator } from "@/lib/creators/schemas/creator-apply-server";
 import { ScrollContainer, ScrollContent, SnapItem } from "./snap";
+import { Button } from "../ui/button";
+import {
+  motion,
+  MotionValue,
+  useMotionTemplate,
+  useTransform,
+} from "motion/react";
+
 const edgePadding = 72;
-const Carousel = () => {
+
+const CreatorCard = ({
+  creator,
+  progress,
+}: {
+  creator: Creator;
+  progress: MotionValue<number>;
+}) => {
+  const brightness = useTransform(progress, [0, 0.5, 1], [0.2, 1, 0.2]);
+  const blur = useTransform(progress, [0, 0.5, 1], [8, 0, 8]);
+
+  const filter = useMotionTemplate`brightness(${brightness}) blur(${blur}px)`;
+
   return (
-    <ScrollContainer className=" h-[600px] ">
+    <motion.div
+      style={{
+        filter,
+      }}
+      className=" bg-muted relative  w-[320px] aspect-3/4 shrink-0   border text-background   "
+    >
+      <div className=" absolute bottom-0 p-4 space-y-3">
+        <h3
+          className="
+              "
+        >
+          {creator.name}
+        </h3>
+        <p className=" line-clamp-2">{creator.bio ?? creator.additionalInfo}</p>
+        <Button className=" px-0" variant={"link"} size={"sm"}>
+          See more
+        </Button>
+      </div>
+      <img
+        className="   object-cover w-full h-full"
+        src={creator.profilePictureUrl ?? ""}
+      />
+    </motion.div>
+  );
+};
+
+const Carousel = ({ creators }: { creators: Creator[] }) => {
+  return (
+    <ScrollContainer className=" py-20  text-start bg-radial ">
       <ScrollContent>
         <div style={{ width: edgePadding, flex: "0 0 auto" }} aria-hidden />
-        {[...Array(10)].map((_, i) => (
+        {creators.map((c, i) => (
           <SnapItem key={i} debug>
-            <div className="h-[220px] w-[320px] shrink-0 rounded-xl border bg-secondary text-secondary-foreground">
-              <DestinationCard
-                imageUrl="https://images.unsplash.com/photo-1526495124232-a04e1849168c?q=80&w=1887"
-                location="Dubai"
-                flag="🇦🇪"
-                stats="2,345 Hotels • 54 Packages"
-                href="#"
-                // A rich, twilight purple HSL value
-                themeColor="250 50% 30%"
-              />
-            </div>
+            <CreatorCard creator={c} />
           </SnapItem>
         ))}
         <div style={{ width: edgePadding, flex: "0 0 auto" }} aria-hidden />
       </ScrollContent>
-    </ScrollContainer>
+     </ScrollContainer>
   );
 };
 

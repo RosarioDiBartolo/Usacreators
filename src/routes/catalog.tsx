@@ -1,7 +1,9 @@
+import CreatorsCarousel from "@/components/creators-carousel";
 import { creatorsQueryOptions } from "@/lib/creators/get-creators";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-
+import Header from "@/components/header";
+import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/catalog")({
   loader: ({ context }) =>
     context.queryClient.ensureQueryData(creatorsQueryOptions),
@@ -10,17 +12,19 @@ export const Route = createFileRoute("/catalog")({
 });
 
 function CatalogPage() {
-  const { data } = useSuspenseQuery(creatorsQueryOptions);
+  const { data: creators } = useSuspenseQuery(creatorsQueryOptions);
 
   return (
-    <main>
-      <h1>Creator Catalog</h1>
-      {data?.map((creator) => (
-        <div key={creator.id}>
-          <h2>{creator.name}</h2>
-          <p>{creator.bio}</p>
+    <>
+       <main className="    pt-20  text-center">
+        <h2>We already acquired the best content creators.</h2>
+        <h1>You just have to choose...</h1>
+        <CreatorsCarousel creators={creators} />
+        <Button size={"2xl"}>Find the creator for your need.</Button>
+        <div>
+          
         </div>
-      ))}
-    </main>
+      </main>
+    </>
   );
 }
