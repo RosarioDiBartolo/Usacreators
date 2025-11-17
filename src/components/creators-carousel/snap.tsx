@@ -82,7 +82,7 @@ export function ScrollContainer({ className, children }: ScrollContainerProps) {
 
   return (
     <ScrollCtx.Provider value={containerRef}>
-      <div className="relative rounded-full  overflow-hidden w-fit mx-auto">
+      <div className="relative rounded-full  overflow-hidden w-fit max-w-full mx-auto">
         <ScrollArrows />
          <div
           ref={containerRef}

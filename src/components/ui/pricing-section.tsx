@@ -1,4 +1,4 @@
-import { ModernPricingPage, PricingCardProps  } from "@/components/animated-glassy-pricing";
+import { ModernPricingPage, PricingCardProps  } from "@/components/pricing/animated-glassy-pricing";
 
 const myPricingPlans: PricingCardProps[] = [
   { 

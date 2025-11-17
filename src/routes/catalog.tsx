@@ -1,9 +1,11 @@
 import CreatorsCarousel from "@/components/creators-carousel";
 import { creatorsQueryOptions } from "@/lib/creators/get-creators";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import PricingSection from "@/components/ui/pricing-section";
+import { FloatingNav } from "@/components/ui/floating-navbar";
+import { cn } from "@/lib/fe-utils";
 export const Route = createFileRoute("/catalog")({
   loader: ({ context }) =>
     context.queryClient.ensureQueryData(creatorsQueryOptions),
@@ -11,20 +13,66 @@ export const Route = createFileRoute("/catalog")({
   component: CatalogPage,
 });
 
+import { LinkProps } from "@tanstack/react-router";
+import { JSX } from "react";
+export interface NavItem {
+  name: string;
+  link: LinkProps["to"];
+  icon?: JSX.Element;
+}
+const navItems: NavItem[] = [
+  { name: "Home", link: "/" },
+  { name: "Catalog", link: "/catalog" },
+];
 function CatalogPage() {
   const { data: creators } = useSuspenseQuery(creatorsQueryOptions);
 
   return (
-    <>
-       <main className=" pt-20  text-center">
-        <h2>We already acquired the best content creators.</h2>
-        <h1>You just have to choose...</h1>
+    <div className=" relative">
+      <FloatingNav>
+        {navItems.map((navItem, idx) => (
+          <Link
+            key={`link=${idx}`}
+            to={navItem.link}
+            className={cn(
+              "relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
+            )}
+          >
+            <span className="block sm:hidden">{navItem.icon}</span>
+            <span className="hidden sm:block text-sm">{navItem.name}</span>
+          </Link>
+        ))}
+        <Link
+          to="/creators/apply"
+          className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full"
+        >
+          <span>Apply as a Creator</span>
+          <span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent  h-px" />
+        </Link>
+      </FloatingNav>
+
+      <main className="  container mx-auto    text-center">
+        <h2
+          className="
+          text-center
+           max-w-3xl mx-auto
+          bg-clip-text text-transparent 
+          bg-gradient-to-b from-secondary via-amber-900 to-amber-950
+          "
+        >
+          A curated catalog of content creators and influencers from miami
+        </h2>
+
+        <h5>
+          You just have to choose.
+        </h5>
+
         <CreatorsCarousel creators={creators} />
-        <Button size={"2xl"}>Find the creator for your need.</Button>
+        <Button size={"2xl"}>Explore the whole Catalog</Button>
         <div className=" relative">
           <PricingSection />
         </div>
       </main>
-    </>
+    </div>
   );
 }

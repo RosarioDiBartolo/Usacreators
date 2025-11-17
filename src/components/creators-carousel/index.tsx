@@ -27,7 +27,7 @@ const CreatorCard = ({
       style={{
         filter,
       }}
-      className=" bg-muted relative  w-[320px] aspect-3/4 shrink-0   border text-background   "
+      className=" rounded-md overflow-hidden bg-muted relative  w-[320px] aspect-3/4 shrink-0   border text-background   "
     >
       <div className=" absolute bottom-0 p-4 space-y-3">
         <h3
@@ -51,7 +51,7 @@ const CreatorCard = ({
 
 const Carousel = ({ creators }: { creators: Creator[] }) => {
   return (
-    <ScrollContainer className=" py-20  text-start bg-radial ">
+    <ScrollContainer className=" max-w-7xl  py-20  text-start bg-radial ">
       <ScrollContent>
         <div style={{ width: edgePadding, flex: "0 0 auto" }} aria-hidden />
         {creators.map((c, i) => (

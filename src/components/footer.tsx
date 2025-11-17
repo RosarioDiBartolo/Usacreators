@@ -3,7 +3,11 @@ import { Mail  } from "lucide-react";
 import logo from "../assets/logo.png";
 import { officialEmail } from "@/lib/creators/constants";
 import { IconBrandTiktok } from "@tabler/icons-react";
-
+import { Link } from "@tanstack/react-router";
+const legalLinks: {
+  name: string;
+  href: "terms" | "privacy" | "cookies";
+}[] = [{name: "Terms and conditions", href: "terms"}, {name:"Privacy Policy", href: "privacy"}, {name:"Cookie Policy", href: "cookies"}]
 function Footer() {
   return (
     <footer className=" section  bg-gradient-to-b from-[var(--creator-brand-overlay-dark)] to-stone-800 xl:mb-30 font-poppins xl:rounded-b-[80px]">
@@ -36,7 +40,7 @@ function Footer() {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <a
                 href="/creators/apply"
-                className="inline-block bg-gradient-to-t from-primary to-tertiary text-white font-semibold text-lg px-8 py-3 rounded-2xl shadow-md hover:shadow-lg transition-all"
+                className="inline-block bg-linear-to-t from-primary to-tertiary text-white font-semibold text-lg px-8 py-3 rounded-2xl shadow-md hover:shadow-lg transition-all"
               >
                 Get Started
              </a>
@@ -64,15 +68,15 @@ function Footer() {
           <div className="flex flex-col gap-4">
             <h3 className="text-white text-xl font-semibold">Legal</h3>
             <nav className="flex flex-col gap-3">
-              {["Terms and conditions", "Privacy Policy", "Cookie Policy"].map(
+              { legalLinks.map(
                 (link) => (
-                  <a
-                    key={link}
-                    href={`${link.toLowerCase().replace(/\s/g, "-")}`}
+                  <Link
+                    key={link.name}
+                    to={`/legal/${link.href}`}
                     className="text-white/70 text-sm uppercase tracking-[2px] hover:text-primary transition-colors"
                   >
-                    {link}
-                  </a>
+                    {link.name}
+                  </Link>
                 )
               )}
             </nav>

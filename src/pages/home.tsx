@@ -2,7 +2,7 @@ import CreatorsBrands from "@/components/creator-brand";
 import Footer from "@/components/footer";
 import Videos from "@/components/videos";
 import FAQ from "@/components/faq";
-import Hero from "@/components/animated-shader-hero";
+import Hero from "@/components/pricing/animated-shader-hero";
 import Features from "@/components/features";
 import Header from "@/components/header";
 
