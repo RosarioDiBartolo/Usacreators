@@ -51,23 +51,25 @@ function CatalogPage() {
         </Link>
       </FloatingNav>
 
-      <main className="section section-padding text-center
- container mx-auto   " >
-
-        <p className=" text-3xl">
+      <main
+        className="section   text-center
+ container mx-auto  p-20  "
+      >
+        <p
+          className=" tracking-wide   bg-clip-text text-transparent 
+          bg-gradient-to-b from-amber-700 to-amber-900 text-3xl"
+        >
           You just have to choose.
         </p>
         <h2
           className="
            max-w-4xl mx-auto
           bg-clip-text text-transparent 
-          bg-gradient-to-b from-foreground via-amber-900 to-amber-950
+          bg-gradient-to-b from-amber-800 to-amber-950
           "
         >
           A curated collection of content creators and influencers from miami
         </h2>
-
-          <h1>Take a  <span className=" bg-text bg-gradient">look</span></h1>
 
         <CreatorsCarousel creators={creators} />
         <Button size={"2xl"}>Explore the whole Catalog</Button>
