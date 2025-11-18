@@ -451,14 +451,15 @@ export const Hero = ( ) => (
 
     <div className="text-center space-y-6 max-w-5xl mx-auto px-4">
       {/* Main Heading with Animation */}
-      <div className="space-y-2">
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-orange-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent animate-fade-in-up animation-delay-200">
-          Miami's Top
-        </h1>
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-yellow-300 via-orange-400 to-red-400 bg-clip-text text-transparent animate-fade-in-up animation-delay-400">
+      <h1 className="space-y-2">
+        <span className="text-5xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-orange-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent animate-fade-in-up animation-delay-200">
+          Miami's Top 
+        </span>
+        <br />
+        <span className="text-5xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-yellow-300 via-orange-400 to-red-400 bg-clip-text text-transparent animate-fade-in-up animation-delay-400">
           Content Creators and Influencers
-        </h1>
-      </div>
+        </span>
+      </h1>
 
       {/* Subtitle with Animation */}
       <div className="max-w-3xl mx-auto animate-fade-in-up animation-delay-600">

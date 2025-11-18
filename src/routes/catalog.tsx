@@ -15,6 +15,9 @@ export const Route = createFileRoute("/catalog")({
 
 import { LinkProps } from "@tanstack/react-router";
 import { JSX } from "react";
+import FloatingLines from "@/components/FloatingLines";
+import Header from "@/components/header";
+import Features from "@/pages/catalog/features";
 export interface NavItem {
   name: string;
   link: LinkProps["to"];
@@ -29,7 +32,8 @@ function CatalogPage() {
 
   return (
     <div className=" relative">
-      <FloatingNav>
+      <Header />
+      {/* <FloatingNav>
         {navItems.map((navItem, idx) => (
           <Link
             key={`link=${idx}`}
@@ -49,30 +53,44 @@ function CatalogPage() {
           <span>Apply as a Creator</span>
           <span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent  h-px" />
         </Link>
-      </FloatingNav>
+      </FloatingNav> */}
 
       <main
-        className="section   text-center
- container mx-auto  p-20  "
+        className=" text-center
+   "
       >
-        <p
-          className=" tracking-wide   bg-clip-text text-transparent 
-          bg-gradient-to-b from-amber-700 to-amber-900 text-3xl"
-        >
-          You just have to choose.
-        </p>
-        <h2
-          className="
-           max-w-4xl mx-auto
-          bg-clip-text text-transparent 
-          bg-gradient-to-b from-amber-800 to-amber-950
-          "
-        >
-          A curated collection of content creators and influencers from miami
-        </h2>
+        <div className="  relative section-padding">
+          <FloatingLines
+            enabledWaves={["top", "middle", "bottom"]}
+            // Array - specify line count per wave; Number - same count for all waves
+            lineCount={[10, 15, 20]}
+            // Array - specify line distance per wave; Number - same distance for all waves
+            lineDistance={[8, 6, 4]}
+            bendRadius={5.0}
+            bendStrength={-0.5}
+            interactive={true}
+            parallax={true}
+          />
+          <div className=" relative z-10">
+            <p className="tracking-wide bg-clip-text text-transparent bg-gradient-to-b from-amber-700 to-amber-900 text-sm uppercase">
+              For Miami brands, agencies & bars
+            </p>
+            <h2  >
+              The only up-to-date catalog of vetted Miami content creators you
+              can plug into your campaigns today.
+            </h2>
 
-        <CreatorsCarousel creators={creators} />
-        <Button size={"2xl"}>Explore the whole Catalog</Button>
+
+            <CreatorsCarousel  creators={creators} />
+            {/* <p className="mt-4 max-w-2xl mx-auto text-muted-foreground">
+              Get instant access to hand-picked creators with contact info,
+              niche, platform stats, pricing ranges, and example deliverables —
+              without spending hours on Instagram and TikTok.
+            </p> */}
+          </div>
+             
+             <Features />
+         </div>
         <div className=" relative">
           <PricingSection />
         </div>

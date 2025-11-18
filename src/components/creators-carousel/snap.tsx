@@ -112,7 +112,7 @@ type SnapItemProps = {
 
 export function SnapItem({
   children,
-  scaleRange = [0.8, 1.2, 0.8],
+  scaleRange = [0.6, 1.2, 0.6],
   debug = false,
   className = "snap-center flex-none",
 }: SnapItemProps) {
