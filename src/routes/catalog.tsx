@@ -18,6 +18,7 @@ import { JSX } from "react";
 import FloatingLines from "@/components/FloatingLines";
 import Header from "@/components/header";
 import Features from "@/pages/catalog/features";
+import SecondSection from "@/pages/catalog/second-section";
 export interface NavItem {
   name: string;
   link: LinkProps["to"];
@@ -81,16 +82,17 @@ function CatalogPage() {
             </h2>
 
 
-            <CreatorsCarousel  creators={creators} />
+            <CreatorsCarousel creators={creators} />
             {/* <p className="mt-4 max-w-2xl mx-auto text-muted-foreground">
               Get instant access to hand-picked creators with contact info,
               niche, platform stats, pricing ranges, and example deliverables —
               without spending hours on Instagram and TikTok.
             </p> */}
           </div>
-             
-             <Features />
-         </div>
+        </div>
+        <SecondSection />
+        <Features />
+
         <div className=" relative">
           <PricingSection />
         </div>
