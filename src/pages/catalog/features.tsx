@@ -14,7 +14,7 @@ export default function Features() {
         {features.map((feature, index) => (
           <div key={index} className="relative flex flex-col items-center">
             <div className="relative w-10 h-10 mb-3">
-              <div className="absolute -left-2 -top-2 w-8 h-8 rounded-full opacity-60 bg-gradient-to-b from-[#FF9D00] to-transparent mix-blend-plus-lighter blur-[20px]" />
+              <div className="absolute inset-0  rounded-full opacity-60 bg-gradient-to-b from-[#FF9D00] to-transparent mix-blend-plus-lighter blur-[20px]" />
               {feature.icon}
             </div>
             <h3 className=" mt-4 text-[29.3px] leading-[32px] font-normal tracking-[-0.64px] mb-3 bg-gradient-to-r from-[#2A1F1D] via-[#7B3306] to-[#461901] bg-clip-text text-transparent">
