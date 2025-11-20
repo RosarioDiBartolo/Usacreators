@@ -76,6 +76,7 @@ function CatalogPage() {
             <p className="tracking-wide bg-clip-text text-transparent bg-gradient-to-b from-amber-700 to-amber-900 text-sm uppercase">
               For Miami brands, agencies & bars
             </p>
+          
             <h2  >
               The only up-to-date catalog of vetted Miami content creators you
               can plug into your campaigns today.

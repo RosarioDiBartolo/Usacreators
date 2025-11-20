@@ -1,73 +1,88 @@
 import { Creator } from "@/lib/creators/schemas/creator-apply-server";
-import { ScrollContainer, ScrollContent, SnapItem } from "./snap";
+import { ScrollProvider } from "./snap";
 import { Button } from "../ui/button";
 import {
   motion,
-  MotionValue,
   useMotionTemplate,
+  useMotionValue,
   useScroll,
   useTransform,
+  Variants,
 } from "motion/react";
-import missingPic from "@/assets/images/creator-missing.jpg"
-const edgePadding = 72;
+import missingPic from "@/assets/images/creator-missing.jpg";
+import InfiniteSlider from "../ui/infinite-slider";
+import { useRef } from "react";
+import { Quote } from "lucide-react";
 
-const CreatorCard = ({
-  creator,
-  progress,
-}: {
-  creator: Creator;
-  progress: MotionValue<number>;
-}) => {
+// Animation variants for each testimonial card
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut",
+    },
+  },
+};
+
+const CreatorCard = ({ creator }: { creator: Creator }) => {
+  const progress = useMotionValue(0);
   const brightness = useTransform(progress, [0, 0.5, 1], [0.2, 1, 0.2]);
   const blur = useTransform(progress, [0, 0.5, 1], [8, 0, 8]);
 
   const filter = useMotionTemplate`brightness(${brightness}) blur(${blur}px)`;
-  const { scrollY} = useScroll()
-const y = useTransform([scrollY, progress], ([v, p]:[number, number]) => {
-  return v * Math.abs(0.5 - p);
-}); 
+  const { scrollY } = useScroll();
+  const y = useTransform([scrollY, progress], ([v, p]: [number, number]) => {
+    return v * Math.abs(0.5 - p);
+  });
 
-return (
+  return (
     <motion.div
-      style={{
-        filter,
-         
-      }}
-      className="  rounded-md group  group-hover: overflow-hidden bg-muted relative  w-[320px] aspect-3/4 shrink-0   border text-background   "
+      key={creator.id}
+      className="relative overflow-hidden rounded-lg bg-card shadow-sm"
+      variants={itemVariants}
     >
-      <div className=" transition opacity-0   absolute inset-0 group-hover:opacity-100 flex backdrop-blur-xs backdrop-brightness-70 flex-col items-start justify-end  p-4 space-y-3">
-        <h3
-          className="
-              "
-        >
-          {creator.name}
-        </h3>
-        <p className=" line-clamp-2">{creator.bio ?? creator.additionalInfo}</p>
-        <Button className=" px-0" variant={"link"} size={"sm"}>
-          See more
-        </Button>
+      <div className="relative">
+        <img
+          src={creator.profilePictureUrl ?? missingPic}
+          alt={creator.name}
+          className="h-120 w-full object-cover"
+        />
+        {/* Gradient overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
       </div>
-      <img
-        className="   object-cover w-full h-full"
-        src={creator.profilePictureUrl ?? missingPic}
-      />
+
+      {/* Content within the card */}
+      <div className="absolute bottom-0 left-0 right-0 p-6 text-left text-white">
+        <Quote className="mb-4 h-8 w-8 text-white/40" aria-hidden="true" />
+        <blockquote className="text-base line-clamp-3 font-medium leading-relaxed">
+          {creator.bio}
+        </blockquote>
+        <figcaption className="mt-4 line-clamp-2">
+          <p className="font-semibold text-card-white/100">
+            &mdash; {creator.name}
+          </p>
+          <p className=" capitalize text-card-white/40">
+            {creator.niches.map((n) => n.replaceAll("_", " ")).join(", ")}
+          </p>
+        </figcaption>
+      </div>
     </motion.div>
   );
 };
 
 const Carousel = ({ creators }: { creators: Creator[] }) => {
-  return (
-    <ScrollContainer autoScroll className="   bg-radial from-purple-200/80 to-60% max-w-7xl  py-20  text-start bg-radial ">
-      <ScrollContent>
-        <div style={{ width: edgePadding, flex: "0 0 auto" }} aria-hidden />
+   return (
+    <div className=" relative w-full max-w-7xl mx-auto">
+      <div className=" w-[120%]  h-[120%]  -left-20 -top-10 blur-lg  absolute z-30    bg-[radial-gradient(circle,transparent_50%,#f2ecf3_70%)]  " />
+      <InfiniteSlider duration={100}>
         {creators.map((c, i) => (
-          <SnapItem key={i}  >
-            <CreatorCard creator={c} />
-          </SnapItem>
+          <CreatorCard key={i} creator={c} />
         ))}
-        <div style={{ width: edgePadding, flex: "0 0 auto" }} aria-hidden />
-      </ScrollContent>
-     </ScrollContainer>
+      </InfiniteSlider>
+    </div>
   );
 };
 

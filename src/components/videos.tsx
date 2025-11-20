@@ -23,7 +23,7 @@ function VideosSlider() {
       <div className=" relative">
         <div
           className=" 
-        slider   
+        slider-overlay   
         inset-0 z-10 absolute"
         />
         <InfiniteSlider gap={30} duration={50} className="w-full py-5   ">

@@ -10,10 +10,10 @@ import { cn } from "@/lib/fe-utils";
 // OPTIONAL: if you use lucide-react already
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const ScrollCtx = React.createContext<
+  const ScrollCtx = React.createContext<
   React.RefObject<HTMLDivElement | null> | undefined
 >(undefined);
-
+export const ScrollProvider = ScrollCtx.Provider;
 type ScrollContainerProps = {
   className?: string;
   children: React.ReactNode;
@@ -77,6 +77,9 @@ function ScrollArrows() {
   );
 }
 
+
+
+ 
 export function ScrollContainer({ className, children }: ScrollContainerProps) {
   const containerRef = React.useRef<HTMLDivElement>(null);
 
@@ -119,7 +122,7 @@ export function SnapItem({
   const containerRef = React.useContext(ScrollCtx);
   if (!containerRef)
     throw new Error("SnapItem must be inside <ScrollContainer>");
-
+      
   const itemRef = React.useRef<HTMLDivElement>(null);
   const { progress, signedPercentFromCenter } = useCenterProgress({
     container: containerRef,
