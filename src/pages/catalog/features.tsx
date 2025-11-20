@@ -8,9 +8,11 @@ export default function Features() {
   return (
     <section className="  relative w-full max-w-[960px] mx-auto px-4 py-12 md:py-20">
       <p className=" text-amber-900 tracking-[0.5em]">BUILT TO SCALE WITH YOU </p>
-      <h2>Miami Creators features for brands</h2>
+      <h2 className="
+    bg-text
+    bg-linear-to-b from-secondary via-amber-900 to-amber-950">Miami Creators features for brands</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 lg:gap-x-24 gap-y-12 md:gap-y-16">
+      <div className="  p-4 py-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 lg:gap-x-24 gap-y-12 md:gap-y-16">
         {features.map((feature, index) => (
           <div key={index} className="relative flex flex-col items-center">
             <div className="relative w-10 h-10 mb-3">

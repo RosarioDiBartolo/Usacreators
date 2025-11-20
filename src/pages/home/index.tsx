@@ -1,0 +1,27 @@
+import CreatorsBrands from "@/pages/home/creator-brand";
+import Footer from "@/pages/home/footer";
+import Videos from "@/pages/home/videos";
+import FAQ from "@/pages/home/faq";
+import Hero from "@/pages/home/animated-shader-hero";
+import Features from "@/pages/home/features";
+import Header from "@/pages/home/header";
+
+function Home() {
+  return (
+    <div className="flex flex-col gap-20">
+      <Header />
+
+      <Hero />
+      <Videos />
+
+      <Features />
+      <FAQ />
+      <div>
+        <CreatorsBrands />
+        <Footer />
+      </div>
+    </div>
+  );
+}
+
+export default Home;

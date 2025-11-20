@@ -1,4 +1,4 @@
-import InfiniteSlider from "./ui/infinite-slider";
+import InfiniteSlider from "../../components/ui/infinite-slider";
 import video1 from "@/assets/creators-videos/regina.mp4";
 import video2 from "@/assets/creators-videos/regina2.mp4";
 import video3 from "@/assets/creators-videos/sabina.mp4";
@@ -14,8 +14,9 @@ function VideosSlider() {
         className="
           text-center
            
-          bg-clip-text text-transparent 
-          bg-gradient-to-b from-secondary via-amber-900 to-amber-950
+         
+    bg-text
+    bg-linear-to-b from-secondary via-amber-900 to-amber-950
           "
       >
         Miami's top creators <br /> across every niche

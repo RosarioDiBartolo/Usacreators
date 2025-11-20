@@ -195,13 +195,13 @@ export default function FAQ() {
       >
          
         <div className=" ">
-          <h2 className=" relative !mt-0"> 
+          <h2 className="
+    bg-text
+    bg-linear-to-b from-secondary via-amber-900 to-amber-950 relative !mt-0"> 
             Everything You Need to Know
-
-
-          
+  
           </h2>
-          <p className="text-base leading-relaxed text-muted-foreground">
+          <p className="text-base leading-relaxed max-w-3xl mx-auto ">
             Welcome to the Miami Creators Community. Here's a full breakdown of
             how the platform works, how you earn, and why being here matters.
           </p>

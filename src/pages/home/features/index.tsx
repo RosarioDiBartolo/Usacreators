@@ -41,7 +41,7 @@ function Features() {
     text-center
   
     bg-text
-    bg-gradient-to-b from-secondary via-amber-900 to-amber-950
+    bg-linear-to-b from-secondary via-amber-900 to-amber-950
 
     "
       >

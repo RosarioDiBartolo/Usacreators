@@ -13,7 +13,9 @@ export default function Section() {
   });
 
   // Parallax mappings
-  const imageY = useSpring( useTransform(scrollYProgress, [0, 1], [-400, 400])); // image moves opposite to scroll
+  const imageY = useSpring( useTransform(scrollYProgress, [0, 1], [-70, 70]), {
+    bounce: 0,
+  }); // image moves opposite to scroll
   const decoTopY = useTransform(scrollYProgress, [0, 1], [100, -200]);
   const decoBottomY = useTransform(scrollYProgress, [0, 1], [-10, 20]);
 

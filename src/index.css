@@ -146,20 +146,19 @@
   }
 
   h2 {
-    @apply max-w-4xl mx-auto bg-clip-text text-transparent bg-gradient-to-b 
-         from-amber-800 to-amber-950 text-4xl md:text-6xl font-light 
+    @apply max-w-4xl mx-auto text-4xl md:text-6xl font-light 
          leading-tight tracking-tight 
-         mt-5 mb-8;
+         mt-3 mb-6;
   }
 
   h3 {
-    @apply mt-4 mb-4 text-3xl md:text-4xl font-semibold leading-snug;
+    @apply mt-2 mb-4 text-3xl md:text-4xl font-semibold leading-snug;
   }
   h4 {
-    @apply mt-3 mb-3 text-2xl md:text-3xl font-semibold leading-snug;
+    @apply mt-2 mb-3 text-2xl md:text-3xl font-semibold leading-snug;
   }
   h5 {
-    @apply mt-2 mb-2 text-xl md:text-2xl font-medium leading-normal;
+    @apply mt-1 mb-2 text-xl md:text-2xl font-medium leading-normal;
   }
 
   h6 {
