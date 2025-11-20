@@ -9,7 +9,7 @@ import video6 from "@/assets/creators-videos/sabina4.mp4";
 const videos = [video1, video2, video3, video4, video5, video6];
 function VideosSlider() {
   return (
-    <section id="videos" className="mx-auto max-w-6xl ">
+    <section id="videos" className="relative w-full max-w-7xl mx-auto  mx-auto  ">
       <h2
         className="
           text-center

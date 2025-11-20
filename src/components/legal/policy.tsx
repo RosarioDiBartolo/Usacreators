@@ -185,7 +185,7 @@ export function PolicyRenderer({
 
       {doc.sections.map((sec, sIdx) => {
          return (
-          <section key={sIdx} className="policy-section">
+          <section key={sIdx} className="relative w-full max-w-7xl mx-auto  policy-section">
             <H level={startLevel}>{renderInline(sec.title)}</H>
             <SectionBlocks
               blocks={sec.blocks}

@@ -181,6 +181,7 @@ export default function FAQ() {
     <section
       id="faq"
       className=" 
+      relative w-full max-w-7xl mx-auto 
     section-padding 
     text-secondary
     text-center

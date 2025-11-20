@@ -6,7 +6,7 @@ interface FeatureData {
 
 export default function Features() {
   return (
-    <section className="w-full max-w-[960px] mx-auto px-4 py-12 md:py-20">
+    <section className="  relative w-full max-w-[960px] mx-auto px-4 py-12 md:py-20">
       <p className=" text-amber-900 tracking-[0.5em]">BUILT TO SCALE WITH YOU </p>
       <h2>Miami Creators features for brands</h2>
 

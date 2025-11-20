@@ -18,23 +18,18 @@ const AdditionalButtons = ({
 }: {
   setIsMobileMenuOpen?: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const onClick = ()=> setIsMobileMenuOpen &&  setIsMobileMenuOpen(false);
-  return(
-  <>
-   
-
-    <NavbarButton
-        onClick = {onClick}
-
-    variant="outline">
-      Book a call <PhoneCall size={20} />
-    </NavbarButton>
-    <NavbarButton 
-        onClick = {onClick}
-
-    variant="gradient">Become a Creator</NavbarButton>
-  </>
-);}
+  const onClick = () => setIsMobileMenuOpen && setIsMobileMenuOpen(false);
+  return (
+    <>
+      <NavbarButton onClick={onClick} variant="outline">
+        Book a call <PhoneCall size={20} />
+      </NavbarButton>
+      <NavbarButton onClick={onClick} variant="gradient">
+        Become a Creator
+      </NavbarButton>
+    </>
+  );
+};
 export default function NavbarDemo() {
   const navItems = [
     {

@@ -196,7 +196,7 @@ const sections = [
 /* Main Component */
 export default function CreatorsBrands() {
   return (
-    <section className=" !pb-0">
+    <section className="relative w-full max-w-7xl mx-auto  ">
       <div className="flex flex-col text-center lg:text-start lg:flex-row    overflow-hidden  rounded-t-[100px] min-h-[80vh] ">
         {sections.map((section) => (
           <Section key={section.id} {...section}>

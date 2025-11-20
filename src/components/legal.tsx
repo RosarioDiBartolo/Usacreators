@@ -102,7 +102,7 @@ export function PolicyRenderer({
       {doc.sections.map((sec, sIdx) => {
         const secTitle = replaceVars(sec.title, vars)
         return (
-          <section key={sIdx} className="policy-section">
+          <section key={sIdx} className="relative w-full max-w-7xl mx-auto  policy-section">
             <H level={startLevel}>{renderInline(secTitle)}</H>
 
             {sec.blocks.map((b, i) => {

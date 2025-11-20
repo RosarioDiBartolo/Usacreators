@@ -1,11 +1,16 @@
 import CreatorsCarousel from "@/components/creators-carousel";
 import { creatorsQueryOptions } from "@/lib/creators/get-creators";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
+import { createFileRoute, LinkProps } from "@tanstack/react-router";
 import PricingSection from "@/components/ui/pricing-section";
-import { FloatingNav } from "@/components/ui/floating-navbar";
-import { cn } from "@/lib/fe-utils";
+import { JSX } from "react";
+import FloatingLines from "@/components/FloatingLines";
+import Header from "@/components/header";
+import Features from "@/pages/catalog/features";
+import SecondSection from "@/pages/catalog/second-section";
+import { motion } from "motion/react";
+import CarouselHero from "@/components/creators-carousel";
+
 export const Route = createFileRoute("/catalog")({
   loader: ({ context }) =>
     context.queryClient.ensureQueryData(creatorsQueryOptions),
@@ -13,91 +18,58 @@ export const Route = createFileRoute("/catalog")({
   component: CatalogPage,
 });
 
-import { LinkProps } from "@tanstack/react-router";
-import { JSX } from "react";
-import FloatingLines from "@/components/FloatingLines";
-import Header from "@/components/header";
-import Features from "@/pages/catalog/features";
-import SecondSection from "@/pages/catalog/second-section";
 export interface NavItem {
   name: string;
   link: LinkProps["to"];
   icon?: JSX.Element;
 }
+
 const navItems: NavItem[] = [
   { name: "Home", link: "/" },
   { name: "Catalog", link: "/catalog" },
 ];
+
 function CatalogPage() {
-  const { data: creators } = useSuspenseQuery(creatorsQueryOptions);
-
   return (
-    <div className=" relative">
+    <div className="relative min-h-screen bg-gradient-to-b from-background via-amber-50/40 to-background dark:from-background dark:via-amber-950/30 dark:to-background">
       <Header />
-      {/* <FloatingNav>
-        {navItems.map((navItem, idx) => (
-          <Link
-            key={`link=${idx}`}
-            to={navItem.link}
-            className={cn(
-              "relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
-            )}
-          >
-            <span className="block sm:hidden">{navItem.icon}</span>
-            <span className="hidden sm:block text-sm">{navItem.name}</span>
-          </Link>
-        ))}
-        <Link
-          to="/creators/apply"
-          className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full"
+
+      <main className="relative text-center overflow-hidden">
+        <CarouselHero />
+
+        {/* Sections enter with slight stagger */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <span>Apply as a Creator</span>
-          <span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent  h-px" />
-        </Link>
-      </FloatingNav> */}
+          <SecondSection />
+        </motion.div>
 
-      <main
-        className=" text-center
-   "
-      >
-        <div className="  relative section-padding">
-          <FloatingLines
-            enabledWaves={["top", "middle", "bottom"]}
-            // Array - specify line count per wave; Number - same count for all waves
-            lineCount={[10, 15, 20]}
-            // Array - specify line distance per wave; Number - same distance for all waves
-            lineDistance={[8, 6, 4]}
-            bendRadius={5.0}
-            bendStrength={-0.5}
-            interactive={true}
-            parallax={true}
-          />
-          <div className=" relative z-10">
-            <p className="tracking-wide bg-clip-text text-transparent bg-gradient-to-b from-amber-700 to-amber-900 text-sm uppercase">
-              For Miami brands, agencies & bars
-            </p>
-          
-            <h2  >
-              The only up-to-date catalog of vetted Miami content creators you
-              can plug into your campaigns today.
-            </h2>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.05 }}
+        >
+          <Features />
+        </motion.div>
 
-
-            <CreatorsCarousel creators={creators} />
-            {/* <p className="mt-4 max-w-2xl mx-auto text-muted-foreground">
-              Get instant access to hand-picked creators with contact info,
-              niche, platform stats, pricing ranges, and example deliverables —
-              without spending hours on Instagram and TikTok.
-            </p> */}
-          </div>
-        </div>
-        <SecondSection />
-        <Features />
-
-        <div className=" relative">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.65, ease: "easeOut" }}
+          className="relative"
+        >
+          {/* Glow above pricing */}
+          <div className="pointer-events-none absolute inset-x-0 -top-10 h-32 bg-gradient-to-b from-amber-500/25 via-amber-500/5 to-transparent blur-3xl" />
           <PricingSection />
-        </div>
+        </motion.div>
       </main>
     </div>
   );
 }
+
+export default CatalogPage;

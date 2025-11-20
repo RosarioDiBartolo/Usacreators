@@ -13,6 +13,9 @@ import missingPic from "@/assets/images/creator-missing.jpg";
 import InfiniteSlider from "../ui/infinite-slider";
 import { useRef } from "react";
 import { Quote } from "lucide-react";
+import FloatingLines from "../FloatingLines";
+import { creatorsQueryOptions } from "@/lib/creators/get-creators";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 // Animation variants for each testimonial card
 const itemVariants: Variants = {
@@ -73,17 +76,69 @@ const CreatorCard = ({ creator }: { creator: Creator }) => {
   );
 };
 
-const Carousel = ({ creators }: { creators: Creator[] }) => {
-   return (
-    <div className=" relative w-full max-w-7xl mx-auto">
-      <div className=" w-[120%]  h-[120%]  -left-20 -top-10 blur-lg  absolute z-30    bg-[radial-gradient(circle,transparent_50%,#f2ecf3_70%)]  " />
-      <InfiniteSlider duration={100}>
-        {creators.map((c, i) => (
-          <CreatorCard key={i} creator={c} />
-        ))}
-      </InfiniteSlider>
-    </div>
+const CarouselHero = () => {
+  const { data: creators } = useSuspenseQuery(creatorsQueryOptions);
+
+  return (
+    <section className="  relative w-full  section-padding">
+      <FloatingLines
+        enabledWaves={["top", "middle", "bottom"]}
+        lineCount={[10, 15, 20]}
+        lineDistance={[8, 6, 4]}
+        bendRadius={5.0}
+        bendStrength={-0.5}
+        interactive={true}
+        parallax={true}
+      />
+
+      <div className="relative z-10 max-w-4xl mx-auto space-y-6">
+        {/* Fancy badge */}
+        <motion.div className="inline-flex  animate-pulse   items-center gap-2 rounded-full border border-amber-500/40 bg-amber-50/80 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-amber-900 shadow-[0_0_40px_rgba(245,158,11,0.35)] dark:bg-amber-500/10 dark:text-amber-100">
+          <span className="h-1.5 w-1.5 rounded-full  bg-emerald-500 shadow-[0_0_16px_rgba(16,185,129,0.9)]" />
+          For Miami brands, agencies & bars
+        </motion.div>
+
+        {/* Heading */}
+        <motion.h2
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.05 }}
+          className="mt-0!"
+        >
+          The only up-to-date catalog of vetted Miami content creators you can
+          plug into your campaigns today.
+        </motion.h2>
+
+        <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.65, ease: "easeOut", delay: 0.1 }}
+            whileHover={{ scale: 1.01 }}
+            className="relative w-full max-w-7xl my-20 mx-auto"
+          >
+            <div className=" w-[120%]  h-[120%]  -left-20 -top-10 blur-lg  absolute z-30    bg-[radial-gradient(circle,transparent_50%,#f2ecf3_70%)]  " />
+            <InfiniteSlider duration={100}>
+              {creators.map((c, i) => (
+                <CreatorCard key={i} creator={c} />
+              ))}
+            </InfiniteSlider>
+          </motion.div>
+          {/* Sub copy */}
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, ease: "easeOut", delay: 0.18 }}
+            className="mt-6 max-w-2xl mx-auto text-muted-foreground"
+          >
+            Get instant access to hand-picked creators with contact info, niche,
+            platform stats, pricing ranges, and example deliverables — without
+            spending hours on Instagram and TikTok.
+          </motion.p>
+        </div>
+      </div>
+    </section>
   );
 };
 
-export default Carousel;
+export default CarouselHero;

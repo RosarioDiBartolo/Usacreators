@@ -10,7 +10,7 @@ function LegalPage({
   title: string;
 }) {
   return (
-    <section className="text-center text-secondary section-padding">
+    <section className=" relative w-full max-w-7xl mx-auto  text-center text-secondary section-padding">
       {/* Trust Badge */}
       <h2
         className=" 
