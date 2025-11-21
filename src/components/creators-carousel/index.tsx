@@ -16,6 +16,7 @@ import { Quote } from "lucide-react";
 import FloatingLines from "../FloatingLines";
 import { creatorsQueryOptions } from "@/lib/creators/get-creators";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import GradientText from "../GradientText";
 
 // Animation variants for each testimonial card
 const itemVariants: Variants = {
@@ -107,20 +108,21 @@ const CarouselHero = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.05 }}
-            className=""
+            className="
+            text-xl  text-amber-700"
           >
-            We Already Found the Best Content Creators.
+            We already found the Best Content Creators for your needs.
           </motion.p>
+
           <h2
             className=" 
-            mb-0  
+            mb-0   
             bg-text
-            bg-linear-to-b from-primary to-tertiary 
- "
+            bg-linear-to-t from-primary to-amber-400
+            "
           >
             You Just Pick Your Favourite.
           </h2>
-           
         </div>
         <div>
           <motion.div

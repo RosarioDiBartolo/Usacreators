@@ -183,7 +183,7 @@ export default function FAQ() {
       className=" 
       relative w-full max-w-7xl mx-auto 
     section-padding 
-    text-secondary
+    text-muted-foreground
     text-center
     "
     >
@@ -196,8 +196,8 @@ export default function FAQ() {
          
         <div className=" ">
           <h2 className="
-    bg-text
-    bg-linear-to-b from-secondary via-amber-900 to-amber-950 relative !mt-0"> 
+            bg-text
+            bg-linear-to-b from-secondary via-amber-900 to-amber-950 relative !mt-0"> 
             Everything You Need to Know
   
           </h2>

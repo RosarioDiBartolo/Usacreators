@@ -10,6 +10,7 @@ import {
   Sparkles,
   Percent,
 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export default function Section() {
   const ref = React.useRef<HTMLDivElement | null>(null);
@@ -40,10 +41,10 @@ export default function Section() {
         <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
           {/* Left content */}
           <div className="relative z-10 flex-1">
-            <div className="inline-flex items-center gap-2 rounded-full border border-muted/70 bg-amber-50/60 px-3 py-1 text-xs font-medium text-amber-900/80 dark:bg-amber-950/40 dark:text-amber-100">
+            <Badge variant={"secondary"} className="   border border-accent/70 bg-secondary/60 hover:bg-secondary   text-xs font-medium ">
               <Megaphone className="h-3.5 w-3.5" />
               <span>Why Miami brands are switching to UGC</span>
-            </div>
+            </Badge>
 
             <h2 className="mt-4 font-bold text-3xl md:text-4xl lg:text-5xl leading-tight lg:leading-[70px] mb-4 lg:mb-6 bg-gradient-to-r from-[#2A1F1D] via-[#7B3306] to-[#461901] bg-clip-text text-transparent">
               10x More Efficient
@@ -51,13 +52,9 @@ export default function Section() {
               Than Traditional Media.
             </h2>
 
-            <p className="max-w-xl text-sm md:text-base text-muted-foreground mb-6 md:mb-8">
-              Stop gambling budget on generic ads. Work with local creators
-              whose content feels native on TikTok and Instagram while actually
-              moving the needle on sales and awareness.
-            </p>
+           
 
-            <ul className="space-y-4 text-base lg:space-y-5">
+            <ul className="space-y-4 text-base lg:space-y-3 max-w-xl">
               <li className="flex items-start gap-4 lg:gap-5">
                 <CheckGradientIcon />
                 <span className="bg-gradient-to-r from-[#2A1F1D] via-[#7B3306] to-[#461901] bg-clip-text text-transparent">
@@ -133,14 +130,14 @@ function Metric({
   value: string;
 }) {
   return (
-    <div className="rounded-2xl border border-muted/60 bg-muted text-muted-foreground px-3 py-3 ">
+    <div className="rounded-2xl border border-muted/50  bg-secondary text-secondary-foreground px-3 py-3 ">
       <div className="flex items-center gap-2 mb-1">
         <Icon className="h-3.5 w-3.5 text-amber-700   " />
         <span className="font-medium uppercase tracking-[0.12em] text-[10px]">
           {label}
         </span>
       </div>
-      <p className="text-sm font-semibold text-[#2A1F1D] dark:text-amber-50">
+      <p className="text-sm mx-3 text-accent font-semibold ">
         {value}
       </p>
     </div>
