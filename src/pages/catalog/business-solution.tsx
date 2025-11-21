@@ -1,6 +1,12 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
-import { CalendarRange, PhoneCall, Target, CheckCircle2, MessageCircle } from "lucide-react";
+import {
+  CalendarRange,
+  PhoneCall,
+  Target,
+  CheckCircle2,
+  MessageCircle,
+} from "lucide-react";
 
 function BusinessSolution() {
   return (
@@ -15,7 +21,10 @@ function BusinessSolution() {
         and what a first test campaign could look like.
       </p>
 
-      <div className="mt-10 grid gap-10 md:grid-cols-[minmax(0,2fr)_minmax(0,1.4fr)] items-stretch rounded-3xl border border-amber-200/70 bg-amber-50/70 p-6 md:p-10 shadow-[0_22px_80px_rgba(0,0,0,0.12)] dark:border-amber-900/70 dark:bg-amber-950/40">
+      <div
+        className="mt-10 grid gap-10 md:grid-cols-[minmax(0,2fr)_minmax(0,1.4fr)] items-stretch rounded-3xl border border-amber-950/40
+       bg-muted text-muted-foreground p-6 md:p-10 shadow-[0_22px_80px_rgba(0,0,0,0.12)]  "
+      >
         {/* Left: what we do on the call */}
         <div className="flex flex-col justify-between gap-6">
           <div>
@@ -24,16 +33,16 @@ function BusinessSolution() {
               <span>What we cover together</span>
             </div>
 
-            <h3 className="mt-4 text-xl md:text-2xl font-semibold text-[#2A1F1D] dark:text-amber-50">
+            <h3 className="mt-4 text-xl md:text-2xl font-semibold  ">
               A concrete plan, not a generic sales pitch.
             </h3>
 
-            <ul className="mt-4 space-y-3 text-sm text-amber-950/80 dark:text-amber-50/90">
+            <ul className="mt-4 text-start space-y-3 text-sm text-amber-950/80 /90">
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 text-emerald-600" />
                 <span>
-                  <strong>Audit your current content &amp; funnel</strong>{" "}
-                  to understand where UGC could have the biggest impact.
+                  <strong>Audit your current content &amp; funnel</strong> to
+                  understand where UGC could have the biggest impact.
                 </span>
               </li>
               <li className="flex items-start gap-3">
@@ -93,13 +102,13 @@ function BusinessSolution() {
           </div>
 
           <div className="relative mt-6 flex flex-col gap-3">
-            <Button className="w-full inline-flex items-center justify-center gap-2 bg-amber-100 text-amber-900 hover:bg-amber-200">
+            <Button className=" rounded-md">
               <PhoneCall className="h-4 w-4" />
               Book my free strategy call
             </Button>
             <Button
               variant="outline"
-              className="w-full border-amber-200/80 bg-white/5 text-amber-50 hover:bg-white/10"
+              className="w-full "
             >
               <MessageCircle className="mr-2 h-4 w-4" />
               Share details via email instead
@@ -117,11 +126,11 @@ function BusinessSolution() {
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-amber-200/70 bg-background/70 px-3 py-3 text-left dark:border-amber-900/60 dark:bg-black/40">
-      <p className="text-[11px] uppercase tracking-[0.16em] text-amber-700/90 dark:text-amber-200/90 mb-1">
+    <div className="rounded-2xl border border-amber-950/40    bg-background/70 px-3 py-3 text-left dark:border-amber-900/60 dark:bg-black/40">
+      <p className="text-[11px] uppercase tracking-[0.16em] text-primary/70     mb-1">
         {label}
       </p>
-      <p className="text-sm font-semibold text-[#2A1F1D] dark:text-amber-50">
+      <p className="text-sm font-semibold  ">
         {value}
       </p>
     </div>

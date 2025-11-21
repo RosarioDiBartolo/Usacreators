@@ -2,7 +2,14 @@
 
 import * as React from "react";
 import { motion, useScroll, useSpring, useTransform } from "motion/react";
-import { BarChart3, Megaphone, HandCoins, Clock, Sparkles, Percent } from "lucide-react";
+import {
+  BarChart3,
+  Megaphone,
+  HandCoins,
+  Clock,
+  Sparkles,
+  Percent,
+} from "lucide-react";
 
 export default function Section() {
   const ref = React.useRef<HTMLDivElement | null>(null);
@@ -24,14 +31,10 @@ export default function Section() {
       className="section-padding relative w-full max-w-none text-start overflow-hidden bg-radial from-tertiary to-primary py-12 md:py-20"
     >
       {/* Top-left decorative border */}
-      <motion.div
-         className="absolute -left-7 -top-12 bg-background h-30 w-20 rotate-45"
-      />
+      <motion.div className="absolute -left-7 -top-12 bg-background h-30 w-20 rotate-45" />
 
       {/* Bottom-right decorative border */}
-      <motion.div
-         className="absolute -bottom-12 -right-7 h-30 w-20 bg-background rotate-45"
-      />
+      <motion.div className="absolute -bottom-12 -right-7 h-30 w-20 bg-background rotate-45" />
 
       <div className="container max-w-[90rem] mx-auto">
         <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
@@ -50,8 +53,8 @@ export default function Section() {
 
             <p className="max-w-xl text-sm md:text-base text-muted-foreground mb-6 md:mb-8">
               Stop gambling budget on generic ads. Work with local creators
-              whose content feels native on TikTok and Instagram while
-              actually moving the needle on sales and awareness.
+              whose content feels native on TikTok and Instagram while actually
+              moving the needle on sales and awareness.
             </p>
 
             <ul className="space-y-4 text-base lg:space-y-5">
@@ -81,11 +84,7 @@ export default function Section() {
             </ul>
 
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs md:text-sm text-amber-900/85 dark:text-amber-100/90">
-              <Metric
-                icon={Clock}
-                label="Creator shortlist"
-                value="2–4 days"
-              />
+              <Metric icon={Clock} label="Creator shortlist" value="2–4 days" />
               <Metric
                 icon={Percent}
                 label="Creator fees"
