@@ -95,25 +95,31 @@ const CarouselHero = () => {
         {/* Fancy badge */}
         <motion.div className="inline-flex  animate-pulse   items-center gap-2 rounded-full border border-amber-500/40 bg-amber-50/80 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-amber-900 shadow-[0_0_40px_rgba(245,158,11,0.35)] dark:bg-amber-500/10 dark:text-amber-100">
           <span className="h-1.5 w-1.5 rounded-full  bg-emerald-500 shadow-[0_0_16px_rgba(16,185,129,0.9)]" />
-          For Miami brands, agencies & bars
+          For Miami based businesses and brands
         </motion.div>
         {/* Heading */}
         <div
           className="
            
     "
-        ><h1 className=" mb-0  bg-text
-    bg-linear-to-b from-amber-950 to-tertiary font-bold">You just have to choose.</h1>
-          <motion.h2
+        >
+          <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.05 }}
-            className="mt-0!  bg-text
-    bg-linear-to-b from-secondary via-amber-900 to-amber-950"
+            className=""
           >
-            The only up-to-date catalog of vetted Miami content creators you can
-            plug into your campaigns today.
-          </motion.h2>
+            We Already Found the Best Content Creators.
+          </motion.p>
+          <h2
+            className=" 
+            mb-0  
+            bg-text
+            bg-linear-to-b from-primary to-tertiary 
+ "
+          >
+            You Just Pick Your Favourite.
+          </h2>
            
         </div>
         <div>
@@ -132,12 +138,11 @@ const CarouselHero = () => {
             </InfiniteSlider>
           </motion.div>
           {/* Sub copy */}
-           <p className="text-lg md:text-xl lg:text-2xl  font-light leading-relaxed">
-          Get instant access to hand-picked creators with contact info, niche,
+          <p className="text-lg md:text-xl lg:text-2xl  font-light leading-relaxed">
+            Get instant access to hand-picked creators with contact info, niche,
             platform stats, pricing ranges, and example deliverables — without
             spending hours on Instagram and TikTok.
-        </p>
-           
+          </p>
         </div>
       </div>
     </section>

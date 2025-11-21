@@ -14,7 +14,7 @@ function DemoVideo() {
           </div>
 
           <h2 className="mt-4 bg-text bg-linear-to-b from-secondary via-amber-900 to-amber-950">
-            Miami Creators Demo
+            Watch the Demo
           </h2>
 
           <p className="mt-4 text-sm md:text-base leading-relaxed max-w-xl text-muted-foreground">
@@ -57,7 +57,7 @@ function DemoVideo() {
         {/* Right: video card */}
         <div className="flex-1 w-full max-w-xl mx-auto">
           <div className="relative aspect-video rounded-3xl bg-gradient-to-br from-amber-500 via-amber-600 to-amber-900 p-[2px] shadow-[0_28px_80px_rgba(0,0,0,0.4)]">
-            <div className="relative h-full w-full rounded-[1.35rem] bg-muted overflow-hidden flex items-center justify-center">
+            <div className="relative h-full w-full rounded-3xl  bg-muted overflow-hidden flex items-center justify-center">
               <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/70" />
               <div className="relative flex flex-col items-center gap-3 text-center px-6">
                 <Button

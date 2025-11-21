@@ -40,7 +40,7 @@ export default function Section() {
         <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
           {/* Left content */}
           <div className="relative z-10 flex-1">
-            <div className="inline-flex items-center gap-2 rounded-full border border-amber-200/70 bg-amber-50/60 px-3 py-1 text-xs font-medium text-amber-900/80 dark:bg-amber-950/40 dark:text-amber-100">
+            <div className="inline-flex items-center gap-2 rounded-full border border-muted/70 bg-amber-50/60 px-3 py-1 text-xs font-medium text-amber-900/80 dark:bg-amber-950/40 dark:text-amber-100">
               <Megaphone className="h-3.5 w-3.5" />
               <span>Why Miami brands are switching to UGC</span>
             </div>
@@ -133,9 +133,9 @@ function Metric({
   value: string;
 }) {
   return (
-    <div className="rounded-2xl border border-amber-200/60 bg-amber-50/70 px-3 py-3 dark:border-amber-900/70 dark:bg-amber-950/40">
+    <div className="rounded-2xl border border-muted/60 bg-muted text-muted-foreground px-3 py-3 ">
       <div className="flex items-center gap-2 mb-1">
-        <Icon className="h-3.5 w-3.5 text-amber-700 dark:text-amber-200" />
+        <Icon className="h-3.5 w-3.5 text-amber-700   " />
         <span className="font-medium uppercase tracking-[0.12em] text-[10px]">
           {label}
         </span>
