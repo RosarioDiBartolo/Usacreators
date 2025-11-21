@@ -1,5 +1,5 @@
 import CarouselHero from "@/components/creators-carousel";
-import PricingSection from "@/components/ui/pricing-section";
+import PricingSection from "@/pages/catalog/pricing-section";
 import Features from "./features";
 import SecondSection from "./second-section";
 import Header from "@/pages/home/header";
