@@ -68,7 +68,10 @@ const CreatorCard = ({ creator }: { creator: Creator }) => {
 };
 
 const Creators = () => {
-  const { data: creators } = useSuspenseQuery(creatorsQueryOptions);
+  const { data: creators } = useSuspenseQuery(creatorsQueryOptions({
+    onlyWithBio: true,
+  
+  }));
 
   return (
     <InfiniteSlider duration={100}>

@@ -1,31 +1,33 @@
 // src/lib/things/server.ts
 import { createServerFn } from "@tanstack/react-start";
-import { firebaseCreatorRecord } from "./schemas/creator-apply-server";
 import { queryOptions } from "@tanstack/react-query";
+import { GetCreatorsInput } from "@/lib/creators/collection";
 import z from "zod";
+ 
+ 
 
-export const getCreators = createServerFn({ method: "GET" }).handler(
-  async () => {
-    const { db } = await import("@/lib/firebase/admin"); // your Firestore admin SDK
+export const getCreators = createServerFn({ method: "GET" })
+  .inputValidator(GetCreatorsInput)
+  .handler(async ({ data }) => {
+    const { findCreators } = await import("@/lib/creators/collection");
 
-    const snap = await db.collection("applications").get();
+ 
+    return  await findCreators(data);
+ 
+  });
+ export type CreatorsFilters = z.infer<typeof GetCreatorsInput>;
 
-    const rawDocs = snap.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+export function creatorsQueryOptions(filters: CreatorsFilters = {}) {
+  // Normalization is optional here, since Zod already gave defaults,
+  // but keeping it explicit is sometimes nicer for the queryKey.
+  const normalized: CreatorsFilters = {
+    limit: filters.limit ?? 20,
+    onlyWithBio: filters.onlyWithBio ?? false,
+    ...filters,
+  };
 
-    // Validate EVERYTHING here
-    const things  = firebaseCreatorRecord.array().parse(rawDocs) as (z.infer< typeof firebaseCreatorRecord> & {
-      id: string;
-    })[]; 
-
-    return things;
-  }
-);
-
-  
-export const creatorsQueryOptions = queryOptions({
-  queryKey: ["creators"],
-  queryFn: () => getCreators(), // server function call
-});
+  return queryOptions({
+    queryKey: ["creators", normalized],
+    queryFn: () => getCreators({ data: normalized }),
+  });
+}
