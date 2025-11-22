@@ -43,8 +43,8 @@ const myPricingPlans: PricingCardProps[] = [
 
 const PricingSection = () => {
   return (
-    <section className="relative w-full   ">
-      <div className="pointer-events-none absolute inset-x-0 -top-10 h-32 bg-gradient-to-b from-amber-500/25 via-amber-500/5 to-transparent blur-3xl" />
+    <section className="relative w-full bg-secondary !text-secondary-foreground   ">
+      <div className="pointer-events-none absolute inset-x-0 -top-10 h-32 b  blur-3xl" />
       <ModernPricingPage
         title={
           <>

@@ -77,7 +77,7 @@
 
   /* CTA Secondario */
   --secondary: #2a1f1d; /* Espresso caldo */
-  --secondary-foreground: var(--color-amber-500);
+  --secondary-foreground: var(--color-amber-50);
 
   /* Tertiary */
   --tertiary: var(--color-amber-500); /* Beige ivory */

@@ -11,7 +11,7 @@ function CatalogPage() {
     <div className="relative min-h-screen bg-gradient-to-b from-background via-amber-50/40 to-background dark:from-background dark:via-amber-950/30 dark:to-background">
       <Header />
 
-      <main className="relative text-center overflow-hidden space-y-20 md:space-y-24 pb-24">
+      <main className="relative text-center overflow-hidden space-y-20 md:space-y-24">
         <CarouselHero />
 
         <SecondSection />

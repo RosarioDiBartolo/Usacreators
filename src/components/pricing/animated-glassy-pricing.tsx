@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { RippleButton } from "@/components/multi-type-ripple-buttons";
+import { Badge } from "../ui/badge";
 // --- Internal Helper Components (Not exported) --- //
 
 const CheckIcon = ({ className }: { className?: string }) => (
@@ -30,7 +31,7 @@ const ShaderCanvas = () => {
     const root = document.documentElement;
     const updateColor = () => {
       const styles = getComputedStyle(document.documentElement);
-      const hex = styles.getPropertyValue("--background").trim(); // "#E9E9E9FF"
+      const hex = styles.getPropertyValue("--secondary").trim(); // "#E9E9E9FF"
 
       // convert HEX → RGB
       const hexClean = hex.replace("#", "");
@@ -213,10 +214,10 @@ export const PricingCard = ({
   buttonVariant = "primary",
 }: PricingCardProps) => {
   const cardClasses = `
-    backdrop-blur-[14px] bg-gradient-to-br rounded-2xl shadow-xl flex-1 max-w-xs px-7 py-8 flex flex-col transition-all duration-300
-    from-black/5 to-black/0 border border-black/10
-    dark:from-white/10 dark:to-white/5 dark:border-white/10 dark:backdrop-brightness-[0.91]
-    ${isPopular ? "scale-105 relative ring-2 ring-primary/20 dark:from-white/20 dark:to-white/10 dark:border-primary/30 shadow-2xl" : ""}
+    backdrop-blur-[14px]  bg-gradient-to-br rounded-2xl shadow-xl flex-1 max-w-xs px-7 py-8 flex flex-col transition-all duration-300
+    from-black/5 to-black/0 border border-cyan-300/40
+     
+    ${isPopular ? "scale-105 relative ring-2 ring-primary/20   shadow-2xl" : ""}
   `;
   const buttonClasses = `
     mt-auto w-full py-2.5 rounded-xl font-semibold text-[14px] transition font-sans
@@ -230,26 +231,28 @@ export const PricingCard = ({
   return (
     <div className={cardClasses.trim()}>
       {isPopular && (
-        <div className="absolute -top-4 right-4 px-3 py-1 text-[12px] font-semibold rounded-full bg-primary text-foreground dark:text-black">
+        <Badge className="absolute -top-4 right-4 px-3 py-1 text-[12px] font-semibold rounded-full">
           Most Popular
-        </div>
+        </Badge>
       )}
       <div className="mb-3">
-        <h2 className="text-[48px] font-extralight tracking-[-0.03em] text-foreground font-display">
+        <h2 className="text-[48px] font-extralight tracking-[-0.03em]  font-display
+        bg-text bg-linear-to-t from-primary to-cyan-400
+        ">
           {planName}
         </h2>
-        <p className="text-[16px] text-foreground/70 mt-1 font-sans">
+        <p className="text-[16px] /70 mt-1 font-sans">
           {description}
         </p>
       </div>
       <div className="my-6 flex items-baseline gap-2">
-        <span className="text-[48px] font-extralight text-foreground font-display">
+        <span className="text-[48px] font-extralight  font-display bg-text bg-linear-to-t from-primary to-cyan-400">
           ${price}
         </span>
-        <span className="text-[14px] text-foreground/70 font-sans">/mo</span>
+        <span className="text-[14px] /70 font-sans">/mo</span>
       </div>
       <div className="card-divider w-full mb-5 h-px bg-[linear-gradient(90deg,transparent,rgba(0,0,0,0.1)_50%,transparent)] dark:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.09)_20%,rgba(255,255,255,0.22)_50%,rgba(255,255,255,0.09)_80%,transparent)]"></div>
-      <ul className="flex flex-col gap-2 text-[14px] text-foreground/90 mb-6 font-sans">
+      <ul className="flex flex-col gap-2 text-[14px] /90 mb-6 font-sans">
         {features.map((feature, index) => (
           <li key={index} className="flex items-center gap-2">
             <CheckIcon className="text-primary w-4 h-4" /> {feature}
@@ -288,7 +291,7 @@ export const ModernPricingPage = ({
           <h1 className="text-[48px] md:text-[64px] font-extralight leading-tight tracking-[-0.03em] bg-clip-text text-transparent bg-gradient-to-r from-primary to-tertiary font-display">
             {title}
           </h1>
-          <p className="mt-3 text-[16px] md:text-[20px] text-foreground/80 max-w-2xl mx-auto font-sans">
+          <p className="mt-3 text-[16px] md:text-[20px] max-w-2xl mx-auto font-sans">
             {subtitle}
           </p>
         </div>
