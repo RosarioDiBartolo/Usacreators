@@ -80,19 +80,7 @@ export default function Section() {
               </li>
             </ul>
 
-            <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs md:text-sm text-amber-900/85 dark:text-amber-100/90">
-              <Metric icon={Clock} label="Creator shortlist" value="2–4 days" />
-              <Metric
-                icon={Percent}
-                label="Creator fees"
-                value="0% platform cut"
-              />
-              <Metric
-                icon={Sparkles}
-                label="Content output"
-                value="Up to 10x assets"
-              />
-            </div>
+            
           </div>
 
           {/* Right content - Laptop image */}
