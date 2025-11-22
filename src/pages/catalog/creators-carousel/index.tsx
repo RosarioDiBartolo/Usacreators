@@ -1,5 +1,5 @@
 import { Creator } from "@/lib/creators/schemas/creator-apply-server";
- 
+
 import {
   motion,
   useMotionTemplate,
@@ -9,13 +9,15 @@ import {
   Variants,
 } from "motion/react";
 import missingPic from "@/assets/images/creator-missing.jpg";
-import InfiniteSlider from "../ui/infinite-slider";
- 
+import InfiniteSlider from "../../../components/ui/infinite-slider";
+
 import { Quote } from "lucide-react";
-import FloatingLines from "../FloatingLines";
+import FloatingLines from "../../../components/FloatingLines";
 import { creatorsQueryOptions } from "@/lib/creators/get-creators";
 import { useSuspenseQuery } from "@tanstack/react-query";
- 
+import { Suspense } from "react";
+import { Skeleton } from "@/components/skeleton";
+
 // Animation variants for each testimonial card
 const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -30,16 +32,6 @@ const itemVariants: Variants = {
 };
 
 const CreatorCard = ({ creator }: { creator: Creator }) => {
-  const progress = useMotionValue(0);
-  const brightness = useTransform(progress, [0, 0.5, 1], [0.2, 1, 0.2]);
-  const blur = useTransform(progress, [0, 0.5, 1], [8, 0, 8]);
-
-  const filter = useMotionTemplate`brightness(${brightness}) blur(${blur}px)`;
-  const { scrollY } = useScroll();
-  const y = useTransform([scrollY, progress], ([v, p]: [number, number]) => {
-    return v * Math.abs(0.5 - p);
-  });
-
   return (
     <motion.div
       key={creator.id}
@@ -75,11 +67,20 @@ const CreatorCard = ({ creator }: { creator: Creator }) => {
   );
 };
 
-const CarouselHero = () => {
+const Creators = () => {
   const { data: creators } = useSuspenseQuery(creatorsQueryOptions);
 
   return (
-    <section className="    relative w-full  section-padding">
+    <InfiniteSlider duration={100}>
+      {creators.map((c, i) => (
+        <CreatorCard key={i} creator={c} />
+      ))}
+    </InfiniteSlider>
+  );
+};
+const CarouselHero = () => {
+  return (
+    <section className="  relative w-full  section-padding">
       <FloatingLines
         enabledWaves={["top", "middle", "bottom"]}
         lineCount={[10, 15, 20]}
@@ -131,11 +132,24 @@ const CarouselHero = () => {
             className="relative w-full max-w-7xl my-20 mx-auto"
           >
             <div className=" w-[120%]  h-[120%]  -left-20 -top-10 blur-lg  absolute z-30    bg-[radial-gradient(circle,transparent_50%,#f2ecf3_70%)]  " />
-            <InfiniteSlider duration={100}>
-              {creators.map((c, i) => (
-                <CreatorCard key={i} creator={c} />
-              ))}
-            </InfiniteSlider>
+
+            <Suspense
+              fallback={
+                <div className=" flex items-center justify-center gap-6">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <div className="flex flex-col space-y-3">
+                      <Skeleton className="h-50  rounded-xl" />
+                      <div className="space-y-2">
+                        <Skeleton className="h-4 w-[250px]" />
+                        <Skeleton className="h-4 w-[200px]" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              }
+            >
+              <Creators />
+            </Suspense>
           </motion.div>
           {/* Sub copy */}
           <p className="text-lg md:text-xl lg:text-2xl  font-light leading-relaxed">
