@@ -1,6 +1,5 @@
 import { Creator } from "@/lib/creators/schemas/creator-apply-server";
-import { ScrollProvider } from "./snap";
-import { Button } from "../ui/button";
+ 
 import {
   motion,
   useMotionTemplate,
@@ -11,13 +10,12 @@ import {
 } from "motion/react";
 import missingPic from "@/assets/images/creator-missing.jpg";
 import InfiniteSlider from "../ui/infinite-slider";
-import { useRef } from "react";
+ 
 import { Quote } from "lucide-react";
 import FloatingLines from "../FloatingLines";
 import { creatorsQueryOptions } from "@/lib/creators/get-creators";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import GradientText from "../GradientText";
-
+ 
 // Animation variants for each testimonial card
 const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },

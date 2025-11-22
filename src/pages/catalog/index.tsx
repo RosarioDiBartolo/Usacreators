@@ -5,6 +5,7 @@ import SecondSection from "./second-section";
 import Header from "@/pages/home/header";
 import DemoVideo from "./demo-video";
 import BusinessSolution from "./business-solution";
+import BookCall from "./book-call";
 
 function CatalogPage() {
   return (
@@ -19,7 +20,7 @@ function CatalogPage() {
         <Features />
 
         <DemoVideo />
-
+        <BookCall />
         <BusinessSolution />
 
         <PricingSection />

@@ -215,15 +215,15 @@ export const PricingCard = ({
 }: PricingCardProps) => {
   const cardClasses = `
     backdrop-blur-[14px]  bg-gradient-to-br rounded-2xl shadow-xl flex-1 max-w-xs px-7 py-8 flex flex-col transition-all duration-300
-    from-black/5 to-black/0 border border-cyan-300/40
+    from-stone-300/20 border border-cyan-300/40
      
-    ${isPopular ? "scale-105 relative ring-2 ring-primary/20   shadow-2xl" : ""}
+    ${isPopular ? "scale-105 bg-secondary relative ring-2 ring-primary/20   shadow-2xl" : ""}
   `;
   const buttonClasses = `
     mt-auto w-full py-2.5 rounded-xl font-semibold text-[14px] transition font-sans
     ${
       buttonVariant === "primary"
-        ? "bg-primary hover:bg-bg-primary/80 text-primary-foreground "
+        ? "bg-gradient from-primary to-tertiary hover:from-primary/70 hover:to-tertiary/70 text-primary-foreground "
         : "bg-secondary hover:bg-secondary/80 text-seconary-foreground border border-black/20 dark:bg-white/10 dark:hover:bg-white/20 dark:text-white dark:border-white/20"
     }
   `;

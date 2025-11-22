@@ -12,7 +12,7 @@ function BusinessSolution() {
   return (
     <section className="px-4 py-16 md:py-20 max-w-5xl mx-auto">
       <h2 className="bg-text bg-linear-to-b from-secondary via-amber-900 to-amber-950">
-        Book a Free Strategy Call
+        Business Solution
       </h2>
 
       <p className="mt-4 text-sm md:text-base text-muted-foreground max-w-2xl mx-auto text-center">
