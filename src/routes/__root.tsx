@@ -1,17 +1,21 @@
-import { 
+import {
   Outlet,
   HeadContent,
   Scripts,
   createRootRouteWithContext,
- } from "@tanstack/react-router";
-import appCss from "../index.css?url"; 
+} from "@tanstack/react-router";
+import appCss from "../index.css?url";
 import { getPlatformMeta } from "@/lib/meta";
-import { Toaster } from "sonner"; 
-import { type QueryClient  } from "@tanstack/react-query";
- 
+import { Toaster } from "sonner";
+import { type QueryClient } from "@tanstack/react-query";
+import { requestLogger } from "@/lib/logging";
+
 const fallbackTitle = "1000+ Creators from Miami";
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   {
+    server: {
+      middleware: [requestLogger],
+    },
     // Static defaults
     head: ({ loaderData }) => {
       if (!loaderData) {
@@ -38,9 +42,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     },
 
     // SSR Loader
-    loader: async ( ) => {
-       const meta = await getPlatformMeta();
-      return ({ meta });
+    loader: async () => {
+      const meta = await getPlatformMeta();
+      return { meta };
     },
 
     staleTime: Infinity,
@@ -57,8 +61,8 @@ function RootComponent() {
         <HeadContent /> {/* ✅ gestisce *automaticamente* <title> + <meta> */}
       </head>
       <body>
-          <Toaster />
-         <Outlet />
+        <Toaster />
+        <Outlet />
         <Scripts />
       </body>
     </html>
