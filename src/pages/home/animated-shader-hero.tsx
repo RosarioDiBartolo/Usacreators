@@ -484,11 +484,14 @@ export const Hero = ( ) => (
             </Link>
           )}
           {  (
-            <button
+             <Link to={"/catalog"}>
+              <button
                className="px-8  w-full sm:w-fit py-4 bg-primary/10 hover:bg-primary/20 border border-orange-300/30 hover:border-orange-300/50 text-orange-100 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 backdrop-blur-sm"
             >
               I am a Brand
             </button>
+            </Link>
+           
           )}
         </div>
       )}

@@ -138,13 +138,13 @@ const CarouselHero = () => {
 
             <Suspense
               fallback={
-                <div className=" flex items-center justify-center gap-6">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <div className="flex flex-col space-y-3">
-                      <Skeleton className="h-50  rounded-xl" />
-                      <div className="space-y-2">
-                        <Skeleton className="h-4 w-[250px]" />
-                        <Skeleton className="h-4 w-[200px]" />
+                 <div className=" flex items-center justify-center gap-6 h-[450px]">
+                  {Array.from({ length: 4 }).map((_, i) => (
+                    <div key = {i} className= " border rounded-md bg-white/20 p-5 gap-5 flex flex-col relative w-full h-full  ">
+                        <Skeleton className=" rounded-md   flex-1" />
+                      <div className="w-full space-y-2  ">
+                        <Skeleton className="h-6 w-full     " />
+                        <Skeleton className="h-6 w-2/3   " />
                       </div>
                     </div>
                   ))}

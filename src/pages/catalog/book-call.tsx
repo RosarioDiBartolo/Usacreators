@@ -9,8 +9,8 @@ function BookCall() {
 
       
       <div
-        className="mt-10   gap-10 rounded-3xl border border-amber-950/40
-       bg-muted text-muted-foreground p-6 md:p-10 shadow-[0_22px_80px_rgba(0,0,0,0.12)]  "
+        className="mt-10    rounded-3xl border border-amber-950/40
+       bg-muted text-muted-foreground  shadow-[0_22px_80px_rgba(0,0,0,0.12)]  "
       > 
       <InlineWidget className="" url={"https://calendly.com/collabs-miamicreator"} /> 
       </div>

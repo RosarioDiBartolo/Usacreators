@@ -181,7 +181,7 @@ const ShaderCanvas = () => {
   return (
     <canvas
       ref={canvasRef}
-      className=" absolute top-0 left-0 w-full h-full block z-0 bg-background"
+      className=" absolute top-1/2 left-1/2 -translate-1/2 min-w-5xl   w-full h-full block z-0 bg-background"
     />
   );
 };
