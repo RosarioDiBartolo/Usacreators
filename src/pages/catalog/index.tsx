@@ -21,8 +21,7 @@ function CatalogPage() {
 
         <DemoVideo />
         <BookCall />
-        <BusinessSolution />
-
+ 
         <PricingSection />
       </main>
     </div>

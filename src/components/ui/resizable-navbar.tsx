@@ -47,8 +47,9 @@ interface MobileNavMenuProps {
   children: React.ReactNode;
   className?: string;
   isOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
 }
+
 export const Navbar = ({
   children,
   className,
@@ -60,23 +61,37 @@ export const Navbar = ({
   const lastY = useRef(0);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const diff = latest - lastY.current;
+    const prev = lastY.current;
+    const diff = latest - prev;
     lastY.current = latest;
 
-    // Add hysteresis to prevent flicker
-    if (latest > 120 && diff > 0) setVisible(true);
-    else if (latest < 80 && diff < 0) setVisible(false);
+    // Small hysteresis to avoid flicker and over-triggering
+    if (latest <= 40) {
+      // Near top: show the "hero" version (visible = false)
+      if (visible) setVisible(false);
+      return;
+    }
+
+    // Scrolling down → compact sticky navbar
+    if (diff > 4 && latest > 80) {
+      if (!visible) setVisible(true);
+    }
+
+    // Scrolling up near top → relax back to hero mode
+    if (diff < -4 && latest < 160) {
+      if (visible) setVisible(false);
+    }
   });
 
   return (
     <div
       ref={ref}
       className={cn(
-        "fixed top-0 left-0 right-0 z-40 w-full pointer-events-none",
+        "fixed inset-x-0 top-0 z-40 w-full pointer-events-none",
         className
       )}
     >
-      <div className="mx-auto  w-full max-w-7xl md:px-4 md:pt-4 pointer-events-auto">
+      <div className="pointer-events-auto mx-auto w-full max-w-7xl px-3 md:px-4 md:pt-4">
         {React.Children.map(children, (child) =>
           React.isValidElement(child)
             ? React.cloneElement(
@@ -98,31 +113,22 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
         justifyContent: visible ? "space-between" : "center",
       }}
       animate={{
-        backdropFilter: visible ? "blur(12px)" : "blur(0px)",
-       
+        backdropFilter: visible ? "blur(14px)" : "blur(0px)",
         boxShadow: visible
           ? "0 8px 24px rgba(0,0,0,0.08)"
           : "0 0 0 rgba(0,0,0,0)",
         opacity: visible ? 1 : 0.98,
       }}
-      transition={{ duration: 0.4, ease: "easeInOut" }}
+      transition={{ duration: 0.35, ease: "easeInOut" }}
       className={cn(
-        " transition-colors hidden md:flex z-[60] mx-auto   w-full flex-row items-center  gap-12  rounded-full px-6 py-3  ",
+        "hidden md:flex z-[60] mx-auto w-full flex-row items-center gap-10 rounded-full px-6 py-3 transition-colors",
         visible
-          ? "!bg-background/70 text-foreground"
-          : " bg-transparent text-muted  ",
+          ? "bg-background/70 text-foreground border border-border/60"
+          : "bg-transparent text-muted-foreground",
         className
       )}
     >
-      {React.Children.map(
-        children,
-        (child) =>
-          React.isValidElement(child) && (
-            <motion.div key={child.key} layout>
-              {child}
-            </motion.div>
-          )
-      )}
+      {children}          
     </motion.div>
   );
 };
@@ -131,29 +137,28 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
-    <motion.div
-       
+    <motion.nav
       onMouseLeave={() => setHovered(null)}
       className={cn(
-        "flex  flex-row items-center justify-center gap-1 text-sm font-medium",
+        "flex flex-row items-center justify-center gap-1 text-sm font-medium",
         className
       )}
     >
       {items.map((item, idx) => (
         <a
-          onMouseEnter={() => setHovered(idx)}
-          onClick={onItemClick}
-          className="relative font-bold px-4 py-2 transition-colors duration-200"
           key={`link-${idx}`}
           href={item.link}
+          onMouseEnter={() => setHovered(idx)}
+          onClick={onItemClick}
+          className="relative px-3 py-2 text-sm font-semibold rounded-full text-muted-foreground transition-colors duration-200 hover:text-foreground"
         >
           <AnimatePresence>
             {hovered === idx && (
               <motion.div
-                layoutId="hovered"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                layoutId="nav-hover-pill"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
                 className="absolute inset-0 h-full w-full rounded-full bg-gradient-to-t from-primary to-tertiary"
                 transition={{ duration: 0.15 }}
               />
@@ -169,7 +174,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
           </span>
         </a>
       ))}
-    </motion.div>
+    </motion.nav>
   );
 };
 
@@ -177,19 +182,17 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
   return (
     <motion.div
       animate={{
-        backdropFilter: visible ? "blur(10px)" : "blur(0px)",
+        backdropFilter: visible ? "blur(12px)" : "blur(4px)",
         boxShadow: visible
           ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
           : "0 0 0 0 rgba(0, 0, 0, 0)",
- 
       }}
       transition={{
         duration: 0.3,
         ease: "easeInOut",
       }}
       className={cn(
-        "relative z-50 flex w-full flex-col items-center justify-between   md:hidden !p-3",
-          visible && "bg-white/80" ,
+        "relative z-50 flex w-full flex-col items-center justify-between rounded-b-2xl border-b border-border/60 bg-background/70 backdrop-blur md:hidden px-3 py-2",
         className
       )}
     >
@@ -205,7 +208,7 @@ export const MobileNavHeader = ({
   return (
     <div
       className={cn(
-        "flex w-full flex-row items-center justify-between",
+        "flex w-full flex-row items-center justify-between gap-2",
         className
       )}
     >
@@ -213,6 +216,7 @@ export const MobileNavHeader = ({
     </div>
   );
 };
+
 export const MobileNavMenu = ({
   children,
   className,
@@ -225,9 +229,9 @@ export const MobileNavMenu = ({
           initial={{ opacity: 0, height: 0, scale: 0.98 }}
           animate={{ opacity: 1, height: "auto", scale: 1 }}
           exit={{ opacity: 0, height: 0, scale: 0.98 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
+          transition={{ duration: 0.25, ease: "easeInOut" }}
           className={cn(
-            "w-full flex flex-col items-start gap-4 px-2 overflow-hidden",
+            "flex w-full flex-col items-start gap-4 px-1 pt-2 pb-2 overflow-hidden",
             className
           )}
         >
@@ -240,18 +244,16 @@ export const MobileNavMenu = ({
 
 export const MobileNavToggle = ({
   isOpen,
-  visible,
   onClick,
 }: {
   isOpen: boolean;
-  visible: boolean;
+  visible?: boolean;
   onClick: () => void;
 }) => {
   return (
     <button
-      disabled={!visible}
       onClick={onClick}
-      className="p-2 z-50  hover:bg-background rounded-lg transition-colors duration-200"
+      className="z-50 inline-flex items-center justify-center rounded-lg p-2 transition-colors duration-200 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       aria-label={isOpen ? "Close menu" : "Open menu"}
     >
       <AnimatePresence mode="wait" initial={false}>
@@ -261,9 +263,9 @@ export const MobileNavToggle = ({
             initial={{ opacity: 0, rotate: -90 }}
             animate={{ opacity: 1, rotate: 0 }}
             exit={{ opacity: 0, rotate: 90 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.18 }}
           >
-            <IconX className="text-black dark:text-white w-6 h-6" />
+            <IconX className="h-6 w-6 text-foreground" />
           </motion.div>
         ) : (
           <motion.div
@@ -271,9 +273,9 @@ export const MobileNavToggle = ({
             initial={{ opacity: 0, rotate: 90 }}
             animate={{ opacity: 1, rotate: 0 }}
             exit={{ opacity: 0, rotate: -90 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.18 }}
           >
-            <IconMenu2 className="text-black dark:text-white w-6 h-6" />
+            <IconMenu2 className="h-6 w-6 text-foreground" />
           </motion.div>
         )}
       </AnimatePresence>
@@ -285,15 +287,17 @@ export const NavbarLogo = () => {
   return (
     <a
       href="/"
-      className="relative z-20 flex items-center space-x-2 text-sm font-normal text-black dark:text-white"
+      className="relative z-20 flex items-center space-x-2 text-sm font-medium text-foreground"
     >
       <img
         className="rounded-full"
         src={logo}
         alt="logo"
-        width={45}
-        height={45}
+        width={42}
+        height={42}
       />
+      {/* If you ever want text: */}
+      {/* <span className="tracking-tight">Miami Creators</span> */}
     </a>
   );
 };
@@ -310,25 +314,25 @@ export const NavbarButton = ({
   as?: React.ElementType;
   children: React.ReactNode;
   className?: string;
-  variant?: "primary" | "outline" |"secondary" | "dark" | "gradient";
+  variant?: "primary" | "outline" | "secondary" | "dark" | "gradient";
 } & (
   | React.ComponentPropsWithoutRef<"a">
   | React.ComponentPropsWithoutRef<"button">
 )) => {
   const baseStyles =
-    "px-4 py-2 !flex gap-2 items-center rounded-full text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center whitespace-nowrap";
+    "inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-semibold relative cursor-pointer whitespace-nowrap transition duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
-  const variantStyles = {
+  const variantStyles: Record<string, string> = {
     outline:
-      "shadow-none border border-muted  hover:bg-muted hover:text-muted-foreground", 
-   
+      "border border-border bg-background/60 text-foreground/80 shadow-none hover:bg-muted hover:text-foreground",
     primary:
-      "bg-primary text-primary-foreground shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] hover:bg-primary hover:text-primary-foreground",
+      "bg-primary text-primary-foreground shadow-[0_0_24px_rgba(34,42,53,0.06),_0_1px_1px_rgba(0,0,0,0.05),_0_0_0_1px_rgba(34,42,53,0.04),_0_0_4px_rgba(34,42,53,0.08),_0_16px_68px_rgba(47,48,55,0.05),_0_1px_0_rgba(255,255,255,0.1)_inset] hover:bg-primary/90",
     secondary:
-      "bg-secondary shadow-none text-secondary-foreground  hover:bg-accent hover:text-accent-foreground", 
-    dark: "bg-black text-white shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]",
+      "bg-secondary text-secondary-foreground shadow-none hover:bg-accent hover:text-accent-foreground",
+    dark:
+      "bg-black text-white shadow-[0_0_24px_rgba(34,42,53,0.06),_0_1px_1px_rgba(0,0,0,0.05),_0_0_0_1px_rgba(34,42,53,0.04),_0_0_4px_rgba(34,42,53,0.08),_0_16px_68px_rgba(47,48,55,0.05),_0_1px_0_rgba(255,255,255,0.1)_inset] hover:bg-black/90",
     gradient:
-      "bg-gradient-to-t from-primary to-tertiary text-white shadow-[0px_2px_0px_0px_rgba(255,255,255,0.3)_inset]",
+      "bg-gradient-to-t from-primary to-tertiary text-white shadow-[0px_2px_0px_0px_rgba(255,255,255,0.3)_inset] hover:brightness-[1.05]",
   };
 
   return (
