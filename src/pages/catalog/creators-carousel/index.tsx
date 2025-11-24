@@ -134,25 +134,29 @@ const CarouselHero = () => {
   const sliderScale = useTransform(scrollYProgress, [0, 1], [0.98, 1.02]);
   const blurGlowOpacity = useTransform(scrollYProgress, [0, 1], [0.3, 0.7]);
 
-  return (
+  return (<>
+ 
     <motion.section
       ref={sectionRef}
-      className="relative w-full section-padding"
+      className="relative w-full section-padding bg-secondary text-secondary-foreground"
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      <FloatingLines
-        enabledWaves={["top", "middle", "bottom"]}
-        lineCount={[10, 15, 20]}
-        lineDistance={[8, 6, 4]}
-        bendRadius={5.0}
-        bendStrength={-0.5}
-        interactive={true}
-        parallax={true}
-      />
-
+      
+      <div className=" absolute inset-0"> 
+ <FloatingLines 
+     enabledWaves={['top', 'middle', 'bottom']}
+    // Array - specify line count per wave; Number - same count for all waves
+    lineCount={[10, 15, 20]}
+    // Array - specify line distance per wave; Number - same distance for all waves
+    lineDistance={[8, 6, 4]}
+    bendRadius={5.0}
+    bendStrength={-0.5}
+    interactive={true}
+    parallax={true} 
+  /> </div>
       <div className="relative z-10 max-w-7xl mx-auto space-y-6">
         {/* Fancy badge */}
         <motion.div
@@ -171,7 +175,7 @@ const CarouselHero = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.12 }}
-            className="text-xl text-amber-700"
+            className="text-xl text-tertiary/70"
           >
             We already found the Best Content Creators for your needs.
           </motion.p>
@@ -194,16 +198,14 @@ const CarouselHero = () => {
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.65, ease: "easeOut", delay: 0.22 }}
-            className="relative w-full max-w-7xl my-20 mx-auto"
-          >
-            <motion.div
-              style={{ opacity: blurGlowOpacity }}
-              className="pointer-events-none w-[120%] h-[120%] -left-20 -top-10 blur-lg absolute z-0 bg-[radial-gradient(circle,transparent_50%,#f2ecf3_70%)]"
+            className="relative p-5 w-full max-w-7xl my-8 mx-auto"
+          >                      
+            <div 
+            className=" w-[120%]  h-[120%]  -left-20 -top-10  absolute top     blur-3xl"
             />
 
-            <div className="relative z-10">
-                          <div className=" w-[120%]  h-[120%]  -left-20 -top-10 blur-lg  absolute z-30    bg-[radial-gradient(circle,transparent_50%,#f2ecf3_70%)]  " />
-
+            <div className="relative z-10 rounded-xl overflow-hidden">
+ 
               <Suspense
                 fallback={
                   <div className="flex items-center justify-center gap-6 h-[450px]">
@@ -249,6 +251,7 @@ const CarouselHero = () => {
         </div>
       </div>
     </motion.section>
+  </>
   );
 };
 
