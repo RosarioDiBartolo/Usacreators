@@ -29,7 +29,7 @@ export default function Section() {
   return (
     <motion.section
       ref={ref}
-      className="section-padding relative w-full max-w-none text-start overflow-hidden bg-radial from-tertiary to-primary py-12 md:py-20"
+      className="section-padding  relative w-full max-w-none text-start overflow-hidden bg-radial from-tertiary to-primary py-12 md:py-20"
     >
       {/* Top-left decorative border */}
       <motion.div className="absolute -left-7 -top-12 bg-background h-30 w-20 rotate-45" />

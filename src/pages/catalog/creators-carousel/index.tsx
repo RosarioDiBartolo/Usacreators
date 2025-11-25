@@ -1,20 +1,17 @@
 import { Creator } from "@/lib/creators/schemas/creator-apply-server";
 
-import {
-  motion,
-  useScroll,
-  useTransform,
-  Variants,
-} from "motion/react";
+import { motion, useScroll, useTransform, Variants } from "motion/react";
 import missingPic from "@/assets/images/creator-missing.jpg";
 import InfiniteSlider from "../../../components/ui/infinite-slider";
 
-import { Quote } from "lucide-react";
+import { LockKeyholeOpenIcon, Quote } from "lucide-react";
 import FloatingLines from "../../../components/FloatingLines";
 import { creatorsQueryOptions } from "@/lib/creators/get-creators";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Suspense, useRef } from "react";
 import { Skeleton } from "@/components/skeleton";
+import { AuroraBackground } from "@/components/ui/aurora-background";
+import { Button } from "@/components/ui/button";
 
 // Animation variants for each testimonial card
 const cardVariants: Variants = {
@@ -134,30 +131,16 @@ const CarouselHero = () => {
   const sliderScale = useTransform(scrollYProgress, [0, 1], [0.98, 1.02]);
   const blurGlowOpacity = useTransform(scrollYProgress, [0, 1], [0.3, 0.7]);
 
-  return (<>
- 
+  return (
     <motion.section
       ref={sectionRef}
-      className="relative w-full section-padding bg-secondary text-secondary-foreground"
+      className="relative   section-padding   w-full    "
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      
-      <div className=" absolute inset-0"> 
- <FloatingLines 
-     enabledWaves={['top', 'middle', 'bottom']}
-    // Array - specify line count per wave; Number - same count for all waves
-    lineCount={[10, 15, 20]}
-    // Array - specify line distance per wave; Number - same distance for all waves
-    lineDistance={[8, 6, 4]}
-    bendRadius={5.0}
-    bendStrength={-0.5}
-    interactive={true}
-    parallax={true} 
-  /> </div>
-      <div className="relative z-10 max-w-7xl mx-auto space-y-6">
+      <div className="max-w-7xl mx-auto   space-y-6">
         {/* Fancy badge */}
         <motion.div
           initial={{ opacity: 0, y: -8, scale: 0.96 }}
@@ -175,7 +158,7 @@ const CarouselHero = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.12 }}
-            className="text-xl text-tertiary/70"
+            className="text-xl text-amber-700"
           >
             We already found the Best Content Creators for your needs.
           </motion.p>
@@ -198,41 +181,44 @@ const CarouselHero = () => {
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.65, ease: "easeOut", delay: 0.22 }}
-            className="relative p-5 w-full max-w-7xl my-8 mx-auto"
-          >                      
-            <div 
-            className=" w-[120%]  h-[120%]  -left-20 -top-10  absolute top     blur-3xl"
-            />
-
-            <div className="relative z-10 rounded-xl overflow-hidden">
- 
-              <Suspense
-                fallback={
-                  <div className="flex items-center justify-center gap-6 h-[450px]">
-                    {Array.from({ length: 4 }).map((_, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{
-                          duration: 0.4,
-                          ease: "easeOut",
-                          delay: i * 0.06,
-                        }}
-                        className="border rounded-xl bg-white/10 dark:bg-zinc-900/40 p-5 gap-5 flex flex-col relative w-full h-full"
-                      >
-                        <Skeleton className="rounded-md flex-1" />
-                        <div className="w-full space-y-2">
-                          <Skeleton className="h-6 w-full" />
-                          <Skeleton className="h-6 w-2/3" />
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                }
-              >
-                <Creators />
-              </Suspense>
+            className="relative w-full max-w-7xl my-20 mx-auto"
+          >
+            <div className="relative group z-10 border-3 p-5 bg-muted transition duration-200 hover:border-tertiary rounded-full overflow-hidden ">
+              <Button 
+              variant={"outline"}
+              size={"lg"} className=" opacity-0 group-hover:opacity-100  duration-500 ease-in-out transition-opacity absolute -translate-1/2 z-40 left-1/2 top-1/2">
+                Discover more <LockKeyholeOpenIcon/>
+              </Button>
+              <div className=" rounded-full transition duration-500 ease-in-out group-hover:backdrop-blur-xs inset-0 absolute z-30    bg-[radial-gradient(circle,transparent_50%,var(--background)_90%)]  " />
+              <div className="rounded-full overflow-hidden">
+                <Suspense
+                  fallback={
+                    <div className="flex items-center justify-center gap-6 h-[450px]">
+                      {Array.from({ length: 4 }).map((_, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{
+                            duration: 0.4,
+                            ease: "easeOut",
+                            delay: i * 0.06,
+                          }}
+                          className="border rounded-xl bg-white/10 dark:bg-zinc-900/40 p-5 gap-5 flex flex-col relative w-full h-full"
+                        >
+                          <Skeleton className="rounded-md flex-1" />
+                          <div className="w-full space-y-2">
+                            <Skeleton className="h-6 w-full" />
+                            <Skeleton className="h-6 w-2/3" />
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  }
+                >
+                  <Creators />
+                </Suspense>
+              </div>
             </div>
           </motion.div>
 
@@ -251,7 +237,6 @@ const CarouselHero = () => {
         </div>
       </div>
     </motion.section>
-  </>
   );
 };
 
