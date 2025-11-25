@@ -18,11 +18,10 @@ function CatalogPage() {
         <SecondSection />
 
         <Features />
-
+      
         <DemoVideo />
         <BookCall />
- 
-        <PricingSection />
+  
       </main>
     </div>
   );
