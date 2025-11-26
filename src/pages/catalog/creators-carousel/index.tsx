@@ -8,10 +8,11 @@ import { LockKeyholeOpenIcon, Quote } from "lucide-react";
 import FloatingLines from "../../../components/FloatingLines";
 import { creatorsQueryOptions } from "@/lib/creators/get-creators";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Suspense, useRef } from "react";
+import { Ref, RefObject, Suspense, useRef } from "react";
 import { Skeleton } from "@/components/skeleton";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { Button } from "@/components/ui/button";
+import { Link } from "@tanstack/react-router";
 
 // Animation variants for each testimonial card
 const cardVariants: Variants = {
@@ -118,7 +119,7 @@ const Creators = () => {
   );
 };
 
-const CarouselHero = () => {
+const CarouselHero = ({previewRef}:{previewRef: RefObject<HTMLDivElement | null>}) => {
   const sectionRef = useRef<HTMLElement | null>(null);
 
   // Parallax on the slider block as you scroll
@@ -130,7 +131,7 @@ const CarouselHero = () => {
   const sliderY = useTransform(scrollYProgress, [0, 1], [24, -24]);
   const sliderScale = useTransform(scrollYProgress, [0, 1], [0.98, 1.02]);
   const blurGlowOpacity = useTransform(scrollYProgress, [0, 1], [0.3, 0.7]);
-
+ 
   return (
     <motion.section
       ref={sectionRef}
@@ -160,9 +161,9 @@ const CarouselHero = () => {
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.12 }}
             className="   tracking-widest flex gap-2 justify-center items-center  text-amber-600"
           >
-           <div className="   bg-amber-600   h-[0.5px]  w-12" /> 
+            <div className="   bg-amber-600   h-[0.5px]  w-12" />
             BEST CREATORS IN MIAMI
-            <div className="   bg-amber-600   h-[0.5px]  w-12" /> 
+            <div className="   bg-amber-600   h-[0.5px]  w-12" />
           </motion.p>
 
           <motion.h2
@@ -185,13 +186,22 @@ const CarouselHero = () => {
             transition={{ duration: 0.65, ease: "easeOut", delay: 0.22 }}
             className="relative w-full max-w-7xl    mx-auto"
           >
-            <div className="relative group z-10 border-3 p-5 bg-muted transition duration-200 hover:border-tertiary 
-            rounded-full overflow-hidden ">
-              <Button 
-              variant={"outline"}
-              size={"lg"} className=" opacity-0 group-hover:opacity-100  duration-500 ease-in-out transition-opacity absolute -translate-1/2 z-40 left-1/2 top-1/2">
-                Discover more <LockKeyholeOpenIcon/>
+            <div
+              className="relative group z-10 border-3 p-5 bg-muted/30 transition duration-200 hover:border-tertiary 
+            rounded-full overflow-hidden "
+            >
+              <Button
+                onClick={() => {
+                  if (!previewRef.current) return;
+                  previewRef.current.scrollIntoView({ behavior: "smooth" });
+                }}
+                variant={"outline"}
+                size={"lg"}
+                className=" opacity-0 group-hover:opacity-100  duration-500 ease-in-out transition-opacity absolute -translate-1/2 z-40 left-1/2 top-1/2"
+              >
+                Discover more <LockKeyholeOpenIcon />
               </Button>
+
               <div className="   transition duration-500 ease-in-out group-hover:backdrop-blur-xs inset-0 absolute z-30    bg-[radial-gradient(circle,transparent_50%,var(--background)_90%)]  " />
               <div className="rounded-full overflow-hidden ">
                 <Suspense
@@ -224,8 +234,6 @@ const CarouselHero = () => {
               </div>
             </div>
           </motion.div>
-
-       
         </div>
       </div>
     </motion.section>

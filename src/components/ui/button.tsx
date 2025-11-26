@@ -16,7 +16,7 @@ const buttonVariants = cva(
         black:
           "rounded-full bg-black text-white border border-input hover:bg-black/90 dark:bg-zinc-950 dark:hover:bg-zinc-900",
         outline:
-          "rounded-full hover:border-primary  border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "rounded-full hover:border-primary  border border-input bg-background/40 text-foreground backdrop-blur  hover:fill-primary hover:text-accent-foreground",
         secondary:
           "rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost:
@@ -31,8 +31,8 @@ const buttonVariants = cva(
         lg: "h-11 px-7 text-base",
         xl: "h-12 px-8 text-lg",
         "2xl": "h-14 px-10 text-xl",
-        icon: "size-10",
-        "icon-sm": "size-8",
+        icon: "size-10 [&>svg]:stroke-1",
+        "icon-sm": "size-8  ",
         "icon-lg": "size-12",
       },
     },
