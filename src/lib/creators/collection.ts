@@ -2,13 +2,13 @@
 
 import { z } from "zod";
 import { createTypedCollection } from "../firebase/utils";
-import { firebaseCreatorRecord } from "./schemas/creator-apply-server";
+import { Creator, firebaseCreatorRecord } from "./schemas/creator-apply-server";
 
-export const GetCreatorsInput = z
+export const GetCreatorsFilterSchema = z
   .object({
     limit: z.number().int().min(1).max(50).default(20),
     // filters
-    onlyWithBio: z.boolean().default(false),
+    cleaned: z.boolean().default(false),
   })
   .partial()
   .default({});
@@ -18,20 +18,19 @@ export const creatorsRepo = createTypedCollection({
   schema: firebaseCreatorRecord,
 });
 
-export type CreatorsFilter = z.infer<typeof GetCreatorsInput>;
-
+export type CreatorsFilter = z.infer<typeof GetCreatorsFilterSchema>;
+type WhereFilter<T> = {
+  field: Extract<keyof T, string>; // cioè "name" | "email" | ... | "createdAt" | ...
+  op: FirebaseFirestore.WhereFilterOp;
+  value: unknown;
+};
+ 
 export async function findCreators(rawFilters: CreatorsFilter) {
-  const { limit = 20, onlyWithBio } = rawFilters;
+  const { limit = 20, cleaned } = rawFilters;
 
-  const where: {
-    field: string;
-    op: FirebaseFirestore.WhereFilterOp;
-    value: unknown;
-  }[] = [];
+  const where: WhereFilter<Creator>[] = [];
 
-  // ⛔️ Do NOT use inequality on `bio` here.
-  // Keep the Firestore query as “dumb” as possible, and filter bio in memory.
-
+ 
   const { results, errors } = await creatorsRepo.find({
     where,
     orderBy: { field: "createdAt", direction: "desc" },
@@ -47,7 +46,7 @@ export async function findCreators(rawFilters: CreatorsFilter) {
 
   let filtered = results;
 
-  if (onlyWithBio) {
+  if (cleaned) {
     filtered = filtered.filter((creator) => {
       const bio = creator.bio;
       const pic = creator.profilePictureUrl;

@@ -97,7 +97,7 @@ const CreatorCard = ({
 const Creators = () => {
   const { data: creators } = useSuspenseQuery(
     creatorsQueryOptions({
-      onlyWithBio: true,
+      cleaned: true,
     })
   );
 
@@ -158,16 +158,18 @@ const CarouselHero = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.12 }}
-            className="text-xl text-amber-700"
+            className="   tracking-widest flex gap-2 justify-center items-center  text-amber-600"
           >
-            We already found the Best Content Creators for your needs.
+           <div className="   bg-amber-600   h-[0.5px]  w-12" /> 
+            BEST CREATORS IN MIAMI
+            <div className="   bg-amber-600   h-[0.5px]  w-12" /> 
           </motion.p>
 
           <motion.h2
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, ease: "easeOut", delay: 0.18 }}
-            className="mb-0 bg-text bg-linear-to-t from-primary to-amber-400"
+            className="my-0 bg-text bg-linear-to-t from-primary to-amber-400"
           >
             You Just Pick Your Favourite.
           </motion.h2>
@@ -181,16 +183,17 @@ const CarouselHero = () => {
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.65, ease: "easeOut", delay: 0.22 }}
-            className="relative w-full max-w-7xl my-20 mx-auto"
+            className="relative w-full max-w-7xl    mx-auto"
           >
-            <div className="relative group z-10 border-3 p-5 bg-muted transition duration-200 hover:border-tertiary rounded-full overflow-hidden ">
+            <div className="relative group z-10 border-3 p-5 bg-muted transition duration-200 hover:border-tertiary 
+            rounded-full overflow-hidden ">
               <Button 
               variant={"outline"}
               size={"lg"} className=" opacity-0 group-hover:opacity-100  duration-500 ease-in-out transition-opacity absolute -translate-1/2 z-40 left-1/2 top-1/2">
                 Discover more <LockKeyholeOpenIcon/>
               </Button>
-              <div className=" rounded-full transition duration-500 ease-in-out group-hover:backdrop-blur-xs inset-0 absolute z-30    bg-[radial-gradient(circle,transparent_50%,var(--background)_90%)]  " />
-              <div className="rounded-full overflow-hidden">
+              <div className="   transition duration-500 ease-in-out group-hover:backdrop-blur-xs inset-0 absolute z-30    bg-[radial-gradient(circle,transparent_50%,var(--background)_90%)]  " />
+              <div className="rounded-full overflow-hidden ">
                 <Suspense
                   fallback={
                     <div className="flex items-center justify-center gap-6 h-[450px]">
@@ -222,18 +225,7 @@ const CarouselHero = () => {
             </div>
           </motion.div>
 
-          {/* Sub copy */}
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.55, ease: "easeOut", delay: 0.1 }}
-            className="text-lg md:text-xl lg:text-2xl font-light leading-relaxed"
-          >
-            Get instant access to hand-picked creators with contact info, niche,
-            platform stats, pricing ranges, and example deliverables — without
-            spending hours on Instagram and TikTok.
-          </motion.p>
+       
         </div>
       </div>
     </motion.section>

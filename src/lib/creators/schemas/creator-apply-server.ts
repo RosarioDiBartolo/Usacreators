@@ -51,7 +51,7 @@ export const firebaseCreatorRecord = applyCreatorParamsObject
     source: withDefault(z.literal("server-fn"), "server-fn"),
     createdAt: TimestampLike,
   })
-  .passthrough();
+  .strip();
 
 export const LegalAcceptanceSchema = z
   .object({
