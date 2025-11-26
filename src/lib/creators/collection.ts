@@ -50,8 +50,8 @@ export async function findCreators(rawFilters: CreatorsFilter) {
     filtered = filtered.filter((creator) => {
       const bio = creator.bio;
       const pic = creator.profilePictureUrl;
-      if (bio == null || pic === undefined) return false;
-      if (typeof bio !== "string") return false;
+      if (typeof bio !== "string" || bio == null || pic === null) return false;
+
       return bio.trim().length > 0;
     });
   }

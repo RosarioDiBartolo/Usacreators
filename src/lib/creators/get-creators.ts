@@ -3,6 +3,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { queryOptions } from "@tanstack/react-query";
 import { GetCreatorsFilterSchema } from "@/lib/creators/collection";
 import z from "zod";
+import { GetCreatorsInput } from "./schemas/creators-filter";
  
  
 

@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SuccessRouteImport } from './routes/success'
+import { Route as RrollRouteImport } from './routes/rroll'
 import { Route as CatalogRouteImport } from './routes/catalog'
 import { Route as _notFoundRouteImport } from './routes/__not-found'
 import { Route as IndexRouteImport } from './routes/index'
@@ -21,6 +22,11 @@ import { Route as CreatorsApplyRouteImport } from './routes/creators/apply'
 const SuccessRoute = SuccessRouteImport.update({
   id: '/success',
   path: '/success',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RrollRoute = RrollRouteImport.update({
+  id: '/rroll',
+  path: '/rroll',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CatalogRoute = CatalogRouteImport.update({
@@ -61,6 +67,7 @@ const CreatorsApplyRoute = CreatorsApplyRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/catalog': typeof CatalogRoute
+  '/rroll': typeof RrollRoute
   '/success': typeof SuccessRoute
   '/creators/apply': typeof CreatorsApplyRoute
   '/legal/cookies': typeof LegalCookiesRoute
@@ -70,6 +77,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/catalog': typeof CatalogRoute
+  '/rroll': typeof RrollRoute
   '/success': typeof SuccessRoute
   '/creators/apply': typeof CreatorsApplyRoute
   '/legal/cookies': typeof LegalCookiesRoute
@@ -81,6 +89,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/__not-found': typeof _notFoundRoute
   '/catalog': typeof CatalogRoute
+  '/rroll': typeof RrollRoute
   '/success': typeof SuccessRoute
   '/creators/apply': typeof CreatorsApplyRoute
   '/legal/cookies': typeof LegalCookiesRoute
@@ -92,6 +101,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/catalog'
+    | '/rroll'
     | '/success'
     | '/creators/apply'
     | '/legal/cookies'
@@ -101,6 +111,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/catalog'
+    | '/rroll'
     | '/success'
     | '/creators/apply'
     | '/legal/cookies'
@@ -111,6 +122,7 @@ export interface FileRouteTypes {
     | '/'
     | '/__not-found'
     | '/catalog'
+    | '/rroll'
     | '/success'
     | '/creators/apply'
     | '/legal/cookies'
@@ -122,6 +134,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   _notFoundRoute: typeof _notFoundRoute
   CatalogRoute: typeof CatalogRoute
+  RrollRoute: typeof RrollRoute
   SuccessRoute: typeof SuccessRoute
   CreatorsApplyRoute: typeof CreatorsApplyRoute
   LegalCookiesRoute: typeof LegalCookiesRoute
@@ -136,6 +149,13 @@ declare module '@tanstack/react-router' {
       path: '/success'
       fullPath: '/success'
       preLoaderRoute: typeof SuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rroll': {
+      id: '/rroll'
+      path: '/rroll'
+      fullPath: '/rroll'
+      preLoaderRoute: typeof RrollRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/catalog': {
@@ -194,6 +214,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   _notFoundRoute: _notFoundRoute,
   CatalogRoute: CatalogRoute,
+  RrollRoute: RrollRoute,
   SuccessRoute: SuccessRoute,
   CreatorsApplyRoute: CreatorsApplyRoute,
   LegalCookiesRoute: LegalCookiesRoute,
