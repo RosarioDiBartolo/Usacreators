@@ -1,8 +1,8 @@
 // src/lib/things/server.ts
 import { createServerFn } from "@tanstack/react-start";
 import { queryOptions } from "@tanstack/react-query";
-import { GetCreatorsInput } from "@/lib/creators/collection";
 import z from "zod";
+import { GetCreatorsInput } from "./schemas/creators-filter";
  
  
 
