@@ -98,6 +98,7 @@ const Creators = () => {
   const { data: creators } = useSuspenseQuery(
     creatorsQueryOptions({
       onlyWithBio: true,
+      limit: 20,
     })
   );
 

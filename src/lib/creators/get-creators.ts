@@ -12,8 +12,8 @@ export const getCreators = createServerFn({ method: "GET" })
     const { findCreators } = await import("@/lib/creators/collection");
 
  
-    return  await findCreators(data);
- 
+    const creators =   await findCreators(data);
+    return  creators
   });
  export type CreatorsFilters = z.infer<typeof GetCreatorsInput>;
 
@@ -21,8 +21,7 @@ export function creatorsQueryOptions(filters: CreatorsFilters = {}) {
   // Normalization is optional here, since Zod already gave defaults,
   // but keeping it explicit is sometimes nicer for the queryKey.
   const normalized: CreatorsFilters = {
-    limit: filters.limit ?? 20,
-    onlyWithBio: filters.onlyWithBio ?? false,
+     onlyWithBio: filters.onlyWithBio ?? false,
     ...filters,
   };
 

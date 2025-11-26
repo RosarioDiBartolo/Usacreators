@@ -3,15 +3,9 @@
 import { z } from "zod";
 import { createTypedCollection } from "../firebase/utils";
 import { firebaseCreatorRecord } from "./schemas/creator-apply-server";
+import { GetCreatorsInput } from "./schemas/creators-filter";
 
-export const GetCreatorsInput = z
-  .object({
-    limit: z.number().int().min(1).max(50).default(20),
-    // filters
-    onlyWithBio: z.boolean().default(false),
-  })
-  .partial()
-  .default({});
+
 
 export const creatorsRepo = createTypedCollection({
   collection: "applications",
@@ -51,8 +45,8 @@ export async function findCreators(rawFilters: CreatorsFilter) {
     filtered = filtered.filter((creator) => {
       const bio = creator.bio;
       const pic = creator.profilePictureUrl;
-      if (bio == null || pic === undefined) return false;
-      if (typeof bio !== "string") return false;
+      if (typeof bio !== "string" || bio == null || pic === null) return false;
+
       return bio.trim().length > 0;
     });
   }

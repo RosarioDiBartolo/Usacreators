@@ -6,6 +6,7 @@ import Header from "@/pages/home/header";
 import DemoVideo from "./demo-video";
 import BusinessSolution from "./business-solution";
 import BookCall from "./book-call";
+import CatalogPreview from "./catalog-preview";
 
 function CatalogPage() {
   return (
@@ -20,8 +21,9 @@ function CatalogPage() {
         <Features />
       
         <DemoVideo />
+        <CatalogPreview />
         <BookCall />
-  
+    
       </main>
     </div>
   );
