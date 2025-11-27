@@ -88,7 +88,7 @@ function Niches({
             <TagsEmpty />
 
             <TagsGroup>
-              {defaultTags
+              {AvailableNiches
                 .filter((t) => !selected.includes(t.id))
                 .map((t) => (
                   <TagsItem
