@@ -68,7 +68,7 @@
   /* Card / Popover */
   --card: #ffffff;
   --card-foreground: #3a3a3a;
-  --popover: var(--color-muted);
+  --popover: var(--background);
   --popover-foreground: var(--color-muted-foreground);
 
   /* CTA Primario */
@@ -88,7 +88,7 @@
   --accent-foreground: var(--color-primary);
 
   /* Muted */
-  --muted: #9e9a94;
+  --muted: #c7c2bd;
   --muted-foreground: #858080;
 
   /* Destructive */

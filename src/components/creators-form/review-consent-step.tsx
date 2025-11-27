@@ -61,9 +61,9 @@ export function ReviewConsentStep({
           </p>
 
           <Tabs defaultValue="terms" className="w-full">
-            <TabsList className="grid grid-cols-2 w-full mb-2">
-              <TabsTrigger value="terms">Terms & Conditions</TabsTrigger>
-              <TabsTrigger value="privacy">Privacy Policy</TabsTrigger>
+            <TabsList className=" bg-background  grid grid-cols-2 w-full mb-2">
+              <TabsTrigger className=" data-[state=active]:bg-card data-[state=active]:text-card-foreground" value="terms">Terms & Conditions</TabsTrigger>
+              <TabsTrigger className=" data-[state=active]:bg-card data-[state=active]:text-card-foreground" value="privacy">Privacy Policy</TabsTrigger>
             </TabsList>
 
             <TabsContent value="terms">
