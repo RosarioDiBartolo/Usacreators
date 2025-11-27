@@ -58,7 +58,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
   const { data: creators } = useSuspenseQuery(
     creatorsQueryOptions({
       cleaned: false,
-      limit: 3,
+      limit: 6,
     })
   );
 
@@ -66,7 +66,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
     <section
       ref={previewRef}
       id="catalog-preview"
-      className="mx-auto bg-gradient-to-t from-tertiary/30 via-muted/30 p-13 sm:p-30 outline outline-offset-40 outline-2 outline-border relative overflow-hidden rounded-[200px] max-w-7xl border"
+      className="mx-auto max-h-[130vh] bg-gradient-to-t from-tertiary/30 via-muted/30 p-13 sm:p-30 outline outline-offset-40 outline-2 outline-border relative overflow-hidden rounded-[200px] max-w-7xl border"
     >
       <div className="mx-auto w-fit text-center flex flex-col items-center">
         <p className="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
@@ -98,7 +98,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
         </span>
       </div>
 
-      <div className="relative p-8">
+      <div className="  p-8">
         <ProgressiveBlur
           className="pointer-events-none z-10 absolute inset-0"
           blurIntensity={1}
@@ -106,19 +106,19 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
 
         {/* Motion container: hover here controls blur + overlay */}
         <motion.div
-          className="relative"
+          className=" "
           variants={containerVariants}
           initial="rest"
           animate="rest"
+          
           whileHover="hover"
         >
           {/* Grid of creators – blurred via motion */}
           <motion.div
             variants={gridVariants}
             className="
-              [&>*:nth-child(2)]:hidden [&>*:nth-child(2)]:md:block
-              [&>*:nth-child(3)]:hidden [&>*:nth-child(3)]:lg:block
-              grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3
+              
+               grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3
             "
           >
             {creators.map((c) => (
@@ -203,7 +203,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
           <motion.div
             variants={overlayVariants}
             className="
-              absolute inset-0 z-20 pointer-events-auto
+              absolute  inset-0 z-20 pointer-events-auto
               flex items-center justify-center
             "
           >
