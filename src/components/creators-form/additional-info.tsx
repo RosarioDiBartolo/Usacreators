@@ -28,39 +28,8 @@ import {
   TagsItem,
   Tags,
 } from "../ui/shadcn-io/tags";
-
-  const defaultTags = [
-  { id: "fitness", label: "Fitness" },
-  { id: "body_transformation", label: "Body Transformation" },
-  { id: "mens_health", label: "Men's Health" },
-  { id: "biohacking", label: "Biohacking" },
-  { id: "longevity", label: "Longevity" },
-  { id: "animal_based", label: "Animal-Based Diet" },
-  { id: "nutrition", label: "Nutrition" },
-  { id: "gym_lifestyle", label: "Gym Lifestyle" },
-  { id: "fashion", label: "Fashion" },
-  { id: "streetwear", label: "Streetwear" },
-  { id: "beauty", label: "Beauty" },
-  { id: "skincare", label: "Skincare" },
-  { id: "travel", label: "Travel" },
-  { id: "luxury_lifestyle", label: "Luxury Lifestyle" },
-  { id: "miami_lifestyle", label: "Miami Lifestyle" },
-  { id: "real_estate", label: "Real Estate" },
-  { id: "finance", label: "Finance" },
-  { id: "crypto", label: "Crypto" },
-  { id: "productivity", label: "Productivity" },
-  { id: "self_improvement", label: "Self-Improvement" },
-  { id: "relationships", label: "Relationships" },
-  { id: "psychology", label: "Psychology" },
-  { id: "ugc", label: "UGC" },
-  { id: "brand_deals", label: "Brand Deals" },
-  { id: "tech_reviews", label: "Tech Reviews" },
-  { id: "ai_tools", label: "AI Tools" },
-  { id: "web_dev", label: "Web Dev" },
-  { id: "designer", label: "Designer" },
-  { id: "freelancing", label: "Freelancing" },
-  { id: "entrepreneurship", label: "Entrepreneurship" }
-];
+import { AvailableNiches } from "@/lib/creators/constants";
+ 
 
 function Niches({
   value,
@@ -93,7 +62,7 @@ function Niches({
     <>
        <div className="flex items-center gap-3 py-2">
         {selected.map((tagId) => {
-          const tag = defaultTags.find((t) => t.id === tagId);
+          const tag = AvailableNiches.find((t) => t.id === tagId);
           if (!tag) return null;
 
           return (

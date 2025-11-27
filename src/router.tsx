@@ -9,9 +9,7 @@ export function getRouter() {
 
   const router = createRouter({
     routeTree,
-    defaultErrorComponent: ({ error })=>(
-      <ErrorComponent  error={error}/>
-    ),
+    defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
     context: { queryClient },
     scrollRestoration: true,
     defaultPreload: "intent",
@@ -27,8 +25,8 @@ export function getRouter() {
 }
 
 // Register the router instance for type safety
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface Register {
-    router: ReturnType < typeof getRouter>
+    router: ReturnType<typeof getRouter>;
   }
 }
