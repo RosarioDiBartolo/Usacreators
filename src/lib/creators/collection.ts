@@ -1,7 +1,7 @@
 // src/lib/firebase/creators-repo.ts
 
 import { z } from "zod";
-import { createTypedCollection } from "../firebase/utils";
+import { createTypedCollection, WithId } from "../firebase/utils";
 import { Creator, firebaseCreatorRecord } from "./schemas/creator-apply-server";
 
 export const GetCreatorsFilterSchema = z
@@ -18,6 +18,7 @@ export const creatorsRepo = createTypedCollection({
   schema: firebaseCreatorRecord,
 });
 
+export type CreatorRecord = WithId<Creator>
 export type CreatorsFilter = z.infer<typeof GetCreatorsFilterSchema>;
 type WhereFilter<T> = {
   field: Extract<keyof T, string>; // cioè "name" | "email" | ... | "createdAt" | ...

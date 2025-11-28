@@ -7,7 +7,7 @@ export const TimestampLike = z.instanceof(Timestamp).transform((ts) => ts.toDate
  
  
  
-type WithId<T> = T & { id: string };
+export type WithId<T> = T & { id: string };
 
 async function getDb() {
   const { db } = await import("@/lib/firebase/admin");

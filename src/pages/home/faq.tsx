@@ -14,6 +14,7 @@ import {
   Bell,
   Target,
 } from "lucide-react";
+import Faq from "@/components/faq";
 const faqItems = [
   {
     id: "how-works",
@@ -176,15 +177,14 @@ const faqItems = [
 ];
 
 
-export default function FAQ() {
+export default function HomeFAQ() {
   return (
     <section
       id="faq"
       className=" 
       relative w-full max-w-7xl mx-auto 
     section-padding 
-    text-muted-foreground
-    text-center
+     text-center
     "
     >
       <motion.div
@@ -208,40 +208,7 @@ export default function FAQ() {
         </div>
       </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-      >
-        <Accordion
-          type="single"
-          collapsible
-          className=" space-y-5 w-full text-start"
-        >
-          {faqItems.map((item) => {
-            const IconComponent = item.icon;
-            return (
-              <AccordionItem
-                key={item.id}
-                value={item.id}
-                className="border  border-accent/20 rounded-lg bg-gradient-to-br from-accent/5 to-secondary/5 overflow-hidden transition-all duration-300 hover:border-accent/40 hover:shadow-lg hover:bg-gradient-to-br hover:from-accent/10 hover:to-accent/15"
-              >
-                <AccordionTrigger className="px-6 py-4 font-semibold  hover:no-underline text-left flex justify-between items-center ">
-                  <div className=" flex gap-4 items-center">
-                    <IconComponent
-                      className={`${item.iconColor} w-5 h-5 flex-shrink-0`}
-                    />
-                    <span className=" font-bold text-xl">{item.question}</span>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="px-6 pb-4 pt-0">
-                  {item.answer}
-                </AccordionContent>
-              </AccordionItem>
-            );
-          })}
-        </Accordion>
-      </motion.div>
+       <Faq faqItems={faqItems}/>
     </section>
   );
 }

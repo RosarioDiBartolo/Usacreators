@@ -112,7 +112,10 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
 </div>
       <div className="relative p-8    ">
         <ProgressiveBlur
-          className="pointer-events-none z-10 absolute inset-0"
+          className="
+          pointer-events-none 
+          bg-linear-to-t from-black/10 
+           z-10 absolute inset-0"
           blurIntensity={1}
         />
 
@@ -152,18 +155,18 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
 
                       <hr className="my-3 bg-muted px-3 h-[1.5px] rounded-full" />
 
-                      <div className="max-h-12 overflow-hidden flex gap-3 flex-wrap my-2">
+                      {/* <div className="max-h-12 overflow-hidden flex gap-3 flex-wrap my-2">
                         {c.niches.map((n) => (
                           <Button
                             key={n}
-                            size="xs"
+            lock                size="xs"
                             variant="outline"
                             className="line-clamp-1 bg-tertiary/10 capitalize"
                           >
                             {n.replaceAll("_", " ")}
                           </Button>
                         ))}
-                      </div>
+                      </div> */}
                     </div>
                   </div>
 
