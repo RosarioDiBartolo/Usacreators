@@ -66,8 +66,20 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
     <section
       ref={previewRef}
       id="catalog-preview"
-      className="mx-auto max-h-[130vh] bg-gradient-to-t from-tertiary/30 via-muted/30 p-13 sm:p-30 outline outline-offset-40 outline-2 outline-border relative overflow-hidden rounded-[200px] max-w-7xl border"
+      className="
+      mx-auto 
+     
+      bg-gradient-to-t from-tertiary/30 via-muted/30 
+ 
+        
+      outline outline-offset-40 outline-2 outline-border 
+      relative 
+      overflow-hidden 
+      rounded-[200px] 
+      max-w-7xl
+       border"
     >
+      <div className="mx-auto   p-13   "> 
       <div className="mx-auto w-fit text-center flex flex-col items-center">
         <p className="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
           <Sparkles className="h-3 w-3" />
@@ -97,8 +109,8 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
           <span>Avg. rating 4.8 / 5</span>
         </span>
       </div>
-
-      <div className="  p-8">
+</div>
+      <div className="relative p-8    ">
         <ProgressiveBlur
           className="pointer-events-none z-10 absolute inset-0"
           blurIntensity={1}
@@ -106,7 +118,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
 
         {/* Motion container: hover here controls blur + overlay */}
         <motion.div
-          className=" "
+          className=" relative max-h-[100vh] "
           variants={containerVariants}
           initial="rest"
           animate="rest"
@@ -203,7 +215,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
           <motion.div
             variants={overlayVariants}
             className="
-              absolute  inset-0 z-20 pointer-events-auto
+              absolute   inset-0 z-20 pointer-events-auto
               flex items-center justify-center
             "
           >

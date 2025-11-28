@@ -173,7 +173,7 @@
     @apply bg-gradient-to-t from-primary to-tertiary;
   }
   /* Imposta il default: Poppins via font-sans */
-  body {
+  body, html {
     @apply font-poppins bg-background text-foreground w-screen overflow-x-hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
