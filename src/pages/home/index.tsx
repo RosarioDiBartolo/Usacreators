@@ -2,7 +2,7 @@ import CreatorsBrands from "@/pages/home/creator-brand";
 import Footer from "@/pages/home/footer";
 import Videos from "@/pages/home/videos";
 import FAQ from "@/pages/home/faq";
-import Hero from "@/pages/home/animated-shader-hero";
+import Hero from "@/pages/home/hero";
 import Features from "@/pages/home/features";
 import Header from "@/pages/home/header";
 
