@@ -185,7 +185,7 @@ export default function CatalogFAQ() {
           </h2>
           <p className="text-base leading-relaxed max-w-3xl mx-auto ">
             Here's a full breakdown of
-            the services we offer the platform works, how you earn, and how we can help your business grow.
+            the services we offer,how the platform works, how you earn, and how we can help your business grow.
           </p>
         </div>
       </motion.div>
