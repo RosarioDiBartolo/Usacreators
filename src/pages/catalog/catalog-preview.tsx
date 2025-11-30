@@ -10,10 +10,10 @@ import {
   Star,
   Users,
 } from "lucide-react";
-import { IconBrandInstagram, IconBrandTiktok } from "@tabler/icons-react";
-import { ProgressiveBlur } from "@/components/ui/progressive-blur";
+ import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { RefObject } from "react";
 import { motion, Variants } from "motion/react";
+import { SiInstagram, SiTiktok  } from "react-icons/si";
 
 type CatalogPreviewProps = {
   previewRef: RefObject<HTMLDivElement>;
@@ -174,7 +174,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
                     {c.instagram && (
                       <a href={c.instagram}>
                         <Button size="icon" variant="outline">
-                          <IconBrandInstagram />
+                          <SiInstagram  />
                         </Button>
                       </a>
                     )}
@@ -182,7 +182,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
                     {c.tiktok && (
                       <a href={c.tiktok}>
                         <Button size="icon" variant="outline">
-                          <IconBrandTiktok />
+                          <SiTiktok />
                         </Button>
                       </a>
                     )}

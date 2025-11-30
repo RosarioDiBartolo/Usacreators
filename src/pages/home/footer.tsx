@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 import { Mail  } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { officialEmail } from "@/lib/creators/constants";
-import { IconBrandTiktok } from "@tabler/icons-react";
-import { Link } from "@tanstack/react-router";
+ import { Link } from "@tanstack/react-router";
+import { SiInstagram, SiTiktok } from "react-icons/si";
 const legalLinks: {
   name: string;
   href: "terms" | "privacy" | "cookies";
@@ -94,7 +94,7 @@ function Footer() {
           
             {/* Socials */}
             <div className="flex items-center gap-4 mt-2">
-              {[IconBrandTiktok].map((Icon, i) => (
+              {[SiTiktok, SiInstagram].map((Icon, i) => (
                 <motion.a
                   key={i}
                   href="#"

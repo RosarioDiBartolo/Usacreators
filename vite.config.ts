@@ -26,7 +26,12 @@ export default defineConfig({
   }), tanstackStart(), // or 'vercel-edge'
   tsConfigPaths({
     projects: ["./tsconfig.json"],
-  }), nitro({   preset: 'vercel'  }), react(), tailwindcss(), ...(isAnalyze ? [Inspect(), visualizer({ filename: 'stats.html', gzipSize: true })] : []), sentryVitePlugin({
+  }), 
+  nitro( )
+  , react(), 
+  tailwindcss(), 
+  ...(isAnalyze ? [Inspect(), visualizer({ filename: 'stats.html', gzipSize: true })] : []), 
+  sentryVitePlugin({
     org: "miamicreators",
     project: "miamicreators"
   }), sentryVitePlugin({

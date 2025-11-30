@@ -1,7 +1,6 @@
 "use client";
 import { cn } from "@/lib/fe-utils";
-import { IconMenu2, IconX } from "@tabler/icons-react";
-import {
+ import {
   motion,
   AnimatePresence,
   useScroll,
@@ -9,6 +8,7 @@ import {
 } from "motion/react";
 import logo from "@/assets/logo.png";
 import React, { useRef, useState, type SetStateAction } from "react";
+import { Menu, X } from "lucide-react";
 
 interface NavbarProps {
   children: React.ReactNode;
@@ -265,7 +265,7 @@ export const MobileNavToggle = ({
             exit={{ opacity: 0, rotate: 90 }}
             transition={{ duration: 0.18 }}
           >
-            <IconX className="h-6 w-6 text-foreground" />
+            <X className="h-6 w-6 text-foreground" />
           </motion.div>
         ) : (
           <motion.div
@@ -275,7 +275,7 @@ export const MobileNavToggle = ({
             exit={{ opacity: 0, rotate: -90 }}
             transition={{ duration: 0.18 }}
           >
-            <IconMenu2 className="h-6 w-6 text-foreground" />
+            <Menu className="h-6 w-6 text-foreground" />
           </motion.div>
         )}
       </AnimatePresence>
