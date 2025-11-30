@@ -27,3 +27,5 @@ dist-ssr
 *.sw?
 .vercel
 api/service-account.json
+# Sentry Config File
+.env.sentry-build-plugin
