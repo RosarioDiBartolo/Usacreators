@@ -3,7 +3,7 @@ import {InlineWidget} from "react-calendly";
 function BookCall() {
   return (
     <section className="   mx-auto">
-      <h2 className="bg-text bg-linear-to-b from-secondary
+      <h2 className="bg-text bg-linear-to-b from-secondary px-0.5
        via-amber-900 to-amber-950">
         Book a Free Strategy Call
       </h2>
@@ -11,7 +11,7 @@ function BookCall() {
 
          <div
         className="
-        rounded-3xl border border-amber-950/40
+          lg:rounded-3xl border border-amber-950/40
        bg-muted text-muted-foreground  shadow-[0_22px_80px_rgba(0,0,0,0.12)]  "
       > 
       

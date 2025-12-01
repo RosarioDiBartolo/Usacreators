@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "legal-registry": "cross-env TS_NODE_PROJECT=tsconfig.json tsx --env-file=.env.local src/scripts/legal 2025-01-01",
-    "dev": "cross-env NODE_OPTIONS=--import=./instrument.server.mjs vite dev --port 3000",
+    "dev": "cross-env NODE_OPTIONS=--import=./instrument.server.mjs vite dev --port 3000 --host 0.0.0.0",
     "start": "dotenv -e .env.local -- cross-env NODE_OPTIONS=--import=./.output/server/instrument.server.mjs node .output/server/index.mjs",
     "build": "vite build && cpx instrument.server.mjs .output/server",
     "type-check": "tsc --noEmit",

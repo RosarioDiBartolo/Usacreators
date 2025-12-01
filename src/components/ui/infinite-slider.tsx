@@ -53,82 +53,85 @@ const InfiniteSlider = React.forwardRef<HTMLDivElement, InfiniteSliderProps>(
     );
 
     useEffect(() => {
-      let controls;
-      const size = direction === "horizontal" ? width : height;
-      const contentSize = size + gap;
-      const from = reverse ? -contentSize / 2 : 0;
-      const to = reverse ? 0 : -contentSize / 2;
+  const size = direction === "horizontal" ? width : height;
+  if (!size) return;
 
-      if (!contentSize) return; // avoid NaN on first render
+  const contentSize = size + gap;
+  if (!contentSize) return;
 
-      if (isTransitioning) {
-        controls = animate(translation, [translation.get(), to], {
-          ease: "linear",
-          duration:
-            currentDuration *
-            Math.abs((translation.get() - to) / contentSize),
-          onComplete: () => {
-            setIsTransitioning(false);
-            setKey((prevKey) => prevKey + 1);
-          },
-        });
-      } else {
-        controls = animate(translation, [from, to], {
-          ease: "linear",
-          duration: currentDuration,
-          repeat: Infinity,
-          repeatType: "loop",
-          repeatDelay: 0,
-          onRepeat: () => {
-            translation.set(from);
-          },
-        });
+  const from = reverse ? -contentSize / 2 : 0;
+  const to = reverse ? 0 : -contentSize / 2;
+
+  let controls;
+
+  if (isTransitioning) {
+    controls = animate(translation, [translation.get(), to], {
+      ease: "linear",
+      duration:
+        currentDuration *
+        Math.abs((translation.get() - to) / contentSize),
+      onComplete: () => {
+        setIsTransitioning(false);
+      },
+    });
+  } else {
+    translation.set(from); // make sure we reset before loop
+    controls = animate(translation, [from, to], {
+      ease: "linear",
+      duration: currentDuration,
+      repeat: Infinity,
+      repeatType: "loop",
+      repeatDelay: 0,
+    });
+  }
+
+  return () => controls?.stop();
+}, [
+  translation,
+  currentDuration,
+  width,
+  height,
+  gap,
+  isTransitioning,
+  direction,
+  reverse,
+]);
+
+    const isTouchDevice =
+  typeof window !== "undefined" && "ontouchstart" in window;
+
+const hoverProps =
+  !isTouchDevice && durationOnHover != null
+    ? {
+        onHoverStart: () => {
+          setIsTransitioning(true);
+          setCurrentDuration(durationOnHover);
+        },
+        onHoverEnd: () => {
+          setIsTransitioning(true);
+          setCurrentDuration(duration);
+        },
       }
-
-      return controls?.stop;
-    }, [
-      key,
-      translation,
-      currentDuration,
-      width,
-      height,
-      gap,
-      isTransitioning,
-      direction,
-      reverse,
-    ]);
-
-    const hoverProps =
-      durationOnHover != null
-        ? {
-            onHoverStart: () => {
-              setIsTransitioning(true);
-              setCurrentDuration(durationOnHover);
-            },
-            onHoverEnd: () => {
-              setIsTransitioning(true);
-              setCurrentDuration(duration);
-            },
-          }
-        : {};
+    : {};
 
     return (
       <div className={cn("overflow-hidden", className)}>
         <motion.div
-          className="flex w-max h-[450px]"
-          style={{
-            ...(direction === "horizontal"
-              ? { x: translation }
-              : { y: translation }),
-            gap: `${gap}px`,
-            flexDirection: direction === "horizontal" ? "row" : "column",
-          }}
-          ref={setRefs} // 👈 merged ref here
-          {...hoverProps}
-        >
-          {children}
-          {children}
-        </motion.div>
+  className="flex w-max h-[450px]"
+  style={{
+    ...(direction === "horizontal"
+      ? { x: translation }
+      : { y: translation }),
+    gap: `${gap}px`,
+    flexDirection: direction === "horizontal" ? "row" : "column",
+    willChange: "transform", // 👈 important for mobile
+  }}
+  ref={setRefs}
+  {...hoverProps}
+>
+  {children}
+  {children}
+</motion.div>
       </div>
     );
   }

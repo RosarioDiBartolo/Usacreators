@@ -133,7 +133,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
             variants={gridVariants}
             className="
               
-               grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3
+            [&>*:nth-child(1)]:block [&>*:nth-child(2)]:block *:hidden md:*:block   grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3
             "
           >
             {creators.map((c) => (

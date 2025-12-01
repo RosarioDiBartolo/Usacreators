@@ -1,7 +1,7 @@
 import InfiniteSlider from "@/components/ui/infinite-slider";
 import { creatorsQueryOptions } from "@/lib/creators/get-creators";
- import { useSuspenseQuery } from "@tanstack/react-query";
- import { Quote } from "lucide-react";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { Quote } from "lucide-react";
 import { motion, Variants } from "motion/react";
 import missingPic from "@/assets/images/creator-missing.jpg";
 
@@ -54,17 +54,17 @@ const CreatorCard = ({
   return (
     <motion.div
       key={creator.id}
-      className="relative overflow-hidden rounded-xl bg-card shadow-sm"
+      className="relative overflow-hidden rounded-xl bg-card shadow-sm h-full"
       variants={cardVariants}
       custom={index}
       whileHover="hover"
       whileTap="tap"
     >
-      <div className="relative">
+      <div className="relative h-full w-[300px]">
         <img
           src={creator.profilePictureUrl ?? missingPic}
           alt={creator.name}
-          className="h-120 w-full object-cover"
+          className="  h-full w-full object-cover"
         />
         {/* Gradient overlay for text readability */}
         <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/40 to-transparent" />
@@ -97,21 +97,25 @@ const Creators = () => {
   );
 
   return (
-    <motion.div
-      variants={sliderContainerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-      className="w-full"
-    >
-      <InfiniteSlider duration={100}>
-        {creators.map((c, i) => (
-          <CreatorCard key={c.id ?? i} creator={c} index={i} />
-        ))}
-      </InfiniteSlider>
-    </motion.div>
+    <> 
+  
+      <div className= "lg:rounded-full overflow-hidden ">
+        <motion.div
+          variants={sliderContainerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="w-full"
+        >
+          <InfiniteSlider duration={100}>
+            {creators.map((c, i) => (
+              <CreatorCard key={c.id ?? i} creator={c} index={i} />
+            ))}
+          </InfiniteSlider>
+        </motion.div>
+      </div>
+  </>
   );
 };
 
-
-export default Creators
+export default Creators;

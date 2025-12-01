@@ -1,4 +1,3 @@
-
 import { motion } from "motion/react";
 
 import { LockKeyholeOpenIcon } from "lucide-react";
@@ -6,12 +5,14 @@ import { RefObject, Suspense } from "react";
 import { Skeleton } from "@/components/skeleton";
 import { Button } from "@/components/ui/button";
 import Creators from "./carousel";
- 
-const CarouselHero = ({previewRef}:{previewRef: RefObject<HTMLDivElement | null>}) => {
- 
- 
+
+const CarouselHero = ({
+  previewRef,
+}: {
+  previewRef: RefObject<HTMLDivElement | null>;
+}) => {
   return (
-    <motion.section 
+    <motion.section
       className="relative   section-padding   w-full    "
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -54,16 +55,16 @@ const CarouselHero = ({previewRef}:{previewRef: RefObject<HTMLDivElement | null>
         </div>
 
         <div>
-           <motion.div
-             initial={{ opacity: 0, y: 24, scale: 0.97 }}
+          <motion.div
+            initial={{ opacity: 0, y: 24, scale: 0.97 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.65, ease: "easeOut", delay: 0.22 }}
             className="relative w-full max-w-7xl    mx-auto"
           >
             <div
-              className="relative group z-10 border-3 p-5 bg-muted/30 transition duration-200 hover:border-tertiary 
-            rounded-full overflow-hidden "
+              className="relative group z-10   p-1 bg-muted/30  border-3 rounded-md lg:rounded-full transition duration-200 border-tertiary lg:border-border hover:border-tertiary 
+              overflow-hidden "
             >
               <Button
                 onClick={() => {
@@ -72,41 +73,46 @@ const CarouselHero = ({previewRef}:{previewRef: RefObject<HTMLDivElement | null>
                 }}
                 variant={"outline"}
                 size={"lg"}
-                className=" opacity-0 group-hover:opacity-100  duration-500 ease-in-out transition-opacity absolute -translate-1/2 z-40 left-1/2 top-1/2"
+                className=" opacity-100 lg:opacity-0 group-hover:opacity-100  duration-500 ease-in-out transition-opacity absolute -translate-1/2 z-40 left-1/2 top-1/2"
               >
                 Discover more <LockKeyholeOpenIcon />
               </Button>
-
-              <div className="   transition duration-500 ease-in-out group-hover:backdrop-blur-xs inset-0 absolute z-30    bg-[radial-gradient(circle,transparent_50%,var(--background)_90%)]  " />
-              <div className="rounded-full overflow-hidden ">
-                <Suspense
-                  fallback={
-                    <div className="flex items-center justify-center gap-6 h-[450px]">
-                      {Array.from({ length: 4 }).map((_, i) => (
-                        <motion.div
-                          key={i}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{
-                            duration: 0.4,
-                            ease: "easeOut",
-                            delay: i * 0.06,
-                          }}
-                          className="border rounded-xl bg-white/10 dark:bg-zinc-900/40 p-5 gap-5 flex flex-col relative w-full h-full"
-                        >
-                          <Skeleton className="rounded-md flex-1" />
-                          <div className="w-full space-y-2">
-                            <Skeleton className="h-6 w-full" />
-                            <Skeleton className="h-6 w-2/3" />
-                          </div>
-                        </motion.div>
-                      ))}
-                    </div>
-                  }
-                >
-                  <Creators />
-                </Suspense>
-              </div>
+              <div
+                className="
+    transition duration-500 ease-in-out 
+    backdrop-blur-xs
+    lg:backdrop-blur-none
+    group-hover:backdrop-blur-xs
+     inset-0 absolute z-30   
+      bg-[radial-gradient(circle,transparent_50%,var(--background)_90%)]  "
+              />
+              <Suspense
+                fallback={
+                  <div className="flex items-center justify-center gap-6 h-[450px]">
+                    {Array.from({ length: 4 }).map((_, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          duration: 0.4,
+                          ease: "easeOut",
+                          delay: i * 0.06,
+                        }}
+                        className="border rounded-xl bg-white/10 dark:bg-zinc-900/40 p-5 gap-5 flex flex-col relative w-full h-full"
+                      >
+                        <Skeleton className="rounded-md flex-1" />
+                        <div className="w-full space-y-2">
+                          <Skeleton className="h-6 w-full" />
+                          <Skeleton className="h-6 w-2/3" />
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                }
+              >
+                <Creators />
+              </Suspense>
             </div>
           </motion.div>
         </div>
