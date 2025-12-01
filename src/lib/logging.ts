@@ -1,51 +1,12 @@
 import { createMiddleware } from "@tanstack/react-start";
-// utils/logger.ts
-import { createIsomorphicFn } from "@tanstack/react-start";
-
- 
-type LogLevel = "debug" | "info" | "warn" | "error";
-
-function formatServerLog(level: LogLevel, message: string, data?: unknown) {
-  const timestamp = new Date().toISOString();
-
-  return {
-    timestamp,
-    level,
-    message,
-    data: data instanceof Error
-      ? { message: data.message, stack: data.stack }
-      : data,
-    service: "tanstack-start",
-    environment: process.env.NODE_ENV,
-  };
-}
-
-export const logger = createIsomorphicFn()
-  .server((level: LogLevel, message: string, data?: unknown) => {
-    if (process.env.NODE_ENV === "development") {
-      console[level](
-        `[${new Date().toISOString()}] [${level.toUpperCase()}]`,
-        message,
-        data
-      );
-    } else {
-      console.log(JSON.stringify(formatServerLog(level, message, data)));
-    }
-  })
-  .client((level: LogLevel, message: string, data?: unknown) => {
-    if (process.env.NODE_ENV === "development") {
-      console[level](`[CLIENT] [${level.toUpperCase()}]`, message, data);
-    } else {
-      // analytics.track('client_log', { level, message, data })
-    }
-  });
-
+import * as Sentry from "@sentry/tanstackstart-react";
 
 export const requestLogger = createMiddleware().server(
   async ({ next, request }) => {
     const startTime = Date.now();
 
-    logger("info", "Incoming request", {
+    // Low-level: useful in dev/preview, can be filtered out in beforeSendLog
+    Sentry.logger.debug("Incoming request", {
       method: request.method,
       url: request.url,
     });
@@ -54,22 +15,34 @@ export const requestLogger = createMiddleware().server(
       const result = await next();
       const duration = Date.now() - startTime;
 
-      logger("debug", "Request processed:", {
+      const status = result.response?.status ?? 0;
+      
+      // Choose log level based on outcome
+      const level: "info" | "warn" | "error" =
+      status >= 500 ? "error" : status >= 400 ? "warn" : "info";
+    
+      Sentry.logger[level]("Request completed", {
         method: request.method,
         url: request.url,
-        duration: `${duration}ms`,
-        status: result.response.status,
+        status,
+        durationMs: duration,
       });
 
       return result;
     } catch (error) {
       const duration = Date.now() - startTime;
-      logger("error", "An error occurred during request processing:", {
-        method: request.method,
-        url: request.url,
-        duration: `${duration}ms`,
-        error,
+
+      // Proper captureException usage: pass the error, then context
+      Sentry.captureException(error, {
+        level: "error",
+        extra: {
+          method: request.method,
+          url: request.url,
+          durationMs: duration,
+        },
       });
+
+      // Re-throw so the framework still sees the error
       throw error;
     }
   }
