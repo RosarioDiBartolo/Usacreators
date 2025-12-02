@@ -30,13 +30,11 @@ const containerVariants: Variants = {
 
 const gridVariants: Variants = {
   rest: {
-    filter: "blur(0px)",
-    scale: 1,
+     scale: 1,
     transition: { duration: 0.35, ease: "easeOut" },
   },
   hover: {
-    filter: "blur(10px)",
-    scale: 0.98,
+     scale: 0.98,
     transition: { duration: 0.35, ease: "easeOut" },
   },
 };
@@ -118,9 +116,10 @@ const FullAccessDialog = () => (
   </motion.div>
 );
 const CreatorCard = (c: CreatorRecord)=>(
-   <Card className="text-start" >
-                  <CardContent className="space-y-4 pt-4">
-                    <div className="rounded-2xl overflow-hidden aspect-square">
+   <Card className="text-start p-0! relative" >
+    <div className=" bg-white/20 absolute inset-0"/>
+                  <CardContent className="space-y-4 ">
+                    <div className="rounded-2xl overflow-hidden aspect-square  ">
                       <img
                         className="h-full w-full object-cover"
                         src={c.profilePictureUrl ?? missingPic}
@@ -128,65 +127,27 @@ const CreatorCard = (c: CreatorRecord)=>(
                       />
                     </div>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex blur-xs items-center justify-between">
                       <div>
                         <h4 className="capitalize">{c.name}</h4>
                         <p className="text-sm font-extralight text-muted-foreground">
                           Miami, Florida
                         </p>
 
-                        <hr className="my-3 bg-muted h-[1.5px] rounded-full" />
-                      </div>
+                       </div>
                     </div>
 
-                    <div className="flex gap-3">
-                      {c.instagram && (
-                        <a href={c.instagram}>
-                          <Button size="icon" variant="outline">
-                            <SiInstagram />
-                          </Button>
-                        </a>
-                      )}
-
-                      {c.tiktok && (
-                        <a href={c.tiktok}>
-                          <Button size="icon" variant="outline">
-                            <SiTiktok />
-                          </Button>
-                        </a>
-                      )}
-                    </div>
+                   
                   </CardContent>
 
-                  <CardFooter>
-                    <div className="flex flex-wrap gap-3 w-full">
-                      <Button
-                        className="rounded-md"
-                        variant="outline"
-                        size="icon"
-                      >
-                        <MailIcon />
-                      </Button>
-                      <Button
-                        className="rounded-md"
-                        variant="outline"
-                        size="icon"
-                      >
-                        <BookmarkIcon />
-                      </Button>
-                      <Button size="sm" className="rounded-md flex-1">
-                        Send a message
-                      </Button>
-                    </div>
-                  </CardFooter>
+          
                 </Card>
 )
 function CatalogPreview({ previewRef }: CatalogPreviewProps) {
   const { data: creators } = useSuspenseQuery(
     creatorsQueryOptions({
       cleaned: false,
-      limit: 6,
-    })
+     })
   );
 
   const isMobile = useIsMobile();
@@ -203,13 +164,13 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
         overflow-hidden
         max-w-7xl
         border
-        bg-gradient-to-t from-tertiary/30 via-muted/30
+        bg-gradient-to-t from-tertiary/30 via-muted/10
         outline outline-offset-40 outline-2 outline-border
         rounded-[48px] md:rounded-[200px]
       "
     >
       {/* Header */}
-      <div className="mx-auto p-6 md:p-13">
+      <div className="mx-auto p-6 md:p-13 sticky top-0">
         <div className="mx-auto w-full md:w-fit text-center flex flex-col items-center gap-2">
           <p className="flex items-center gap-2 text-[10px] md:text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
             <Sparkles className="h-3 w-3" />
@@ -310,17 +271,14 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
       ) : (
         // DESKTOP: fancy motion + blur + overlay
         <div className="relative p-8">
-          <ProgressiveBlur
-            className="
-              pointer-events-none
-              bg-linear-to-t from-black/10
-              z-10 absolute inset-0
-            "
-            blurIntensity={1}
-          />
+          
+          <div className=" absolute inset-0 
+          bg-linear-to-t from-tertiary/20 z-10
+          ">
 
+          </div>
           <motion.div
-            className="relative max-h-[100vh]"
+            className="relative"
             variants={containerVariants}
             initial="rest"
             animate="rest"
@@ -329,15 +287,14 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
             <motion.div
               variants={gridVariants}
               className="
-                grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3
+                grid gap-5 grid-cols-3 md:grid-cols-4 lg:grid-cols-4  
               "
             >
               {visibleCreators.map((c) => (
                <CreatorCard {...c} key = {c.id} />
               ))}
             </motion.div>
-
-            <FullAccessDialog />
+ 
           </motion.div>
         </div>
       )}

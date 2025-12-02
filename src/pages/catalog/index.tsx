@@ -11,22 +11,14 @@ import CatalogFAQ from "./faq";
 function CatalogPage() {
   const previewRef = useRef<HTMLDivElement>(null);
   return (
-    <div className="relative min-h-screen     ">
+    < >
       <Header />
-
-      <main className="relative text-center overflow-hidden space-y-20 md:space-y-24">
-        <CarouselHero previewRef={previewRef} />
-
-        <SecondSection />
-
-        <Features />
-
-        <DemoVideo />
-        <CatalogFAQ />
-        <CatalogPreview previewRef={previewRef} />
-        <BookCall />
+       <main className="relative text-center  space-y-20 md:space-y-24">
+        <div className=" h-500 ">
+          <div> </div>
+        </div>
       </main>
-    </div>
+    </ >
   );
 }
 
