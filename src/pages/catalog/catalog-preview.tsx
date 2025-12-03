@@ -116,9 +116,9 @@ const FullAccessDialog = () => (
   </motion.div>
 );
 const CreatorCard = (c: CreatorRecord)=>(
-   <Card className="text-start p-0! relative" >
+   <Card className="text-start p-0! relative overflow-hidden p-0" >
     <div className=" bg-white/20 absolute inset-0"/>
-                  <CardContent className="space-y-4 ">
+                  <CardContent className="space-y-1 !p-2 ">
                     <div className="rounded-2xl overflow-hidden aspect-square  ">
                       <img
                         className="h-full w-full object-cover"
@@ -146,7 +146,7 @@ const CreatorCard = (c: CreatorRecord)=>(
 function CatalogPreview({ previewRef }: CatalogPreviewProps) {
   const { data: creators } = useSuspenseQuery(
     creatorsQueryOptions({
-      cleaned: false,
+      cleaned: false, limit: 16
      })
   );
 
@@ -164,7 +164,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
         overflow-hidden
         max-w-7xl
         border
-        bg-gradient-to-t from-tertiary/30 via-muted/10
+        bg-gradient-to-t  
         outline outline-offset-40 outline-2 outline-border
         rounded-[48px] md:rounded-[200px]
       "
@@ -177,7 +177,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
             <span>Creator catalog preview</span>
           </p>
 
-          <h2 className="text-3xl md:text-4xl">
+          <h2 className="text-3xl md:text-5xl">
             Our top-rated creators in Miami
           </h2>
 
@@ -273,7 +273,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
         <div className="relative p-8">
           
           <div className=" absolute inset-0 
-          bg-linear-to-t from-tertiary/20 z-10
+          bg-linear-to-t from-background from-20% z-10
           ">
 
           </div>
@@ -287,7 +287,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
             <motion.div
               variants={gridVariants}
               className="
-                grid gap-5 grid-cols-3 md:grid-cols-4 lg:grid-cols-4  
+                grid gap-5 grid-cols-3 md:grid-cols-4 container max-w-6xl mx-auto 
               "
             >
               {visibleCreators.map((c) => (
