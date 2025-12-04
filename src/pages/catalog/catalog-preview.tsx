@@ -118,7 +118,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
 
   const { data: creators } = useSuspenseQuery(
     creatorsQueryOptions({
-      cleaned: false,
+      cleaned: false, limit: 16
      })
   );
 
@@ -154,6 +154,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
             <span>Creator catalog preview</span>
           </p>
 
+          <h2 className="text-3xl md:text-5xl">
           <h2 className="text-3xl md:text-5xl">
             Our top-rated creators in Miami
           </h2>
