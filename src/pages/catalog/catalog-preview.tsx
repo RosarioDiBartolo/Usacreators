@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { CheckCircleIcon, Lock, LockOpenIcon, Sparkles } from "lucide-react";
 import { Dispatch, RefObject, SetStateAction, useState } from "react";
 import { motion } from "motion/react";
-import { useIsMobile } from "@/lib/hooks/use-mobile";
 import { CreatorRecord } from "@/lib/creators/collection";
 import { AvailableNiches } from "@/lib/creators/constants";
 import { Badge } from "@/components/ui/badge";
@@ -91,11 +90,17 @@ const NicheButton = ({
   );
 };
 
-function NichesTags() {
-  const [selectedNiches, setSelectedNiches] = useState<string[]>([]);
-  return (
-    <div className="my-3 border border-secondary overflow-auto md:overflow-hidden rounded-full flex gap-1 p-2">
-      {AvailableNiches.map((niche) => (
+function NichesTags({selectedNiches, setSelectedNiches}:{  selectedNiches: string[];
+  setSelectedNiches: Dispatch<SetStateAction<string[]>>}) {
+   return (
+    <div className="my-3 justify-center border border-secondary overflow-auto md:overflow-hidden rounded-full flex gap-1 p-2">
+      {[{ id: "fashion", label: "Fashion" },
+  { id: "streetwear", label: "Streetwear" },
+  { id: "beauty", label: "Beauty" },
+  { id: "skincare", label: "Skincare" },
+  { id: "travel", label: "Travel" },
+  { id: "luxury_lifestyle", label: "Luxury Lifestyle" },
+ ].map((niche) => (
         <NicheButton
           key={niche.id}
           niche={niche}
@@ -108,28 +113,35 @@ function NichesTags() {
 }
 
 function CatalogPreview({ previewRef }: CatalogPreviewProps) {
+    const [selectedNiches, setSelectedNiches] = useState<string[]>([]);
+
+
   const { data: creators } = useSuspenseQuery(
     creatorsQueryOptions({
       cleaned: false,
-    })
+     })
   );
 
-  const isMobile = useIsMobile();
+  const filtered = creators.filter(
+    c=> selectedNiches.every( n =>  c.niches.includes(n) )
+  )
 
-  const visibleCreators = isMobile ? creators.slice(0, 3) : creators;
-
+ 
+ 
   return (
     <section
       ref={previewRef}
       id="catalog-preview"
       className="
+      border-secondary/40
+      outline-secondary/10
         mx-auto
         relative
         overflow-hidden
         max-w-7xl
         border
         bg-linear-to-t from-tertiary/30 via-muted/10
-         outline-2   outline-offset-40  outline-border
+         outline-2   outline-offset-40  
         rounded-[48px] md:rounded-[200px]
         
       "
@@ -156,7 +168,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
           </p>
         </div>
 
-        <NichesTags />
+        <NichesTags selectedNiches={selectedNiches} setSelectedNiches={setSelectedNiches} />
       </div>
       <div className="p-8 space-y-10 ">
         <motion.div
@@ -164,7 +176,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
                 grid gap-5 grid-cols-3 md:grid-cols-4 lg:grid-cols-4  
               "
         >
-          {visibleCreators.map((c) => (
+          {filtered.map((c) => (
             <CreatorCard {...c} key={c.id} />
           ))}
         </motion.div>

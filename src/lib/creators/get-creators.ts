@@ -22,7 +22,7 @@ export function creatorsQueryOptions(filters: CreatorsFilters = {}) {
   // Normalization is optional here, since Zod already gave defaults,
   // but keeping it explicit is sometimes nicer for the queryKey.
   const normalized: CreatorsFilters = {
-    limit: filters.limit ?? 20,
+    limit: filters.limit ,
     cleaned: filters.cleaned ?? false,
     ...filters,
   };
