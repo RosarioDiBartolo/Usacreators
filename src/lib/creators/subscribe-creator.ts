@@ -10,10 +10,13 @@ import {
   setResponseHeader,
   getRequest,
 } from "@tanstack/react-start/server";
-import {    creatorSchema, FirestoreCreatorRecord } from "./schemas/creator-apply-server";
+import {
+  creatorSchema,
+  FirestoreCreatorRecord,
+} from "./schemas/creator-apply-server";
 import { applyCreatorParamsSchema } from "./schemas/creators-apply-shared";
 import { normalizeIp } from "../ip";
-
+import * as Sentry from "@sentry/tanstackstart-react";
 // ---------- Types ----------
 type ApiOk = { success: true; id: string };
 
@@ -188,7 +191,8 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
         }
 
         // ---- Legal version check
-        const { terms: currentTerms, privacy: currentPrivacy } = await getLegalVersions();
+        const { terms: currentTerms, privacy: currentPrivacy } =
+          await getLegalVersions();
 
         if (
           data.legal.termsVersion !== currentTerms ||
@@ -216,6 +220,7 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
           locationYesNo: data.locationYesNo,
           portfolio: data.portfolio,
           niches: data.niches,
+          instagramPostUrl: data.instagramPostUrl,
           email: emailLower,
           bio: data.bio,
           profilePictureUrl: asUrl(data.profilePictureUrl),
@@ -273,12 +278,13 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
         }
 
         setResponseStatus(201);
-        console.log(
+        Sentry.logger.debug(
           `✅ [${requestId}] Completed in ${Date.now() - started}ms (id=${docRef.id})`
         );
         return { success: true, id: docRef.id } satisfies ApiOk;
       } catch (err) {
-        console.error(`[${requestId}] DB error`, err);
+        Sentry.captureException(err);
+         Sentry.logger.error(Sentry.logger.fmt`[${requestId}] DB error`)
         return jsonErr(500, {
           code: "DB_ERROR",
           message: "Database operation failed",
@@ -296,5 +302,7 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
   });
 
 // ---------- Convenient TS exports ----------
-export type SubmitCreatorApplicationInput = z.infer<typeof applyCreatorParamsSchema>;
+export type SubmitCreatorApplicationInput = z.infer<
+  typeof applyCreatorParamsSchema
+>;
 export type SubmitCreatorApplicationResult = ApiOk | ApiError;

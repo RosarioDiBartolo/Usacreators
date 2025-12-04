@@ -1,38 +1,5 @@
+import { yesNoEnum, urlOrHandle, emptyToMissing  } from "@/lib/schemas-helpers";
 import { z } from "zod";
-
-// --- enums & shared
-export const yesNoEnum = z.enum(["yes", "no"]);
-export type YesNo = z.infer<typeof yesNoEnum>;
-
-// --- helpers
-// Only use this on string-based schemas.
-export const emptyToMissing = <T extends z.ZodTypeAny>(schema: T) =>
-  z.preprocess(
-    (v) => (typeof v === "string" && v.trim() === "" ? null : v),
-    schema
-    // Zod types this as input = unknown; we narrow it for our use case:
-  ) as unknown as z.ZodEffects<
-    T,
-    z.output<T>, // output type = whatever the inner schema outputs
-    string // input type = what our form actually passes
-  >;
-
-// Accept either @handle (2-30) or a full URL.
-// NOTE: this is a *validator*, not optional by itself.
-const handleRegex = /^@[a-zA-Z0-9_.]{2,30}$/;
-export const urlOrHandle = z
-  .string()
-  .trim()
-  .refine(
-    (v) => handleRegex.test(v) || /^https?:\/\/[^\s]+$/i.test(v),
-    "Enter @handle or a full URL."
-  );
-
-// If you want a *required* URL (e.g., portfolio), validate real URLs
-export const requiredUrl = z
-  .string()
-  .trim()
-  .url("Enter a valid URL (must start with http:// or https://).");
 
 export const MAX_BIO = 1000;
 // 🔹 Cross-field rules (run after preprocess)
@@ -67,6 +34,10 @@ export const applyStandardRules = <
       });
     }
   });
+
+  // ✅ Instagram post URL (only posts/reels/tv)
+  const instagramPostUrlRegex =  /^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|tv)\/[A-Za-z0-9_\-]+\/?/i;
+
 // --- base object (normalize early)
 export const sharedBaseFormObject = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters."),
@@ -78,8 +49,21 @@ export const sharedBaseFormObject = z.object({
   // Socials from forms may be "" → undefined
   instagram: urlOrHandle.nullable(),
   tiktok: urlOrHandle.nullable(),
-  // Portfolio REQUIRED and must be a real URL
-  portfolio: requiredUrl,
+  instagramPostUrl: z
+    .string()
+    .trim()
+    .min(1, "This field is required.")
+    .url("Enter a valid URL (must start with http:// or https://).")
+    .regex(
+      instagramPostUrlRegex,
+      "Enter a valid Instagram post URL (post or reel)."
+    ),
+
+  portfolio: z
+    .string()
+    .trim()
+    .url("Enter a valid URL (must start with http:// or https://).")
+    .nullable(),
   niches: z.array(z.string().trim()).min(1, "Must select at least 1 niche."),
   bio: emptyToMissing(
     z.string().trim().max(MAX_BIO, `Max ${MAX_BIO} characters`)
@@ -95,7 +79,7 @@ export const applyCreatorParamsObject = sharedBaseFormObject
       legal: z.object({
         termsVersion: z.string(), // current versions from server registry
         privacyVersion: z.string(),
-       }),
+      }),
       turnstileToken: emptyToMissing(z.string().trim()).optional(),
     })
   )

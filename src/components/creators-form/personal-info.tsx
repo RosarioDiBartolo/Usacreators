@@ -30,7 +30,7 @@ export function PersonalInfo({ form }: { form: FormType }) {
             
            return (
             <DSField data-invalid={!!errors.length}>
-              <FieldLabel htmlFor="name">Name</FieldLabel>
+              <FieldLabel htmlFor="name">Full Name</FieldLabel>
               <Input
                 id="name"
                 value={f.state.value ?? ""}

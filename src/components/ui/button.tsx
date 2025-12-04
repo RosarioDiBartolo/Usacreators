@@ -5,18 +5,18 @@ import { motion } from "motion/react";
 import React from "react";
 
 const buttonVariants = cva(
-  "relative isolate inline-flex items-center justify-center gap-2 font-semibold whitespace-nowrap transition-all disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 [&_svg]:shrink-0",
+  "relative isolate border inline-flex items-center justify-center gap-2 font-semibold whitespace-nowrap transition-all disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "rounded-full bg-gradient-to-t from-primary to-tertiary text-primary-foreground hover:opacity-90",
+          "rounded-full  bg-gradient-to-t from-primary to-tertiary text-primary-foreground hover:opacity-90",
         destructive:
           "rounded-full bg-destructive text-destructive-foreground hover:bg-destructive/90",
         black:
-          "rounded-full bg-black text-white border border-input hover:bg-black/90 dark:bg-zinc-950 dark:hover:bg-zinc-900",
+          "rounded-full bg-black text-white   border-input hover:bg-black/90 dark:bg-zinc-950 dark:hover:bg-zinc-900",
         outline:
-          "rounded-full hover:border-primary  border border-input bg-background/40 text-foreground backdrop-blur  hover:fill-primary hover:text-accent-foreground",
+          "rounded-full hover:border-primary    border-input bg-background/40 text-foreground backdrop-blur  hover:fill-primary hover:text-accent-foreground",
         secondary:
           "rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost:

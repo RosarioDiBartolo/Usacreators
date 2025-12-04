@@ -68,11 +68,11 @@ export function SocialInfo({ form }: { form: FormType }) {
             const errs = getFieldErrors(f);
             return (
               <DSField data-invalid={!!errs.length}>
-                <FieldLabel htmlFor="portfolio">Portfolio</FieldLabel>
+                <FieldLabel htmlFor="portfolio">Portfolio (optional)</FieldLabel>
                 <Input
                   id="portfolio"
                   placeholder="full URL"
-                  value={f.state.value }
+                  value={f.state.value ?? ""}
                   onChange={(e) => f.handleChange(e.target.value)}
                   onBlur={f.handleBlur}
                   aria-invalid={!!errs.length}
@@ -88,6 +88,7 @@ export function SocialInfo({ form }: { form: FormType }) {
                     template
                   </a>{" "}
                   for a quick setup.
+                  We ask this so Businesses can have a clearer Idea of your skillset
                 </FieldDescription>
                 {!!errs.length && <FieldError errors={errs} />}
               </DSField>

@@ -29,7 +29,7 @@ import {
   Tags,
 } from "../ui/shadcn-io/tags";
 import { AvailableNiches } from "@/lib/creators/constants";
- 
+import { Input } from "../ui/input";
 
 function Niches({
   value,
@@ -60,7 +60,7 @@ function Niches({
 
   return (
     <>
-       <div className="flex items-center gap-3 py-2">
+      <div className="flex items-center gap-3 py-2">
         {selected.map((tagId) => {
           const tag = AvailableNiches.find((t) => t.id === tagId);
           if (!tag) return null;
@@ -88,9 +88,8 @@ function Niches({
             <TagsEmpty />
 
             <TagsGroup>
-              {AvailableNiches
-                .filter((t) => !selected.includes(t.id))
-                .map((t) => (
+              {AvailableNiches.filter((t) => !selected.includes(t.id)).map(
+                (t) => (
                   <TagsItem
                     key={t.id}
                     value={t.id}
@@ -98,12 +97,12 @@ function Niches({
                   >
                     {t.label}
                   </TagsItem>
-                ))}
+                )
+              )}
             </TagsGroup>
           </TagsList>
         </TagsContent>
       </Tags>
-      
     </>
   );
 }
@@ -123,6 +122,34 @@ export function AdditionalInfo({ form }: { form: FormType }) {
                 <FieldLabel htmlFor="niches">Niches</FieldLabel>
                 <Niches value={f.state.value} onChange={f.handleChange} />
                 <FieldDescription>Add from 1 to 5 niches</FieldDescription>
+                {!!errs.length && <FieldError errors={errs} />}
+              </DSField>
+            );
+          }}
+        </form.Field>
+      </motion.div>
+      <motion.div variants={fadeInUp}>
+        <form.Field
+          name="instagramPostUrl"
+          validators={{ onChange: clientFormObject.shape.instagramPostUrl }}
+        >
+          {(f) => {
+            const errs = getFieldErrors(f);
+            return (
+              <DSField data-invalid={!!errs.length}>
+                <FieldLabel htmlFor="instagram-post-url">Instagram Post Url</FieldLabel>
+                <Input
+                  id="instagram-post-url"
+                  placeholder="full URL"
+                  value={f.state.value ?? ""}
+                  onChange={(e) => f.handleChange(e.target.value)}
+                  onBlur={f.handleBlur}
+                  aria-invalid={!!errs.length}
+                />{" "}
+                <FieldDescription>
+                  Content Creators – link to an Instagram post you have made
+                  (this will be shown as a showcase in your profile)
+                </FieldDescription>
                 {!!errs.length && <FieldError errors={errs} />}
               </DSField>
             );

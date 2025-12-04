@@ -15,35 +15,7 @@ import {
  } from "@/lib/creators/schemas/creators-apply-shared";
 import { useMutation } from "@tanstack/react-query";
 import { useCurrentLegal } from "@/lib/legal/hooks";
-
-function toastApiError(err: ApiError, status: number) {
-  const base = err.message || "Something went wrong.";
-  const ref = err.requestId ? ` • Ref: ${err.requestId}` : "";
-  switch (status) {
-    case 400:
-      return toast.error(`Invalid data. ${base}${ref}`);
-    case 403:
-      return toast.error(`Captcha failed. ${base}${ref}`);
-    case 429:
-      return toast.error(`Too many requests. ${base}${ref}`);
-    case 409:
-      if (err.code === "DUPLICATE_EMAIL")
-        return toast.error(`This email already applied.${ref}`);
-      if (err.code === "DUPLICATE_INSTAGRAM")
-        return toast.error(`This Instagram already applied.${ref}`);
-      if (err.code === "DUPLICATE_TIKTOK")
-        return toast.error(`This TikTok already applied.${ref}`);
-      if (err.reason === "version_mismatch")
-        return toast.error(
-          `Our Terms/Privacy changed. Please review and accept the new version.`
-        );
-      return toast.error(`Conflict. ${base}${ref}`);
-    case 503:
-      return toast.error(`Captcha unavailable. ${base}${ref}`);
-    default:
-      return toast.error(`${base}${ref}`);
-  }
-}
+ 
 
 // (Optional) Turnstile helper — replace with your actual integration
 async function getTurnstileToken(): Promise<string | undefined> {
@@ -107,10 +79,11 @@ const useApplicationForm = () => {
     bio: null,
     niches: [],
     locationYesNo: "yes",
-    portfolio: "",
+    portfolio: null,
     instagram: null,
     tiktok: null,
     termsAccepted: false,
+    instagramPostUrl: "",
   } satisfies DefaultValues;
 
   const form = useForm({

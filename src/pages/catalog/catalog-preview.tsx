@@ -1,153 +1,117 @@
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { creatorsQueryOptions } from "@/lib/creators/get-creators";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import missingPic from "@/assets/images/creator-missing.jpg";
 import { Button } from "@/components/ui/button";
-import {
-  BookmarkIcon,
-  LockKeyholeIcon,
-  MailIcon,
-  Sparkles,
-  Star,
-  Users,
-} from "lucide-react";
-import { ProgressiveBlur } from "@/components/ui/progressive-blur";
-import { RefObject } from "react";
-import { motion, Variants } from "motion/react";
-import { SiInstagram, SiTiktok } from "react-icons/si";
-import { useEffect, useState } from "react";
+import { CheckCircleIcon, Lock, LockOpenIcon, Sparkles } from "lucide-react";
+import { Dispatch, RefObject, SetStateAction, useState } from "react";
+import { motion } from "motion/react";
 import { useIsMobile } from "@/lib/hooks/use-mobile";
 import { CreatorRecord } from "@/lib/creators/collection";
+import { AvailableNiches } from "@/lib/creators/constants";
+import { Badge } from "@/components/ui/badge";
 
 type CatalogPreviewProps = {
   previewRef: RefObject<HTMLDivElement>;
 };
 
-const containerVariants: Variants = {
-  rest: {},
-  hover: {},
-};
-
-const gridVariants: Variants = {
-  rest: {
-     scale: 1,
-    transition: { duration: 0.35, ease: "easeOut" },
-  },
-  hover: {
-     scale: 0.98,
-    transition: { duration: 0.35, ease: "easeOut" },
-  },
-};
-
-const overlayVariants: Variants = {
-  rest: {
-    opacity: 0,
-    scale: 0.95,
-    y: 18,
-    pointerEvents: "none",
-    transition: { duration: 0.35, ease: "easeOut" },
-  },
-  hover: {
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    pointerEvents: "auto",
-    transition: { duration: 0.4, ease: "easeOut" },
-  },
-};
-const FullAccessDialog = () => (
-  <motion.div
-    variants={overlayVariants}
+const CreatorCard = (c: CreatorRecord) => (
+  <Card
     className="
-                absolute inset-0 z-20
-                flex items-center justify-center px-3
-              "
+   
+   text-start 
+   overflow-hidden 
+    
+    bg-linear-to-bl   
+    relative
+     "
   >
-    <div className="max-w-md mx-auto rounded-[2.5rem] border bg-background/90 backdrop-blur-xl px-8 py-7 shadow-xl flex flex-col gap-4 text-center">
-      <div className="inline-flex items-center justify-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-        <Sparkles className="h-3 w-3" />
-        <span>Gain full access</span>
-      </div>
-
-      <div className="space-y-2">
-        <h3 className="text-lg sm:text-xl font-semibold">
-          Unlock the full Miami creator catalog
-        </h3>
-        <p className="text-xs sm:text-sm text-muted-foreground">
-          Browse{" "}
-          <span className="font-medium text-foreground">
-            500+ vetted UGC creators
-          </span>{" "}
-          by niche, platform, budget and content style. View ratings, example
-          work and contact details in one place.
-        </p>
-      </div>
-      <div className="flex flex-wrap justify-center gap-2 text-[11px] text-muted-foreground">
-        <span className="inline-flex items-center gap-1 rounded-full border px-3 py-1 bg-background/80">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-          Unlimited catalog searches
-        </span>
-        <span className="inline-flex items-center gap-1 rounded-full border px-3 py-1 bg-background/80">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-          Direct contact links
-        </span>
-        <span className="inline-flex items-center gap-1 rounded-full border px-3 py-1 bg-background/80">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-          New creators added weekly
-        </span>
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <Button
-          size="sm"
-          className="rounded-full px-8 mx-auto"
-          onClick={() => {
-            window.location.href = "/catalog";
-          }}
+    <div className="   absolute inset-0" />
+    <CardContent className="space-y-4 ">
+      <div
+        className="
+                    relative
+                    rounded-2xl    overflow-hidden aspect-square  "
+      >
+        <img
+          className="h-full w-full object-cover"
+          src={c.profilePictureUrl ?? missingPic}
+          loading="lazy"
+        />
+        <div
+          className="
+        absolute
+        inset-0
+        grainy
+          flex justify-center items-center"
         >
-          View plans & get access
-        </Button>
-        <p className="text-[11px] text-muted-foreground">
-          No agency retainers. Just transparent access to Miami’s best UGC
-          creators.
-        </p>
+          <Button size={"icon"}>
+            <Lock />
+          </Button>
+        </div>
       </div>
-    </div>
-  </motion.div>
+
+      <div
+        className="flex 
+                    blur-xs  items-center justify-between"
+      >
+        <div>
+          <h4 className="capitalize">{c.name}</h4>
+          <p className="text-sm font-extralight text-muted-foreground">
+            Miami, Florida
+          </p>
+        </div>
+      </div>
+    </CardContent>
+  </Card>
 );
-const CreatorCard = (c: CreatorRecord)=>(
-   <Card className="text-start p-0! relative" >
-    <div className=" bg-white/20 absolute inset-0"/>
-                  <CardContent className="space-y-4 ">
-                    <div className="rounded-2xl overflow-hidden aspect-square  ">
-                      <img
-                        className="h-full w-full object-cover"
-                        src={c.profilePictureUrl ?? missingPic}
-                        loading="lazy"
-                      />
-                    </div>
 
-                    <div className="flex blur-xs items-center justify-between">
-                      <div>
-                        <h4 className="capitalize">{c.name}</h4>
-                        <p className="text-sm font-extralight text-muted-foreground">
-                          Miami, Florida
-                        </p>
+const NicheButton = ({
+  selectedNiches,
+  setSelectedNiches,
+  niche,
+}: {
+  niche: { id: string; label: string };
+  selectedNiches: string[];
+  setSelectedNiches: Dispatch<SetStateAction<string[]>>;
+}) => {
+  const selected = selectedNiches.includes(niche.id);
+  return (
+    <Button
+      onClick={() => {
+        setSelectedNiches((old) =>
+          selected ? old.filter((nid) => nid != niche.id) : [...old, niche.id]
+        );
+      }}
+      variant={selected ? "secondary" : "outline"}
+      key={niche.id}
+    >
+      {niche.label}
+    </Button>
+  );
+};
 
-                       </div>
-                    </div>
+function NichesTags() {
+  const [selectedNiches, setSelectedNiches] = useState<string[]>([]);
+  return (
+    <div className="my-3 border border-secondary overflow-auto md:overflow-hidden rounded-full flex gap-1 p-2">
+      {AvailableNiches.map((niche) => (
+        <NicheButton
+          key={niche.id}
+          niche={niche}
+          selectedNiches={selectedNiches}
+          setSelectedNiches={setSelectedNiches}
+        />
+      ))}
+    </div>
+  );
+}
 
-                   
-                  </CardContent>
-
-          
-                </Card>
-)
 function CatalogPreview({ previewRef }: CatalogPreviewProps) {
   const { data: creators } = useSuspenseQuery(
     creatorsQueryOptions({
       cleaned: false,
-     })
+    })
   );
 
   const isMobile = useIsMobile();
@@ -164,20 +128,21 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
         overflow-hidden
         max-w-7xl
         border
-        bg-gradient-to-t from-tertiary/30 via-muted/10
-        outline outline-offset-40 outline-2 outline-border
+        bg-linear-to-t from-tertiary/30 via-muted/10
+         outline-2   outline-offset-40  outline-border
         rounded-[48px] md:rounded-[200px]
+        
       "
     >
       {/* Header */}
-      <div className="mx-auto p-6 md:p-13 sticky top-0">
+      <div className="mx-auto   max-w-4xl container p-6 md:p-13 sticky top-0">
         <div className="mx-auto w-full md:w-fit text-center flex flex-col items-center gap-2">
           <p className="flex items-center gap-2 text-[10px] md:text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
             <Sparkles className="h-3 w-3" />
             <span>Creator catalog preview</span>
           </p>
 
-          <h2 className="text-3xl md:text-4xl">
+          <h2 className="text-3xl md:text-5xl">
             Our top-rated creators in Miami
           </h2>
 
@@ -191,113 +156,151 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
           </p>
         </div>
 
-        <div className="flex flex-wrap justify-center w-full my-3 gap-2 text-[10px] md:text-xs">
-          <span className="inline-flex items-center gap-2 rounded-full border bg-background/80 px-3 py-1 text-muted-foreground md:backdrop-blur">
-            <Users className="h-3 w-3" />
-            <span>500+ creators in database</span>
-          </span>
-
-          <span className="inline-flex items-center gap-2 rounded-full border bg-background/80 px-3 py-1 text-muted-foreground md:backdrop-blur">
-            <Star className="h-3 w-3 fill-amber-400/80 text-amber-400" />
-            <span>Avg. rating 4.8 / 5</span>
-          </span>
-        </div>
+        <NichesTags />
       </div>
+      <div className="p-8 space-y-10 ">
+        <motion.div
+          className="
+                grid gap-5 grid-cols-3 md:grid-cols-4 lg:grid-cols-4  
+              "
+        >
+          {visibleCreators.map((c) => (
+            <CreatorCard {...c} key={c.id} />
+          ))}
+        </motion.div>
 
-      {/* MOBILE: simple static layout, no heavy blur / motion */}
-      {isMobile ? (
-        <div className="p-4 rounded-2xl pb-6  relative  bg-muted ">
-          <div className=" absolute inset-0 bg-linear-to-t from-background z-10 flex flex-col items-end">
-            <div className="w-full     mt-auto    pointer-events-auto">
-              <div className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground mb-2">
-                <Sparkles className="h-3 w-3" />
-                <span>Gain full access</span>
+        <div className=" border flex gap-3  text-start p-20 rounded-[170px] mb-2 bg-background  ">
+          <div className="flex-1 space-y-4">
+            <Badge variant="secondary">Miami Creators</Badge>
+
+            <h2 className="m-0 font-semibold ">
+              Unlock the Full Creator Catalog
+            </h2>
+
+            <p className="text-muted-foreground">
+              Get unlimited access to our complete database of vetted Miami
+              creators. Browse niches, platforms, rates, and contact info — all
+              in one place, without agencies or commissions.
+            </p>
+
+            <ul className="flex flex-col gap-2 text-sm">
+              <li className="flex gap-2 items-center">
+                <CheckCircleIcon className="h-4 w-4" />
+                Access 500+ verified Miami creators
+              </li>
+
+              <li className="flex gap-2 items-center">
+                <CheckCircleIcon className="h-4 w-4" />
+                Filter by niche, demographics, and content style
+              </li>
+
+              <li className="flex gap-2 items-center">
+                <CheckCircleIcon className="h-4 w-4" />
+                Contact creators directly — zero middlemen
+              </li>
+            </ul>
+
+            <Button
+              size="lg"
+              className="mt-4 w-fit rounded-full px-6 py-5 text-base font-semibold shadow-sm"
+            >
+              <LockOpenIcon /> Unlock Full Access
+            </Button>
+          </div>
+
+          <div className="flex-1 
+          bg-linear-to-b from-muted via-muted/70 to-muted/20 border border-secondary/15   rounded-[130px] flex items-center justify-center">
+            <div
+              className="
+      relative w-full max-w-sm 
+      aspect-[4/3]
+      rounded-3xl 
+      border border-secondary/60 
+      bg-linear-to-br from-background via-muted/40 to-tertiary/20
+      shadow-lg
+      overflow-hidden
+    "
+            >
+              {/* Top bar */}
+              <div className="absolute rounded-t-3xl overflow-hidden  inset-x-0 top-0 h-9 border-b border-border/60 bg-background/80 backdrop-blur-sm flex items-center justify-between px-3">
+                <div className="flex items-center gap-1.5">
+                  <span className="h-2 w-2 rounded-full bg-muted-foreground/60" />
+                  <span className="h-2 w-2 rounded-full bg-muted-foreground/60" />
+                  <span className="h-2 w-2 rounded-full bg-muted-foreground/60" />
+                </div>
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
+                  Creator Catalog
+                </span>
+                <span className="text-[10px] text-muted-foreground">
+                  Miami, FL
+                </span>
               </div>
 
-              <div className="rounded-2xl   5 shadow-lg px-4 py-4 space-y-3">
-                <div className="space-y-1">
-                  <h3 className="text-sm font-semibold">
-                    Unlock the full Miami creator catalog
-                  </h3>
-                  <p className="text-[11px] text-muted-foreground">
-                    Browse{" "}
-                    <span className="font-medium text-foreground">
-                      500+ vetted UGC creators
-                    </span>{" "}
-                    by niche, platform, budget and content style — all in one
-                    place.
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-1.5 text-[10px] text-muted-foreground">
-                  <span className="inline-flex items-center gap-1 rounded-full border px-2.5 py-1 bg-background/90">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                    Unlimited catalog searches
-                  </span>
-                  <span className="inline-flex items-center gap-1 rounded-full border px-2.5 py-1 bg-background/90">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                    Direct contact links
-                  </span>
-                  <span className="inline-flex items-center gap-1 rounded-full border px-2.5 py-1 bg-background/90">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                    New creators added weekly
-                  </span>
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <Button
-                    size="sm"
-                    className="rounded-full px-5 w-full"
-                    onClick={() => {
-                      window.location.href = "/catalog";
-                    }}
+              {/* Grid of creator cards */}
+              <div className="grid grid-cols-3 gap-2 p-3 pt-11">
+                {/* Generic blurred cards */}
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="
+            h-16 rounded-xl 
+            bg-muted/40 
+            border border-border/40 
+            overflow-hidden
+          "
                   >
-                    View plans & get access
-                  </Button>
-                  <p className="text-[10px] text-muted-foreground text-center">
-                    No agency retainers. Just transparent access to Miami’s best
-                    UGC creators.
-                  </p>
+                    <div className="h-full w-full grainy" />
+                  </div>
+                ))}
+
+                {/* Highlighted locked card */}
+                <div className="col-span-3 mt-1">
+                  <div
+                    className="
+            relative flex items-center gap-3 
+            rounded-2xl 
+            border border-secondary 
+            bg-linear-to-r from-tertiary/40 via-muted/40 to-background 
+            px-3 py-2
+          "
+                  >
+                    <div className="h-10 w-10 rounded-xl overflow-hidden border border-border/60">
+                      <div className="h-full w-full grainy" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-medium truncate">
+                        Top Miami Creator • Fashion
+                      </p>
+                      <p className="text-[10px] text-muted-foreground">
+                        Stats, rates &amp; contact info unlocked
+                      </p>
+                    </div>
+                    <div className="flex flex-col items-end gap-1">
+                      <Button
+                        size="icon"
+                        variant="secondary"
+                        className="h-8 w-8 rounded-full"
+                      >
+                        <Lock className="h-3 w-3" />
+                      </Button>
+                      <span className="text-[9px] text-muted-foreground">
+                        Locked
+                      </span>
+                    </div>
+                  </div>
                 </div>
+              </div>
+
+              {/* Bottom badge */}
+              <div className="absolute bottom-2 left-2">
+                <Badge variant="secondary" className="text-[10px]">
+                  Preview • Blurred for demo
+                </Badge>
               </div>
             </div>
           </div>
-          <div className="grid gap-4 grid-cols-1  blur-xs opacity-70">
-            {visibleCreators.slice(1).map((c) => (
-              <CreatorCard {...c} key={c.id} />
-            ))}
-          </div>
         </div>
-      ) : (
-        // DESKTOP: fancy motion + blur + overlay
-        <div className="relative p-8">
-          
-          <div className=" absolute inset-0 
-          bg-linear-to-t from-tertiary/20 z-10
-          ">
-
-          </div>
-          <motion.div
-            className="relative"
-            variants={containerVariants}
-            initial="rest"
-            animate="rest"
-            whileHover="hover"
-          >
-            <motion.div
-              variants={gridVariants}
-              className="
-                grid gap-5 grid-cols-3 md:grid-cols-4 lg:grid-cols-4  
-              "
-            >
-              {visibleCreators.map((c) => (
-               <CreatorCard {...c} key = {c.id} />
-              ))}
-            </motion.div>
- 
-          </motion.div>
-        </div>
-      )}
+      </div>
     </section>
   );
 }

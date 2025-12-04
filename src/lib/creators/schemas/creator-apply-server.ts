@@ -34,7 +34,9 @@ export const firebaseCreatorRecord = applyCreatorParamsObject
   .extend({
     bio: withDefault(z.string().optional(), undefined),
     portfolio:  withDefault(z.string().url().optional().nullable(), null),
-
+    instagramPostUrl: z
+        .string()
+        .trim().optional(),
     instagram: z.string().optional().nullable(),
     tiktok: z.string().optional().nullable(),
     profilePictureUrl: withDefault(z.string().url().optional().nullable(), null),
