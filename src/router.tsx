@@ -9,8 +9,7 @@ const vercelEnv = process.env.VERCEL_ENV; // 'development' | 'preview' | 'produc
 const nodeEnv = process.env.NODE_ENV; // 'development' | 'production' | 'test'
 
 const isLocalDev = !vercelEnv && nodeEnv === "development";
-const isPreview = vercelEnv === "preview";
-const isProd = nodeEnv === "production" && vercelEnv === "production";
+ const isProd = nodeEnv === "production" && vercelEnv === "production";
 Sentry.init({
       environment: vercelEnv ?? nodeEnv ,
       enabled: !isLocalDev,

@@ -7,8 +7,7 @@ import { CheckCircleIcon, Lock, LockOpenIcon, Sparkles } from "lucide-react";
 import { Dispatch, RefObject, SetStateAction, useState } from "react";
 import { motion } from "motion/react";
 import { CreatorRecord } from "@/lib/creators/collection";
-import { AvailableNiches } from "@/lib/creators/constants";
-import { Badge } from "@/components/ui/badge";
+ import { Badge } from "@/components/ui/badge";
 
 type CatalogPreviewProps = {
   previewRef: RefObject<HTMLDivElement>;
@@ -154,8 +153,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
             <span>Creator catalog preview</span>
           </p>
 
-          <h2 className="text-3xl md:text-5xl">
-          <h2 className="text-3xl md:text-5xl">
+           <h2 className="text-3xl md:text-5xl">
             Our top-rated creators in Miami
           </h2>
 
