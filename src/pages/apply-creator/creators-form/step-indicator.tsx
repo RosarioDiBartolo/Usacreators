@@ -22,10 +22,9 @@ steps: ReadonlyArray<Step>
   return (
     <motion.div
       className="p-6 h-fit"
-      initial={{ opacity: 0, y: -20 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
+     >
        
          <motion.h2
          layoutId = {step.id}

@@ -22,9 +22,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FormType } from "../../lib/creators/use-application-form";
+import { FormType } from "../../../lib/creators/use-application-form";
 import { getFieldErrors } from "@/lib/field";
-import { SectionBlocks } from "../legal/policy";
+import { SectionBlocks } from "../../../components/legal/policy";
 import termsData from "@/assets/legal/terms/2025-01-01.json"
  import privacyData from "@/assets/legal/terms/2025-01-01.json"
 import { Block } from "@/lib/legal/types";

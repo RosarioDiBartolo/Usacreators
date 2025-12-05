@@ -15,7 +15,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { fadeInUp } from "./utils";
 import { clientFormObject } from "@/lib/creators/schemas/creator-apply-client";
-import { FormType } from "../../lib/creators/use-application-form";
+import { FormType } from "../../../lib/creators/use-application-form";
 import { getFieldErrors } from "@/lib/field";
 import {
   TagsTrigger,
@@ -27,9 +27,9 @@ import {
   TagsGroup,
   TagsItem,
   Tags,
-} from "../ui/shadcn-io/tags";
+} from "../../../components/ui/shadcn-io/tags";
 import { AvailableNiches } from "@/lib/creators/constants";
-import { Input } from "../ui/input";
+import { Input } from "../../../components/ui/input";
 
 function Niches({
   value,

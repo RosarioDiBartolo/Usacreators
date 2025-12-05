@@ -19,7 +19,7 @@ import {
   steps,
 } from "@/lib/creators/schemas/creator-apply-client";
 
-import useApplicationForm from "../../lib/creators/use-application-form";
+import useApplicationForm from "../../../lib/creators/use-application-form";
 import { Suspense, useState } from "react";
  
 export default function OnboardingForm() {
@@ -49,9 +49,7 @@ export default function OnboardingForm() {
   return (
     <motion.div
       className="flex-1 flex flex-col"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-    >
+     >
        
       {currentStep !== steps.length && (
         <StepIndicator
@@ -78,6 +76,7 @@ export default function OnboardingForm() {
             variants={contentVariants}
             className="flex-1 flex"
           >
+            
             {currentStep === 0 && <PersonalInfo form={form} />}
             {currentStep === 1 && <SocialInfo form={form} />}
             {currentStep === 2 && <AdditionalInfo form={form} />}

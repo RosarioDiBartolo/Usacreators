@@ -6,9 +6,9 @@
 
 import { Images } from "lucide-react";
 import React, { useRef } from "react";
-import { Button } from "../ui/button";
-import { Field, FieldLabel, FieldDescription, FieldError } from "../ui/field";
-import { Input } from "../ui/input";
+import { Button } from "../../../components/ui/button";
+import { Field, FieldLabel, FieldDescription, FieldError } from "../../../components/ui/field";
+import { Input } from "../../../components/ui/input";
 import { MAX_PIC_SIZE } from "@/lib/creators/constants";
 
 type Props = {
