@@ -1,19 +1,30 @@
 // src/lib/shared/creator-apply-server.ts
 import { z } from "zod";
-import { applyStandardRules, applyCreatorParamsObject } from "./creators-apply-shared";
+import { applyStandardRules, formSteps  } from "./creators-apply-shared";
 import { TimestampLike } from "@/lib/firebase/utils.js";
 import { withDefault } from "@/lib/zod-utils";
 
 // ---- Persistence schema (what we actually store) ----
 // Omit on the object, extend, then re-apply the same rule.
-export const creatorObject = applyCreatorParamsObject
-  .omit({
-    turnstileToken: true,
-    // keep profilePictureUrl if you store the CDN URL
-  })
-  .extend({ 
-    legal: applyCreatorParamsObject.shape.legal.extend({
+
+
+export const creatorApplicationPayloadsObject = z.object({
+   ...formSteps.shape.details.shape,
+  
+  ...formSteps.shape.social.shape,
+  
+  ...formSteps.shape.personal.shape,
+}).omit({
+    "profilePictureFile": true
+  }).extend( {
+    profilePictureUrl: z.string().url(),
+  });
+export const creatorApplicationObject = creatorApplicationPayloadsObject.extend({
+  
+     legal:  z.object({
       acceptedAt: z.any(),
+      privacyVersion: z.string(),
+      termsVersion: z.string(),
     }),
     // audit / meta
     ipHash: z.string(),
@@ -21,16 +32,14 @@ export const creatorObject = applyCreatorParamsObject
     country: z.string().optional().default("unknown"),
     source: z.literal("server-fn"),
     createdAt: z.any(), // Firestore server timestamp
-  });
+  }) 
 //use to create new documents safely and possibly zod safe...
-export const creatorSchema = applyStandardRules(creatorObject);
+export const creatorApplicationSchema = applyStandardRules(creatorApplicationObject);
 
-// ---- Persistence schema ----
+// ---- Retriving schema ----
 // Some fields might be missing for outdated versions of the forms and the schemas... use this for document retriving and sanatization
-export const firebaseCreatorRecord = applyCreatorParamsObject
-  .omit({
-    turnstileToken: true,
-  })
+export const firebaseCreatorRecord = creatorApplicationObject
+ 
   .extend({
     bio: withDefault(z.string().optional(), undefined),
     portfolio:  withDefault(z.string().url().optional().nullable(), null),
@@ -85,7 +94,7 @@ export const EmailVerificationSchema = z.object({
     .regex(/^[a-zA-Z0-9_-]{5,100}$/, "Invalid document id"), // Firestore-safe
   token: z.string().min(1, "Missing token"), // tokens are opaque
 });
-export type FirestoreCreatorRecord = z.infer<typeof creatorSchema>;
+export type FirestoreCreatorRecord = z.infer<typeof creatorApplicationSchema>;
 
 export type Creator = z.infer<typeof firebaseCreatorRecord>;
 export type EmailVerification = z.infer<typeof EmailVerificationSchema>;

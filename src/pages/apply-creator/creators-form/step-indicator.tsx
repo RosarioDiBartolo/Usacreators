@@ -3,22 +3,20 @@
 // (unchanged logic with minor polish)
 // ============================================================================
 import { motion } from "framer-motion";
-import { cn } from "@/lib/fe-utils";
-import type { Step } from "@/lib/creators/schemas/creator-apply-client";
+import { cn } from "@/lib/fe-utils"; 
 import { Dispatch, SetStateAction } from "react";
+import { steps } from "@/lib/creators/schemas/creators-apply-shared";
   
 export default function StepIndicator({
-  currentStep,
-  setCurrentStep,
-  steps,
-}: {
-  setCurrentStep: Dispatch<SetStateAction<number>>;
-  currentStep: number;
-steps: ReadonlyArray<Step>
+  currentStepIndex,
+  setCurrentStepIndex,
+ }: {
+  setCurrentStepIndex: Dispatch<SetStateAction<number>>;
+  currentStepIndex: number; 
 }) {
 
-  const step = steps[currentStep]
-  const pct = (currentStep / (steps.length - 1)) * 100;
+  const step = steps[currentStepIndex]
+  const pct = (currentStepIndex / (steps.length - 1)) * 100;
   return (
     <motion.div
       className="p-6 h-fit"
@@ -27,8 +25,8 @@ steps: ReadonlyArray<Step>
      >
        
          <motion.h2
-         layoutId = {step.id}
-        className=" capitalize my-0 bg-text bg-gradient">{step.id}</motion.h2>
+         layoutId = {step}
+        className=" capitalize my-0 bg-text bg-gradient">{step}</motion.h2>
         
             <div className="w-full bg-muted h-1 sm:h-1.5 rounded-full overflow-hidden mt-2 sm:mt-3">
         <motion.div
@@ -42,12 +40,12 @@ steps: ReadonlyArray<Step>
       <div className=" py-4 hidden sm:flex gap-1 sm:gap-6 sm:justify-between">
         {steps.map((step, index) => (
           <motion.button
-          disabled = {index > currentStep}
+          disabled = {index > currentStepIndex}
           onClick={()=>{
-                setCurrentStep(index)
+                setCurrentStepIndex(index)
               }}
               type="button"
-            key={step.id}
+            key={step}
             className="flex disabled:cursor-not-allowed cursor-pointer flex-col items-center flex-1 sm:flex-none"
             whileHover={{ scale: 1.05 }}
           >
@@ -55,24 +53,24 @@ steps: ReadonlyArray<Step>
  
               className={cn(
                 "w-2 h-2 sm:w-3 sm:h-3 rounded-full cursor-default transition-colors",
-                index < currentStep
+                index < currentStepIndex
                   ? "bg-linear-to-b from-amber-400 to-primary"
-                  : index === currentStep
+                  : index === currentStepIndex
                   ? "bg-linear-to-b from-amber-400 to-primary ring-2 sm:ring-4 ring-primary/20"
                   : "bg-muted"
               )}
-              aria-current={index === currentStep ? "step" : undefined}
-              aria-label={step.id}
+              aria-current={index === currentStepIndex ? "step" : undefined}
+              aria-label={step}
             />
             <span
               className={cn(
                 "text-xs sm:text-sm mt-1 sm:mt-1.5 hidden sm:block",
-                index <= currentStep
+                index <= currentStepIndex
                   ? "text-primary font-medium"
                   : "text-muted-foreground"
               )}
             >
-              {step.id}
+              {step}
             </span>
           </motion.button>
         ))}

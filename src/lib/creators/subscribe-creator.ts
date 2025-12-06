@@ -11,12 +11,13 @@ import {
   getRequest,
 } from "@tanstack/react-start/server";
 import {
-  creatorSchema,
-  FirestoreCreatorRecord,
+  creatorApplicationPayloadsObject,
+   creatorApplicationSchema,
+   FirestoreCreatorRecord,
 } from "./schemas/creator-apply-server";
-import { applyCreatorParamsSchema } from "./schemas/creators-apply-shared";
 import { normalizeIp } from "../ip";
 import * as Sentry from "@sentry/tanstackstart-react";
+import { formSteps } from "./schemas/creators-apply-shared";
 // ---------- Types ----------
 type ApiOk = { success: true; id: string };
 
@@ -53,7 +54,7 @@ function setCorsHeaders() {
 // ---------- Main submit function ----------
 export const submitCreatorApplication = createServerFn({ method: "POST" })
   // Accept a single `data` object, validated here per docs
-  .inputValidator(applyCreatorParamsSchema)
+  .inputValidator(creatorApplicationPayloadsObject)
   .handler(async ({ data }) => {
     const { db, admin } = await import("@/lib/firebase/admin");
     setCorsHeaders();
@@ -66,80 +67,6 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
     try {
       const ip = normalizeIp(getRequestHeader("host"));
       const ipHash = hashIP(ip as string);
-
-      // ---- Turnstile (optional)
-      if (data.turnstileToken) {
-        try {
-          const resp = await fetch(
-            "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/x-www-form-urlencoded" },
-              body: new URLSearchParams({
-                secret: process.env.TURNSTILE_SECRET_KEY || "",
-                response: data.turnstileToken,
-              }),
-            }
-          );
-          const out = (await resp.json()) as { success: boolean };
-          if (!out.success) {
-            return jsonErr(403, {
-              code: "CAPTCHA_FAILED",
-              message: "Captcha verification failed",
-              requestId,
-            });
-          }
-        } catch (err) {
-          console.error(`[${requestId}] Turnstile error`, err);
-          return jsonErr(503, {
-            code: "CAPTCHA_ERROR",
-            message: "Captcha verification unavailable",
-            requestId,
-          });
-        }
-      }
-
-      // // ---- Rate limiting window
-      // try {
-      //   if (RATE_WINDOW_MINUTES > 0) {
-      //     const windowStart = admin.firestore.Timestamp.fromMillis(
-      //       Date.now() - RATE_WINDOW_MINUTES * 60 * 1000,
-      //     )
-
-      //     const ipQ = await db
-      //       .collection('applications')
-      //       .where('ipHash', '==', ipHash)
-      //       .where('createdAt', '>=', windowStart)
-      //       .limit(1)
-      //       .get()
-      //     if (!ipQ.empty) {
-      //       setResponseHeader('Retry-After', String(RATE_WINDOW_MINUTES * 60))
-      //       return jsonErr(429, {
-      //         code: 'RATE_LIMIT_IP',
-      //         message: 'Too many requests from this IP. Try again later.',
-      //         requestId,
-      //       })
-      //     }
-
-      //     const emailQ = await db
-      //       .collection('applications')
-      //       .where('email', '==', data.email.toLowerCase())
-      //       .where('createdAt', '>=', windowStart)
-      //       .limit(1)
-      //       .get()
-      //     if (!emailQ.empty) {
-      //       setResponseHeader('Retry-After', String(RATE_WINDOW_MINUTES * 60))
-      //       return jsonErr(429, {
-      //         code: 'RATE_LIMIT_EMAIL',
-      //         message: 'This email was used recently. Try again later.',
-      //         requestId,
-      //       })
-      //     }
-      //   }
-      // } catch (err) {
-      //   console.error(`[${requestId}] Rate-limit check failed`, err)
-      //   // continue
-      // }
 
       // ---- Duplicate checks
       try {
@@ -194,36 +121,17 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
         const { terms: currentTerms, privacy: currentPrivacy } =
           await getLegalVersions();
 
-        if (
-          data.legal.termsVersion !== currentTerms ||
-          data.legal.privacyVersion !== currentPrivacy
-        ) {
-          setResponseStatus(409);
-          return {
-            success: false,
-            reason: "version_mismatch",
-            termsVersion: currentTerms,
-            privacyVersion: currentPrivacy,
-            code: "LEGAL_VERSION_MISMATCH",
-            message: "Submitted legal versions are outdated.",
-            requestId,
-          } satisfies ApiError;
-        }
-
         // ---- Persist
         const now = admin.firestore.FieldValue.serverTimestamp();
         const ua = (request.headers.get("user-agent") || "").slice(0, 300);
         const country = request.headers.get("x-vercel-ip-country") || "unknown";
-
+        const profilePictureUrl = data.profilePictureUrl;
         const application = {
-          name: data.name,
-          locationYesNo: data.locationYesNo,
-          portfolio: data.portfolio,
-          niches: data.niches,
-          instagramPostUrl: data.instagramPostUrl,
+          ...data,
+
           email: emailLower,
-          bio: data.bio,
-          profilePictureUrl: asUrl(data.profilePictureUrl),
+
+          profilePictureUrl: asUrl(profilePictureUrl),
           instagram: ig,
           tiktok: tt,
           ua,
@@ -237,10 +145,10 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
             acceptedAt: now,
           },
         } satisfies FirestoreCreatorRecord;
-
+        const parsedApplication = await creatorApplicationSchema.parseAsync(application)
         const docRef = await db
           .collection("applications")
-          .add(await creatorSchema.parseAsync(application));
+          .add(parsedApplication );
 
         // ---- Legal acceptance log (hashed email)
         const emailHash = crypto
@@ -273,7 +181,8 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
               signal: AbortSignal.timeout(3000),
             });
           } catch (err) {
-            console.error(`[${requestId}] Slack webhook failed`, err);
+            Sentry.logger.error(`[${requestId}] Slack webhook failed`, err);
+            Sentry.captureException(err);
           }
         }
 
@@ -284,7 +193,7 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
         return { success: true, id: docRef.id } satisfies ApiOk;
       } catch (err) {
         Sentry.captureException(err);
-         Sentry.logger.error(Sentry.logger.fmt`[${requestId}] DB error`)
+        Sentry.logger.error(Sentry.logger.fmt`[${requestId}] DB error`);
         return jsonErr(500, {
           code: "DB_ERROR",
           message: "Database operation failed",
@@ -302,7 +211,5 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
   });
 
 // ---------- Convenient TS exports ----------
-export type SubmitCreatorApplicationInput = z.infer<
-  typeof applyCreatorParamsSchema
->;
+export type SubmitCreatorApplicationInput = z.infer<typeof formSteps>;
 export type SubmitCreatorApplicationResult = ApiOk | ApiError;

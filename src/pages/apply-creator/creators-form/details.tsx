@@ -4,7 +4,6 @@
 // ============================================================================
 "use client";
 
-import { motion } from "framer-motion";
 import {
   Field as DSField,
   FieldLabel,
@@ -13,9 +12,7 @@ import {
   FieldDescription,
 } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
-import { fadeInUp } from "./utils";
-import { clientFormObject } from "@/lib/creators/schemas/creator-apply-client";
-import { FormType } from "../../../lib/creators/use-application-form";
+ import { FormType } from "../../../lib/creators/use-application-form";
 import { getFieldErrors } from "@/lib/field";
 import {
   TagsTrigger,
@@ -29,7 +26,8 @@ import {
   Tags,
 } from "../../../components/ui/shadcn-io/tags";
 import { AvailableNiches } from "@/lib/creators/constants";
-import { Input } from "../../../components/ui/input";
+import { formSteps } from "@/lib/creators/schemas/creators-apply-shared";
+import FileUpload from "./file-upload";
 
 function Niches({
   value,
@@ -77,7 +75,7 @@ function Niches({
         })}
       </div>
       <Tags className=" bg- muted ">
-        <TagsTrigger disabled={value.length > 4} className="">
+        <TagsTrigger disabled={value.length > 4} className=" font-light px-4 bg-input text-muted-foreground">
           Select one or more niches
         </TagsTrigger>
 
@@ -107,13 +105,13 @@ function Niches({
   );
 }
 
-export function AdditionalInfo({ form }: { form: FormType }) {
+export function Details({ form }: { form: FormType }) {
+  const step = formSteps.shape.details.shape
   return (
     <FieldGroup className="space-y-6">
-      <motion.div variants={fadeInUp}>
         <form.Field
-          name="niches"
-          validators={{ onChange: clientFormObject.shape.niches }}
+          name="details.niches"
+          validators={{ onChange: step.niches }}
         >
           {(f) => {
             const errs = getFieldErrors(f);
@@ -127,40 +125,11 @@ export function AdditionalInfo({ form }: { form: FormType }) {
             );
           }}
         </form.Field>
-      </motion.div>
-      <motion.div variants={fadeInUp}>
-        <form.Field
-          name="instagramPostUrl"
-          validators={{ onChange: clientFormObject.shape.instagramPostUrl }}
-        >
-          {(f) => {
-            const errs = getFieldErrors(f);
-            return (
-              <DSField data-invalid={!!errs.length}>
-                <FieldLabel htmlFor="instagram-post-url">Instagram Post Url</FieldLabel>
-                <Input
-                  id="instagram-post-url"
-                  placeholder="full URL"
-                  value={f.state.value ?? ""}
-                  onChange={(e) => f.handleChange(e.target.value)}
-                  onBlur={f.handleBlur}
-                  aria-invalid={!!errs.length}
-                />{" "}
-                <FieldDescription>
-                  Content Creators – link to an Instagram post you have made
-                  (this will be shown as a showcase in your profile)
-                </FieldDescription>
-                {!!errs.length && <FieldError errors={errs} />}
-              </DSField>
-            );
-          }}
-        </form.Field>
-      </motion.div>
+         
 
-      <motion.div variants={fadeInUp}>
         <form.Field
-          name="bio"
-          validators={{ onChange: clientFormObject.shape.bio }}
+          name="details.bio"
+          validators={{ onChange: step.bio }}
         >
           {(f) => {
             const errs = getFieldErrors(f);
@@ -181,7 +150,27 @@ export function AdditionalInfo({ form }: { form: FormType }) {
             );
           }}
         </form.Field>
-      </motion.div>
+
+      
+            {/* profilePictureFile */}
+            <form.Field
+              name="details.profilePictureFile"
+              // validazione su submit (schema controlla tipo e size)
+              validators={{ onChange:   step.profilePictureFile }}
+            >
+              {(f) => {
+                const errs = getFieldErrors(f);
+                return (
+                  <FileUpload
+                    name={f.name}
+                    value={f.state.value}
+                    onChange={  f.handleChange}
+                    onBlur={f.handleBlur}
+                    errors={errs}
+                  />
+                );
+              }}
+            </form.Field>
     </FieldGroup>
   );
 }

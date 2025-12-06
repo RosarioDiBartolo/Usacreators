@@ -7,55 +7,56 @@
 import { motion, AnimatePresence } from "framer-motion";
 
 import StepIndicator from "./step-indicator";
-import { PersonalInfo } from "./personal-info";
-import { SocialInfo } from "./social-info";
-import { AdditionalInfo } from "./additional-info";
-import { ReviewConsentStep } from "./review-consent-step";
+import { PersonalInfo } from "./personal";
+import { SocialInfo } from "./social";
+import { Details } from "./details";
+import { ReviewConsentStep } from "./review-consent";
 import { StepNavigation } from "./step-navigation";
 import { contentVariants } from "./utils";
 
-import {
+import useApplicationForm from "@/lib/creators/use-application-form";
+import { Suspense, useState } from "react";
+import { 
   stepKeysMap,
   steps,
-} from "@/lib/creators/schemas/creator-apply-client";
+} from "@/lib/creators/schemas/creators-apply-shared";
 
-import useApplicationForm from "../../../lib/creators/use-application-form";
-import { Suspense, useState } from "react";
- 
 export default function OnboardingForm() {
   const { form, isPending } = useApplicationForm();
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const currentStep  = steps[currentStepIndex];
   async function nextStep() {
-    const names = stepKeysMap[currentStep];
-    const results = await Promise.all(
-      names.map((n) => form.validateField(n, "change"))
+    const fieldNames = stepKeysMap[currentStep];
+     const validations = await Promise.all(
+      fieldNames.map((field) =>
+        form.validateField(`${currentStep}.${field}`, "change")
+      )
     );
-    const stepHasErrors = results.some((r) => r?.length);
+
+    const stepHasErrors = validations.some(
+      (issues) => issues && issues.length > 0
+    );
 
     if (stepHasErrors) {
       console.error(
         "Error when trying to jump to next\n Step:",
-        currentStep,
+        currentStepIndex,
         "errors:",
-        results
+        validations
       );
     } else {
-      setCurrentStep((s) => s + 1);
+      setCurrentStepIndex((s) => s + 1);
     }
   }
   function prevStep() {
-    if (currentStep > 0) setCurrentStep((s) => s - 1);
+    if (currentStepIndex > 0) setCurrentStepIndex((s) => s - 1);
   }
   return (
-    <motion.div
-      className="flex-1 flex flex-col"
-     >
-       
-      {currentStep !== steps.length && (
+    <motion.div className=" min-h-full  flex flex-col ">
+      {currentStepIndex !== steps.length && (
         <StepIndicator
-          setCurrentStep={setCurrentStep}
-          currentStep={currentStep}
-          steps={steps}
+          setCurrentStepIndex={setCurrentStepIndex}
+          currentStepIndex={currentStepIndex}
         />
       )}
 
@@ -65,22 +66,21 @@ export default function OnboardingForm() {
           form.handleSubmit();
         }}
         noValidate
-        className="flex flex-col h-full text-start"
+        className=" flex-1   flex flex-col text-start"
       >
         <AnimatePresence mode="wait">
           <motion.div
-            key={currentStep}
+            key={currentStepIndex}
             initial="hidden"
             animate="visible"
             exit="exit"
             variants={contentVariants}
-            className="flex-1 flex"
+            className="flex-1  "
           >
-            
-            {currentStep === 0 && <PersonalInfo form={form} />}
-            {currentStep === 1 && <SocialInfo form={form} />}
-            {currentStep === 2 && <AdditionalInfo form={form} />}
-            {currentStep === 3 && (
+            {currentStepIndex === 0 && <PersonalInfo form={form} />}
+            {currentStepIndex === 1 && <SocialInfo form={form} />}
+            {currentStepIndex === 2 && <Details form={form} />}
+            {currentStepIndex === 3 && (
               <Suspense
                 fallback={<p>Loading most recent legal related data...</p>}
               >
@@ -90,14 +90,14 @@ export default function OnboardingForm() {
           </motion.div>
         </AnimatePresence>
 
-        {currentStep !== steps.length && (
+        {currentStepIndex !== steps.length && (
           <StepNavigation
-            currentStep={currentStep}
-            steps={steps}
+            currentStepIndex={currentStepIndex}
+            
             isSubmitting={isPending}
             nextStep={nextStep}
             prevStep={prevStep}
-            handleSubmit={() => form.handleSubmit()}
+            handleSubmit={form.handleSubmit}
           />
         )}
       </form>

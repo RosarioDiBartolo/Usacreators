@@ -2,59 +2,35 @@ import { useForm } from "@tanstack/react-form";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
-// Import both client + submit schemas
-import { clientSubmitSchema } from "@/lib/creators/schemas/creator-apply-client";
-import { z } from "zod"; 
-import { uploadToCloudinary } from "@/lib/upload";
+import { z } from "zod";
 import {
   ApiError,
   submitCreatorApplication,
 } from "@/lib/creators/subscribe-creator";
-import {
-  type ApplyCreatorParams,
- } from "@/lib/creators/schemas/creators-apply-shared";
-import { useMutation } from "@tanstack/react-query";
-import { useCurrentLegal } from "@/lib/legal/hooks";
- 
 
-// (Optional) Turnstile helper — replace with your actual integration
-async function getTurnstileToken(): Promise<string | undefined> {
-  return undefined;
-}
+import { useMutation } from "@tanstack/react-query";
+import { formSteps } from "./schemas/creators-apply-shared";
+import { uploadProfilePicture } from "../cloudinary/upload";
 
 const useApplicationForm = () => {
   //Use cached if any...
-  const { data: currentVersions } = useCurrentLegal();
 
   const { mutateAsync: Submit, isPending } = useMutation({
     mutationFn: async ({ value }: { value: DefaultValues }) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { profilePictureFile, termsAccepted, ...stripped } = value;
-      if (!profilePictureFile) {
+      const {profilePictureFile, ...details} = value.details
+      if(!profilePictureFile){
         throw "Missing profilePictureFile.";
-      }
+       }
       const fd = new FormData();
-      fd.set("file", profilePictureFile);
-
-      const profilePictureUpload = await uploadToCloudinary({ data: fd });
-
-      //Block End
-      const creator =  {
-        ...stripped,
-        locationYesNo: value.locationYesNo ?? defaultValues.locationYesNo,
-        profilePictureUrl: profilePictureUpload?.secure_url,
-        bio: value.bio,
-        instagram: value.instagram,
-        portfolio: value.portfolio,
-        tiktok: value.tiktok,
-        turnstileToken: await getTurnstileToken(),
-        legal: {
-          termsVersion: currentVersions.terms,
-          privacyVersion: currentVersions.privacy,
-        },
-      } satisfies ApplyCreatorParams ;
-
-      await submitCreatorApplication({ data: creator });
+   
+        fd.set("file", profilePictureFile );
+        
+        const profilePictureUrl = (await uploadProfilePicture({ data: fd }))?.secure_url;
+        if ( !profilePictureUrl){
+                  throw "An Error occurred while uploading profile picture.";
+         } 
+         const application = {...details,...value.social, ...value.personal,...value.legal, profilePictureUrl }
+        await submitCreatorApplication({ data: application });
     },
     onSuccess: () => {
       toast.success("Application submitted successfully!");
@@ -70,20 +46,29 @@ const useApplicationForm = () => {
 
   const navigate = useNavigate();
 
-  type DefaultValues = z.input<typeof clientSubmitSchema>;
+  type DefaultValues = z.input<typeof formSteps>;
   // Strongly type defaults to the Zod *input* so unions match (File | undefined, "yes" | "no", etc.)
   const defaultValues = {
-    name: "",
-    email: "",
-    profilePictureFile: undefined,
-    bio: null,
-    niches: [],
-    locationYesNo: "yes",
-    portfolio: null,
-    instagram: null,
-    tiktok: null,
-    termsAccepted: false,
-    instagramPostUrl: "",
+    personal: {
+      name: "",
+      email: "",
+
+      locationYesNo: "yes",
+    },
+    social: {
+      portfolio: null,
+      instagramPostUrl: "",
+      instagram: null,
+      tiktok: null,
+    },
+    details: {
+      niches: [],
+      bio: null,
+      profilePictureFile: undefined,
+    },
+    legal: {
+      termsAccepted: false,
+    },
   } satisfies DefaultValues;
 
   const form = useForm({
@@ -93,7 +78,7 @@ const useApplicationForm = () => {
 
     // 3) Submit-time cross-field validation (adapter wrapper)
     validators: {
-      onSubmit: clientSubmitSchema,
+      onSubmit: formSteps,
     },
 
     onSubmit: Submit,
