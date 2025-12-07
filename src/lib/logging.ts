@@ -1,11 +1,10 @@
 import { createMiddleware } from "@tanstack/react-start";
 import * as Sentry from "@sentry/tanstackstart-react";
-
-export const requestLogger = createMiddleware().server(
+ 
+export const sentryMiddleware = createMiddleware().server(
   async ({ next, request }) => {
     const startTime = Date.now();
-
-    // Low-level: useful in dev/preview, can be filtered out in beforeSendLog
+      // Low-level: useful in dev/preview, can be filtered out in beforeSendLog
     Sentry.logger.debug("Incoming request", {
       method: request.method,
       url: request.url,
@@ -31,7 +30,7 @@ export const requestLogger = createMiddleware().server(
       return result;
     } catch (error) {
       const duration = Date.now() - startTime;
-
+      
       // Proper captureException usage: pass the error, then context
       Sentry.captureException(error, {
         level: "error",
@@ -41,6 +40,8 @@ export const requestLogger = createMiddleware().server(
           durationMs: duration,
         },
       });
+      Sentry.logger.error("Error in request",error);
+      
 
       // Re-throw so the framework still sees the error
       throw error;
