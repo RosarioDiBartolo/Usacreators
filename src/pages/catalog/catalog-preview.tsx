@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { CheckCircleIcon, Lock, LockOpenIcon, Sparkles } from "lucide-react";
 import { Dispatch, RefObject, SetStateAction, useState } from "react";
 import { motion } from "motion/react";
-import { CreatorRecord } from "@/lib/creators/collection";
+import { CreatorRecord } from "@/lib/creators/creators-collection";
  import { Badge } from "@/components/ui/badge";
 
 type CatalogPreviewProps = {

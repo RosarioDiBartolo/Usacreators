@@ -90,6 +90,7 @@ export const formSteps = z.object({
     ).nullable(),
   }),
   legal: z.object({
+    newsletter: z.boolean() ,
     termsAccepted: z
       .boolean()
       .refine((v) => v === true, "You must accept terms to continue."),

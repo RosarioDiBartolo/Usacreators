@@ -6,7 +6,7 @@ import { motion, Variants } from "motion/react";
 import missingPic from "@/assets/images/creator-missing.jpg";
 
 //Could be dangerous... this is a server side file
-import { type CreatorRecord } from "@/lib/creators/collection";
+import { type CreatorRecord } from "@/lib/creators/creators-collection";
 
 // Animation variants for each testimonial card
 const cardVariants: Variants = {

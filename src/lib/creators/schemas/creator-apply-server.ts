@@ -1,27 +1,30 @@
 // src/lib/shared/creator-apply-server.ts
 import { z } from "zod";
-import { applyStandardRules, formSteps  } from "./creators-apply-shared";
+import { applyStandardRules, formSteps } from "./creators-apply-shared";
 import { TimestampLike } from "@/lib/firebase/utils.js";
 import { withDefault } from "@/lib/zod-utils";
 
 // ---- Persistence schema (what we actually store) ----
 // Omit on the object, extend, then re-apply the same rule.
 
+export const creatorApplicationPayloadsObject = z
+  .object({
+    ...formSteps.shape.details.shape,
 
-export const creatorApplicationPayloadsObject = z.object({
-   ...formSteps.shape.details.shape,
-  
-  ...formSteps.shape.social.shape,
-  
-  ...formSteps.shape.personal.shape,
-}).omit({
-    "profilePictureFile": true
-  }).extend( {
+    ...formSteps.shape.social.shape,
+
+    ...formSteps.shape.personal.shape,
+    newsLetter: formSteps.shape.legal.shape.newsletter
+  })
+  .omit({
+    profilePictureFile: true,
+  })
+  .extend({
     profilePictureUrl: z.string().url(),
   });
-export const creatorApplicationObject = creatorApplicationPayloadsObject.extend({
-  
-     legal:  z.object({
+export const creatorApplicationObject = creatorApplicationPayloadsObject.extend(
+  {
+    legal: z.object({
       acceptedAt: z.any(),
       privacyVersion: z.string(),
       termsVersion: z.string(),
@@ -32,30 +35,34 @@ export const creatorApplicationObject = creatorApplicationPayloadsObject.extend(
     country: z.string().optional().default("unknown"),
     source: z.literal("server-fn"),
     createdAt: z.any(), // Firestore server timestamp
-  }) 
+  }
+);
 //use to create new documents safely and possibly zod safe...
-export const creatorApplicationSchema = applyStandardRules(creatorApplicationObject);
+export const creatorApplicationSchema = applyStandardRules(
+  creatorApplicationObject
+);
 
 // ---- Retriving schema ----
 // Some fields might be missing for outdated versions of the forms and the schemas... use this for document retriving and sanatization
 export const firebaseCreatorRecord = creatorApplicationObject
- 
+
   .extend({
     bio: withDefault(z.string().optional(), undefined),
-    portfolio:  withDefault(z.string().url().optional().nullable(), null),
-    instagramPostUrl: z
-        .string()
-        .trim().optional(),
+    portfolio: withDefault(z.string().url().optional().nullable(), null),
+    instagramPostUrl: z.string().trim().optional(),
     instagram: z.string().optional().nullable(),
     tiktok: z.string().optional().nullable(),
-    profilePictureUrl: withDefault(z.string().url().optional().nullable(), null),
+    profilePictureUrl: withDefault(
+      z.string().url().optional().nullable(),
+      null
+    ),
     niches: withDefault(z.array(z.string()), []),
-     legal: z.object({
+    legal: z.object({
       termsVersion: z.string(),
       privacyVersion: z.string(),
       acceptedAt: TimestampLike,
     }),
-
+    newsLetter: z.boolean().optional().default(true),
     ipHash: z.string(),
     ua: z.string().max(300).optional(),
     country: z.string().optional().default("unknown"),

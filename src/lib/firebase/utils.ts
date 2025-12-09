@@ -1,12 +1,11 @@
 import { Timestamp } from "firebase-admin/firestore";
- 
 import { z, type ZodTypeAny } from "zod";
- 
+
 // ---- Timestamp guard (works across admin/emulator builds)
-export const TimestampLike = z.instanceof(Timestamp).transform((ts) => ts.toDate());
- 
- 
- 
+export const TimestampLike = z
+  .instanceof(Timestamp)
+  .transform((ts) => ts.toDate());
+
 export type WithId<T> = T & { id: string };
 
 async function getDb() {
@@ -29,12 +28,15 @@ interface QueryOptions<T> {
   };
 }
 
-export function createTypedCollection<TSchema extends ZodTypeAny>(opts: {
+export function createTypedCollection<TSchema extends ZodTypeAny, AddSchema extends ZodTypeAny = TSchema>(opts: {
   collection: string;
   schema: TSchema;
+  addSchema?: AddSchema;
 }) {
   type T = z.infer<TSchema>;
-  const { collection, schema } = opts;
+  type TInput = z.input<AddSchema>;
+
+  const { collection, schema, addSchema = schema } = opts;
 
   function applyQueryOptions(
     base: FirebaseFirestore.CollectionReference,
@@ -92,8 +94,26 @@ export function createTypedCollection<TSchema extends ZodTypeAny>(opts: {
     return { id: doc.id, ...(parsed as T) } as WithId<T>;
   }
 
+  async function add(data: TInput): Promise<WithId<T>> {
+    const db = await getDb();
+    const colRef = db.collection(collection);
+
+    // Validate + run transforms before writing
+    const parsed = addSchema.parse(data);
+
+    const docRef = await colRef.add(parsed as FirebaseFirestore.DocumentData);
+
+    // If you want to re-parse from Firestore (e.g. server timestamps), you can:
+    // const snap = await docRef.get();
+    // const finalParsed = schema.parse(snap.data());
+    // return { id: docRef.id, ...(finalParsed as T) };
+
+    return docRef;
+  }
+
   return {
     find,
     getById,
+    add,
   };
 }

@@ -1,14 +1,11 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-
-import { config as loadEnv } from "dotenv";
-
-// Load .env.local first
-loadEnv({ path: path.resolve(process.cwd(), ".env.local") });
+  
 
 import * as crypto from "node:crypto";
 import { Timestamp } from "firebase-admin/firestore";
 import { db } from "@/lib/firebase/admin";
+import { env } from "@/enviroment/client";
 
 type Version = string; // "YYYY-MM-DD"
 
@@ -55,7 +52,7 @@ const joinUrl = (base: string, pathPart: string) =>
     // ----- resolve env early & validate -----
     const versionYMD = must(process.argv[2], "Pass version as YYYY-MM-DD");
     const baseUrl = must(
-      process.env.VITE_DOMAIN_URL,
+      env.VITE_DOMAIN_URL,
       "Missing VITE_DOMAIN_URL (e.g. https://yourdomain.com)"
     );
 

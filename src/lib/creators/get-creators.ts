@@ -1,16 +1,15 @@
 // src/lib/things/server.ts
 import { createServerFn } from "@tanstack/react-start";
 import { queryOptions } from "@tanstack/react-query";
-import { GetCreatorsFilterSchema } from "@/lib/creators/collection";
-import z from "zod";
-import { GetCreatorsInput } from "./schemas/creators-filter";
+import { GetCreatorsFilterSchema } from "@/lib/creators/creators-collection";
+import z from "zod"; 
  
  
 
 export const getCreators = createServerFn({ method: "GET" })
   .inputValidator(GetCreatorsFilterSchema)
   .handler(async ({ data }) => {
-    const { findCreators } = await import("@/lib/creators/collection");
+    const { findCreators } = await import("@/lib/creators/creators-collection");
   
     const creators =  await findCreators(data);
  

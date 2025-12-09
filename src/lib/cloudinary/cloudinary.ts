@@ -1,3 +1,4 @@
+import { env } from "@/enviroment/enviroment";
 import { v2 as cloudinary } from "cloudinary";
  
 // Disable Vercel's default body parsing
@@ -9,9 +10,9 @@ export const config = {
 
 // Configure Cloudinary
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+  cloud_name: env.CLOUDINARY_CLOUD_NAME,
+  api_key: env.CLOUDINARY_API_KEY,
+  api_secret: env.CLOUDINARY_API_SECRET,
 }); 
  
 export   {cloudinary};

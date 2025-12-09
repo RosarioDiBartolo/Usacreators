@@ -1,9 +1,7 @@
 // src/server/legal/get-legal-versions.ts
 import { z } from "zod";
-import { createServerFn } from "@tanstack/react-start";
-import { validatePolicyDoc } from "./policy";
-import { setResponseHeader } from "@tanstack/react-start/server";
-
+import { createServerFn } from "@tanstack/react-start"; 
+ 
 // ---- Public type for UI (unchanged)
 export type LegalVersions = {
   terms: string; // e.g. "2025-11-01"
@@ -64,46 +62,5 @@ export const getLegalVersions = createServerFn({ method: "GET" }).handler(
 const policyObject = z.enum(["terms", "privacy", "cookie"]);
 export type Policy = z.infer<typeof policyObject>;
 export type PolicyVersion = z.infer<typeof policyVersion>;
-
-const params = z.object({
-  policy: policyObject,
-  version: policyVersion,
-});
-
-const getOrigin = createServerFn({ method: "GET" }).handler(() =>
-  process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://127.0.0.1:5173"
-); // dev fallback)
-// export const getLegalFromPublic = createServerFn({ method: "GET" })
-//   .inputValidator(params)
-//   .handler(async ({ data: { policy, version } }) => {
-//     const assetPath = `/legal/${policy}/${version}.json`;
-
-//     const origin = await getOrigin();
-
-//     const url = origin + assetPath;
-
-//     // 3. Fetch from HTTP, not filesystem
-//     const res = await fetch(url, {
-//       // Nitro/Node fetch
-//       cache: "force-cache",
-//     });
-
-//     if (!res.ok) {
-//       throw new Error(
-//         `Missing legal JSON: ${assetPath} (status ${res.status})`
-//       );
-//     }
-
-//     const raw = await res.json();
-//     const parsed = validatePolicyDoc(raw);
-//     setResponseHeader(
-//       "Cache-Control",
-//       "public, max-age=300, stale-while-revalidate=86400"
-//     );
-
-//     return { version, parsed };
-//   });
-
+ 
  

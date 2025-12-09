@@ -1,0 +1,284 @@
+import { getRequestHeader } from "@tanstack/react-start/server";
+// src/server/apply.ts
+import { z } from "zod";
+import crypto from "crypto";
+import { hashIP, normalizeIG, normalizeTT, asUrl } from "@/lib/utils";
+import { setResponseHeader, getRequest } from "@tanstack/react-start/server";
+import {
+  creatorApplicationPayloadsObject,
+  creatorApplicationSchema,
+  FirestoreCreatorRecord,
+} from "./schemas/creator-apply-server";
+import { normalizeIp } from "../ip";
+import * as Sentry from "@sentry/tanstackstart-react";
+import env from "@/enviroment/server";
+import { db } from "@/lib/firebase/admin";
+import admin from "firebase-admin";
+import { creatorsRepo } from "./creators-collection";
+// ---------- Types ----------
+export type ApiOk = { success: true; id: string };
+
+export type ApiError = {
+  status: number;
+  code?: string;
+  message?: string;
+  details?: { fieldErrors?: Record<string, string[]>; formErrors?: string[] };
+  requestId?: string;
+  reason?: string; // e.g., "version_mismatch"
+};
+
+// Runtime error class
+export class ApiErrorException extends Error {
+  status: number;
+  code?: string;
+  details?: ApiError["details"];
+  reason?: string;
+  termsVersion?: string;
+  privacyVersion?: string;
+
+  constructor({ message, status = 500, code, details, reason }: ApiError) {
+    super(message);
+    Object.setPrototypeOf(this, new.target.prototype);
+
+    this.name = "ApiErrorException";
+    this.status = status;
+    this.code = code;
+    this.details = details;
+    this.reason = reason;
+  }
+}
+type RequestContext = {
+  requestId: string;
+  started: number;
+  ua: string;
+  country: string;
+  ipHash: string;
+};
+
+// ---------- CORS helpers ----------
+export function setCorsHeaders() {
+  setResponseHeader("Access-Control-Allow-Origin", env.ALLOW_ORIGIN || "*");
+  setResponseHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  setResponseHeader("Access-Control-Allow-Headers", "Content-Type");
+  setResponseHeader("Vary", "Origin");
+}
+
+export function createRequestContext(): RequestContext {
+  const request = getRequest();
+  const requestId = crypto.randomUUID();
+  setResponseHeader("X-Request-ID", requestId);
+
+  const started = Date.now();
+  const ua = (request.headers.get("user-agent") || "").slice(0, 300);
+  const country = request.headers.get("x-vercel-ip-country") || "unknown";
+
+  // NOTE: if you actually want the IP, use x-real-ip / x-forwarded-for.
+  const ip = normalizeIp(getRequestHeader("host"));
+  const ipHash = hashIP(ip as string);
+
+  return { requestId, started, ua, country, ipHash };
+}
+
+export const ensureNoDuplicatesOrThrow = async (
+  data: z.infer<typeof creatorApplicationPayloadsObject>
+) => {
+  const emailLower = data.email.toLowerCase();
+
+  // email
+  const existingEmailQ = await db
+    .collection("applications")
+    .where("email", "==", emailLower)
+    .limit(1)
+    .get();
+
+  if (!existingEmailQ.empty) {
+    throw new ApiErrorException({
+      status: 409,
+      code: "DUPLICATE_EMAIL",
+      message: "This email already applied.",
+    });
+  }
+
+  // instagram
+  const ig = normalizeIG(data.instagram);
+  if (ig) {
+    const igQ = await db
+      .collection("applications")
+      .where("instagram", "==", ig)
+      .limit(1)
+      .get();
+    if (!igQ.empty) {
+      throw new ApiErrorException({
+        status: 409,
+        code: "DUPLICATE_INSTAGRAM",
+        message: "This Instagram already applied.",
+      });
+    }
+  }
+
+  // tiktok
+  const tt = normalizeTT(data.tiktok);
+  if (tt) {
+    const ttQ = await db
+      .collection("applications")
+      .where("tiktok", "==", tt)
+      .limit(1)
+      .get();
+    if (!ttQ.empty) {
+      throw new ApiErrorException({
+        status: 409,
+        code: "DUPLICATE_TIKTOK",
+        message: "This TikTok already applied.",
+      });
+    }
+  }
+
+  return {
+    emailLower,
+    normalizedInstagram: ig,
+    normalizedTiktok: tt,
+  };
+};
+
+export const buildApplicationRecord = (params: {
+  data: z.infer<typeof creatorApplicationPayloadsObject>;
+  emailLower: string;
+  normalizedInstagram: string | null;
+  normalizedTiktok: string | null;
+  ctx: RequestContext;
+  currentTerms: string;
+  currentPrivacy: string;
+}): FirestoreCreatorRecord => {
+  const {
+    data,
+    emailLower,
+    normalizedInstagram,
+    normalizedTiktok,
+    ctx,
+    currentTerms,
+    currentPrivacy,
+  } = params;
+
+  const now = admin.firestore.FieldValue.serverTimestamp();
+  const profilePictureUrl = data.profilePictureUrl;
+
+  const application = {
+    ...data,
+    email: emailLower,
+    profilePictureUrl: asUrl(profilePictureUrl),
+    instagram: normalizedInstagram,
+    tiktok: normalizedTiktok,
+    ua: ctx.ua,
+    country: ctx.country,
+    createdAt: now,
+    source: "server-fn",
+    ipHash: ctx.ipHash,
+    legal: {
+      termsVersion: currentTerms,
+      privacyVersion: currentPrivacy,
+      acceptedAt: now,
+    },
+  } satisfies FirestoreCreatorRecord;
+
+  return application;
+};
+
+// ...
+
+const newsletterListId = Number( env.BREVO_NEWSLETTER_LIST_ID );
+
+export async function subscribeToNewsletterIfOptedIn(params: {
+  email: string;
+  name: string;
+  data: z.infer<typeof creatorApplicationPayloadsObject>;
+  requestId: string;
+}) {
+  const { contactsClient } = await import("@/lib/brevo/client");
+
+  const { email, name, data, requestId } = params;
+
+  // Adjust depending on how your schema stores opt-in
+  const optedIn = data.newsLetter;
+
+  if (!optedIn) {
+    return;
+  }
+
+  await contactsClient.createContact({
+    email,
+    listIds: [newsletterListId],
+    updateEnabled: true, // if contact already exists, just update it
+    attributes: {
+      FIRSTNAME: data.name,
+      INSTAGRAM_HANDLE: data.instagram ?? undefined,
+      TIKTOK_HANDLE: data.tiktok ?? undefined,
+      // any other attributes you configured in Brevo
+    },
+  });
+
+  Sentry.logger.info(
+    `[${requestId}] Added contact to Brevo list ${newsletterListId}`
+  );
+}
+
+export const persistApplication = async (
+  application: FirestoreCreatorRecord
+): Promise<string> => {
+  const docRef = await creatorsRepo.add(application);
+  return docRef.id;
+};
+
+export const logLegalAcceptance = async (params: {
+  applicationId: string;
+  emailLower: string;
+  ctx: RequestContext;
+  currentTerms: string;
+  currentPrivacy: string;
+}) => {
+  const { applicationId, emailLower, ctx, currentTerms, currentPrivacy } =
+    params;
+
+  const now = admin.firestore.FieldValue.serverTimestamp();
+
+  const emailHash = crypto
+    .createHash("sha256")
+    .update((env.EMAIL_HASH_SALT || "") + emailLower)
+    .digest("hex");
+
+  await db.collection("legal_acceptances").add({
+    subjectType: "application",
+    subjectId: applicationId,
+    context: "application_submit",
+    emailHash,
+    ipHash: ctx.ipHash,
+    userAgent: ctx.ua,
+    country: ctx.country,
+    termsVersion: currentTerms,
+    privacyVersion: currentPrivacy,
+    acceptedAt: now,
+  });
+};
+
+export const notifySlackSafely = async (params: {
+  name: string;
+  emailLower: string;
+  requestId: string;
+}) => {
+  if (!env.SLACK_WEBHOOK_URL) return;
+
+  const { name, emailLower, requestId } = params;
+
+  try {
+    await fetch(env.SLACK_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        text: `📨 New application: ${name} (${emailLower})`,
+      }),
+      signal: AbortSignal.timeout(3000),
+    });
+  } catch (err) {
+    Sentry.logger.error(`[${requestId}] Slack webhook failed`, err);
+    Sentry.captureException(err);
+  }
+};
