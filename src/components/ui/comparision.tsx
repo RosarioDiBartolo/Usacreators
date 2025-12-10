@@ -20,7 +20,7 @@ import {
   useMemo,
   type KeyboardEventHandler,
 } from "react";
-import { cn } from "@/lib/fe-utils";
+import { cn } from "@/lib/client-only/utils";
 import { buttonVariants } from "./button";
 
 /* ========= Context ========= */

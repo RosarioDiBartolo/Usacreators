@@ -2,7 +2,7 @@
 import { z } from "zod";
 import { applyStandardRules, formSteps } from "./creators-apply-shared";
 import { TimestampLike } from "@/lib/firebase/utils.js";
-import { withDefault } from "@/lib/zod-utils";
+import { withDefault } from "@/lib/schemas-helpers";
 
 // ---- Persistence schema (what we actually store) ----
 // Omit on the object, extend, then re-apply the same rule.

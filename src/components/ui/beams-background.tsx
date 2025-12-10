@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
-import { cn } from "@/lib/fe-utils";
+import { cn } from "@/lib/client-only/utils";
 
 interface AnimatedGradientBackgroundProps {
     className?: string;

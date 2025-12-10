@@ -6,7 +6,7 @@ import {
   useScroll,
   useMotionValueEvent,
 } from "framer-motion";
-import { cn } from "@/lib/fe-utils"; 
+import { cn } from "@/lib/client-only/utils"; 
 export const FloatingNav = ({
    className, children
 }: {

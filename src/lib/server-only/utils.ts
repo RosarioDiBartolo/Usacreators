@@ -1,3 +1,6 @@
+import env from "@/enviroment/server";
+import crypto from "crypto";
+
 // utils/getClientIp.ts
 export function normalizeIp(ip: string | null | undefined): string | null {
   if (!ip) return null;
@@ -44,4 +47,12 @@ export function extractClientIp(
 
   // fallback to socket remote address
   return normalizeIp(remoteAddr ?? null);
+}
+export const hashIP = (ip: string) =>
+  crypto.createHash("sha256").update(ip).digest("hex");
+
+export function hashEmail(email: string) {
+  const salt = env.EMAIL_HASH_SALT ?? "";
+  // SHA-256(salt + email)
+  return crypto.createHash("sha256").update(salt + email).digest("hex");
 }

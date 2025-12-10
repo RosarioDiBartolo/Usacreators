@@ -2,59 +2,24 @@ import { getRequestHeader } from "@tanstack/react-start/server";
 // src/server/apply.ts
 import { z } from "zod";
 import crypto from "crypto";
-import { hashIP, normalizeIG, normalizeTT, asUrl } from "@/lib/utils";
+import { normalizeIG, normalizeTT, asUrl } from "@/lib/utils";
+import { hashIP } from "../server-only/utils";
 import { setResponseHeader, getRequest } from "@tanstack/react-start/server";
 import {
-  creatorApplicationPayloadsObject,
-  creatorApplicationSchema,
+  creatorApplicationPayloadsObject, 
   FirestoreCreatorRecord,
 } from "./schemas/creator-apply-server";
-import { normalizeIp } from "../ip";
+import { normalizeIp } from "../server-only/utils";
 import * as Sentry from "@sentry/tanstackstart-react";
 import env from "@/enviroment/server";
 import { db } from "@/lib/firebase/admin";
 import admin from "firebase-admin";
 import { creatorsRepo } from "./creators-collection";
-// ---------- Types ----------
-export type ApiOk = { success: true; id: string };
-
-export type ApiError = {
-  status: number;
-  code?: string;
-  message?: string;
-  details?: { fieldErrors?: Record<string, string[]>; formErrors?: string[] };
-  requestId?: string;
-  reason?: string; // e.g., "version_mismatch"
-};
-
-// Runtime error class
-export class ApiErrorException extends Error {
-  status: number;
-  code?: string;
-  details?: ApiError["details"];
-  reason?: string;
-  termsVersion?: string;
-  privacyVersion?: string;
-
-  constructor({ message, status = 500, code, details, reason }: ApiError) {
-    super(message);
-    Object.setPrototypeOf(this, new.target.prototype);
-
-    this.name = "ApiErrorException";
-    this.status = status;
-    this.code = code;
-    this.details = details;
-    this.reason = reason;
-  }
-}
-type RequestContext = {
-  requestId: string;
-  started: number;
-  ua: string;
-  country: string;
-  ipHash: string;
-};
-
+import { contactsClient } from "@/lib/brevo/client";
+import { ApiErrorException } from "../server-only/errors/api-error";
+import { RequestContext } from "../server-only/request/request-context";
+ 
+ 
 // ---------- CORS helpers ----------
 export function setCorsHeaders() {
   setResponseHeader("Access-Control-Allow-Origin", env.ALLOW_ORIGIN || "*");
@@ -68,7 +33,7 @@ export function createRequestContext(): RequestContext {
   const requestId = crypto.randomUUID();
   setResponseHeader("X-Request-ID", requestId);
 
-  const started = Date.now();
+  const startedAt = Date.now();
   const ua = (request.headers.get("user-agent") || "").slice(0, 300);
   const country = request.headers.get("x-vercel-ip-country") || "unknown";
 
@@ -76,7 +41,7 @@ export function createRequestContext(): RequestContext {
   const ip = normalizeIp(getRequestHeader("host"));
   const ipHash = hashIP(ip as string);
 
-  return { requestId, started, ua, country, ipHash };
+  return { requestId, startedAt, ua, country, ipHash };
 }
 
 export const ensureNoDuplicatesOrThrow = async (
@@ -185,7 +150,7 @@ export const buildApplicationRecord = (params: {
 
 // ...
 
-const newsletterListId = Number( env.BREVO_NEWSLETTER_LIST_ID );
+const newsletterListId = Number(env.BREVO_NEWSLETTER_LIST_ID);
 
 export async function subscribeToNewsletterIfOptedIn(params: {
   email: string;
@@ -193,8 +158,6 @@ export async function subscribeToNewsletterIfOptedIn(params: {
   data: z.infer<typeof creatorApplicationPayloadsObject>;
   requestId: string;
 }) {
-  const { contactsClient } = await import("@/lib/brevo/client");
-
   const { email, name, data, requestId } = params;
 
   // Adjust depending on how your schema stores opt-in

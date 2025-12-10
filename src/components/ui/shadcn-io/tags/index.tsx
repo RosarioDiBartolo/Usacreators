@@ -26,7 +26,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { cn } from '@/lib/fe-utils';
+import { cn } from '@/lib/client-only/utils';
 
 type TagsContextType = {
   value?: string;

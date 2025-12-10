@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cn } from "@/lib/fe-utils";
+import { cn } from "@/lib/client-only/utils";
 
 export interface AnimatedButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {

@@ -6,7 +6,7 @@ import {
   useTransform,
 } from "motion/react";
 import { useCenterProgress } from "./use-center-progress";
-import { cn } from "@/lib/fe-utils";
+import { cn } from "@/lib/client-only/utils";
 // OPTIONAL: if you use lucide-react already
 import { ChevronLeft, ChevronRight } from "lucide-react";
 

@@ -1,5 +1,5 @@
 'use client';
-import { cn } from '@/lib/fe-utils';
+import { cn } from '@/lib/client-only/utils';
 import { useMotionValue, animate, motion } from 'framer-motion';
 import React from 'react';
 import { useState, useEffect } from 'react';

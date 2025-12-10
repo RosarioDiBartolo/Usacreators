@@ -1,4 +1,4 @@
-import { cn } from "@/lib/fe-utils";
+import { cn } from "@/lib/client-only/utils";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, VariantProps } from "class-variance-authority";
 import { motion } from "motion/react";

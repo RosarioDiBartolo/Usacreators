@@ -1,4 +1,4 @@
-import { cn } from "@/lib/fe-utils";
+import { cn } from "@/lib/client-only/utils";
 
 function Skeleton({
   className,

@@ -22,5 +22,9 @@ export const urlOrHandle = z
     (v) => handleRegex.test(v) || /^https?:\/\/[^\s]+$/i.test(v),
     "Enter @handle or a full URL."
   );
+// helper: same default for "missing" or "invalid"
 
- 
+export const withDefault = <T extends z.ZodTypeAny>(
+  schema: T,
+  defaultValue: z.infer<T>
+) => schema.default(defaultValue).catch(defaultValue);
