@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
  
 import z from "zod";
 import { sentryMiddleware } from "../logging";
-import { creatorApplicationPayloadsObject } from "./schemas/creator-apply-server";
+import { creatorApplicationPayloadsObject } from "./schemas/creators-apply-server";
 import { formSteps } from "./schemas/creators-apply-shared";
 import { setCorsHeaders, createRequestContext, ensureNoDuplicatesOrThrow, buildApplicationRecord, persistApplication, logLegalAcceptance, notifySlackSafely, ApiOk, ApiErrorException, ApiError } from "./steps";
 import { getLegalVersions } from "../legal/utils";

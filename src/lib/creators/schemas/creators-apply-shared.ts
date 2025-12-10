@@ -1,4 +1,4 @@
-import { yesNoEnum, urlOrHandle, emptyToMissing } from "@/lib/schemas-helpers";
+import { yesNoEnum, urlOrHandle, emptyToMissing, mustBeTrue } from "@/lib/schemas-helpers";
 import { z } from "zod";
 import { MAX_PIC_SIZE } from "../constants";
 
@@ -35,6 +35,7 @@ export const applyStandardRules = <
       });
     }
   });
+
 
 // ✅ Instagram post URL (only posts/reels/tv)
 const instagramPostUrlRegex =
@@ -90,10 +91,8 @@ export const formSteps = z.object({
     ).nullable(),
   }),
   legal: z.object({
-    newsletter: z.boolean() ,
-    termsAccepted: z
-      .boolean()
-      .refine((v) => v === true, "You must accept terms to continue."),
+    newsLetter: mustBeTrue ,
+    termsAccepted: mustBeTrue,
   }),
 });
 // --- Types based on the schema ---

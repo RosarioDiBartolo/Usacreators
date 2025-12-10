@@ -23,4 +23,8 @@ export const urlOrHandle = z
     "Enter @handle or a full URL."
   );
 
+
+  export const mustBeTrue = z
+      .boolean()
+      .refine((v) => v === true, "You must accept this to continue.")
  

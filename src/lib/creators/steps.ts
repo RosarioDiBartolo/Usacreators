@@ -8,7 +8,7 @@ import {
   creatorApplicationPayloadsObject,
   creatorApplicationSchema,
   FirestoreCreatorRecord,
-} from "./schemas/creator-apply-server";
+} from "./schemas/creators-apply-server";
 import { normalizeIp } from "../ip";
 import * as Sentry from "@sentry/tanstackstart-react";
 import env from "@/enviroment/server";

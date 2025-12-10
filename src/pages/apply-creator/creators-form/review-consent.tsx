@@ -21,11 +21,15 @@ import { Link } from "@tanstack/react-router";
 
 export function ReviewConsentStep({ form }: { form: FormType }) {
   return (
-    <FieldGroup className="space-y-6">
-      {/* Title + short explanation */}
-      <motion.div variants={fadeInUp} className="space-y-2">
-        <h2 className="text-lg font-semibold">Review & consent</h2>
-        <p className="text-sm text-muted-foreground">
+    <motion.div
+      variants={fadeInUp}
+      initial="hidden"
+      animate="visible"
+      className="space-y-6"
+    >
+      <FieldGroup className="space-y-6">
+        {/* Title + short explanation */}
+         <p className="text-sm text-muted-foreground">
           Before submitting your application, please review our{" "}
           <Link
             to="/legal/terms"
@@ -47,10 +51,8 @@ export function ReviewConsentStep({ form }: { form: FormType }) {
           . We want everything to be clear and transparent about how Miami
           Creators works with you and your data.
         </p>
-      </motion.div>
 
-      {/* Consent checkbox */}
-      <motion.div variants={fadeInUp}>
+        {/* Consent checkbox (required) */}
         <form.Field
           name="legal.termsAccepted"
           validators={{ onChange: formSteps.shape.legal.shape.termsAccepted }}
@@ -102,7 +104,46 @@ export function ReviewConsentStep({ form }: { form: FormType }) {
             );
           }}
         </form.Field>
-      </motion.div>
-    </FieldGroup>
+
+        {/* Newsletter checkbox (optional) */}
+        <form.Field
+          name="legal.newsLetter"
+          // Assuming you have this in your Zod schema under formSteps.shape.legal.shape.newsletterOptIn
+          validators={{
+            onChange: formSteps.shape.legal.shape.newsLetter,
+          }}
+        >
+          {(f) => {
+            const errs = getFieldErrors(f);
+
+            return (
+              <DSField data-invalid={!!errs.length}>
+                <div className="flex items-center gap-3">
+                  <Checkbox
+                    id="newsletterOptIn"
+                    checked={!!f.state.value}
+                    onCheckedChange={(v) => f.handleChange(!!v)}
+                    onBlur={f.handleBlur}
+                    aria-invalid={!!errs.length}
+                  />
+
+                  <FieldLabel
+                    htmlFor="newsletterOptIn"
+                    className="leading-snug text-sm"
+                  >
+                    I accept to receive occasional updates, tips and Miami
+                    campaign opportunities from Miami Creators via email.
+                  </FieldLabel>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  This is mandatory and necessary for the philosoplhy of our serivice.
+                </p>
+                {!!errs.length && <FieldError errors={errs} />}
+              </DSField>
+            );
+          }}
+        </form.Field>
+      </FieldGroup>
+    </motion.div>
   );
 }

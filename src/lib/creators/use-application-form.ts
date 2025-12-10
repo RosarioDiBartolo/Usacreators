@@ -30,6 +30,7 @@ const defaultValues: DefaultValues = {
     profilePictureFile: undefined,
   },
   legal: {
+    newsLetter: false,
     termsAccepted: false,
   },
 };
