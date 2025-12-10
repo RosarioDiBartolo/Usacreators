@@ -3,9 +3,7 @@
 // TanStack Form version (no RHF).
 // ============================================================================
 "use client";
-
-import { motion } from "framer-motion";
-import { fadeInUp } from "./utils";
+ 
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Field as DSField,
@@ -21,12 +19,7 @@ import { Link } from "@tanstack/react-router";
 
 export function ReviewConsentStep({ form }: { form: FormType }) {
   return (
-    <motion.div
-      variants={fadeInUp}
-      initial="hidden"
-      animate="visible"
-      className="space-y-6"
-    >
+    
       <FieldGroup className="space-y-6">
         {/* Title + short explanation */}
          <p className="text-sm text-muted-foreground">
@@ -144,6 +137,6 @@ export function ReviewConsentStep({ form }: { form: FormType }) {
           }}
         </form.Field>
       </FieldGroup>
-    </motion.div>
+    
   );
 }

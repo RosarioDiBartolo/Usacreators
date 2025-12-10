@@ -16,7 +16,7 @@ import { contentVariants } from "./utils";
 
 import useApplicationForm from "@/lib/creators/use-application-form";
 import { Suspense, useState } from "react";
-import { 
+import {
   stepKeysMap,
   steps,
 } from "@/lib/creators/schemas/creators-apply-shared";
@@ -24,10 +24,11 @@ import {
 export default function OnboardingForm() {
   const { form, isPending } = useApplicationForm();
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const currentStep  = steps[currentStepIndex];
+  const currentStep = steps[currentStepIndex];
+
   async function nextStep() {
     const fieldNames = stepKeysMap[currentStep];
-     const validations = await Promise.all(
+    const validations = await Promise.all(
       fieldNames.map((field) =>
         form.validateField(`${currentStep}.${field}`, "change")
       )
@@ -52,9 +53,11 @@ export default function OnboardingForm() {
     if (currentStepIndex > 0) setCurrentStepIndex((s) => s - 1);
   }
   return (
-    <motion.div className=" min-h-svh relative section-padding 
+    <motion.div
+      className=" min-h-svh relative section-padding 
     py-5 flex flex-col text-center 
-    container border max-w-4xl mx-auto sm:my-20  rounded-2xl   ">
+    container border max-w-4xl mx-auto sm:my-20  rounded-2xl   "
+    >
       {currentStepIndex !== steps.length && (
         <StepIndicator
           setCurrentStepIndex={setCurrentStepIndex}
@@ -95,7 +98,6 @@ export default function OnboardingForm() {
         {currentStepIndex !== steps.length && (
           <StepNavigation
             currentStepIndex={currentStepIndex}
-            
             isSubmitting={isPending}
             nextStep={nextStep}
             prevStep={prevStep}

@@ -1,5 +1,6 @@
 import { getRequest, getRequestHeader, setResponseHeader } from "@tanstack/react-start/server";
 import { hashIP, normalizeIp } from "../utils";
+import { enviroment } from "@/enviroment/server";
 
 // src/lib/server-kit/context/request-context.ts
 export type RequestContext = {
@@ -7,7 +8,7 @@ export type RequestContext = {
   country: string;
   ua: string;
   startedAt: number;
-  ipHash?: string;
+  ipHash: string;
   userId?: string;
   env: "development" | "production" | "test";
 };
@@ -26,5 +27,5 @@ export function createRequestContext(): RequestContext {
   const ip = normalizeIp(getRequestHeader("host"));
   const ipHash = hashIP(ip as string);
 
-  return { requestId, startedAt, ua, country, ipHash, env: process.e };
+  return { requestId, startedAt, ua, country, ipHash, env: enviroment };
 }

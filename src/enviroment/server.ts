@@ -24,7 +24,7 @@ if (!parsed.success) {
   console.error("❌ Invalid server env", parsed.error.flatten());
   process.exit(1);
 }
-
+export const enviroment: "production" | "development" | "test"  =  process.env.VERCEL_ENV || process.env.NODE_ENV
 const env = parsed.data;
 
 export default env;

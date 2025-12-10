@@ -1,15 +1,9 @@
-import { getRequestHeader } from "@tanstack/react-start/server";
 // src/server/apply.ts
 import { z } from "zod";
 import crypto from "crypto";
 import { normalizeIG, normalizeTT, asUrl } from "@/lib/utils";
-import { hashIP } from "../server-only/utils";
-import { setResponseHeader, getRequest } from "@tanstack/react-start/server";
-import {
-  creatorApplicationPayloadsObject, 
-  FirestoreCreatorRecord,
-} from "./schemas/creator-apply-server";
-import { normalizeIp } from "../server-only/utils";
+import { setResponseHeader } from "@tanstack/react-start/server";
+ 
 import * as Sentry from "@sentry/tanstackstart-react";
 import env from "@/enviroment/server";
 import { db } from "@/lib/firebase/admin";
@@ -18,6 +12,7 @@ import { creatorsRepo } from "./creators-collection";
 import { contactsClient } from "@/lib/brevo/client";
 import { ApiErrorException } from "../server-only/errors/api-error";
 import { RequestContext } from "../server-only/request/request-context";
+import { creatorApplicationPayloadsObject, FirestoreCreatorRecord } from "./schemas/creators-apply-server";
  
  
 // ---------- CORS helpers ----------
@@ -27,22 +22,7 @@ export function setCorsHeaders() {
   setResponseHeader("Access-Control-Allow-Headers", "Content-Type");
   setResponseHeader("Vary", "Origin");
 }
-
-export function createRequestContext(): RequestContext {
-  const request = getRequest();
-  const requestId = crypto.randomUUID();
-  setResponseHeader("X-Request-ID", requestId);
-
-  const startedAt = Date.now();
-  const ua = (request.headers.get("user-agent") || "").slice(0, 300);
-  const country = request.headers.get("x-vercel-ip-country") || "unknown";
-
-  // NOTE: if you actually want the IP, use x-real-ip / x-forwarded-for.
-  const ip = normalizeIp(getRequestHeader("host"));
-  const ipHash = hashIP(ip as string);
-
-  return { requestId, startedAt, ua, country, ipHash };
-}
+ 
 
 export const ensureNoDuplicatesOrThrow = async (
   data: z.infer<typeof creatorApplicationPayloadsObject>
@@ -152,20 +132,14 @@ export const buildApplicationRecord = (params: {
 
 const newsletterListId = Number(env.BREVO_NEWSLETTER_LIST_ID);
 
-export async function subscribeToNewsletterIfOptedIn(params: {
+export async function subscribeToNewsletter(params: {
   email: string;
   name: string;
   data: z.infer<typeof creatorApplicationPayloadsObject>;
   requestId: string;
 }) {
   const { email, name, data, requestId } = params;
-
-  // Adjust depending on how your schema stores opt-in
-  const optedIn = data.newsLetter;
-
-  if (!optedIn) {
-    return;
-  }
+ 
 
   await contactsClient.createContact({
     email,
@@ -245,3 +219,5 @@ export const notifySlackSafely = async (params: {
     Sentry.captureException(err);
   }
 };
+export { ApiErrorException };
+

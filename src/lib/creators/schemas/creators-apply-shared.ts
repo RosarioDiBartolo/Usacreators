@@ -94,6 +94,7 @@ export const formSteps = z.object({
     newsLetter: mustBeTrue ,
     termsAccepted: mustBeTrue,
   }),
+
 });
 // --- Types based on the schema ---
 type FormStepsShape = typeof formSteps.shape;

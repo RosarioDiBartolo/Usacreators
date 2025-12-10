@@ -1,24 +1,24 @@
 import { createServerFn } from "@tanstack/react-start";
 
 import z from "zod";
-import { sentryMiddleware } from "../server-only/logging";
-import { creatorApplicationPayloadsObject } from "./schemas/creator-apply-server";
+import { sentryMiddleware } from "../server-only/logging";  
 import { formSteps } from "./schemas/creators-apply-shared";
 import {
-  setCorsHeaders,
-  createRequestContext,
+  setCorsHeaders, 
   ensureNoDuplicatesOrThrow,
   buildApplicationRecord,
   persistApplication,
   logLegalAcceptance,
   notifySlackSafely,
-  ApiOk,
   ApiErrorException,
-  ApiError,
+   
 } from "./subscription-steps";
 import { getLegalVersions } from "../legal/utils";
 import * as Sentry from "@sentry/tanstackstart-react";
 import { setResponseStatus } from "@tanstack/react-start/server";
+import { ApiOk } from "../server-only/errors/api-error";
+import { createRequestContext } from "../server-only/request/request-context";
+import { creatorApplicationPayloadsObject } from "./schemas/creators-apply-server";
 
 export const submitCreatorApplication = createServerFn({ method: "POST" })
   .middleware([sentryMiddleware])
@@ -70,7 +70,7 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
       // 7) Final response
       setResponseStatus(201);
       Sentry.logger.debug(
-        `✅ [${ctx.requestId}] Completed in ${Date.now() - ctx.started}ms (id=${applicationId})`
+        `✅ [${ctx.requestId}] Completed in ${Date.now() - ctx.startedAt}ms (id=${applicationId})`
       );
 
       return { success: true, id: applicationId } satisfies ApiOk;
@@ -93,4 +93,4 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
 
 // ---------- Convenient TS exports ----------
 export type SubmitCreatorApplicationInput = z.infer<typeof formSteps>;
-export type SubmitCreatorApplicationResult = ApiOk | ApiError;
+export type SubmitCreatorApplicationResult = ApiOk;

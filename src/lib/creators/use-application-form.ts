@@ -66,13 +66,7 @@ const useApplicationForm = () => {
       
       const result = await submitCreatorApplication({ data: application });
       return result;
-    },
-
-    onSuccess: ( ) => {
-      toast.success("Application submitted successfully!");
-      navigate({ to: "/success" });
-    },
-
+    }, 
     onError: (error: unknown) => { 
       Sentry.captureException(error);
       if (error instanceof Error) {
