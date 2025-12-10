@@ -1,7 +1,7 @@
 // src/scripts/sanatize.ts
 
 import { db, admin } from "../lib/firebase/admin";
-import { firebaseCreatorRecord } from "../lib/creators/schemas/creator-apply-server";
+import { firebaseCreatorRecord } from "../lib/creators/schemas/creators-apply-server";
 import { z } from "zod";
 
 // Infer the sanitized type (optional but nice for type safety)

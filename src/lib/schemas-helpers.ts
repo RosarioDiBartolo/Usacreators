@@ -24,7 +24,8 @@ export const urlOrHandle = z
   );
 // helper: same default for "missing" or "invalid"
 
-export const withDefault = <T extends z.ZodTypeAny>(
-  schema: T,
-  defaultValue: z.infer<T>
-) => schema.default(defaultValue).catch(defaultValue);
+
+  export const mustBeTrue = z
+      .boolean()
+      .refine((v) => v === true, "You must accept this to continue.")
+ 

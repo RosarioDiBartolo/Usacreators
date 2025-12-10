@@ -13,8 +13,7 @@ export const creatorApplicationPayloadsObject = z
 
     ...formSteps.shape.social.shape,
 
-    ...formSteps.shape.personal.shape,
-    newsLetter: formSteps.shape.legal.shape.newsletter
+    ...formSteps.shape.personal.shape
   })
   .omit({
     profilePictureFile: true,

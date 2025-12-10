@@ -52,7 +52,9 @@ export default function OnboardingForm() {
     if (currentStepIndex > 0) setCurrentStepIndex((s) => s - 1);
   }
   return (
-    <motion.div className=" min-h-full  flex flex-col ">
+    <motion.div className=" min-h-svh relative section-padding 
+    py-5 flex flex-col text-center 
+    container border max-w-4xl mx-auto sm:my-20  rounded-2xl   ">
       {currentStepIndex !== steps.length && (
         <StepIndicator
           setCurrentStepIndex={setCurrentStepIndex}

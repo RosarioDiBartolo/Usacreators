@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 import { createTypedCollection, WithId } from "../firebase/utils";
-import { Creator, creatorApplicationSchema, firebaseCreatorRecord } from "./schemas/creator-apply-server";
+import { Creator, creatorApplicationSchema, firebaseCreatorRecord } from "./schemas/creators-apply-server";
 
 export const GetCreatorsFilterSchema = z
   .object({

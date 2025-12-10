@@ -224,7 +224,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
             <div
               className="
       relative w-full max-w-sm 
-      aspect-[4/3]
+      aspect-4/3
       rounded-3xl 
       border border-secondary/60 
       bg-linear-to-br from-background via-muted/40 to-tertiary/20
