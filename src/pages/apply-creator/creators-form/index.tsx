@@ -54,9 +54,11 @@ export default function OnboardingForm() {
   }
   return (
     <motion.div
-      className=" min-h-svh relative section-padding 
-    py-5 flex flex-col text-center 
-    container border max-w-4xl mx-auto sm:my-20  rounded-2xl   "
+      className="
+        min-h-full relative 
+        
+        p-10 flex flex-col text-center 
+        container   max-w-xl mx-auto   rounded-2xl   "
     >
       {currentStepIndex !== steps.length && (
         <StepIndicator
@@ -71,7 +73,7 @@ export default function OnboardingForm() {
           form.handleSubmit();
         }}
         noValidate
-        className=" flex-1   flex flex-col text-start"
+        className=" flex-1    flex flex-col text-start"
       >
         <AnimatePresence mode="wait">
           <motion.div

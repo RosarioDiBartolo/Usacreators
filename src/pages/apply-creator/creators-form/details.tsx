@@ -74,7 +74,7 @@ function Niches({
           );
         })}
       </div>
-      <Tags className=" bg- muted ">
+      <Tags className=" ">
         <TagsTrigger disabled={value.length > 4} className=" font-light px-4 bg-input text-muted-foreground">
           Select one or more niches
         </TagsTrigger>
