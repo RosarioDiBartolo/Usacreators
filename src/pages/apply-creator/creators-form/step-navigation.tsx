@@ -4,7 +4,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Check, Loader2 } from "lucide-react";
-import { steps } from "@/lib/creators/schemas/creators-apply-shared";
+import { Steps  } from "@/lib/creators/schemas/creators-apply-shared";
 import { contentVariants } from "./utils";
 
 export function StepNavigation({
@@ -20,15 +20,18 @@ export function StepNavigation({
   prevStep: () => void;
   handleSubmit: () => void;
 }) {
-  const isLastInteractiveStep = currentStepIndex === steps.length - 1; // before success
-  const submittedStep = currentStepIndex === steps.length; // before success
+  const step = Steps[currentStepIndex]
+
+  const isLastInteractiveStep = currentStepIndex === Steps.length - 2; // before success
+  const confirmStep = step.id === "confirm"; // before success
 
   return (
     <AnimatePresence mode ="wait">
       
-      {!submittedStep && (
+      {!confirmStep && (
         <motion.div
           variants={contentVariants}
+           
           initial="hidden"
           animate="visible"
           exit="exit"

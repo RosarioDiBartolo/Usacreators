@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 
 import z from "zod";
 import { sentryMiddleware } from "../server-only/logging";  
-import { formSteps } from "./schemas/creators-apply-shared";
+import { formSchema } from "./schemas/creators-apply-shared";
 import {
   setCorsHeaders, 
   ensureNoDuplicatesOrThrow,
@@ -92,5 +92,5 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
   });
 
 // ---------- Convenient TS exports ----------
-export type SubmitCreatorApplicationInput = z.infer<typeof formSteps>;
+export type SubmitCreatorApplicationInput = z.infer<typeof formSchema>;
 export type SubmitCreatorApplicationResult = ApiOk;

@@ -26,7 +26,7 @@ import {
   Tags,
 } from "../../../components/ui/shadcn-io/tags";
 import { AvailableNiches } from "@/lib/creators/constants";
-import { formSteps } from "@/lib/creators/schemas/creators-apply-shared";
+import { formSchema } from "@/lib/creators/schemas/creators-apply-shared";
 import FileUpload from "./file-upload";
 
 function Niches({
@@ -106,7 +106,7 @@ function Niches({
 }
 
 export function Details({ form }: { form: FormType }) {
-  const step = formSteps.shape.details.shape
+  const step = formSchema.shape.details.shape
   return (
     <FieldGroup className="space-y-6">
         <form.Field

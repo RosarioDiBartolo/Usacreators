@@ -18,35 +18,44 @@ import useApplicationForm from "@/lib/creators/use-application-form";
 import { Suspense, useState } from "react";
 import {
   stepKeysMap,
-  steps,
+  Steps,
 } from "@/lib/creators/schemas/creators-apply-shared";
+import ConfirmStep from "./confirm";
 
 export default function OnboardingForm() {
-  const { form, isPending } = useApplicationForm();
+  const { form, isPending } = useApplicationForm({
+    onSubmitSucces: () => {
+      setCurrentStepIndex(Steps.length - 1);
+    },
+  });
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const currentStep = steps[currentStepIndex];
-
+  const currentStep = Steps[currentStepIndex];
+  const confirmStep = currentStep.schema === null;
   async function nextStep() {
-    const fieldNames = stepKeysMap[currentStep];
-    const validations = await Promise.all(
-      fieldNames.map((field) =>
-        form.validateField(`${currentStep}.${field}`, "change")
-      )
-    );
-
-    const stepHasErrors = validations.some(
-      (issues) => issues && issues.length > 0
-    );
-
-    if (stepHasErrors) {
-      console.error(
-        "Error when trying to jump to next\n Step:",
-        currentStepIndex,
-        "errors:",
-        validations
+    if (currentStep.schema) {
+      const fieldNames = stepKeysMap[currentStep.id];
+      const validations = await Promise.all(
+        fieldNames.map((field) =>
+          form.validateField(`${currentStep.id}.${field}`, "change")
+        )
       );
+
+      const stepHasErrors = validations.some(
+        (issues) => issues && issues.length > 0
+      );
+
+      if (stepHasErrors) {
+        console.error(
+          "Error when trying to jump to next\n Step:",
+          currentStepIndex,
+          "errors:",
+          validations
+        );
+      } else {
+        setCurrentStepIndex((s) => s + 1);
+      }
     } else {
-      setCurrentStepIndex((s) => s + 1);
+      throw new Error("Cant't go a step forward");
     }
   }
   function prevStep() {
@@ -56,24 +65,19 @@ export default function OnboardingForm() {
     <motion.div
       className="
         min-h-full relative 
-        
-        p-10 flex flex-col text-center 
+
+        p-10 py-30 flex flex-col gap-10 text-center 
         container   max-w-xl mx-auto   rounded-2xl   "
     >
-      {currentStepIndex !== steps.length && (
-        <StepIndicator
-          setCurrentStepIndex={setCurrentStepIndex}
-          currentStepIndex={currentStepIndex}
-        />
-      )}
+      <StepIndicator currentStepIndex={currentStepIndex} />
 
-      <form
+      <motion.form
         onSubmit={(e) => {
           e.preventDefault();
           form.handleSubmit();
         }}
         noValidate
-        className=" flex-1    flex flex-col text-start"
+        className=" flex-1 relative flex flex-col text-start"
       >
         <AnimatePresence mode="wait">
           <motion.div
@@ -88,25 +92,19 @@ export default function OnboardingForm() {
             {currentStepIndex === 1 && <SocialInfo form={form} />}
             {currentStepIndex === 2 && <Details form={form} />}
             {currentStepIndex === 3 && (
-              <Suspense
-                fallback={<p>Loading most recent legal related data...</p>}
-              >
-                <ReviewConsentStep form={form} />
-              </Suspense>
-            )}
+              <ReviewConsentStep form={form} />
+            )}   {confirmStep && <ConfirmStep form={form}  />}
           </motion.div>
         </AnimatePresence>
+      </motion.form>
 
-        {currentStepIndex !== steps.length && (
-          <StepNavigation
-            currentStepIndex={currentStepIndex}
-            isSubmitting={isPending}
-            nextStep={nextStep}
-            prevStep={prevStep}
-            handleSubmit={form.handleSubmit}
-          />
-        )}
-      </form>
+      <StepNavigation
+        currentStepIndex={currentStepIndex}
+        isSubmitting={isPending}
+        nextStep={nextStep}
+        prevStep={prevStep}
+        handleSubmit={form.handleSubmit}
+      />
     </motion.div>
   );
 }

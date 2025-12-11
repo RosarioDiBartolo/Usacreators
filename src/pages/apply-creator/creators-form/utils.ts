@@ -10,7 +10,7 @@ import { type Variants } from "framer-motion";
 export const contentVariants: Variants = {
 hidden: { opacity: 0, x: 20 },
 visible: { opacity: 1, x: 0, transition: { duration: 0.2 } },
-exit: { opacity: 0, x: -8, transition: { duration: 0.15 } },
+exit: { opacity: 0, x: -8, transition: { duration: 0.2 } },
 };
 
  

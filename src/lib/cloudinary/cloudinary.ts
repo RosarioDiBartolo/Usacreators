@@ -1,4 +1,5 @@
-import { env } from "@/enviroment/enviroment";
+ 
+import env from "@/enviroment/server";
 import { v2 as cloudinary } from "cloudinary";
  
 // Disable Vercel's default body parsing

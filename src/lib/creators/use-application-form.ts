@@ -1,16 +1,15 @@
-import { useForm } from "@tanstack/react-form";
-import { useNavigate } from "@tanstack/react-router";
+import { useForm } from "@tanstack/react-form"; 
 import { toast } from "sonner";
 import { z } from "zod";
 import { 
   submitCreatorApplication,
 } from "@/lib/creators/subscribe-creator";
 import { useMutation } from "@tanstack/react-query";
-import { formSteps } from "./schemas/creators-apply-shared";
+import { formSchema } from "./schemas/creators-apply-shared";
 import { uploadProfilePicture } from "../cloudinary/upload";
 import * as Sentry from "@sentry/tanstackstart-react";
 
-type DefaultValues = z.input<typeof formSteps>;
+type DefaultValues = z.input<typeof formSchema>;
 
 const defaultValues: DefaultValues = {
   personal: {
@@ -35,8 +34,8 @@ const defaultValues: DefaultValues = {
   },
 };
 
-const useApplicationForm = () => {
-  const navigate = useNavigate();
+const useApplicationForm = ({onSubmitSucces}:{onSubmitSucces: ()=>void }) => {
+ 
 
   const { mutateAsync: Submit, isPending } = useMutation({
     mutationFn: async ({ value }: { value: DefaultValues }) => {
@@ -67,6 +66,9 @@ const useApplicationForm = () => {
       const result = await submitCreatorApplication({ data: application });
       return result;
     }, 
+    onSuccess: ()=>{
+      onSubmitSucces()
+    },
     onError: (error: unknown) => { 
       Sentry.captureException(error);
       if (error instanceof Error) {
@@ -78,7 +80,7 @@ const useApplicationForm = () => {
   const form = useForm({
     defaultValues,
     validators: {
-      onSubmit: formSteps,
+      onSubmit: formSchema,
     },
     onSubmit: Submit,
   });

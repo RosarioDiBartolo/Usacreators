@@ -29,3 +29,7 @@ export const urlOrHandle = z
       .boolean()
       .refine((v) => v === true, "You must accept this to continue.")
  
+      export const withDefault = <T extends z.ZodTypeAny>(
+  schema: T,
+  defaultValue: z.infer<T>
+) => schema.default(defaultValue).catch(defaultValue);

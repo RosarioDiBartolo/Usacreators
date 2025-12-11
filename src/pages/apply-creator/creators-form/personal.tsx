@@ -14,12 +14,12 @@ import {
 import { Input } from "@/components/ui/input";  
 import { FormType } from "../../../lib/creators/use-application-form";
 import { getFieldErrors } from "@/lib/field";
-import { formSteps } from "@/lib/creators/schemas/creators-apply-shared";
+import { formSchema } from "@/lib/creators/schemas/creators-apply-shared";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
   
 export function PersonalInfo({ form }: { form: FormType }) {
-  const step= formSteps.shape.personal.shape
+  const step= formSchema.shape.personal.shape
   return (
     <FieldGroup>
       {/* name */}

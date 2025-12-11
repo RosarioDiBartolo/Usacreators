@@ -14,10 +14,10 @@
 import { Input } from "@/components/ui/input"; 
  import { FormType } from "../../../lib/creators/use-application-form";
 import { getFieldErrors } from "@/lib/field";
-import { formSteps } from "@/lib/creators/schemas/creators-apply-shared";
+import { formSchema } from "@/lib/creators/schemas/creators-apply-shared";
 
 export function SocialInfo({ form }: { form: FormType }) {
-  const step = formSteps.shape.social.shape
+  const step = formSchema.shape.social.shape
   return (
     <FieldGroup className="space-y-6">
       {/* Miami yes/no */}
@@ -35,6 +35,7 @@ export function SocialInfo({ form }: { form: FormType }) {
                           id="instagram-post-url"
                           placeholder="full URL"
                           value={f.state.value ?? ""}
+                          className=" rounded-r-none"
                           onChange={(e) => f.handleChange(e.target.value)}
                           onBlur={f.handleBlur}
                           aria-invalid={!!errs.length}
@@ -63,6 +64,7 @@ export function SocialInfo({ form }: { form: FormType }) {
                   id="portfolio"
                   placeholder="full URL"
                   value={f.state.value ?? ""}
+                  className="rounded-l-none"
                   onChange={(e) => f.handleChange(e.target.value)}
                   onBlur={f.handleBlur}
                   aria-invalid={!!errs.length}

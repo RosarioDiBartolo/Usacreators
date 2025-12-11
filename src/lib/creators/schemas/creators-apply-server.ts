@@ -1,19 +1,19 @@
 // src/lib/shared/creator-apply-server.ts
 import { z } from "zod";
-import { applyStandardRules, formSteps } from "./creators-apply-shared";
+import { applyStandardRules, formSchema } from "./creators-apply-shared";
 import { TimestampLike } from "@/lib/firebase/utils.js";
 import { withDefault } from "@/lib/schemas-helpers";
-
+ 
 // ---- Persistence schema (what we actually store) ----
 // Omit on the object, extend, then re-apply the same rule.
 
 export const creatorApplicationPayloadsObject = z
   .object({
-    ...formSteps.shape.details.shape,
+    ...formSchema.shape.details.shape,
 
-    ...formSteps.shape.social.shape,
+    ...formSchema.shape.social.shape,
 
-    ...formSteps.shape.personal.shape
+    ...formSchema.shape.personal.shape
   })
   .omit({
     profilePictureFile: true,
