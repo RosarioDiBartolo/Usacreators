@@ -5,8 +5,8 @@ import {
   mustBeTrue,
 } from "@/lib/schemas-helpers";
 import { z } from "zod";
-import { MAX_PIC_SIZE } from "../constants";
-import { Link } from "@tanstack/react-router";
+import { MAX_PIC_SIZE } from "../constants"; 
+import legal from "./legal-sub";
 
 export const MAX_BIO = 1000;
 // 🔹 Cross-field rules (run after preprocess)
@@ -106,31 +106,7 @@ const formSteps = {
 
   legal: {
     title: "Legals",
-    subTitle: (
-    
-               <p className="text-sm text-muted-foreground">
-                Before submitting your application, please review our{" "}
-                <Link
-                  to="/legal/terms"
-                  className="font-medium underline underline-offset-4"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Terms &amp; Conditions
-                </Link>{" "}
-                and{" "}
-                <Link
-                  to="/legal/privacy"
-                  className="font-medium underline underline-offset-4"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Privacy Policy
-                </Link>
-                . We want everything to be clear and transparent about how Miami
-                Creators works with you and your data.
-              </p>
-    ),
+    subTitle: legal ,
     schema: z.object({
       newsLetter: mustBeTrue,
       termsAccepted: mustBeTrue,

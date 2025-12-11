@@ -3,8 +3,7 @@ import React from "react";
 import { MailCheck } from "lucide-react";
 
 function ConfirmStep({ form }: { form: FormType }) {
-  // avoid unused param warning if you’re not using `form` (optional)
-  void form;
+ 
 
   return (
     <div className="flex min-h-[320px] w-full items-center justify-center px-4">
@@ -37,9 +36,15 @@ function ConfirmStep({ form }: { form: FormType }) {
             </h2>
             <p className="text-sm leading-relaxed text-emerald-50/80">
               We’ve sent you an email to confirm your subscription to our
-              service and our newsletter. Once you confirm, you’ll start
+              service and our newsletter.
+              Open <a
+  href={`mailto:${form.state.values.personal.email ?? ""}`}
+  className="font-semibold text-amber-100 underline underline-offset-2 hover:text-amber-200 transition"
+>
+  {form.state.values.personal.email || "your email"}
+</a> Once you confirm, you’ll start
               receiving important deals, updates, and opportunities from our
-              brand.
+              brands.
             </p>
           </div>
 
