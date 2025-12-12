@@ -3,7 +3,7 @@ import { z } from "zod";
 import crypto from "crypto";
 import { normalizeIG, normalizeTT, asUrl } from "@/lib/utils";
 import { setResponseHeader } from "@tanstack/react-start/server";
- 
+
 import * as Sentry from "@sentry/tanstackstart-react";
 import env from "@/enviroment/server";
 import { db } from "@/lib/firebase/admin";
@@ -12,9 +12,11 @@ import { creatorsRepo } from "./creators-collection";
 import { contactsClient } from "@/lib/brevo/client";
 import { ApiErrorException } from "../server-only/errors/api-error";
 import { RequestContext } from "../server-only/request/request-context";
-import { creatorApplicationPayloadsObject, FirestoreCreatorRecord } from "./schemas/creators-apply-server";
- 
- 
+import {
+  creatorApplicationPayloadsObject,
+  FirestoreCreatorRecord,
+} from "./schemas/creators-apply-server";
+
 // ---------- CORS helpers ----------
 export function setCorsHeaders() {
   setResponseHeader("Access-Control-Allow-Origin", env.ALLOW_ORIGIN || "*");
@@ -22,8 +24,8 @@ export function setCorsHeaders() {
   setResponseHeader("Access-Control-Allow-Headers", "Content-Type");
   setResponseHeader("Vary", "Origin");
 }
- 
 
+const TemporaryListId = Number(env.BREVO_NEWSLETTER_LIST_ID);
 export const ensureNoDuplicatesOrThrow = async (
   data: z.infer<typeof creatorApplicationPayloadsObject>
 ) => {
@@ -43,7 +45,16 @@ export const ensureNoDuplicatesOrThrow = async (
       message: "This email already applied.",
     });
   }
+  const contact = (await contactsClient.getContactInfo(emailLower)).body;
 
+  if (contact.listIds.includes(TemporaryListId)) {
+    throw new ApiErrorException({
+      status: 409,
+      code: "SUBSCRIPTION_REATTEMPT",
+      message:
+        "This email has alredy tried to subscribe to our service, and a confirmation email was sent alredy.",
+    });
+  }
   // instagram
   const ig = normalizeIG(data.instagram);
   if (ig) {
@@ -130,8 +141,6 @@ export const buildApplicationRecord = (params: {
 
 // ...
 
-const newsletterListId = Number(env.BREVO_NEWSLETTER_LIST_ID);
-
 export async function subscribeToNewsletter(params: {
   email: string;
   name: string;
@@ -139,11 +148,10 @@ export async function subscribeToNewsletter(params: {
   requestId: string;
 }) {
   const { email, name, data, requestId } = params;
- 
 
   await contactsClient.createContact({
     email,
-    listIds: [newsletterListId],
+    listIds: [TemporaryListId],
     updateEnabled: true, // if contact already exists, just update it
     attributes: {
       FIRSTNAME: data.name,
@@ -154,7 +162,7 @@ export async function subscribeToNewsletter(params: {
   });
 
   Sentry.logger.info(
-    `[${requestId}] Added contact to Brevo list ${newsletterListId}`
+    `[${requestId}] Added contact to Brevo list ${TemporaryListId}`
   );
 }
 
@@ -220,4 +228,3 @@ export const notifySlackSafely = async (params: {
   }
 };
 export { ApiErrorException };
-

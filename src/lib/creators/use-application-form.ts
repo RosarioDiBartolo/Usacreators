@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { 
   submitCreatorApplication,
-} from "@/lib/creators/subscribe-creator";
+} from "@/lib/creators/request-subscription";
 import { useMutation } from "@tanstack/react-query";
 import { formSchema } from "./schemas/creators-apply-shared";
 import { uploadProfilePicture } from "../cloudinary/upload";
