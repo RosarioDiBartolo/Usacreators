@@ -11,6 +11,11 @@ import Inspect from "vite-plugin-inspect";
 const isAnalyze = process.env.ANALYZE === "1";
 
 export default defineConfig({
+  server: {
+    hmr: {
+      overlay: true
+    }
+  },
    build: {
     sourcemap: "hidden", // Source map generation must be turned on ("hidden", true, etc.)
   },
