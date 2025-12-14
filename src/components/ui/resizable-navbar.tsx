@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/client-only/utils";
- import {
+import {
   motion,
   AnimatePresence,
   useScroll,
@@ -87,20 +87,18 @@ export const Navbar = ({
     <div
       ref={ref}
       className={cn(
-        "fixed inset-x-0 top-0 z-40 w-full pointer-events-none",
+        "fixed  pointer-events-auto  top-0 z-40 w-full  *:",
         className
       )}
     >
-      <div className="pointer-events-auto mx-auto w-full max-w-7xl px-3 md:px-4 md:pt-4">
-        {React.Children.map(children, (child) =>
-          React.isValidElement(child)
-            ? React.cloneElement(
-                child as React.ReactElement<{ visible?: boolean }>,
-                { visible }
-              )
-            : child
-        )}
-      </div>
+      {React.Children.map(children, (child) =>
+        React.isValidElement(child)
+          ? React.cloneElement(
+              child as React.ReactElement<{ visible?: boolean }>,
+              { visible }
+            )
+          : child
+      )}
     </div>
   );
 };
@@ -109,26 +107,15 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
   return (
     <motion.div
       layout
-      style={{
-        justifyContent: visible ? "space-between" : "center",
-      }}
-      animate={{
-        backdropFilter: visible ? "blur(14px)" : "blur(0px)",
-        boxShadow: visible
-          ? "0 8px 24px rgba(0,0,0,0.08)"
-          : "0 0 0 rgba(0,0,0,0)",
-        opacity: visible ? 1 : 0.98,
-      }}
+     
       transition={{ duration: 0.35, ease: "easeInOut" }}
       className={cn(
-        "hidden md:flex z-[60] mx-auto w-full flex-row items-center gap-10 rounded-full px-6 py-3 transition-colors",
-        visible
-          ? "bg-background/70 text-foreground border border-border/60"
-          : "bg-transparent text-muted-foreground",
+        "hidden max-w-7xl bg-background/70 text-black border border-border/60 rounded-full mt-3 justify-between md:flex z-60 mx-auto w-full flex-row items-center gap-10  -full px-6 py-3 transition-colors",
+     
         className
       )}
     >
-      {children}          
+      {children}
     </motion.div>
   );
 };
@@ -150,7 +137,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
           href={item.link}
           onMouseEnter={() => setHovered(idx)}
           onClick={onItemClick}
-          className="relative px-3 py-2 text-sm font-semibold rounded-full text-muted-foreground transition-colors duration-200 hover:text-foreground"
+          className="relative px-3 py-2 text-sm font-semibold rounded-full   transition-colors duration-200 hover:text-foreground"
         >
           <AnimatePresence>
             {hovered === idx && (
@@ -329,8 +316,7 @@ export const NavbarButton = ({
       "bg-primary text-primary-foreground shadow-[0_0_24px_rgba(34,42,53,0.06),_0_1px_1px_rgba(0,0,0,0.05),_0_0_0_1px_rgba(34,42,53,0.04),_0_0_4px_rgba(34,42,53,0.08),_0_16px_68px_rgba(47,48,55,0.05),_0_1px_0_rgba(255,255,255,0.1)_inset] hover:bg-primary/90",
     secondary:
       "bg-secondary text-secondary-foreground shadow-none hover:bg-accent hover:text-accent-foreground",
-    dark:
-      "bg-black text-white shadow-[0_0_24px_rgba(34,42,53,0.06),_0_1px_1px_rgba(0,0,0,0.05),_0_0_0_1px_rgba(34,42,53,0.04),_0_0_4px_rgba(34,42,53,0.08),_0_16px_68px_rgba(47,48,55,0.05),_0_1px_0_rgba(255,255,255,0.1)_inset] hover:bg-black/90",
+    dark: "bg-black text-white shadow-[0_0_24px_rgba(34,42,53,0.06),_0_1px_1px_rgba(0,0,0,0.05),_0_0_0_1px_rgba(34,42,53,0.04),_0_0_4px_rgba(34,42,53,0.08),_0_16px_68px_rgba(47,48,55,0.05),_0_1px_0_rgba(255,255,255,0.1)_inset] hover:bg-black/90",
     gradient:
       "bg-gradient-to-t from-primary to-tertiary text-white shadow-[0px_2px_0px_0px_rgba(255,255,255,0.3)_inset] hover:brightness-[1.05]",
   };

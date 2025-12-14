@@ -1,4 +1,4 @@
- import { subscribeToNewsletterFunction } from "@/lib/brevo/server-fns";
+ 
  import { Link } from "@tanstack/react-router";
 import { lazy } from "react";
 
@@ -55,22 +55,7 @@ export default function Hero() {
         {/* CTA Buttons with Animation */}
         {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10 animate-fade-in-up animation-delay-800">
-            <button
-              onClick={ 
-                ()=>subscribeToNewsletterFunction({
-                  data: {
-                    email: "gfeef@gmail.com",
-                    name: "efef",
-                    niches: ["2"],
-                    phone: "",
-                    locationYesNo: "yes",
-                    docId: "test",
-                  },
-                })
-              }
-            >
-              Break the world
-            </button>
+           
             {
               <Link to={"/creators/apply"}>
                 <button className="px-8 w-full sm:w-fit py-4 bg-gradient-to-r from-primary to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-black rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/25">
