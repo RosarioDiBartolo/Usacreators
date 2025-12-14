@@ -16,6 +16,7 @@ const defaultValues: DefaultValues = {
     name: "",
     email: "",
     locationYesNo: "yes",
+    phone: ""
   },
   social: {
     portfolio: null,
@@ -36,8 +37,7 @@ const defaultValues: DefaultValues = {
 
 const useApplicationForm = ({onSubmitSucces}:{onSubmitSucces: ()=>void }) => {
  
-
-  const { mutateAsync: Submit, isPending } = useMutation({
+   const { mutateAsync: Submit, isPending } = useMutation({
     mutationFn: async ({ value }: { value: DefaultValues }) => {
       const { profilePictureFile, ...details } = value.details;
 
@@ -69,9 +69,9 @@ const useApplicationForm = ({onSubmitSucces}:{onSubmitSucces: ()=>void }) => {
     onSuccess: ()=>{
       onSubmitSucces()
     },
-    onError: (error: unknown) => { 
-      Sentry.captureException(error);
-      if (error instanceof Error) {
+    onError: (error ) => { 
+      Sentry.logger.error('Submit mutation failed', error);
+       if (error instanceof Error) {
         toast.error(error.message);
       }
     },

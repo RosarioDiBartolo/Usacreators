@@ -8,12 +8,11 @@ import appCss from "../index.css?url";
 import { getPlatformMeta } from "@/lib/meta";
 import { Toaster } from "sonner";
 import { type QueryClient } from "@tanstack/react-query";
-  
+
 const fallbackTitle = "1000+ Creators from Miami";
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   {
-    server: {
-     },
+    server: {},
     // Static defaults
     head: ({ loaderData }) => {
       if (!loaderData) {
@@ -47,7 +46,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
     staleTime: Infinity,
     gcTime: Infinity,
-  
+
     component: RootComponent,
   }
 );

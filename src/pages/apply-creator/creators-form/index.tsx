@@ -15,7 +15,7 @@ import { StepNavigation } from "./step-navigation";
 import { contentVariants } from "./utils";
 
 import useApplicationForm from "@/lib/creators/use-application-form";
-import { Suspense, useState } from "react";
+import {   useState } from "react";
 import {
   stepKeysMap,
   Steps,

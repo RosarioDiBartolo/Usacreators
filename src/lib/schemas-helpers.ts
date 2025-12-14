@@ -1,8 +1,17 @@
 import { z } from "zod";
+import   { isValidPhoneNumber, parsePhoneNumberWithError } from 'libphonenumber-js';
 
 // --- enums & shared
 export const yesNoEnum = z.enum(["yes", "no"]);
 export type YesNo = z.infer<typeof yesNoEnum>;
+
+
+export function phone(schema: z.ZodString) {
+    return schema
+        .refine(isValidPhoneNumber, "Please specify a valid phone number (include the international prefix).")
+        .transform((value) => parsePhoneNumberWithError(value).number.toString());
+}
+
 
 // --- helpers
 // Only use this on string-based schemas.

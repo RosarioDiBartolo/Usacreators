@@ -40,8 +40,8 @@ export const creatorApplicationObject = creatorApplicationPayloadsObject.extend(
 export const creatorApplicationSchema = applyStandardRules(
   creatorApplicationObject
 );
-
-// ---- Retriving schema ----
+ 
+ // ---- Retriving schema ----
 // Some fields might be missing for outdated versions of the forms and the schemas... use this for document retriving and sanatization
 export const firebaseCreatorRecord = creatorApplicationObject
 

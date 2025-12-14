@@ -16,6 +16,11 @@ import {
   creatorApplicationPayloadsObject,
   FirestoreCreatorRecord,
 } from "./schemas/creators-apply-server";
+import {
+  isContactInList,
+  subscribeToNewsletter,
+  TemporaryListId,
+} from "../brevo/utils";
 
 // ---------- CORS helpers ----------
 export function setCorsHeaders() {
@@ -25,7 +30,6 @@ export function setCorsHeaders() {
   setResponseHeader("Vary", "Origin");
 }
 
-const TemporaryListId = Number(env.BREVO_NEWSLETTER_LIST_ID);
 export const ensureNoDuplicatesOrThrow = async (
   data: z.infer<typeof creatorApplicationPayloadsObject>
 ) => {
@@ -45,9 +49,8 @@ export const ensureNoDuplicatesOrThrow = async (
       message: "This email already applied.",
     });
   }
-  const contact = (await contactsClient.getContactInfo(emailLower)).body;
-
-  if (contact.listIds.includes(TemporaryListId)) {
+  const inTemporary = await isContactInList(emailLower, TemporaryListId);
+  if (inTemporary) {
     throw new ApiErrorException({
       status: 409,
       code: "SUBSCRIPTION_REATTEMPT",
@@ -139,37 +142,20 @@ export const buildApplicationRecord = (params: {
   return application;
 };
 
-// ...
-
-export async function subscribeToNewsletter(params: {
-  email: string;
-  name: string;
-  data: z.infer<typeof creatorApplicationPayloadsObject>;
-  requestId: string;
-}) {
-  const { email, name, data, requestId } = params;
-
-  await contactsClient.createContact({
-    email,
-    listIds: [TemporaryListId],
-    updateEnabled: true, // if contact already exists, just update it
-    attributes: {
-      FIRSTNAME: data.name,
-      INSTAGRAM_HANDLE: data.instagram ?? undefined,
-      TIKTOK_HANDLE: data.tiktok ?? undefined,
-      // any other attributes you configured in Brevo
-    },
-  });
-
-  Sentry.logger.info(
-    `[${requestId}] Added contact to Brevo list ${TemporaryListId}`
-  );
-}
-
 export const persistApplication = async (
   application: FirestoreCreatorRecord
 ): Promise<string> => {
   const docRef = await creatorsRepo.add(application);
+
+  const { email, phone, name, niches, locationYesNo } = application;
+  await subscribeToNewsletter({
+    email,
+    phone,
+    name,
+    niches,
+    locationYesNo,
+    docId: docRef.id,
+  });
   return docRef.id;
 };
 

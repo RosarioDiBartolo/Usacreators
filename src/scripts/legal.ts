@@ -4,8 +4,8 @@ import * as path from "node:path";
 
 import * as crypto from "node:crypto";
 import { Timestamp } from "firebase-admin/firestore";
-import { db } from "@/lib/firebase/admin";
-import { env } from "@/enviroment/client";
+import { db } from "@/lib/firebase/admin"; 
+import env from "@/enviroment/client";
 
 type Version = string; // "YYYY-MM-DD"
 

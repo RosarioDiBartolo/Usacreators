@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router"
 
-const legal = <p className="text-sm text-muted-foreground">
+const legal = <div className="text-sm text-muted-foreground">
                 Before submitting your application, please review our{" "}
                 <Link
                   to="/legal/terms"
@@ -21,7 +21,7 @@ const legal = <p className="text-sm text-muted-foreground">
                 </Link>
                 . We want everything to be clear and transparent about how Miami
                 Creators works with you and your data.
-              </p>
+              </div>
 
 
 export default legal

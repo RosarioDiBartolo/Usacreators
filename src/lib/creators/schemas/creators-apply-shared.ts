@@ -3,6 +3,7 @@ import {
   urlOrHandle,
   emptyToMissing,
   mustBeTrue,
+  phone,
 } from "@/lib/schemas-helpers";
 import { z } from "zod";
 import { MAX_PIC_SIZE } from "../constants"; 
@@ -58,12 +59,13 @@ const profilePictureClient = z
     (f) => !f || f.size <= MAX_PIC_SIZE * 1024 * 1024,
     `Max size is ${MAX_PIC_SIZE} MB.`
   );
-const formSteps = {
+export const formSteps = {
   personal: {
     title: "Let's start simple",
     subTitle: "We need your basic info so we know who we're speaking with.",
     schema: z.object({
       name: z.string().trim().min(2, "Name must be at least 2 characters."),
+      phone: phone(z.string()),
       email: z
         .string()
         .email("Enter a valid email address.")
@@ -180,3 +182,5 @@ export const stepKeysMap: StepKeysMap = Object.freeze(
     })
   ) as StepKeysMap
 );
+
+

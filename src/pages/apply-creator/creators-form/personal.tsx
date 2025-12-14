@@ -17,7 +17,7 @@ import { getFieldErrors } from "@/lib/field";
 import { formSchema } from "@/lib/creators/schemas/creators-apply-shared";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-  
+ 
 export function PersonalInfo({ form }: { form: FormType }) {
   const step= formSchema.shape.personal.shape
   return (
@@ -50,7 +50,34 @@ export function PersonalInfo({ form }: { form: FormType }) {
           );
         }}
       </form.Field>
+<form.Field
+        name="personal.phone"
+        validators={{ onChange: step.phone }}
+      >
+        {(f) => {
+          
 
+          const errs = getFieldErrors(f)
+
+          return (
+            <DSField data-invalid={!!errs.length}>
+              <FieldLabel htmlFor="phone">Phone Number</FieldLabel>
+              <Input
+                id="phone"
+                type="text"
+                value={f.state.value ?? ""}
+                onChange={(value) => f.handleChange(value.target.value)}
+                onBlur={f.handleBlur}
+                aria-invalid={!!errs.length}
+               
+              />
+               {!!errs?.length && (
+                <FieldError errors={ errs } />
+              )}
+            </DSField>
+          );
+        }}
+      </form.Field>
       {/* email */}
       <form.Field
         name="personal.email"

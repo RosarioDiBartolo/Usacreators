@@ -1,17 +1,15 @@
 import { createServerFn } from "@tanstack/react-start";
 
 import z from "zod";
-import { sentryMiddleware } from "../server-only/logging";  
 import { formSchema } from "./schemas/creators-apply-shared";
 import {
-  setCorsHeaders, 
+  setCorsHeaders,
   ensureNoDuplicatesOrThrow,
   buildApplicationRecord,
   persistApplication,
   logLegalAcceptance,
   notifySlackSafely,
   ApiErrorException,
-   
 } from "./subscription-steps";
 import { getLegalVersions } from "../legal/utils";
 import * as Sentry from "@sentry/tanstackstart-react";
@@ -20,8 +18,8 @@ import { ApiOk } from "../server-only/errors/api-error";
 import { createRequestContext } from "../server-only/request/request-context";
 import { creatorApplicationPayloadsObject } from "./schemas/creators-apply-server";
 
+ 
 export const submitCreatorApplication = createServerFn({ method: "POST" })
-  .middleware([sentryMiddleware])
   .inputValidator(creatorApplicationPayloadsObject)
   .handler(async ({ data }) => {
     setCorsHeaders();
