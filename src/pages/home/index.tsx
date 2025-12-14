@@ -4,7 +4,7 @@ import Videos from "@/pages/home/videos";
 import FAQ from "@/pages/home/faq";
 import Hero from "@/pages/home/hero";
 import Features from "@/pages/home/features";
-import Header   "@/pages/home/header";
+import Header from "@/pages/home/header";
 
 function Home() {
   return (
