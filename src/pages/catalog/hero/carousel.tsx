@@ -1,5 +1,5 @@
 import InfiniteSlider from "@/components/ui/infinite-slider";
-import { creatorsQueryOptions } from "@/lib/creators/get-creators";
+import { creatorsQueryOptions } from "@/lib/creators/utils";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Quote } from "lucide-react";
 import { motion, Variants } from "motion/react";

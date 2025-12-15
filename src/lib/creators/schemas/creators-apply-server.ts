@@ -61,6 +61,7 @@ export const firebaseCreatorRecord = creatorApplicationObject
       privacyVersion: z.string(),
       acceptedAt: TimestampLike,
     }),
+    phone: z.string().optional(),
     newsLetter: z.boolean().optional().default(true),
     ipHash: z.string(),
     ua: z.string().max(300).optional(),

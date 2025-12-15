@@ -142,17 +142,17 @@
   }
   h1 {
     @apply text-5xl md:text-7xl font-black leading-tight tracking-tight 
-         mt-6 mb-10;
+         mt-6 ;
   }
 
   h2 {
-    @apply max-w-4xl mx-auto text-4xl md:text-6xl font-light 
+    @apply max-w-4xl   text-4xl md:text-6xl font-light 
          leading-tight tracking-tight 
-         mt-3 mb-6;
+         mt-3  ;
   }
 
   h3 {
-    @apply mt-2 mb-4 text-3xl md:text-4xl font-semibold leading-snug;
+    @apply mt-2   text-3xl md:text-4xl font-semibold leading-snug;
   }
   h4 {
     @apply md:text-xl mt-5 ;

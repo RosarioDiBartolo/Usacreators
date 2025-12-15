@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { creatorsQueryOptions } from "@/lib/creators/get-creators";
+import { creatorsQueryOptions } from "@/lib/creators/utils";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import missingPic from "@/assets/images/creator-missing.jpg";
 import { Button } from "@/components/ui/button";

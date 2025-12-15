@@ -6,6 +6,16 @@ import z from "zod";
  
  
 
+export const getCreator  = createServerFn({ method: "GET" })
+  .inputValidator(z.object({id: z.string()}))
+  .handler(async ({ data }) => {
+    const { creatorsRepo } = await import("@/lib/creators/creators-collection");
+  
+    const creator  =  (await creatorsRepo.getById(data.id));
+ 
+    return creator
+  });
+
 export const getCreators = createServerFn({ method: "GET" })
   .inputValidator(GetCreatorsFilterSchema)
   .handler(async ({ data }) => {

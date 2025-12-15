@@ -9,21 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SuccessRouteImport } from './routes/success'
 import { Route as RrollRouteImport } from './routes/rroll'
 import { Route as CatalogRouteImport } from './routes/catalog'
 import { Route as _notFoundRouteImport } from './routes/__not-found'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SuccessUidRouteImport } from './routes/success.$uid'
 import { Route as LegalTermsRouteImport } from './routes/legal/terms'
 import { Route as LegalPrivacyRouteImport } from './routes/legal/privacy'
 import { Route as LegalCookiesRouteImport } from './routes/legal/cookies'
 import { Route as CreatorsApplyRouteImport } from './routes/creators/apply'
 
-const SuccessRoute = SuccessRouteImport.update({
-  id: '/success',
-  path: '/success',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const RrollRoute = RrollRouteImport.update({
   id: '/rroll',
   path: '/rroll',
@@ -41,6 +36,11 @@ const _notFoundRoute = _notFoundRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SuccessUidRoute = SuccessUidRouteImport.update({
+  id: '/success/$uid',
+  path: '/success/$uid',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LegalTermsRoute = LegalTermsRouteImport.update({
@@ -68,21 +68,21 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/catalog': typeof CatalogRoute
   '/rroll': typeof RrollRoute
-  '/success': typeof SuccessRoute
   '/creators/apply': typeof CreatorsApplyRoute
   '/legal/cookies': typeof LegalCookiesRoute
   '/legal/privacy': typeof LegalPrivacyRoute
   '/legal/terms': typeof LegalTermsRoute
+  '/success/$uid': typeof SuccessUidRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/catalog': typeof CatalogRoute
   '/rroll': typeof RrollRoute
-  '/success': typeof SuccessRoute
   '/creators/apply': typeof CreatorsApplyRoute
   '/legal/cookies': typeof LegalCookiesRoute
   '/legal/privacy': typeof LegalPrivacyRoute
   '/legal/terms': typeof LegalTermsRoute
+  '/success/$uid': typeof SuccessUidRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -90,11 +90,11 @@ export interface FileRoutesById {
   '/__not-found': typeof _notFoundRoute
   '/catalog': typeof CatalogRoute
   '/rroll': typeof RrollRoute
-  '/success': typeof SuccessRoute
   '/creators/apply': typeof CreatorsApplyRoute
   '/legal/cookies': typeof LegalCookiesRoute
   '/legal/privacy': typeof LegalPrivacyRoute
   '/legal/terms': typeof LegalTermsRoute
+  '/success/$uid': typeof SuccessUidRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -102,32 +102,32 @@ export interface FileRouteTypes {
     | '/'
     | '/catalog'
     | '/rroll'
-    | '/success'
     | '/creators/apply'
     | '/legal/cookies'
     | '/legal/privacy'
     | '/legal/terms'
+    | '/success/$uid'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/catalog'
     | '/rroll'
-    | '/success'
     | '/creators/apply'
     | '/legal/cookies'
     | '/legal/privacy'
     | '/legal/terms'
+    | '/success/$uid'
   id:
     | '__root__'
     | '/'
     | '/__not-found'
     | '/catalog'
     | '/rroll'
-    | '/success'
     | '/creators/apply'
     | '/legal/cookies'
     | '/legal/privacy'
     | '/legal/terms'
+    | '/success/$uid'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -135,22 +135,15 @@ export interface RootRouteChildren {
   _notFoundRoute: typeof _notFoundRoute
   CatalogRoute: typeof CatalogRoute
   RrollRoute: typeof RrollRoute
-  SuccessRoute: typeof SuccessRoute
   CreatorsApplyRoute: typeof CreatorsApplyRoute
   LegalCookiesRoute: typeof LegalCookiesRoute
   LegalPrivacyRoute: typeof LegalPrivacyRoute
   LegalTermsRoute: typeof LegalTermsRoute
+  SuccessUidRoute: typeof SuccessUidRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/success': {
-      id: '/success'
-      path: '/success'
-      fullPath: '/success'
-      preLoaderRoute: typeof SuccessRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/rroll': {
       id: '/rroll'
       path: '/rroll'
@@ -177,6 +170,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/success/$uid': {
+      id: '/success/$uid'
+      path: '/success/$uid'
+      fullPath: '/success/$uid'
+      preLoaderRoute: typeof SuccessUidRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/legal/terms': {
@@ -215,11 +215,11 @@ const rootRouteChildren: RootRouteChildren = {
   _notFoundRoute: _notFoundRoute,
   CatalogRoute: CatalogRoute,
   RrollRoute: RrollRoute,
-  SuccessRoute: SuccessRoute,
   CreatorsApplyRoute: CreatorsApplyRoute,
   LegalCookiesRoute: LegalCookiesRoute,
   LegalPrivacyRoute: LegalPrivacyRoute,
   LegalTermsRoute: LegalTermsRoute,
+  SuccessUidRoute: SuccessUidRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
