@@ -19,7 +19,7 @@ import { createRequestContext } from "../server-only/request/request-context";
 import { creatorApplicationPayloadsObject } from "./schemas/creators-apply-server";
 
  
-export const submitCreatorApplication = createServerFn({ method: "POST" })
+export const requestSubscription = createServerFn({ method: "POST" })
   .inputValidator(creatorApplicationPayloadsObject)
   .handler(async ({ data }) => {
     setCorsHeaders();
@@ -90,5 +90,5 @@ export const submitCreatorApplication = createServerFn({ method: "POST" })
   });
 
 // ---------- Convenient TS exports ----------
-export type SubmitCreatorApplicationInput = z.infer<typeof formSchema>;
-export type SubmitCreatorApplicationResult = ApiOk;
+export type requestSubscriptionInput = z.infer<typeof formSchema>;
+export type requestSubscriptionResult = ApiOk;

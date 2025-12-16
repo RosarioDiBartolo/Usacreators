@@ -2,7 +2,7 @@ import { useForm } from "@tanstack/react-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { 
-  submitCreatorApplication,
+  requestSubscription,
 } from "@/lib/creators/request-subscription";
 import { useMutation } from "@tanstack/react-query";
 import { formSchema } from "./schemas/creators-apply-shared";
@@ -63,7 +63,7 @@ const useApplicationForm = ({onSubmitSucces}:{onSubmitSucces: ()=>void }) => {
         profilePictureUrl,
       };
       
-      const result = await submitCreatorApplication({ data: application });
+      const result = await requestSubscription({ data: application });
       return result;
     }, 
     onSuccess: ()=>{

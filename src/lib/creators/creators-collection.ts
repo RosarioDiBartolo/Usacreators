@@ -1,9 +1,9 @@
 // src/lib/firebase/creators-repo.ts
 
 import { z } from "zod";
-import { createTypedCollection, WithId } from "../firebase/utils";
+import { createTypedCollection, WhereFilter, WithId } from "../firebase/utils";
 import { Creator, creatorApplicationSchema, firebaseCreatorRecord } from "./schemas/creators-apply-server";
-
+ 
 export const GetCreatorsFilterSchema = z
   .object({
     limit: z.number().int().min(1).max(50).default(20),
@@ -16,22 +16,20 @@ export const GetCreatorsFilterSchema = z
 export const creatorsRepo = createTypedCollection({
   collection: "applications",
   schema: firebaseCreatorRecord,
-  addSchema: creatorApplicationSchema
+  addSchema: creatorApplicationSchema,
+  // updateSchema: z.object({
+  //   status: firebaseCreatorRecord.shape.status
+  // }),
 });
 
 export type CreatorRecord = WithId<Creator>
-export type CreatorsFilter = z.infer<typeof GetCreatorsFilterSchema>;
-type WhereFilter<T> = {
-  field: Extract<keyof T, string>; // cioè "name" | "email" | ... | "createdAt" | ...
-  op: FirebaseFirestore.WhereFilterOp;
-  value: unknown;
+export type CreatorsFilter = z.infer<typeof GetCreatorsFilterSchema> & {
+  where? : WhereFilter<Creator>[]
 };
- 
+  
 export async function findCreators(rawFilters: CreatorsFilter) {
-  const { limit = 20, cleaned } = rawFilters;
-
-  const where: WhereFilter<Creator>[] = [];
-
+  const { limit = 20, cleaned, where = [] as WhereFilter<Creator>[] } = rawFilters;
+  
  
   const { results, errors } = await creatorsRepo.find({
     where,

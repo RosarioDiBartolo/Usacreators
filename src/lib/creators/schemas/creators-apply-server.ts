@@ -28,6 +28,7 @@ export const creatorApplicationObject = creatorApplicationPayloadsObject.extend(
       privacyVersion: z.string(),
       termsVersion: z.string(),
     }),
+    confirmToken: z.string(),
     // audit / meta
     ipHash: z.string(),
     ua: z.string().max(300).optional().default(""),
@@ -61,6 +62,7 @@ export const firebaseCreatorRecord = creatorApplicationObject
       privacyVersion: z.string(),
       acceptedAt: TimestampLike,
     }),
+    confirmToken: z.string().optional().default(""),
     phone: z.string().optional(),
     newsLetter: z.boolean().optional().default(true),
     ipHash: z.string(),
