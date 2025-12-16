@@ -29,6 +29,7 @@ export const creatorApplicationObject = creatorApplicationPayloadsObject.extend(
       termsVersion: z.string(),
     }),
     confirmToken: z.string(),
+    status:z.enum(["pending","confirmed"]).optional().default("pending"),
     // audit / meta
     ipHash: z.string(),
     ua: z.string().max(300).optional().default(""),

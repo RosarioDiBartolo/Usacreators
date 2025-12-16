@@ -9,18 +9,18 @@ import env from "@/enviroment/server";
 import { db } from "@/lib/firebase/admin";
 import admin from "firebase-admin";
 import { creatorsRepo } from "./creators-collection";
-import { contactsClient } from "@/lib/brevo/client";
-import { ApiErrorException } from "../server-only/errors/api-error";
+ import { ApiErrorException } from "../server-only/errors/api-error";
 import { RequestContext } from "../server-only/request/request-context";
 import {
   creatorApplicationPayloadsObject,
   FirestoreCreatorRecord,
-} from "./schemas/creators-apply-server";
+ } from "./schemas/creators-apply-server";
 import {
   isContactInList,
   subscribeToNewsletter,
   TemporaryListId,
 } from "../brevo/utils";
+import { generateSecureToken } from "../security";
 
 // ---------- CORS helpers ----------
 export function setCorsHeaders() {
@@ -132,6 +132,8 @@ export const buildApplicationRecord = (params: {
     createdAt: now,
     source: "server-fn",
     ipHash: ctx.ipHash,
+    confirmToken: generateSecureToken(),
+    status: "pending",
     legal: {
       termsVersion: currentTerms,
       privacyVersion: currentPrivacy,

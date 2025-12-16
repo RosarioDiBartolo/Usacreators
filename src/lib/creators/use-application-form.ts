@@ -1,9 +1,7 @@
 import { useForm } from "@tanstack/react-form"; 
 import { toast } from "sonner";
 import { z } from "zod";
-import { 
-  requestSubscription,
-} from "@/lib/creators/request-subscription";
+import { requestSubscription } from "./server-fns";
 import { useMutation } from "@tanstack/react-query";
 import { formSchema } from "./schemas/creators-apply-shared";
 import { uploadProfilePicture } from "../cloudinary/upload";

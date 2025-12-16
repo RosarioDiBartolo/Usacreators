@@ -12,3 +12,4 @@ export const subscribeToNewsletterFunction = createServerFn({ method: "POST" })
 
     Sentry.logger.info(`[${data.docId}] Added contact to Brevo list`);
   });
+
