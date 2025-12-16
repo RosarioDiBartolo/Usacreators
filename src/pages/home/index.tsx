@@ -8,7 +8,7 @@ import Header from "@/pages/home/header";
 
 function Home() {
   return (
-    <div className="flex flex-col gap-20">
+    <div className="flex flex-col gap-40">
       <Header />
 
       <Hero />

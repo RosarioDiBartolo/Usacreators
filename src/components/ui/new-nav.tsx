@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect,   useState } from "react";
 import { motion } from "framer-motion";
 import { LucideIcon } from "lucide-react";
 import { Link } from "@tanstack/react-router";
@@ -65,7 +65,7 @@ export function NavContainer({
         className
       )}
     >
-      <div className="flex items-center gap-6 bg-background border border-border backdrop-blur-lg py-2 px-2 rounded-full shadow-lg">
+      <div className="flex items-center gap-6 bg-background border border-border backdrop-blur-lg pb-2 pt-1 px-2 rounded-full shadow-lg">
         {children}
       </div>
     </div>

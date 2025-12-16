@@ -140,22 +140,22 @@
   * {
     @apply border-border outline-ring/50;
   }
-  h1 {
+  h1, .h1 {
     @apply text-5xl md:text-7xl font-black leading-tight tracking-tight 
-         mt-6 ;
+         mt-6 mb-1 ;
   }
 
-  h2 {
-    @apply max-w-4xl   text-4xl md:text-6xl font-light 
+  h2, .h2 {
+    @apply max-w-4xl font-bold   text-4xl md:text-6xl    
          leading-tight tracking-tight 
-         mt-3  ;
+         mt-4 mb-1  ;
   }
 
-  h3 {
-    @apply mt-2   text-3xl md:text-4xl font-semibold leading-snug;
+  h3, .h3 {
+    @apply mt-2 mb-1    text-3xl md:text-4xl font-semibold leading-snug;
   }
-  h4 {
-    @apply md:text-xl mt-5 ;
+  h4, .h4 {
+    @apply md:text-xl mt-5 mb-1 ;
   }
  
 

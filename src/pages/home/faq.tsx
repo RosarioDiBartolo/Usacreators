@@ -22,7 +22,7 @@ const faqItems = [
     icon: Zap,
     iconColor: "text-blue-500",
     answer: (
-      <div className="space-y-4 text-muted-foreground">
+      <div className="  text-muted-foreground">
         <p>
           Miami Creators connects brands and creators directly — no agencies, no
           middlemen. We offer two main services for companies looking to
@@ -49,9 +49,9 @@ const faqItems = [
           </div>
         </div>
         <p>
-          <strong>In both cases:</strong> brands contact creators directly, and
-          creators keep 100% of what they earn.
-        </p>
+      <span className="font-medium text-foreground">In both cases:</span>{" "}
+      brands contact creators directly, and creators keep 100% of what they earn.
+    </p>
       </div>
     ),
   },
@@ -176,39 +176,53 @@ const faqItems = [
   },
 ];
 
-
 export default function HomeFAQ() {
   return (
     <section
       id="faq"
-      className=" 
-      relative w-full max-w-7xl mx-auto 
-    section-padding 
-     text-center
-    "
+      className="
+        relative w-full max-w-7xl mx-auto
+         
+      "
     >
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="flex flex-col gap-6 mb-12"
+        className="mx-auto max-w-3xl text-center"
       >
-         
-        <div className=" ">
-          <h2 className="
-            bg-text
-            bg-linear-to-b from-secondary via-amber-900 to-amber-950 relative !mt-0"> 
-            Everything You Need to Know
-  
-          </h2>
-          <p className="text-base leading-relaxed max-w-3xl mx-auto ">
-            Welcome to the Miami Creators Community. Here's a full breakdown of
-            how the platform works, how you earn, and why being here matters.
-          </p>
-        </div>
+        <h2
+          className="
+            !mt-0
+            text-balance
+            text-3xl sm:text-4xl md:text-5xl
+            font-semibold tracking-tight
+            leading-[1.05]
+            bg-clip-text text-transparent
+            bg-linear-to-b from-orange-900   to-foreground
+          "
+        >
+          Everything You Need to Know
+        </h2>
+
+        <p
+          className="
+            mt-4
+            text-pretty
+            text-base
+            sm:text-lg
+            leading-relaxed
+            text-foreground
+          "
+        >
+          Welcome to the Miami Creators Community. Here's a full breakdown of how
+          the platform works, how you earn, and why being here matters.
+        </p>
       </motion.div>
 
-       <Faq faqItems={faqItems}/>
+      <div className="mt-10">
+        <Faq faqItems={faqItems} />
+      </div>
     </section>
   );
 }
