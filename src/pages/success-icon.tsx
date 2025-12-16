@@ -22,19 +22,23 @@ export function AnimatedCheckIcon({
 
   return (
     <motion.svg
-    initial={{
-  y: 12,
-  opacity: 0,
-}}
-animate={{
-  y: 0,
-  opacity: 1,
-}}
-transition={{
-  duration: 0.45,
-  ease: [0.22, 1, 0.36, 1], // easeOutCubic
-}}
+      variants={{
+        initial: {
+          y: 12,
+          opacity: 0,
+        },
+        in: {
+          y: 0,
+          opacity: 1,
+        },
+        
+      }}
+       transition= {{
+          duration: 0.45,
+          ease: [0.22, 1, 0.36, 1], // easeOutCubic
+        }}
 
+        
       width={size}
       height={size}
       viewBox="0 0 24 24"
@@ -58,7 +62,13 @@ transition={{
         }
         transition={
           loop
-            ? { times: [0, 0.6, 1], duration: 1.4, ease: "easeInOut", repeat: Infinity, repeatDelay: 0.3 }
+            ? {
+                times: [0, 0.6, 1],
+                duration: 1.4,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatDelay: 0.3,
+              }
             : transition
         }
       />
@@ -74,7 +84,13 @@ transition={{
         }
         transition={
           loop
-            ? { times: [0, 0.55, 1], duration: 1.4, ease: "easeInOut", repeat: Infinity, repeatDelay: 0.3 }
+            ? {
+                times: [0, 0.55, 1],
+                duration: 1.4,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatDelay: 0.3,
+              }
             : { ...transition, delay: 0.25 }
         }
       />

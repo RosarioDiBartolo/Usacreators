@@ -17,9 +17,9 @@ export const creatorsRepo = createTypedCollection({
   collection: "applications",
   schema: firebaseCreatorRecord,
   addSchema: creatorApplicationSchema,
-  // updateSchema: z.object({
-  //   status: firebaseCreatorRecord.shape.status
-  // }),
+  updateSchema: z.object({
+   status: firebaseCreatorRecord.shape.status
+  }),
 });
 
 export type CreatorRecord = WithId<Creator>

@@ -9,34 +9,53 @@ import * as Sentry from "@sentry/tanstackstart-react";
 import { setResponseStatus } from "@tanstack/react-start/server";
 import { getLegalVersions } from "../legal/utils";
 import { createRequestContext } from "../server-only/request/request-context";
-import { creatorApplicationPayloadsObject } from "./schemas/creators-apply-server";
-import { setCorsHeaders, ensureNoDuplicatesOrThrow, buildApplicationRecord, persistApplication, logLegalAcceptance, notifySlackSafely } from "./subscription-steps";
- 
- 
+import {
+  creatorApplicationPayloadsObject,
+  
+} from "./schemas/creators-apply-server";
+import {
+  setCorsHeaders,
+  ensureNoDuplicatesOrThrow,
+  buildApplicationRecord,
+  persistApplication,
+  logLegalAcceptance,
+  notifySlackSafely,
+  confirmSubscriptionStep,
+} from "./subscription-steps";
 
- export const findCreatorByToken = createServerFn({method: "GET"}).inputValidator(z.string()).handler( async({data: confirmToken} )=>{
-  const creators = await findCreators({
-       limit: 1,
-       where: [
-         {
-           field: "confirmToken",
-           op: "==",
-           value: confirmToken,
-         },
-       ],
-     });
-     if (creators.length === 0) {
-       throw notFound();
-     }
- 
-     const creator = creators[0];
+export const findCreatorByToken = createServerFn({ method: "GET" })
+  .inputValidator(z.string())
+  .handler(async ({ data: confirmToken }) => {
+    const creators = await findCreators({
+      limit: 1,
+      where: [
+        {
+          field: "confirmToken",
+          op: "==",
+          value: confirmToken,
+        },
+      ],
+    });
+    if (creators.length === 0) {
+      throw notFound();
+    }
 
-     return creator
- })
+    const creator = creators[0];
 
-// ---------- Convenient TS exports ----------
-export type requestSubscriptionInput = z.infer<typeof formSchema>;
-export type requestSubscriptionResult = ApiOk;
+    return creator;
+  });
+
+export const confirmSubscription = createServerFn({ method: "POST" })
+  .inputValidator(
+       z.string(),
+   )
+  .handler(async ({ data: id }) => {
+     setCorsHeaders();
+
+      await confirmSubscriptionStep(id);
+
+       return { success: true }   
+  });
 
 export const requestSubscription = createServerFn({ method: "POST" })
   .inputValidator(creatorApplicationPayloadsObject)
@@ -47,10 +66,12 @@ export const requestSubscription = createServerFn({ method: "POST" })
 
     try {
       // 1) Duplicate checks
-      const { emailLower, normalizedInstagram, normalizedTiktok } = await ensureNoDuplicatesOrThrow(data);
+      const { emailLower, normalizedInstagram, normalizedTiktok } =
+        await ensureNoDuplicatesOrThrow(data);
 
       // 2) Legal versions
-      const { terms: currentTerms, privacy: currentPrivacy } = await getLegalVersions();
+      const { terms: currentTerms, privacy: currentPrivacy } =
+        await getLegalVersions();
 
       // 3) Build application record
       const application = buildApplicationRecord({
@@ -105,4 +126,6 @@ export const requestSubscription = createServerFn({ method: "POST" })
       throw err;
     }
   });
-
+// ---------- Convenient TS exports ----------
+export type requestSubscriptionInput = z.infer<typeof formSchema>;
+export type requestSubscriptionResult = ApiOk;

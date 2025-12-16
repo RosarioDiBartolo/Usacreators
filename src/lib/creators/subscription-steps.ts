@@ -1,4 +1,4 @@
-// src/server/apply.ts
+ // src/server/apply.ts
 import { z } from "zod";
 import crypto from "crypto";
 import { normalizeIG, normalizeTT, asUrl } from "@/lib/utils";
@@ -8,7 +8,7 @@ import * as Sentry from "@sentry/tanstackstart-react";
 import env from "@/enviroment/server";
 import { db } from "@/lib/firebase/admin";
 import admin from "firebase-admin";
-import { creatorsRepo } from "./creators-collection";
+import { CreatorRecord, creatorsRepo } from "./creators-collection";
  import { ApiErrorException } from "../server-only/errors/api-error";
 import { RequestContext } from "../server-only/request/request-context";
 import {
@@ -215,4 +215,11 @@ export const notifySlackSafely = async (params: {
     Sentry.captureException(err);
   }
 };
+
+export const confirmSubscriptionStep = async(id: string)=>{
+  
+    await creatorsRepo.updateById( id, {
+    status: "confirmed"
+  }) 
+}
 export { ApiErrorException };

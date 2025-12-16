@@ -1,55 +1,56 @@
- 
 import { CreatorRecord } from "@/lib/creators/creators-collection";
 import { Button } from "@/components/ui/button";
 import { GrFormNextLink } from "react-icons/gr";
-
 import { AnimatedCheckIcon } from "./success-icon";
+import { motion } from "motion/react";
 
-/**
- * SuccessPage
- * A clean, minimal success/thank-you page for creators who just submitted the form.
- * - TailwindCSS only (no custom CSS required)
- * - Framer Motion for subtle entrance animations
- * - Lucide icons for a crisp look
- *
- * Props (optional):
- * - discordInviteUrl: string  -> invite link to your Discord
- * - onClose: () => void       -> optional handler for "Back to Home"
- */
 export default function SuccessPage({ creator }: { creator: CreatorRecord }) {
- 
-  
+  const firstName = (creator?.name || "there").trim().split(" ")[0];
+
   return (
-    <main className=" flex items-center h-screen">
-      <div
-        className="
-      
-      flex flex-col items-center  h-fit 
-      
-      container 
-    
-      mx-auto text-center"
-      >
-        <AnimatedCheckIcon size={180} strokeWidth={2} />
-         <h1>
-          Welcome <span className=" capitalize
-          
-          bg-text
-          bg-linear-to-b from-blue-900 to-blue-300
-          ">{creator.name}.</span>
-        </h1>
-        <h2 className=" text-7xl">
-          You Email has been <span className=" text-green-500"> Verified!</span>{" "}
-          </h2>
+    <main className="min-h-screen w-full">
+      <div className="mx-auto flex min-h-screen max-w-3xl items-center px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.45, ease: "easeOut" }}
+          className="w-full text-center"
+        >
+          <div className="mx-auto mb-6 flex justify-center">
+            <AnimatedCheckIcon size={160} strokeWidth={2} />
+          </div>
 
-        
-        <p className=" mt-2 mb-10 text-2xl">
-          You have successflly joined our platform.{" "}
-        </p>
+          <p className="text-xl font-medium">
+            Welcome{" "}
+            <span className="capitalize font-semibold text-foreground">
+              {firstName}
+            </span>
+          </p>
 
-        <Button size={"2xl"}>Next Step <GrFormNextLink   /></Button> 
+          <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl">
+            Your email has been{" "}
+            <span className="bg-gradient-to-b from-emerald-600 to-emerald-400 bg-clip-text text-transparent">
+              verified.
+            </span>
+            
+          </h1>
+
+          <p className="mt-4 text-base text-muted-foreground sm:text-lg">
+            You’ve successfully joined our platform. Let’s complete your setup.
+          </p>
+
+          <div className="mt-10 flex justify-center">
+            <Button size="2xl" className="gap-2">
+              Next step <GrFormNextLink className="text-2xl" />
+            </Button>
+          </div>
+
+          {/* Optional: tiny “what happens next” helper */}
+          <p className="mt-4 text-xs text-muted-foreground">
+            This usually takes less than 2 minutes.
+          </p>
+        </motion.div>
       </div>
     </main>
   );
 }
- 
