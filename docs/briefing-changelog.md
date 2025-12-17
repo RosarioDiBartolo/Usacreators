@@ -1,6 +1,9 @@
 # Briefing Changelog
 
 ## 2025-12-17
+- Created initial SSOT from repository files (`docs/miami-creators-briefing.md`).
+
+## 2025-12-17 (resync)
 - Rewrote SSOT to be code/config-only, removed unverified product claims, and added file-path citations (`docs/miami-creators-briefing.md`).
 - Added verified public routes inventory (`src/routes/**`, `src/pages/**`).
 - Expanded server function list to include Cloudinary upload, creator reads, and Brevo helper (`src/lib/meta/index.ts`, `src/lib/legal/utils.ts`, `src/lib/cloudinary/upload.ts`, `src/lib/creators/server-fns.tsx`, `src/lib/creators/utils.ts`, `src/lib/brevo/server-fns.ts`).

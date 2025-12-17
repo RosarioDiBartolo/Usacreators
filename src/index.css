@@ -174,7 +174,7 @@
   }
   /* Imposta il default: Poppins via font-sans */
   body, html {
-    @apply font-poppins bg-background text-foreground w-screen overflow-x-hidden;
+    @apply font-poppins bg-background text-foreground w-screen  ;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
