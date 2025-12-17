@@ -55,7 +55,7 @@ export const ensureNoDuplicatesOrThrow = async (
       status: 409,
       code: "SUBSCRIPTION_REATTEMPT",
       message:
-        "This email has alredy tried to subscribe to our service, and a confirmation email was sent alredy.",
+        "This email has already tried to subscribe to our service, and a confirmation email was sent already.",
     });
   }
   // instagram
