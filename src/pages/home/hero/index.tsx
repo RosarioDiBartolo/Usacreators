@@ -6,10 +6,9 @@ const HeroCanvas = lazy(() => import("./hero-canvas"));
 
 export default function Hero() {
   return (
-    <div className=" p-7  pt-4"> 
-    <HeroCanvas className="    h-[95vh]   rounded-[4rem] rounded-b-[18rem]">
+     <HeroCanvas className=" h-[95vh]    rounded-b-[4rem]">
       {/* Trust Badge */}
-      <div className="mb-8 animate-fade-in-down">
+      <div className="my-8 animate-fade-in-down">
         <div className="flex items-center gap-2 px-6 py-3 bg-primary/10 backdrop-blur-md border border-orange-300/30 rounded-full text-sm">
           {
             <div className="flex">
@@ -34,11 +33,11 @@ export default function Hero() {
       <div className="text-center space-y-6 max-w-5xl mx-auto px-4">
         {/* Main Heading with Animation */}
         <h1 className="space-y-2">
-          <span className="text-5xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-orange-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent animate-fade-in-up animation-delay-200">
+          <span className="text-5xl md:text-7xl lg:text-8xl font-bold bg-linear-to-r from-orange-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent animate-fade-in-up animation-delay-200">
             Miami's Top
           </span>
           <br />
-          <span className="text-5xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-yellow-300 via-orange-400 to-red-400 bg-clip-text text-transparent animate-fade-in-up animation-delay-400">
+          <span className="text-5xl md:text-7xl lg:text-8xl font-bold bg-linear-to-r from-yellow-300 via-orange-400 to-red-400 bg-clip-text text-transparent animate-fade-in-up animation-delay-400">
             Content Creators and Influencers
           </span>
         </h1>
@@ -75,6 +74,5 @@ export default function Hero() {
         }
       </div>
     </HeroCanvas>
-    </div>
-  );
+   );
 }

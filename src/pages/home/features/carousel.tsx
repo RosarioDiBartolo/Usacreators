@@ -56,7 +56,7 @@ export function Carousel({ items, autoPlay = false, interval = 4000 }: CarouselP
       </div>
 
       {/* Dots indicator */}
-      <div className="flex justify-center mt-4 space-x-2">
+      <div className="flex justify-center my-4 space-x-2">
         {items.map((_, index) => (
           <button
             key={index}
