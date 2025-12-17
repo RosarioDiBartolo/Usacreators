@@ -62,12 +62,11 @@ export default function OnboardingForm() {
     if (currentStepIndex > 0) setCurrentStepIndex((s) => s - 1);
   }
   return (
-    <motion.div
+    <>
+     <motion.div
       className="
-        min-h-full relative 
-
-        p-10 py-30 flex flex-col gap-10 text-center 
-        container   max-w-xl mx-auto   rounded-2xl   "
+        p-10 py-30   text-center 
+        relative  rounded-2xl   "
     >
       <StepIndicator currentStepIndex={currentStepIndex} />
 
@@ -98,13 +97,15 @@ export default function OnboardingForm() {
         </AnimatePresence>
       </motion.form>
 
+    
+    </motion.div>
       <StepNavigation
         currentStepIndex={currentStepIndex}
         isSubmitting={isPending}
         nextStep={nextStep}
         prevStep={prevStep}
         handleSubmit={form.handleSubmit}
-      />
-    </motion.div>
+      /></>
+   
   );
 }
