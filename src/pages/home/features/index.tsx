@@ -5,7 +5,7 @@ import img1 from "@/assets/features-carousel/phone.jpg";
 import img2 from "@/assets/features-carousel/phone2.jpg";
 import img3 from "@/assets/features-carousel/portatili.jpg";
 import img4 from "@/assets/features-carousel/portatili2.jpg";
- 
+
 const items = [
   <CarouselItem
     key="1"
@@ -35,23 +35,33 @@ const items = [
 
 function Features() {
   return (
-    <section id="features" className="     text-center ">
-      <div className="relative max-w-7xl mx-auto   overflow-hidden"> 
-      <h2
-        className="
+    <section
+      id="features"
+      className="
+    px-3
+    text-center "
+    >
+      <div className="relative max-w-7xl mx-auto
        
-        absolute top-0 right-1/2 
-        z-10 translate-x-1/2
-    text-center
-    mx-auto
-     gap-3
-    flex items-center
+      ">
+        <h2
+          className="
+          w-full
+       bg-text 
+       text-5xl md:text-6xl
+       leading-tight md:leading-snug
+       font-normal
+        bg-linear-to-b from-white to-white/70 
+
+        absolute  inset-0 h-fit mx-auto   z-10
+        text-center
+         
+      
     "
-      >  
-       <span className="bg-text
-    bg-linear-to-b from-white ">   Brand features.</span>
-       </h2>
-      <Carousel items={items} autoPlay interval={5000} />
+        >
+          Brand features
+        </h2>
+        <Carousel items={items}   interval={5000} />
       </div>
     </section>
   );

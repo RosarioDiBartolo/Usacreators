@@ -32,15 +32,15 @@ export function Carousel({ items, autoPlay = false, interval = 4000 }: CarouselP
   return (
     <>
        <div className=" flex items-center justify-between absolute top-1/2 left-0  w-full px-4 z-10">
-        <Button variant="ghost" size="icon" onClick={prev}>
+        <Button variant="ghost" className=" backdrop-blur-sm bg-background/70  border-foreground/20  " size="icon" onClick={prev}>
           <ChevronLeft className="h-6 w-6" />
         </Button>
-        <Button variant="ghost" size="icon" onClick={next}>
+        <Button variant="ghost" className="backdrop-blur-sm bg-background/70 border-foreground/20" size="icon" onClick={next}>
           <ChevronRight className="h-6 w-6" />
         </Button>
       </div>
 
-      <div className="relative mx-auto max-w-5xl h-[70vh] flex items-center justify-center">
+      <div className="relative  h-[70vh] flex items-center justify-center">
         <AnimatePresence initial={false}>
           <motion.div
             key={current}
