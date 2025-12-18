@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
+ 
 
 interface CarouselItemProps {
   title: string;
@@ -20,9 +20,9 @@ export function CarouselItem({ title, description, image }: CarouselItemProps) {
         </div>
       )}
    
-        <div className=" p-8  w-full  max-w-3xl left-1/2   -translate-x-1/2 text-white absolute bottom-0    text-center ">
-          <h3 className=" capitalize text-7xl leading-tight font-bold">{title}</h3>
-          <p className="text-xl leading-normal  ">{description}</p>
+        <div className=" p-8  w-full  max-w-2xl left-1/2   -translate-x-1/2 text-white absolute bottom-0    text-center ">
+          <h3 className=" capitalize text-5xl leading-tight font-bold">{title}</h3>
+          <p className="text-xl leading-normal text-white/85  ">{description}</p>
         </div>
        
     </div>

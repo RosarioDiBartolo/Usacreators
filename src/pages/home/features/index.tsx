@@ -47,19 +47,18 @@ function Features() {
         <h2
           className="
           w-full
-       bg-text 
-       text-5xl md:text-6xl
+          text-white/70
+        text-5xl md:text-6xl
        leading-tight md:leading-snug
-       font-normal
-        bg-linear-to-b from-white to-white/70 
-
+        font-normal
+        capitalize
         absolute  inset-0 h-fit mx-auto   z-10
         text-center
          
       
     "
         >
-          Brand features
+          Brand <span className=" text-white"> features </span> 
         </h2>
         <Carousel items={items}   interval={5000} />
       </div>

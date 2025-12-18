@@ -65,7 +65,7 @@ export function NavContainer({
         className
       )}
     >
-      <div className="flex items-center gap-6 bg-background border border-border backdrop-blur-lg  pt-1 px-2 rounded-full shadow-lg">
+      <div className="flex  gap-3 items-center justify-between bg-background border border-border backdrop-blur-lg  pt-1 px-2 rounded-full shadow-lg">
         {children}
       </div>
     </div>

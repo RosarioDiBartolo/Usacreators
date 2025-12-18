@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"; 
+import { motion } from "framer-motion";
 import {
   Accordion,
   AccordionItem,
@@ -10,7 +10,7 @@ import {
   DollarSign,
   Users,
   BookOpen,
-  TrendingUp, 
+  TrendingUp,
   Bell,
   Target,
 } from "lucide-react";
@@ -30,7 +30,7 @@ const faqItems = [
         </p>
         <div className="space-y-3">
           <div>
-            <h4 className="font-semibold text-foreground">Catalog Access</h4>
+            <h4 className=" text-foreground">Catalog Access</h4>
             <p>
               Brands can purchase access to our creator catalog, view verified
               profiles, and contact creators directly using the contact details
@@ -39,7 +39,7 @@ const faqItems = [
             </p>
           </div>
           <div>
-            <h4 className="font-semibold text-foreground">Custom Selection</h4>
+            <h4 className=" text-foreground">Custom Selection</h4>
             <p>
               For brands that want extra support, our team handpicks creators
               that match their campaign goals — whether it’s niche, style,
@@ -49,9 +49,10 @@ const faqItems = [
           </div>
         </div>
         <p>
-      <span className="font-medium text-foreground">In both cases:</span>{" "}
-      brands contact creators directly, and creators keep 100% of what they earn.
-    </p>
+          <span className="font-medium text-foreground">In both cases:</span>{" "}
+          brands contact creators directly, and creators keep 100% of what they
+          earn.
+        </p>
       </div>
     ),
   },
@@ -116,15 +117,16 @@ const faqItems = [
   },
   {
     id: "increase-income",
-    question: "How can Miami Creators help me increase my income (even passively)?",
+    question:
+      "How can Miami Creators help me increase my income (even passively)?",
     icon: TrendingUp,
     iconColor: "text-emerald-500",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
-          Once you’re listed in the catalog, brands can find your profile anytime
-          — even while you’re offline. That means your presence can generate new
-          paid opportunities passively.
+          Once you’re listed in the catalog, brands can find your profile
+          anytime — even while you’re offline. That means your presence can
+          generate new paid opportunities passively.
         </p>
         <p>
           The more active and professional you are, the more visible you become
@@ -181,7 +183,7 @@ export default function HomeFAQ() {
     <section
       id="faq"
       className="
-        relative w-full max-w-7xl mx-auto
+        relative px-3 w-full max-w-7xl mx-auto
          
       "
     >
@@ -191,30 +193,34 @@ export default function HomeFAQ() {
         transition={{ duration: 0.6 }}
         className="mx-auto max-w-4xl text-center"
       >
-        <h2
+        <h2 className=" !text-xl md:text-3xl text-orange-400 leading-normal  font-normal ">
+          Frequently Asked Questions
+        </h2>
+        <p
           className="
-             text-balance
+
+            text-balance
+            text-5xl md:text-6xl
+            leading-tight md:leading-tight
+            font-normal   
              
-           
-            bg-clip-text text-transparent
-            bg-linear-to-b from-orange-900   to-foreground
           "
         >
-          Everything You Need to Know
-        </h2>
+          Everything You Need to Know  
+        </p>
 
         <p
           className="
             mt-4
-            text-pretty
+            
             text-base
             sm:text-lg
             leading-relaxed
-            text-foreground
+            text-foreground/85
           "
         >
-          Welcome to the Miami Creators Community. Here's a full breakdown of how
-          the platform works, how you earn, and why being here matters.
+          Welcome to the Miami Creators Community. Here's a full breakdown of
+          how the platform works, how you earn, and why being here matters.
         </p>
       </motion.div>
 

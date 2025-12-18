@@ -148,7 +148,7 @@
 
   h2,
   .h2 {
-    @apply max-w-4xl font-bold   text-4xl md:text-6xl    
+    @apply   font-bold   text-4xl md:text-6xl    
          leading-tight tracking-tight 
          mt-4 mb-1;
   }

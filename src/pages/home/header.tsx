@@ -14,7 +14,7 @@ import { useState } from "react";
 import { IconFirstRevealTextLink } from "./icon-links";
 
 const navItems: NavItem[] = [
-  { name: "Home",   icon: Home,id: "hero", type: "section" },
+  { name: "Home", icon: Home, id: "hero", type: "section" },
   { name: "Features", icon: Sparkles, id: "features", type: "section" },
   { name: "Pricing", url: "/#pricing", icon: BadgeDollarSign, type: "link" },
   { name: "FAQ", icon: HelpCircle, id: "faq", type: "section" },
@@ -35,7 +35,6 @@ export default function Header() {
           onActivate={(it) => setActiveTab(it.name)}
         />
       ))}
-
       <IconFirstRevealTextLink
         to="/creators/apply"
         icon={
@@ -49,6 +48,7 @@ export default function Header() {
             <TbUsersPlus className=" " />
           </span>
         }
+        buttonClassName=" my-1"
         label="Become a Creator"
         buttonVariant="outline"
         buttonSize="lg"
@@ -60,7 +60,7 @@ export default function Header() {
             className="
            inline-flex bg-background/80 text-primary
       rounded-full border   
-      p-3  "
+      p-2  "
           >
             <TbBrandApplePodcast className=" w-5 h-5  " />
           </span>
