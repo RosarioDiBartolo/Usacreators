@@ -1,11 +1,6 @@
 "use client";
-import {
-  BadgeDollarSign,
-  HelpCircle,
-  Home,
-  Sparkles,
- } from "lucide-react";
- import { TbUsersPlus } from "react-icons/tb";
+import { BadgeDollarSign, HelpCircle, Home, Sparkles } from "lucide-react";
+import { TbUsersPlus } from "react-icons/tb";
 
 import { TbBrandApplePodcast } from "react-icons/tb";
 
@@ -44,9 +39,13 @@ export default function Header() {
       <IconFirstRevealTextLink
         to="/creators/apply"
         icon={
-          <span className="inline-flex 
+          <span
+            className="
+          inline-flex 
       rounded-full border
-      p-3  ">
+      bg-background
+      p-3  "
+          >
             <TbUsersPlus className=" " />
           </span>
         }
@@ -57,18 +56,17 @@ export default function Header() {
       <IconFirstRevealTextLink
         to="/catalog"
         icon={
-          <span className="
-          bg-secondary
-          inline-flex 
-      rounded-full border
-      p-3  ">
-            <TbBrandApplePodcast
-              className=" w-5 h-5  "
-            />
+          <span
+            className="
+           inline-flex bg-background/80 text-primary
+      rounded-full border   
+      p-3  "
+          >
+            <TbBrandApplePodcast className=" w-5 h-5  " />
           </span>
         }
         label="Explore our Catalog"
-        buttonVariant="secondary"
+        buttonVariant="default"
         buttonSize="lg"
       />
     </NavContainer>

@@ -19,7 +19,7 @@ function VideosSlider() {
            mx-auto
          bg-text bg-linear-to-br from-amber-700  to-foreground         "
       >
-        Miami's top creators across every niche
+        Miami's top creators <br /> across every niche
       </h2>
       <div className=" relative">
         <div

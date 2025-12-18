@@ -189,15 +189,13 @@ export default function HomeFAQ() {
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="mx-auto max-w-3xl text-center"
+        className="mx-auto max-w-4xl text-center"
       >
         <h2
           className="
-            !mt-0
-            text-balance
-            text-3xl sm:text-4xl md:text-5xl
-            font-semibold tracking-tight
-            leading-[1.05]
+             text-balance
+             
+           
             bg-clip-text text-transparent
             bg-linear-to-b from-orange-900   to-foreground
           "

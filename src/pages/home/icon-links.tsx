@@ -66,7 +66,7 @@ export function IconFirstRevealTextLink({
         )}
         variants={{
           rest: { width: 0, opacity: 0 },
-          hover: { width: "auto", opacity: 1, marginLeft: "1rem" },
+          hover: { width: "auto", opacity: 1, marginInline: "1rem" },
         }}
         transition={{ type: "spring", stiffness: 500, damping: 40 }}
       >
