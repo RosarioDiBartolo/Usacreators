@@ -14,7 +14,7 @@ import { useState } from "react";
 import { IconFirstRevealTextLink } from "./icon-links";
 
 const navItems: NavItem[] = [
-  { name: "Home", url: "/", icon: Home, type: "link" },
+  { name: "Home",   icon: Home,id: "hero", type: "section" },
   { name: "Features", icon: Sparkles, id: "features", type: "section" },
   { name: "Pricing", url: "/#pricing", icon: BadgeDollarSign, type: "link" },
   { name: "FAQ", icon: HelpCircle, id: "faq", type: "section" },

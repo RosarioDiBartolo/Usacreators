@@ -6,7 +6,8 @@ const HeroCanvas = lazy(() => import("./hero-canvas"));
 
 export default function Hero() {
   return (
-     <HeroCanvas className=" h-[95vh]    rounded-b-[4rem]">
+    <section id = "hero"> 
+     <HeroCanvas  className=" h-[95vh]    rounded-b-[4rem]">
       {/* Trust Badge */}
       <div className="my-8 animate-fade-in-down">
         <div className="flex items-center gap-2 px-6 py-3 bg-primary/10 backdrop-blur-md border border-orange-300/30 rounded-full text-sm">
@@ -74,5 +75,6 @@ export default function Hero() {
         }
       </div>
     </HeroCanvas>
+    </section>
    );
 }
