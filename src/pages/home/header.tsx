@@ -4,16 +4,18 @@ import {
   HelpCircle,
   Home,
   Sparkles,
-  User,
-} from "lucide-react";
+ } from "lucide-react";
+ import { TbUsersPlus } from "react-icons/tb";
 
-import { 
+import { TbBrandApplePodcast } from "react-icons/tb";
+
+import {
   NavContainer,
   NavItemButton,
   useIsMobile,
   type NavItem,
 } from "@/components/ui/new-nav";
-import {   useState } from "react"; 
+import { useState } from "react";
 import { IconFirstRevealTextLink } from "./icon-links";
 
 const navItems: NavItem[] = [
@@ -39,15 +41,36 @@ export default function Header() {
         />
       ))}
 
-       <IconFirstRevealTextLink
-      to="/creators/apply"
-      icon={User}
-      label="Become a Creator"
-      buttonVariant="secondary"
-      buttonSize="lg"
-      textWidth={150}
-    />
-      
+      <IconFirstRevealTextLink
+        to="/creators/apply"
+        icon={
+          <span className="inline-flex 
+      rounded-full border
+      p-3  ">
+            <TbUsersPlus className=" " />
+          </span>
+        }
+        label="Become a Creator"
+        buttonVariant="outline"
+        buttonSize="lg"
+      />
+      <IconFirstRevealTextLink
+        to="/catalog"
+        icon={
+          <span className="
+          bg-secondary
+          inline-flex 
+      rounded-full border
+      p-3  ">
+            <TbBrandApplePodcast
+              className=" w-5 h-5  "
+            />
+          </span>
+        }
+        label="Explore our Catalog"
+        buttonVariant="secondary"
+        buttonSize="lg"
+      />
     </NavContainer>
   );
 }

@@ -10,7 +10,7 @@ const MotionLink = motion.create(TanstackLink);
 type IconFirstRevealTextLinkProps =
   React.ComponentProps<typeof TanstackLink> & {
     label: React.ReactNode;
-    icon: LucideIcon;
+    icon: React.ReactNode;
 
     buttonVariant?: Parameters<typeof buttonVariants>[0]["variant"];
     buttonSize?: Parameters<typeof buttonVariants>[0]["size"];
@@ -19,13 +19,12 @@ type IconFirstRevealTextLinkProps =
     iconClassName?: string;
     labelClassName?: string;
 
-    textWidth?: number; // px
-    gap?: number; // px
+     gap?: number; // px
   };
 
 export function IconFirstRevealTextLink({
   label,
-  icon: Icon,
+  icon,
 
   buttonVariant = "secondary",
   buttonSize = "lg",
@@ -34,8 +33,7 @@ export function IconFirstRevealTextLink({
   iconClassName,
   labelClassName,
 
-  textWidth = 140,
- 
+  
   className,
   ...linkProps
 }: IconFirstRevealTextLinkProps) {
@@ -56,21 +54,19 @@ export function IconFirstRevealTextLink({
       initial="rest"
       animate="rest"
     >
-      {/* Icon always visible */}
-      <span className="inline-flex bg-background text-secondary rounded-full p-3  ">
-        <Icon className={cn("h-5 w-5", iconClassName)} />
-      </span>
- 
+     
+          {icon}
+  
 
       {/* Revealing text */}
       <motion.span
         className={cn(
-          "overflow-hidden   whitespace-nowrap inline-flex items-center",
+          "overflow-hidden whitespace-nowrap inline-flex items-center",
           labelClassName
         )}
         variants={{
           rest: { width: 0, opacity: 0 },
-          hover: { width: textWidth, opacity: 1, marginLeft: "1rem" },
+          hover: { width: "auto", opacity: 1, marginLeft: "1rem" },
         }}
         transition={{ type: "spring", stiffness: 500, damping: 40 }}
       >

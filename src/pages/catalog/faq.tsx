@@ -164,7 +164,7 @@ export default function CatalogFAQ() {
     <section
       id="catalog-faq"
       className=" 
-      relative w-full max-w-7xl mx-auto 
+      relative w-full flex flex-col justify-center max-w-7xl mx-auto 
     section-padding 
      text-center
     "
@@ -173,11 +173,10 @@ export default function CatalogFAQ() {
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="flex flex-col gap-6 mb-12"
+        className="  mb-12  w-full flex flex-col  items-center text-center"
       >
          
-        <div className=" ">
-          <h2 className="
+           <h2 className="
             bg-text
             bg-linear-to-b from-secondary via-amber-900 to-amber-950 relative !mt-0"> 
             Got any questions?
@@ -187,8 +186,7 @@ export default function CatalogFAQ() {
             Here's a full breakdown of
             the services we offer,how the platform works, how you earn, and how we can help your business grow.
           </p>
-        </div>
-      </motion.div>
+       </motion.div>
 
        <Faq faqItems={brandFaqItems}/>
     </section>

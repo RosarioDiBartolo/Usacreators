@@ -32,7 +32,7 @@ const CarouselHero = ({
         </motion.div>
 
         {/* Heading */}
-        <div>
+        <div className=" flex flex-col items-center">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
