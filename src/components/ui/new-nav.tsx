@@ -65,7 +65,7 @@ export function NavContainer({
         className
       )}
     >
-      <div className="flex   sm:gap-3 items-center bg-background border border-border backdrop-blur-lg  pt-1 pb-3 sm:pb-0 px-2  rounded-t-md   justify-between  md:rounded-full shadow-lg">
+      <div className="flex shadow-primary/15 w-screen sm:w-fit   sm:gap-3 items-center bg-background border border-border backdrop-blur-lg  pt-1 pb-3 sm:pb-0 px-2  rounded-t-md   justify-between  sm:rounded-full shadow-lg">
         {children}
       </div>
     </div>
@@ -112,13 +112,13 @@ export function NavItemButton({ item, isActive, onActivate }: NavItemButtonProps
         }
       }}
       className={cn(
-        "relative cursor-pointer text-sm font-semibold  px-5 md:px-8 py-3 rounded-full transition-colors",
+        "relative flex items-center gap-2 cursor-pointer text-sm font-semibold  px-5 md:px-8 py-3 rounded-full transition-colors",
         "text-foreground/80 hover:text-primary",
         isActive && "bg-muted text-primary"
       )}
     >
       <span className="hidden md:inline">{item.name}</span>
-      <span className="md:hidden">
+      <span className="">
         <Icon size={18} strokeWidth={2.5} />
       </span>
 

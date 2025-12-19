@@ -1,30 +1,62 @@
- 
+import * as React from "react";
+import { cn } from "@/lib/client-only/utils";
 
 interface CarouselItemProps {
   title: string;
   description: string;
   image?: string;
+  className?: string;
 }
 
-export function CarouselItem({ title, description, image }: CarouselItemProps) {
+export function CarouselItem({
+  title,
+  description,
+  image,
+  className,
+}: CarouselItemProps) {
   return (
-    <div className=" w-full overflow-hidden  max-w-4xl rounded-4xl  mx-auto   shadow-xl border border-border/60 flex flex-col">
-      {image && (
-        <div className="relative   flex-1 h-full w-full">
+    <article
+      className={cn(
+        "relative h-full w-full overflow-hidden",
+        "rounded-3xl",
+        className
+      )}
+    >
+      {/* Background image */}
+      {image ? (
+        <>
           <img
             src={image}
-            alt={title}
-            className="h-full blur-[2px] w-full object-cover"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80"></div>
-        </div>
+
+          {/* Better than blur: crisp image + layered gradients */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10" />
+          <div className="absolute inset-0 bg-[radial-gradient(900px_circle_at_20%_20%,rgba(255,255,255,0.10),transparent_55%)]" />
+        </>
+      ) : (
+        <div className="absolute inset-0 bg-gradient-to-br from-muted/60 to-muted" />
       )}
-   
-        <div className=" p-8  w-full  max-w-2xl left-1/2 text-balance  -translate-x-1/2 text-white absolute bottom-0    text-center ">
-          <h3 className=" capitalize text-5xl leading-tight font-bold ">{title}</h3>
-          <p className="text-xl leading-normal text-white/85  ">{description}</p>
+
+      {/* Content */}
+      <div className="relative z-10 flex h-full items-end">
+        <div className="w-full px-6 pb-8 pt-20 md:px-10 md:pb-10">
+          <div className="mx-auto max-w-3xl text-center">
+            <h3 className="text-balance text-3xl font-bold leading-tight text-white md:text-5xl">
+              {title}
+            </h3>
+
+            <p className="mt-3 text-balance text-base leading-relaxed text-white/80 md:text-lg">
+              {description}
+            </p>
+
+            {/* subtle bottom divider */}
+            <div className="mx-auto mt-6 h-px w-24 bg-white/20" />
+          </div>
         </div>
-       
-    </div>
+      </div>
+    </article>
   );
 }

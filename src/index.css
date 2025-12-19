@@ -7,7 +7,7 @@
 /* ===== THEME TOKENS ===== */
 @theme inline {
   /* Fonts */
-  --font-poppins: "Poppins", sans-serif;
+  /* --font-poppins: "Poppins", sans-serif; */
 
   /* Radii */
   --radius-sm: calc(var(--radius) - 4px);
@@ -63,7 +63,8 @@
 
   /* Base */
   --background: var(--color-gray-200);
-  --foreground: var(--color-gray-950); /*l: 0%*/ 
+  --foreground: var(--color-gray-800); /*l: 0%*/ 
+  --foreground-focus: var(--color-gray-800); /*l: 0%*/ 
 
   /* Card / Popover */
   --card: #ffffff;
@@ -140,34 +141,12 @@
   * {
     @apply border-border outline-ring/50;
   }
-  h1,
-  .h1 {
-    @apply text-5xl md:text-7xl font-black leading-tight tracking-tight 
-         mt-6 mb-1;
-  }
-
-  h2,
-  .h2 {
-    @apply   font-bold   text-4xl md:text-6xl    
-         leading-tight tracking-tight 
-         mt-4 mb-1;
-  }
-
-  h3,
-  .h3 {
-    @apply mt-2 mb-1    text-3xl md:text-4xl font-semibold leading-snug;
-  }
-  h4,
-  .h4 {
-    @apply md:text-xl mt-5 mb-1;
-  }
+   
 
   .section-padding {
     @apply px-6 md:px-12 lg:px-20 py-20 lg:py-32;
   }
-  p {
-    @apply tracking-wider leading-8   font-medium;
-  }
+  
 
   .bg-text {
     @apply bg-clip-text text-transparent;
@@ -178,7 +157,7 @@
   /* Imposta il default: Poppins via font-sans */
   body,
   html {
-    @apply font-poppins bg-background text-foreground w-screen;
+    @apply   bg-background text-foreground w-screen;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;

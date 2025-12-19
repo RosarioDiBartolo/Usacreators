@@ -1,7 +1,7 @@
 import { Carousel } from "./carousel";
 import { CarouselItem } from "./carousel-item";
-import img1 from "@/assets/features-carousel/phone.jpg";
 
+import img1 from "@/assets/features-carousel/phone.jpg";
 import img2 from "@/assets/features-carousel/phone2.jpg";
 import img3 from "@/assets/features-carousel/portatili.jpg";
 import img4 from "@/assets/features-carousel/portatili2.jpg";
@@ -35,32 +35,25 @@ const items = [
 
 function Features() {
   return (
-    <section
-      id="features"
-      className="
-    px-3
-    text-center "
-    >
-      <div className="relative max-w-7xl mx-auto
-       
-      ">
-        <h2
-          className="
-          w-full
-          text-white/70
-        text-5xl md:text-6xl
-       leading-tight md:leading-snug
-        font-normal
-        capitalize
-        absolute  inset-0 h-fit mx-auto   z-10
-        text-center
-         
-      
-    "
-        >
-          Brand <span className=" text-white"> features </span> 
+    <section id="features" className="px-3 py-16 text-center md:py-24">
+      <div className="mx-auto max-w-7xl">
+        <h2 className="mx-auto max-w-3xl text-balance text-4xl font-bold leading-tight md:text-5xl">
+          Brand <span className="text-foreground-focus">features</span>
         </h2>
-        <Carousel items={items}   interval={5000} />
+
+        <p className="
+            font-normal
+            text-balance
+            text-base
+            sm:text-lg
+            leading-relaxed
+            text-foreground">
+          Everything creators need to look legit, get discovered, and start working with local Miami brands faster.
+        </p>
+
+        <div className="mt-10">
+          <Carousel items={items} autoPlay interval={5000} />
+        </div>
       </div>
     </section>
   );
