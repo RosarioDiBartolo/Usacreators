@@ -17,7 +17,9 @@ function VideosSlider() {
         className="
           text-center 
            mx-auto
-         bg-text bg-linear-to-br from-amber-700  to-foreground         "
+         bg-text 
+         bg-text
+            bg-linear-to-b from-orange-900 to-orange-950        "
       >
         Miami's top creators <br /> across every niche
       </h2>

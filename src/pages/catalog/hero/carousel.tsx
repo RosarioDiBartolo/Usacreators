@@ -73,14 +73,14 @@ const CreatorCard = ({
       {/* Content within the card */}
       <div className="absolute bottom-0 left-0 right-0 p-6 text-left text-white">
         <Quote className="mb-4 h-8 w-8 text-white/40" aria-hidden="true" />
-        <blockquote className="text-base line-clamp-3 font-medium leading-relaxed">
+        <blockquote className="text-sm line-clamp-3 font-medium leading-relaxed">
           {creator.bio}
         </blockquote>
         <figcaption className="mt-4 line-clamp-2">
-          <p className="font-semibold text-card-white/100">
+          <p className=" backdrop-blur-xl border px-3 text-lg line-clamp-1 w-fit backdrop-brightness-125 rounded-xl font-semibold text-card-white/100">
             &mdash; {creator.name}
           </p>
-          <p className="capitalize text-card-white/40">
+          <p className="capitalize line-clamp-1 text-white/50 font-semibold">
             {creator.niches.map((n) => n.replaceAll("_", " ")).join(", ")}
           </p>
         </figcaption>

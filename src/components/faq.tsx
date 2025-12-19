@@ -48,9 +48,12 @@ export default function FAQ({faqItems}:{faqItems: FaqItem[]}) {
                 flex justify-between items-center  ">
                   <div className=" flex gap-4 items-center">
                     <IconComponent
-                      className={`${item.iconColor} w-5 h-5 flex-shrink-0`}
+                      className={`${item.iconColor} w-5 h-5 flex-shrink-0 hidden md:block`}
                     />
-                    <span className=" font-light    text-3xl">{item.question}</span>
+                    <span className=" font-semibold    text-3xl
+                    bg-text
+            bg-linear-to-t from-orange-900 to-foreground 
+                    ">{item.question}</span>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-4 pt-0">

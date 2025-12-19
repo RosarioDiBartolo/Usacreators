@@ -183,7 +183,7 @@ export default function HomeFAQ() {
     <section
       id="faq"
       className="
-        relative px-3 w-full max-w-7xl mx-auto
+        relative  text-foreground/85 w-full max-w-5xl mx-auto
          
       "
     >
@@ -191,18 +191,21 @@ export default function HomeFAQ() {
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="mx-auto max-w-4xl text-center"
+        className="mx-auto max-w-4xl px-6 "
       >
-        <h2 className=" !text-xl md:text-3xl text-orange-400 leading-normal  font-normal ">
+        <h2 className=" font-bold px-5 py-2 mx-auto bg-muted rounded-full w-fit !text-xl md:text-3xl text-primary border border-primary leading-normal   ">
           Frequently Asked Questions
         </h2>
         <p
           className="
 
             text-balance
+            
             text-5xl md:text-6xl
             leading-tight md:leading-tight
-            font-normal   
+            font-bold   
+            bg-text
+            bg-linear-to-t from-orange-900 to-foreground 
              
           "
         >
@@ -212,7 +215,8 @@ export default function HomeFAQ() {
         <p
           className="
             mt-4
-            
+                        text-balance
+
             text-base
             sm:text-lg
             leading-relaxed

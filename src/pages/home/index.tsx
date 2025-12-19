@@ -8,8 +8,10 @@ import Header from "@/pages/home/header";
 
 function Home() {
   return (
+    <>
+          <Header />
+
     <div className="flex flex-col gap-40">
-      <Header />
 
       <Hero />
       <Videos />
@@ -21,6 +23,8 @@ function Home() {
         <Footer />
       </div>
     </div>
+        </>
+
   );
 }
 

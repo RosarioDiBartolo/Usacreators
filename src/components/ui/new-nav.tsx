@@ -59,17 +59,17 @@ export function NavContainer({
   children: React.ReactNode;
 }) {
   return (
-    <div
+     <div
       className={cn(
-        "fixed h-fit bottom-0 sm:top-0 left-1/2 -translate-x-1/2 z-50 mb-6 sm:pt-6",
+        "fixed h-fit bottom-0 sm:top-0 left-1/2 -translate-x-1/2 z-50  sm:pt-6",
         className
       )}
     >
-      <div className="flex  gap-3 items-center justify-between bg-background border border-border backdrop-blur-lg  pt-1 px-2 rounded-full shadow-lg">
+      <div className="flex   sm:gap-3 items-center bg-background border border-border backdrop-blur-lg  pt-1 pb-3 sm:pb-0 px-2  rounded-t-md   justify-between  md:rounded-full shadow-lg">
         {children}
       </div>
     </div>
-  );
+   );
 }
 
 export function NavActiveLamp() {
@@ -112,7 +112,7 @@ export function NavItemButton({ item, isActive, onActivate }: NavItemButtonProps
         }
       }}
       className={cn(
-        "relative cursor-pointer text-sm font-semibold px-8 py-3 rounded-full transition-colors",
+        "relative cursor-pointer text-sm font-semibold  px-5 md:px-8 py-3 rounded-full transition-colors",
         "text-foreground/80 hover:text-primary",
         isActive && "bg-muted text-primary"
       )}

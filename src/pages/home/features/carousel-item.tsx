@@ -20,8 +20,8 @@ export function CarouselItem({ title, description, image }: CarouselItemProps) {
         </div>
       )}
    
-        <div className=" p-8  w-full  max-w-2xl left-1/2   -translate-x-1/2 text-white absolute bottom-0    text-center ">
-          <h3 className=" capitalize text-5xl leading-tight font-bold">{title}</h3>
+        <div className=" p-8  w-full  max-w-2xl left-1/2 text-balance  -translate-x-1/2 text-white absolute bottom-0    text-center ">
+          <h3 className=" capitalize text-5xl leading-tight font-bold ">{title}</h3>
           <p className="text-xl leading-normal text-white/85  ">{description}</p>
         </div>
        
