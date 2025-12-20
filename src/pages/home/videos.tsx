@@ -46,6 +46,7 @@ function VideoCard({ src }: { src: string }) {
         bg-card/50
         shadow-[0_25px_80px_-55px_rgba(0,0,0,0.65)]
         backdrop-blur
+        h-fit
       "
     >
       {/* Consistent sizing across videos */}

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { cn } from "@/lib/client-only/utils";
 
-interface CarouselItemProps {
+export interface CarouselItemProps {
   title: string;
   description: string;
   image?: string;

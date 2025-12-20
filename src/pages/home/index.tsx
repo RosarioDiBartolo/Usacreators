@@ -9,21 +9,21 @@ import Header from "@/pages/home/header";
 function Home() {
   return (
     <>
-          <Header />
+      <Header />
 
-    <div className="flex flex-col gap-40">
+      <div className="flex flex-col gap-25">
 
-      <Hero />
-      <Videos />
+        <Hero />
+        <Videos />
 
-      <Features />
-      <FAQ />
-      <div>
-        <CreatorsBrands />
-        <Footer />
+        <Features />
+        <FAQ />
+        <div>
+          <CreatorsBrands />
+          <Footer />
+        </div>
       </div>
-    </div>
-        </>
+    </>
 
   );
 }
