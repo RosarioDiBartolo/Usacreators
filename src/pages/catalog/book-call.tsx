@@ -11,10 +11,11 @@ function BookCall() {
         text-center
         flex flex-col items-center
           lg:rounded-3xl border border-amber-950/40
-       bg-muted text-muted-foreground  shadow-[0_22px_80px_rgba(0,0,0,0.12)]  "
+       bg-muted text-muted-foreground
+        shadow-[0_22px_80px_rgba(0,0,0,0.12)]
+           "
       >
-        <h2 className="bg-text bg-linear-to-b  px-0.5 w-full
-       from-orange-800 to-foreground">
+        <h2 className=" h2 py-4 text-foreground-focus   bg-white ">
           Book a Free Strategy Call
         </h2>
 

@@ -15,7 +15,7 @@ import { StepNavigation } from "./step-navigation";
 import { contentVariants } from "./utils";
 
 import useApplicationForm from "@/lib/creators/use-application-form";
-import {   useState } from "react";
+import { useState } from "react";
 import {
   stepKeysMap,
   Steps,
@@ -63,49 +63,49 @@ export default function OnboardingForm() {
   }
   return (
     <>
-     <motion.div
-      className="
-        p-10 py-30   text-center 
-        relative  rounded-2xl   "
-    >
-      <StepIndicator currentStepIndex={currentStepIndex} />
-
-      <motion.form
-        onSubmit={(e) => {
-          e.preventDefault();
-          form.handleSubmit();
-        }}
-        noValidate
-        className=" flex-1 relative flex flex-col text-start"
+      <motion.div
+        className="
+      container max-w-3xl mx-auto
+      pt-20 px-8
+      text-center relative
+      min-h-svh flex flex-col
+              "
       >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentStepIndex}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={contentVariants}
-            className="flex-1  "
-          >
-            {currentStepIndex === 0 && <PersonalInfo form={form} />}
-            {currentStepIndex === 1 && <SocialInfo form={form} />}
-            {currentStepIndex === 2 && <Details form={form} />}
-            {currentStepIndex === 3 && (
-              <ReviewConsentStep form={form} />
-            )}   {confirmStep && <ConfirmStep form={form}  />}
-          </motion.div>
-        </AnimatePresence>
-      </motion.form>
+        <StepIndicator currentStepIndex={currentStepIndex} />
 
-    
-    </motion.div>
-      <StepNavigation
-        currentStepIndex={currentStepIndex}
-        isSubmitting={isPending}
-        nextStep={nextStep}
-        prevStep={prevStep}
-        handleSubmit={form.handleSubmit}
-      /></>
-   
+        <motion.form
+          onSubmit={(e) => {
+            e.preventDefault();
+            form.handleSubmit();
+          }}
+          noValidate
+          className="  flex-1 relative flex flex-col text-start"
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentStepIndex}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={contentVariants}
+              className="flex-1  "
+            >
+              {currentStepIndex === 0 && <PersonalInfo form={form} />}
+              {currentStepIndex === 1 && <SocialInfo form={form} />}
+              {currentStepIndex === 2 && <Details form={form} />}
+              {currentStepIndex === 3 && <ReviewConsentStep form={form} />}{" "}
+              {confirmStep && <ConfirmStep form={form} />}
+            </motion.div>
+          </AnimatePresence>
+        </motion.form>
+        <StepNavigation
+          currentStepIndex={currentStepIndex}
+          isSubmitting={isPending}
+          nextStep={nextStep}
+          prevStep={prevStep}
+          handleSubmit={form.handleSubmit}
+        />
+      </motion.div>
+    </>
   );
 }

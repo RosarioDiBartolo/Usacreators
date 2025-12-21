@@ -5,6 +5,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { contentVariants } from "./utils";
 import { Steps } from "@/lib/creators/schemas/creators-apply-shared";
+import { badgeVariants } from "@/components/ui/badge";
 
 export default function StepIndicator({
   currentStepIndex,
@@ -12,8 +13,7 @@ export default function StepIndicator({
   currentStepIndex: number;
 }) {
   const step = Steps[currentStepIndex];
-  const pct = (currentStepIndex / (Steps.length - 1)) * 100;
-
+ 
   return (
     <AnimatePresence mode="wait">
       <motion.div
@@ -24,21 +24,37 @@ export default function StepIndicator({
         initial="hidden"
         animate="visible"
         exit="exit"
-        className=" max-w-lg mx-auto   min-h-30      "
+        className="    mb-10      "
       >
-        {/* <div className=" max-w-xs mx-auto bg-muted h-1 sm:h-1.5 rounded-full overflow-hidden mt-2 sm:mt-3">
-        <motion.div
-          className="  h-full bg-linear-to-r from-amber-400 to-primary"
-          initial={{ width: 0 }}
-          animate={{ width: `${pct}%` }}
-          transition={{ duration: 0.3 }}
-        />
-      </div> */}
-
-        <motion.h3 className=" font-extrabold capitalize    ">
+        <h2
+          className={badgeVariants({
+            variant: "default",
+            className: "  capitalize",
+          })}
+        >
+          <step.icon /> {step.id}
+        </h2>
+        <motion.p
+          className="
+            
+            text-balance
+            text-foreground-focus
+            text-5xl md:text-6xl
+            leading-tight
+            font-bold
+          "
+        >
           {step.title}
-        </motion.h3>
-        <motion.p className=" leading-tight text-muted-foreground">
+        </motion.p>
+        <motion.p
+          className="   
+            font-normal
+          text-balance
+            text-base
+            sm:text-lg
+            leading-relaxed
+            text-fground"
+        >
           {step.subTitle}
         </motion.p>
       </motion.div>

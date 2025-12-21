@@ -8,6 +8,13 @@ import {
 import { z } from "zod";
 import { MAX_PIC_SIZE } from "../constants"; 
 import legal from "./legal-sub";
+import {
+  User,
+  Share2,
+  Info,
+  ShieldCheck,
+  MailCheck,
+} from "lucide-react";
 
 export const MAX_BIO = 1000;
 // 🔹 Cross-field rules (run after preprocess)
@@ -61,6 +68,7 @@ const profilePictureClient = z
   );
 export const formSteps = {
   personal: {
+    icon: User,
     title: "Let's start simple",
     subTitle: "We need your basic info so we know who we're speaking with.",
     schema: z.object({
@@ -75,6 +83,7 @@ export const formSteps = {
   },
 
   social: {
+    icon: Share2,
     title: "Make yourself reachable",
     subTitle:
       "Share your social handles so brands can understand your style and reach.",
@@ -94,6 +103,7 @@ export const formSteps = {
   },
 
   details: {
+    icon: Info,
     title: "Some details about you",
     subTitle:
       "Tell us what niche you work in and upload your profile picture so brands can get a better sense of you.",
@@ -107,8 +117,9 @@ export const formSteps = {
   },
 
   legal: {
+    icon: ShieldCheck,
     title: "Legals",
-    subTitle: legal ,
+    subTitle: legal,
     schema: z.object({
       newsLetter: mustBeTrue,
       termsAccepted: mustBeTrue,
@@ -116,12 +127,14 @@ export const formSteps = {
   },
 
   confirm: {
+    icon: MailCheck,
     title: "Check your Email",
     subTitle:
       "We've sent you a confirmation email. Open it to complete your application.",
     schema: null,
   },
 } as const;
+
 
 type FormSteps = typeof formSteps;
 

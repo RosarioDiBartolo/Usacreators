@@ -33,16 +33,18 @@ const CarouselHero = ({
 
         {/* Heading */}
         <div className=" flex flex-col items-center">
-          <motion.p
+          <motion.h2
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.12 }}
-            className="   tracking-widest flex gap-2 justify-center items-center  text-amber-600"
+            className="h2"
           >
-            <div className="   bg-amber-600   h-[0.5px]  w-12" />
-            BEST CREATORS IN MIAMI
-            <div className="   bg-amber-600   h-[0.5px]  w-12" />
-          </motion.p>
+            <span className=" text-amber-500  underline underline-offset-7 decoration-amber-500 decoration-1   ">
+              {" "}
+              BEST
+            </span>{" "}
+            CREATORS IN MIAMI
+          </motion.h2>
 
           <motion.h2
             initial={{ opacity: 0, y: 12 }}

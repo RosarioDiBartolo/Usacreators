@@ -35,7 +35,7 @@ export function StepNavigation({
           initial="hidden"
           animate="visible"
           exit="exit"
-          className=" sticky bottom-0  py-5"
+          className="max-w-xl w-full mx-auto  sticky bottom-0  py-5"
         >
           <div className="   rounded-full backdrop-blur flex gap-3 sm:gap-4 justify-between p-3  border ">
             <motion.div

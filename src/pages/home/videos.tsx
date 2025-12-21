@@ -9,6 +9,11 @@ import video3 from "@/assets/creators-videos/sabina.mp4";
 import video4 from "@/assets/creators-videos/sabina2.mp4";
 import video5 from "@/assets/creators-videos/sabina3.mp4";
 import video6 from "@/assets/creators-videos/sabina4.mp4";
+import { motion } from "motion/react";
+import { Badge } from "@/components/ui/badge";
+import { StarOffIcon } from "lucide-react";
+import { GrStar } from "react-icons/gr";
+import LogoIcon from "@/components/logo";
 
 const videos = [video1, video2, video3, video4, video5, video6];
 
@@ -38,7 +43,8 @@ function VideoCard({ src }: { src: string }) {
   }, []);
 
   return (
-    <div
+    <motion.div
+      whileHover={"hover"}
       className="
         group relative overflow-hidden
         rounded-2xl
@@ -51,6 +57,11 @@ function VideoCard({ src }: { src: string }) {
     >
       {/* Consistent sizing across videos */}
       <div className="relative aspect-[9/16] w-[210px] sm:w-[240px] md:w-[260px]">
+        <Badge
+        className=" absolute z-10 top-4 left-4 "
+        variant={"outline"}>
+          <GrStar/> Our top creators
+        </Badge>
         <video
           ref={ref}
           src={src}
@@ -72,7 +83,7 @@ function VideoCard({ src }: { src: string }) {
         {/* subtle ring on hover */}
         <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/0 transition group-hover:ring-white/10" />
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -80,10 +91,13 @@ export default function VideosSlider() {
   return (
     <section id="videos" className="relative mx-auto w-full max-w-7xl px-3 py-16 text-center md:py-24">
       <div className="mx-auto max-w-3xl">
-        <h2 className="text-balance text-4xl font-bold leading-tight md:text-5xl">
+      <Badge className=" my-2" > 
+        The service we provide at  <LogoIcon size={26} className=" border border-white/60"/>
+      </Badge>
+        <h2 className="text-balance text-5xl font-bold leading-tight md:text-6xl">
           Miami&apos;s top creators <br className="hidden sm:block" /> across every niche
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-balance text-base text-muted-foreground md:text-lg">
+        <p className=" font-medium mx-auto mt-4 max-w-2xl text-balance text-base text-muted-foreground md:text-lg">
           Real UGC, real faces, real performance — swipeable proof of quality brands can trust.
         </p>
       </div>

@@ -21,7 +21,7 @@ export interface FaqItem {
 export default function FAQ({ faqItems }: { faqItems: FaqItem[] }) {
   return (
     <motion.div
-      className="p-12"
+      className="py-12"
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.1 }}
@@ -43,7 +43,7 @@ export default function FAQ({ faqItems }: { faqItems: FaqItem[] }) {
                 className="
                 text-lg
                 font-bold
-                text-foreground-focus
+              
                 px-6 py-4
                 flex justify-between items-center  "
               >

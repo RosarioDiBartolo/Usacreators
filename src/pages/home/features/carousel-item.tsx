@@ -44,7 +44,7 @@ export function CarouselItem({
       <div className="relative z-10 flex h-full items-end">
         <div className="w-full px-6 pb-8 pt-20 md:px-10 md:pb-10">
           <div className="mx-auto max-w-3xl text-center">
-            <h3 className="text-balance text-3xl font-bold leading-tight text-white md:text-5xl">
+            <h3 className="text-balance text-3xl font-bold leading-tight text-white md:text-6xl">
               {title}
             </h3>
 

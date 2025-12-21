@@ -47,16 +47,11 @@ function Features() {
   return (
     <section id="features" className="px-3 py-16 text-center md:py-24">
       <div className="mx-auto max-w-7xl">
-        <h2 className="mx-auto max-w-3xl text-balance text-4xl font-bold leading-tight md:text-5xl">
-          Brand <span className="text-foreground-focus">features</span>
-        </h2>
-
-     
-          <Carousel  items={items} autoPlay interval={100} >
-            
- 
-          </Carousel>
-       
+        <Carousel items={items} interval={100}>
+          <h2 className=" absolute z-10 text-gray-300/80  inset-0 h-fit    mx-auto max-w-3xl text-balance text-4xl font-medium leading-loose md:text-5xl">
+            Brand <span className="">features</span>
+          </h2>
+        </Carousel>
       </div>
     </section>
   );
