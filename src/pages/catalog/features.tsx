@@ -19,14 +19,14 @@ interface FeatureData {
 export default function Features() {
   return (
     <section className="relative w-full max-w-[960px] mx-auto px-4 py-12 md:py-20">
-      <p className="text-[11px] font-medium text-amber-900/80 tracking-[0.4em] mb-3">
+      <p className="text-[11px] font-medium text-amber-900  tracking-[0.4em] mb-3">
         BUILT TO SCALE WITH YOU
       </p>
-      <h2 className="bg-text bg-linear-to-b from-secondary via-amber-900 to-amber-950">
+      <h2 className=" h2  ">
         Miami Creators features for brands
       </h2>
 
-      <p className="mt-4 text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
+      <p className=" body   ">
         Stop scrolling hashtags and DMing random profiles. Our catalog gives
         you a clean, structured view of Miami-based creators so you can
         shortlist, brief and launch campaigns in days, not months.

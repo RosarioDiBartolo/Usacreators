@@ -173,16 +173,15 @@ export default function CatalogFAQ() {
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="  mb-12  w-full flex flex-col  items-center text-center"
+        className="   w-full flex flex-col  items-center text-center"
       >
          
            <h2 className="
-            bg-text
-            bg-linear-to-b from-secondary via-amber-900 to-amber-950 relative !mt-0"> 
+            h2"> 
             Got any questions?
   
           </h2>
-          <p className="text-base  font-bold leading-relaxed max-w-3xl mx-auto ">
+          <p className="body">
             Here's a full breakdown of
             the services we offer,how the platform works, how you earn, and how we can help your business grow.
           </p>

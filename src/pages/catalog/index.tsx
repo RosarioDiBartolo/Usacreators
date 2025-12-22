@@ -1,12 +1,12 @@
-import CarouselHero from "@/pages/catalog/hero";
+import CarouselHero from "./hero";
 import Features from "./features";
 import SecondSection from "./second-section";
-import Header from "@/pages/home/header";
-import DemoVideo from "./demo-video";
+ import DemoVideo from "./demo-video";
 import BookCall from "./book-call";
 import CatalogPreview from "./catalog-preview";
 import { useRef } from "react";
 import CatalogFAQ from "./faq";
+import Header from "./header";
 
 function CatalogPage() {
   const previewRef = useRef<HTMLDivElement>(null);

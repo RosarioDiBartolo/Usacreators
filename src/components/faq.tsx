@@ -21,7 +21,7 @@ export interface FaqItem {
 export default function FAQ({ faqItems }: { faqItems: FaqItem[] }) {
   return (
     <motion.div
-      className="py-12"
+      className="py-12 text-start"
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.1 }}
@@ -42,15 +42,16 @@ export default function FAQ({ faqItems }: { faqItems: FaqItem[] }) {
               <AccordionTrigger
                 className="
                 text-lg
-                font-bold
+                font-semibold
               
                 px-6 py-4
                 flex justify-between items-center  "
               >
                 <div className=" flex gap-4 items-center">
+                  <span className="    shadow-lg shadow-amber-50 rounded-full p-2 bg-tertiary/30"> 
                   <IconComponent
-                    className={`${item.iconColor} w-5 h-5 shrink-0 hidden md:block`}
-                  />
+                    className={`${item.iconColor}  w-5 h-5 shrink-0  `}
+                  /></span>
                   <span
                     className=" 
                   

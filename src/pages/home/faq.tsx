@@ -213,13 +213,7 @@ export default function HomeFAQ() {
 
         <p
           className="
-            mt-4
-            font-normal
-            text-balance
-            text-base
-            sm:text-lg
-            leading-relaxed
-            text-foreground
+            body
           "
         >
           Welcome to the Miami Creators Community. Here's a full breakdown of

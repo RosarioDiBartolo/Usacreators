@@ -48,7 +48,7 @@ export function CarouselItem({
               {title}
             </h3>
 
-            <p className="mt-3 text-balance text-base leading-relaxed text-white/80 md:text-lg">
+            <p className="  text-white/80 ">
               {description}
             </p>
 

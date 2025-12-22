@@ -1,6 +1,11 @@
-"use client";
-import { BadgeDollarSign, HelpCircle, Home, Sparkles } from "lucide-react";
-import { TbUsersPlus } from "react-icons/tb";
+ 
+ 
+import {
+  Home,
+  HelpCircle,
+  Calendar,
+  Layers, 
+} from "lucide-react";
  
 
 import {
@@ -9,17 +14,16 @@ import {
   useIsMobile,
   type NavItem,
 } from "@/components/ui/new-nav";
-import { useState } from "react";
-import { IconFirstRevealTextLink } from "@/components/icon-links";
+import { useState } from "react"; 
 import ExploreCatalogLink from "@/components/explore-catalog-link";
 import { BecomeCreatorLink } from "@/components/become-creator-link";
-
 const navItems: NavItem[] = [
-  { name: "Home", icon: Home, id: "hero", type: "section" },
-  { name: "Features", icon: Sparkles, id: "features", type: "section" },
-  { name: "Pricing", url: "/#pricing", icon: BadgeDollarSign, type: "link" },
+  { name: "Home", icon: Home, url: "/", type: "link" },
+  { name: "Services", icon: Layers, id: "services", type: "section" },
   { name: "FAQ", icon: HelpCircle, id: "faq", type: "section" },
+  { name: "Book a call", icon: Calendar, id: "booking", type: "section" },
 ];
+
 export default function Header() {
   const isMobile = useIsMobile(768);
 
@@ -36,9 +40,8 @@ export default function Header() {
           onActivate={(it) => setActiveTab(it.name)}
         />
       ))}
-      <BecomeCreatorLink />
-      
-      <ExploreCatalogLink/>
+      <BecomeCreatorLink     />
+      <ExploreCatalogLink />
     </NavContainer>
   );
 }

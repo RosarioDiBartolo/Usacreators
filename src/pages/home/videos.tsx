@@ -97,7 +97,7 @@ export default function VideosSlider() {
         <h2 className="text-balance text-5xl font-bold leading-tight md:text-6xl">
           Miami&apos;s top creators <br className="hidden sm:block" /> across every niche
         </h2>
-        <p className=" font-medium mx-auto mt-4 max-w-2xl text-balance text-base text-muted-foreground md:text-lg">
+        <p className="body  ">
           Real UGC, real faces, real performance — swipeable proof of quality brands can trust.
         </p>
       </div>

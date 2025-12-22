@@ -13,11 +13,11 @@ function DemoVideo() {
             <span>See the catalog in action</span>
           </div>
 
-          <h2 className=" bg-text bg-linear-to-b from-secondary via-amber-900 to-amber-950">
+          <h2 className=" h2 bg-text bg-linear-to-b from-secondary via-amber-900 to-amber-950">
             Watch the Demo
           </h2>
 
-          <p className="text-sm md:text-base leading-relaxed max-w-xl text-muted-foreground">
+          <p className=" body max-w-xl text-muted-foreground">
             In this short walkthrough we show you exactly how brands use Miami
             Creators to discover local UGC talent, review example content and
             organize their next campaign in just a few clicks.

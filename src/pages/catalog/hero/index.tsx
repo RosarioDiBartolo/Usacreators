@@ -5,6 +5,7 @@ import { RefObject, Suspense } from "react";
 import { Skeleton } from "@/components/skeleton";
 import { Button } from "@/components/ui/button";
 import Creators from "./carousel";
+import { badgeVariants } from "@/components/ui/badge";
 
 const CarouselHero = ({
   previewRef,
@@ -33,6 +34,19 @@ const CarouselHero = ({
 
         {/* Heading */}
         <div className=" flex flex-col items-center">
+        <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, ease: "easeOut", delay: 0.18 }}
+            className={
+              badgeVariants({
+                variant: "outline",
+                className: " mt-4",
+              }) 
+            }
+          >
+           Just Pick Your Favourite.
+          </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -46,14 +60,7 @@ const CarouselHero = ({
             CREATORS IN MIAMI
           </motion.h2>
 
-          <motion.h2
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, ease: "easeOut", delay: 0.18 }}
-            className="my-0 bg-text bg-linear-to-t from-primary to-amber-400"
-          >
-            You Just Pick Your Favourite.
-          </motion.h2>
+          
         </div>
 
         <div>
