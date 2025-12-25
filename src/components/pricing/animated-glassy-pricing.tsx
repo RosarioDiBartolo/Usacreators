@@ -217,7 +217,7 @@ export const PricingCard = ({
     backdrop-blur-[14px]  bg-gradient-to-br rounded-2xl shadow-xl flex-1 max-w-xs px-7 py-8 flex flex-col transition-all duration-300
     from-stone-300/20 border border-cyan-300/40
      
-    ${isPopular ? "scale-105 bg-secondary relative ring-2 ring-primary/20   shadow-2xl" : ""}
+    ${isPopular ? "scale-105 bg-secondary text-secondary-foreground relative ring-2 ring-primary/20   shadow-2xl" : ""}
   `;
   const buttonClasses = `
     mt-auto w-full py-2.5 rounded-xl font-semibold text-[14px] transition font-sans
