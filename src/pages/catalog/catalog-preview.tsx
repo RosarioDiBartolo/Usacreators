@@ -188,7 +188,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
           ))}
         </motion.div>
 
-        <div className=" border flex gap-3  text-start p-20 rounded-[170px] mb-2 bg-background  ">
+        <div className=" border flex flex-col lg:flex-row gap-3  text-start p-8 md:p-20 rounded-[48px] md:rounded-[170px] mb-2 bg-background  ">
           <div className="flex-1 space-y-4">
             <Badge variant="secondary">Miami Creators</Badge>
 

@@ -4,7 +4,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { Quote } from "lucide-react";
 import { motion, Variants } from "motion/react";
 import missingPic from "@/assets/images/creator-missing.jpg";
-
+import { useIsMobile } from "@/components/ui/new-nav";
 //Could be dangerous... this is a server side file
 import { type CreatorRecord } from "@/lib/creators/creators-collection";
 
@@ -60,7 +60,7 @@ const CreatorCard = ({
       whileHover="hover"
       whileTap="tap"
     >
-      <div className="relative h-full w-[300px]">
+      <div className="relative h-full w-[80vw] md:w-[300px]">
         <img
           src={creator.profilePictureUrl ?? missingPic}
           alt={creator.name}
@@ -96,10 +96,11 @@ const Creators = () => {
     })
   );
 
+  const isMobile = useIsMobile();
+
   return (
-    <> 
-  
-      <div className= "lg:rounded-full overflow-hidden ">
+    <>
+      <div className="lg:rounded-full overflow-hidden ">
         <motion.div
           variants={sliderContainerVariants}
           initial="hidden"
@@ -107,14 +108,14 @@ const Creators = () => {
           viewport={{ once: true, amount: 0.3 }}
           className="w-full"
         >
-          <InfiniteSlider duration={100}>
+          <InfiniteSlider duration={100} key={String(isMobile)}>
             {creators.map((c, i) => (
               <CreatorCard key={c.id ?? i} creator={c} index={i} />
             ))}
           </InfiniteSlider>
         </motion.div>
       </div>
-  </>
+    </>
   );
 };
 

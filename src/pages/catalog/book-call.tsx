@@ -15,11 +15,11 @@ function BookCall() {
         shadow-[0_22px_80px_rgba(0,0,0,0.12)]
            "
       >
-        <h2 className=" h2 py-4 text-foreground-focus   bg-white ">
+        <h2 className=" h2 py-4 text-white  text-shadow-2xs ">
           Book a Free Strategy Call
         </h2>
 
-        <InlineWidget className="  w-full  h-200 overflow-hidden" url={"https://calendly.com/collabs-miamicreator/30min?embed_type=Inline&embed_domain=1&back=1"} />
+        <InlineWidget className="  w-full  h-[830px] overflow-hidden" url={"https://calendly.com/collabs-miamicreator/30min?embed_type=Inline&embed_domain=1&back=1"} />
       </div>
     </section>
   );
