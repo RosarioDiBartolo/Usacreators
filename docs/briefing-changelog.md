@@ -11,3 +11,8 @@
 - Added creator application schema + persistence/logging details (`src/lib/creators/schemas/creators-apply-shared.ts`, `src/lib/creators/schemas/creators-apply-server.ts`, `src/lib/creators/subscription-steps.ts`, `src/lib/creators/use-application-form.ts`).
 - Documented Brevo sync paths in both app runtime and Firebase Functions (`src/lib/brevo/**`, `functions/src/index.ts`, `functions/package.json`).
 - Added TODOs for confirmation email delivery, legal-registry schema mismatch, catalog access control, and request-context hashing (`src/lib/creators/subscription-steps.ts`, `src/lib/brevo/utils.ts`, `functions/src/index.ts`, `src/lib/legal/utils.ts`, `src/scripts/legal.ts`, `src/lib/server-only/request/request-context.ts`).
+
+## 2025-12-22
+- Updated legal registry data-model notes to reflect runtime `cookies` expectations and the sync script's `currentVersion`/terms/privacy shape (`src/lib/legal/utils.ts`, `src/scripts/legal.ts`).
+- Expanded the client-required application fields list to include `newsLetter` and `termsAccepted` (`src/lib/creators/schemas/creators-apply-shared.ts`).
+- Clarified the legal registry TODO to note missing markdown files and JSON-only legal assets (`src/scripts/legal.ts`, `public/legal/**`, `src/assets/legal/**`).

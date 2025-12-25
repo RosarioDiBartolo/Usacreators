@@ -7,7 +7,7 @@ import { CheckCircleIcon, Lock, LockOpenIcon, Sparkles } from "lucide-react";
 import { Dispatch, RefObject, SetStateAction, useState } from "react";
 import { motion } from "motion/react";
 import { CreatorRecord } from "@/lib/creators/creators-collection";
- import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge";
 
 type CatalogPreviewProps = {
   previewRef: RefObject<HTMLDivElement>;
@@ -81,6 +81,7 @@ const NicheButton = ({
           selected ? old.filter((nid) => nid != niche.id) : [...old, niche.id]
         );
       }}
+      className="snap-center"
       variant={selected ? "secondary" : "outline"}
       key={niche.id}
     >
@@ -89,17 +90,23 @@ const NicheButton = ({
   );
 };
 
-function NichesTags({selectedNiches, setSelectedNiches}:{  selectedNiches: string[];
-  setSelectedNiches: Dispatch<SetStateAction<string[]>>}) {
-   return (
-    <div className="my-3 justify-center border border-secondary overflow-auto md:overflow-hidden rounded-full flex gap-1 p-2">
-      {[{ id: "fashion", label: "Fashion" },
-  { id: "streetwear", label: "Streetwear" },
-  { id: "beauty", label: "Beauty" },
-  { id: "skincare", label: "Skincare" },
-  { id: "travel", label: "Travel" },
-  { id: "luxury_lifestyle", label: "Luxury Lifestyle" },
- ].map((niche) => (
+function NichesTags({
+  selectedNiches,
+  setSelectedNiches,
+}: {
+  selectedNiches: string[];
+  setSelectedNiches: Dispatch<SetStateAction<string[]>>;
+}) {
+  return (
+    <div className="my-3 items-center  snap-x   border border-secondary overflow-auto md:overflow-hidden rounded-full flex gap-1 p-2">
+      {[
+        { id: "fashion", label: "Fashion" },
+        { id: "streetwear", label: "Streetwear" },
+        { id: "beauty", label: "Beauty" },
+        { id: "skincare", label: "Skincare" },
+        { id: "travel", label: "Travel" },
+        { id: "luxury_lifestyle", label: "Luxury Lifestyle" },
+      ].map((niche) => (
         <NicheButton
           key={niche.id}
           niche={niche}
@@ -112,21 +119,19 @@ function NichesTags({selectedNiches, setSelectedNiches}:{  selectedNiches: strin
 }
 
 function CatalogPreview({ previewRef }: CatalogPreviewProps) {
-    const [selectedNiches, setSelectedNiches] = useState<string[]>([]);
-
+  const [selectedNiches, setSelectedNiches] = useState<string[]>([]);
 
   const { data: creators } = useSuspenseQuery(
     creatorsQueryOptions({
-      cleaned: false, limit: 16
-     })
+      cleaned: false,
+      limit: 16,
+    })
   );
 
-  const filtered = creators.filter(
-    c=> selectedNiches.every( n =>  c.niches.includes(n) )
-  )
+  const filtered = creators.filter((c) =>
+    selectedNiches.every((n) => c.niches.includes(n))
+  );
 
- 
- 
   return (
     <section
       ref={previewRef}
@@ -136,7 +141,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
       outline-secondary/10
         mx-auto
         relative
-        overflow-hidden
+         
         max-w-7xl
         border
         bg-linear-to-t from-tertiary/30 via-muted/10
@@ -153,7 +158,7 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
             <span>Creator catalog preview</span>
           </p>
 
-           <h2 className="text-3xl md:text-5xl">
+          <h2 className="text-3xl md:text-5xl">
             Our top-rated creators in Miami
           </h2>
 
@@ -167,12 +172,15 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
           </p>
         </div>
 
-        <NichesTags selectedNiches={selectedNiches} setSelectedNiches={setSelectedNiches} />
+        <NichesTags
+          selectedNiches={selectedNiches}
+          setSelectedNiches={setSelectedNiches}
+        />
       </div>
       <div className="p-8 space-y-10 ">
         <motion.div
           className="
-                grid gap-5 grid-cols-3 md:grid-cols-4 lg:grid-cols-4  
+                grid gap-5 grid-cols-1 md:grid-cols-4 lg:grid-cols-4  
               "
         >
           {filtered.map((c) => (
@@ -219,8 +227,10 @@ function CatalogPreview({ previewRef }: CatalogPreviewProps) {
             </Button>
           </div>
 
-          <div className="flex-1 
-          bg-linear-to-b from-muted via-muted/70 to-muted/20 border border-secondary/15   rounded-[130px] flex items-center justify-center">
+          <div
+            className="flex-1 
+          bg-linear-to-b from-muted via-muted/70 to-muted/20 border border-secondary/15   rounded-[130px] flex items-center justify-center"
+          >
             <div
               className="
       relative w-full max-w-sm 

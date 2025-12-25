@@ -37,12 +37,12 @@ Source: repository code/config only. No speculation.
 - `applications` collection: creator application records, including `status`, `confirmToken`, and nested `legal` object (`src/lib/creators/schemas/creators-apply-server.ts`, `src/lib/creators/subscription-steps.ts`, `src/lib/creators/creators-collection.ts`).
 - `legal_acceptances` collection: append-only acceptance logs (`src/lib/creators/subscription-steps.ts`, `src/lib/creators/legal-collection.ts`).
 - `pages/home` document: platform meta used for `<title>` (`src/lib/meta/index.ts`, `firestore.rules`).
-- `legal/registry` + `legal/history/versions/{YYYY-MM-DD}` docs: referenced by runtime legal-version reads + sync script (`src/lib/legal/utils.ts`, `src/scripts/legal.ts`).
+- `legal/registry` + `legal/history/versions/{YYYY-MM-DD}` docs: runtime expects registry entries for `terms`, `privacy`, and `cookies` artifacts with timestamps; sync script writes `terms`/`privacy` artifacts and a `currentVersion` field (`src/lib/legal/utils.ts`, `src/scripts/legal.ts`).
 - `test_connection/connection_test` doc: used by Firestore credentials test script (`scripts/test-firebase-credentials.ts`).
 
 ## 6) Creator Application Flow (Verified)
 - Client form is multi-step (personal/social/details/legal/confirm) using Zod schemas (`src/pages/apply-creator/creators-form/index.tsx`, `src/lib/creators/schemas/creators-apply-shared.ts`).
-- Client-required fields include: `name`, `email`, `phone`, `locationYesNo`, `instagramPostUrl`, `niches[]`, `profilePictureFile`; at least one of `instagram` or `tiktok` must be provided (`src/lib/creators/schemas/creators-apply-shared.ts`).
+- Client-required fields include: `name`, `email`, `phone`, `locationYesNo`, `instagramPostUrl`, `niches[]`, `profilePictureFile`, `newsLetter`, `termsAccepted`; at least one of `instagram` or `tiktok` must be provided (`src/lib/creators/schemas/creators-apply-shared.ts`).
 - Client uploads profile picture to Cloudinary before submitting the application (`src/lib/creators/use-application-form.ts`, `src/lib/cloudinary/upload.ts`).
 - Server normalizes `email`, `instagram`, `tiktok`; adds `ua`, `country`, `ipHash`, `createdAt`, `confirmToken`, `status: "pending"`, and `legal.{termsVersion,privacyVersion,acceptedAt}` (`src/lib/creators/subscription-steps.ts`).
 - Request context sets `X-Request-ID`, reads `user-agent` and `x-vercel-ip-country`, and computes `ipHash` (`src/lib/server-only/request/request-context.ts`).
@@ -65,7 +65,7 @@ Source: repository code/config only. No speculation.
 
 ## 10) TODO / Follow-ups (Needs Inspection)
 - Confirmation email/link delivery: `confirmToken` is generated and stored, but not forwarded to Brevo payloads or any mailer code path (`src/lib/creators/subscription-steps.ts`, `src/lib/brevo/utils.ts`, `functions/src/index.ts`, `src/pages/apply-creator/creators-form/confirm.tsx`).
-- Legal registry schema alignment: runtime expects `legal/registry` to include `cookies`, but `src/scripts/legal.ts` writes only `terms` + `privacy` and expects markdown files that are not present in-repo (`src/lib/legal/utils.ts`, `src/scripts/legal.ts`, `public/legal/**`, `src/assets/legal/**`).
+- Legal registry schema alignment: runtime expects `legal/registry` to include `cookies`, but `src/scripts/legal.ts` writes only `terms` + `privacy` and expects markdown files not present in-repo (only JSON assets exist) (`src/lib/legal/utils.ts`, `src/scripts/legal.ts`, `public/legal/**`, `src/assets/legal/**`).
 - Catalog access control: `/catalog` queries `applications` via `getCreators` without any auth checks; verify intended exposure/field filtering (`src/routes/catalog.tsx`, `src/pages/catalog/**`, `src/lib/creators/utils.ts`, `src/lib/creators/creators-collection.ts`).
 - Sanitization script status: `src/scripts/sanatize.ts` imports `{ db, admin }` but `src/lib/firebase/admin.ts` exports only `db` (`src/scripts/sanatize.ts`, `src/lib/firebase/admin.ts`).
 - Request context IP hashing: request context currently hashes the `Host` header, not the client IP headers listed in `extractClientIp` (`src/lib/server-only/request/request-context.ts`, `src/lib/server-only/utils.ts`).
