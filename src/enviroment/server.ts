@@ -13,6 +13,7 @@ const serverEnvSchema = z
     CLOUDINARY_API_SECRET: z.string().trim(),
     ALLOW_ORIGIN: z.string().trim().optional().default("*"),
     SLACK_WEBHOOK_URL: z.string().trim().optional(),
+    YOUTUBE_API_KEY: z.string().trim().optional(),
     VITE_DOMAIN_URL: z.string().trim().url(), // can still exist server-side too
     FIREBASE_SERVICE_ACCOUNT: z.string(),
   })

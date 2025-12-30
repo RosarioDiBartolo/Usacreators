@@ -14,6 +14,7 @@ import { Route as CatalogRouteImport } from './routes/catalog'
 import { Route as _notFoundRouteImport } from './routes/__not-found'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SuccessTokenRouteImport } from './routes/success.$token'
+import { Route as ImportRouteImport } from './routes/import'
 import { Route as LegalTermsRouteImport } from './routes/legal/terms'
 import { Route as LegalPrivacyRouteImport } from './routes/legal/privacy'
 import { Route as LegalCookiesRouteImport } from './routes/legal/cookies'
@@ -36,6 +37,11 @@ const _notFoundRoute = _notFoundRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImportRoute = ImportRouteImport.update({
+  id: '/import',
+  path: '/import',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SuccessTokenRoute = SuccessTokenRouteImport.update({
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/catalog': typeof CatalogRoute
   '/rroll': typeof RrollRoute
+  '/import': typeof ImportRoute
   '/creators/apply': typeof CreatorsApplyRoute
   '/legal/cookies': typeof LegalCookiesRoute
   '/legal/privacy': typeof LegalPrivacyRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/catalog': typeof CatalogRoute
   '/rroll': typeof RrollRoute
+  '/import': typeof ImportRoute
   '/creators/apply': typeof CreatorsApplyRoute
   '/legal/cookies': typeof LegalCookiesRoute
   '/legal/privacy': typeof LegalPrivacyRoute
@@ -90,6 +98,7 @@ export interface FileRoutesById {
   '/__not-found': typeof _notFoundRoute
   '/catalog': typeof CatalogRoute
   '/rroll': typeof RrollRoute
+  '/import': typeof ImportRoute
   '/creators/apply': typeof CreatorsApplyRoute
   '/legal/cookies': typeof LegalCookiesRoute
   '/legal/privacy': typeof LegalPrivacyRoute
@@ -102,6 +111,7 @@ export interface FileRouteTypes {
     | '/'
     | '/catalog'
     | '/rroll'
+    | '/import'
     | '/creators/apply'
     | '/legal/cookies'
     | '/legal/privacy'
@@ -112,6 +122,7 @@ export interface FileRouteTypes {
     | '/'
     | '/catalog'
     | '/rroll'
+    | '/import'
     | '/creators/apply'
     | '/legal/cookies'
     | '/legal/privacy'
@@ -123,6 +134,7 @@ export interface FileRouteTypes {
     | '/__not-found'
     | '/catalog'
     | '/rroll'
+    | '/import'
     | '/creators/apply'
     | '/legal/cookies'
     | '/legal/privacy'
@@ -135,6 +147,7 @@ export interface RootRouteChildren {
   _notFoundRoute: typeof _notFoundRoute
   CatalogRoute: typeof CatalogRoute
   RrollRoute: typeof RrollRoute
+  ImportRoute: typeof ImportRoute
   CreatorsApplyRoute: typeof CreatorsApplyRoute
   LegalCookiesRoute: typeof LegalCookiesRoute
   LegalPrivacyRoute: typeof LegalPrivacyRoute
@@ -170,6 +183,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/import': {
+      id: '/import'
+      path: '/import'
+      fullPath: '/import'
+      preLoaderRoute: typeof ImportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/success/$token': {
@@ -215,6 +235,7 @@ const rootRouteChildren: RootRouteChildren = {
   _notFoundRoute: _notFoundRoute,
   CatalogRoute: CatalogRoute,
   RrollRoute: RrollRoute,
+  ImportRoute: ImportRoute,
   CreatorsApplyRoute: CreatorsApplyRoute,
   LegalCookiesRoute: LegalCookiesRoute,
   LegalPrivacyRoute: LegalPrivacyRoute,

@@ -32,3 +32,5 @@ Additional commands:
 
 ## Environment variables
 Define variables in `.env.local` so they load for dev commands (validated at startup by `src/enviroment/server.ts` and `src/enviroment/client.ts`). Required server-side keys: `SENTRY_AUTH_TOKEN`, `BREVO_API_KEY`, `BREVO_NEWSLETTER_LIST_ID`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`, `VITE_DOMAIN_URL`, `FIREBASE_SERVICE_ACCOUNT`. Optional keys: `ANALYZE` (defaults `false`), `EMAIL_HASH_SALT`, `ALLOW_ORIGIN` (defaults `*`), `SLACK_WEBHOOK_URL`. Client-side validation also requires `VITE_DOMAIN_URL`.
+
+The playlist import flow expects a YouTube Data API key (`YOUTUBE_API_KEY`) to list playlist items; transcripts are fetched directly from YouTube timed-text endpoints without additional secrets.
